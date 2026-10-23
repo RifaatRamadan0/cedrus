@@ -64,3 +64,15 @@ Either way the result goes in `docs/RESULTS.md` and on the website, with the per
 ## Secondary check — the satellite handover
 
 Suomi NPP stopped delivering data products on 1 Nov 2026. Fit M1 on Suomi NPP, apply it unchanged to NOAA-20 for the years where both exist, and report the same scores. If NOAA-20 needs its own ratio, we say so.
+
+## Note added 23 Oct 2026, after downloading and before any model was fitted
+
+Found while checking the downloaded files (no scores had been computed yet):
+
+- **The MODIS files are not one product version.** The `version` column reads 6.2 for 2000–2017,
+  6.03 for 2018–2022 and 61.03 for 2023–2025. A processing change inside the training years (2018)
+  and inside the held-out years (2023) could move MODIS counts for reasons that are neither fires
+  nor VIIRS. The rules above are unchanged. RESULTS.md reports the yearly errors, so a step at 2018
+  or 2023 would show up there.
+- **The NOAA-20 archive covers 2018–2025**, not only 2024–2025, so the handover check runs on all
+  held-out years.
