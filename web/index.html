@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121c">
+  <meta name="description" content="CEDRUS — a consistent 25-year wildfire record from NASA MODIS and VIIRS satellite fire detections.">
+  <title>CEDRUS — A clearer picture of wildfires</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-8 9 8M5 9v12h5v-7h4v7h5V9"/></symbol>
+  <symbol id="fire" viewBox="0 0 24 24"><path d="M13 2c2 6-4 6-2 11 2-1 3-3 3-5 4 3 6 7 4 11-2 4-10 4-12 0-2-4 0-7 2-10-1 5 1 6 2 6-1-6 5-7 3-13Z"/></symbol>
+  <symbol id="layers" viewBox="0 0 24 24"><path d="m2 8 10-6 10 6-10 6L2 8Zm1 5 9 5 9-5M3 18l9 5 9-5"/></symbol>
+  <symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-11v1"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></symbol>
+  <symbol id="calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6m10-6v6M3 10h18"/></symbol>
+  <symbol id="chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M3 12h18m-7-7 7 7-7 7"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m6 12 4 4 8-9"/></symbol>
+  <symbol id="sprout" viewBox="0 0 24 24"><path d="M12 22V8m0 7c-7 0-8-5-8-8 6 0 8 3 8 8Zm0-4c0-7 5-8 9-8-1 6-4 8-9 8ZM7 23l5-3 5 3"/></symbol>
+  <symbol id="leaf" viewBox="0 0 24 24"><path d="M3 21 20 4M8 18C-1 7 7 2 22 2c0 15-6 20-14 16Zm3-5-1-6m5 2 5 1"/></symbol>
+  <symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M2 12h20M4 6c5 3 11 3 16 0M4 18c5-3 11-3 16 0"/></symbol>
+  <symbol id="chart" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="1"/><path d="m5 17 5-6 4 3 5-7m-5 0h5v5M7 5v3M5 7h4"/></symbol>
+  <symbol id="satellite" viewBox="0 0 24 24"><g transform="rotate(40 12 12)"><rect x="9" y="8" width="6" height="8" rx="1"/><path d="M9 11H7m8 2h2M12 8V4m0 12v5"/><path fill="currentColor" stroke="none" d="M1 7h6v5H1zm0 6h6v5H1zM17 6h6v5h-6zm0 6h6v5h-6z"/></g></symbol>
+  <symbol id="cedar" viewBox="0 0 60 68"><path d="M30 2 21 13h6L17 23h9L11 34h11L6 46h17L2 57h25v9m6 0v-9h25L37 46h17L38 34h11L34 23h9L33 13h6L30 2ZM30 13v42M19 66h23M16 51l14-7 15 7M20 38l10-6 11 6M24 25l6-5 6 5"/></symbol>
+</defs></svg>
+
+<aside class="sidebar">
+  <a class="brand" href="#home" aria-label="CEDRUS home">
+    <svg class="cedar icon"><use href="#cedar"/></svg>
+    <span><strong>CEDRUS</strong><small>Roots in Nature. Data for a Safer Tomorrow.</small></span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="#home" class="nav-item active" aria-current="page"><svg class="icon"><use href="#home"/></svg><span>Home</span></a>
+    <a href="#fire-history" class="nav-item"><svg class="icon"><use href="#fire"/></svg><span>Fire History</span></a>
+    <button class="nav-item" data-dialog="methodology"><svg class="icon"><use href="#layers"/></svg><span>Data &amp; Methodology</span></button>
+    <button class="nav-item" data-dialog="about"><svg class="icon"><use href="#info"/></svg><span>About</span></button>
+  </nav>
+  <div class="event-brand"><svg viewBox="0 0 65 72" aria-hidden="true"><path d="M35 10C0 8-6 58 25 65c22 6 35-12 35-26"/><circle cx="48" cy="17" r="7"/><path d="m48 5 1-5m5 7 4-4m0 10 6-2M45 27l-2 4m14-9 5 3"/></svg><div><span>NASA</span><strong>SPACE APPS</strong><span>BEIRUT 2026</span></div></div>
+</aside>
+
+<main id="home">
+  <header class="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/wildfire-poster.jpg" aria-label="Wildfire moving through a forest"><source src="assets/wildfire.mp4" type="video/mp4"></video>
+    <div class="hero-shade"></div>
+    <div class="hero-badge"><svg class="icon"><use href="#satellite"/></svg><span>Satellite data</span><i>•</i><span>25 years</span><i>•</i><span>NASA FIRMS</span><b id="data-badge">LOADING</b></div>
+    <div class="hero-copy"><p class="eyebrow">MODIS – VIIRS FIRE HISTORY</p><h1>A clearer picture<br>of wildfires.</h1><p class="hero-description">By combining MODIS and VIIRS satellite data, we correct<br class="desktop-break"> the false increase in fire detections and provide a consistent<br class="desktop-break"> 25-year fire history — for better decisions, safer communities,<br class="desktop-break"> and a healthier planet.</p></div>
+    <button class="video-toggle" aria-label="Pause background video" title="Pause background video">Ⅱ</button>
+  </header>
+
+  <section class="workspace" id="fire-history" aria-label="Explore wildfire history">
+    <form class="controls panel" id="filter-form">
+      <h2>Explore the Fire History</h2>
+      <p class="intro">Select an area and view the corrected 25-year fire history, with the option to compare current year data.</p>
+      <div class="field-group"><label for="location-search">1. Choose a region</label>
+        <div class="search-field"><svg class="icon"><use href="#search"/></svg><input id="location-search" type="search" placeholder="Search for a location..." autocomplete="off" aria-describedby="search-result"></div>
+        <p id="search-result" class="search-result" hidden></p>
+        <div class="select-field"><select id="region" aria-label="Region"><option value="Portugal">Portugal</option></select><svg class="icon"><use href="#chevron"/></svg></div>
+      </div>
+      <div class="field-group time-field"><label for="time-range">2. Select time range</label><div class="select-field"><svg class="icon calendar-icon"><use href="#calendar"/></svg><select id="time-range"></select><svg class="icon"><use href="#chevron"/></svg></div></div>
+      <button class="update-button" type="submit">Update Map</button>
+      <fieldset class="legend"><legend class="sr-only">Fire intensity legend</legend><h3>Fire detections per year (corrected)</h3><ul><li><span style="--dot:#f4434b"></span>Very high <em data-class="4"></em></li><li><span style="--dot:#ff7146"></span>High <em data-class="3"></em></li><li><span style="--dot:#ffa846"></span>Moderate <em data-class="2"></em></li><li><span style="--dot:#f3d363"></span>Low <em data-class="1"></em></li><li><span style="--dot:#529b6e"></span>No fire</li></ul></fieldset>
+    </form>
+
+    <div class="map-column">
+      <div class="map-panel" id="map-panel" role="region" aria-label="Map of corrected fire detections">
+        <div class="map-viewport" id="map"></div>
+        <div class="map-zoom"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button></div>
+        <span class="map-demo" id="map-demo">0.25° GRID · CORRECTED</span>
+      </div>
+      <div class="expanded-chart panel" id="expanded-chart" hidden><div><p class="eyebrow" id="expanded-eyebrow">PORTUGAL</p><h2>A consistent view over time.</h2><p class="intro">Fire detections per year: the joined record, the corrected record, and MODIS itself as a check.</p></div><div id="large-chart"></div><p class="chart-disclaimer" id="chart-disclaimer"></p></div>
+      <p class="map-caption" id="map-caption" aria-live="polite">Loading NASA FIRMS record…</p>
+    </div>
+
+    <section class="history panel" aria-labelledby="history-title">
+      <div class="panel-heading"><h2 id="history-title">Fire History</h2><div class="view-switch" role="group" aria-label="Main visualization"><button class="selected" id="map-tab" aria-pressed="true">Map</button><button id="chart-tab" aria-pressed="false">Chart</button></div></div>
+      <h3 class="chart-title" id="chart-title">Corrected vs. Combined Data</h3>
+      <div class="chart-wrap" id="chart-container"><div class="chart-key"><span><i class="combined"></i>Combined (MODIS + VIIRS)</span><span><i class="corrected"></i>Corrected (MODIS-equivalent)</span><span><i class="modis-check"></i>MODIS itself (check)</span></div><svg id="history-chart" viewBox="0 0 430 188" role="img" aria-label="Fire detections per year: combined record, corrected record, and MODIS"><defs><linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#68b584" stop-opacity=".2"/><stop offset="1" stop-color="#68b584" stop-opacity=".015"/></linearGradient></defs><g id="chart-content"></g></svg></div>
+      <div class="explanation"><svg class="icon"><use href="#info"/></svg><p id="explanation">The 2012 jump is caused by the switch from MODIS to VIIRS, which detects more small fires. The correction removes this artificial increase.</p></div>
+      <h3 class="calendar-title">Fire Calendar <span id="calendar-basis"></span></h3>
+      <div class="fire-calendar"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
+      <button class="comparison" data-dialog="comparison"><span class="comparison-title" id="comparison-title">Latest Year Comparison</span><span class="comparison-body"><svg class="icon green" id="comparison-icon"><use href="#check"/></svg><span id="comparison-text">–</span><svg class="icon arrow"><use href="#arrow"/></svg></span></button>
+    </section>
+  </section>
+
+  <footer class="benefits"><div class="benefit"><svg class="icon"><use href="#satellite"/></svg><div><h3>Two Satellites.<br>One Clearer Record.</h3><p>MODIS (2000–) + VIIRS (2012–)<br>= one consistent 25-year history.</p></div></div><div class="benefit"><svg class="icon"><use href="#chart"/></svg><div><h3>Corrected Data.<br>Real Trends.</h3><p>We remove the artificial jump and reveal<br>the true patterns of wildfire activity.</p></div></div><div class="benefit"><svg class="icon"><use href="#globe"/></svg><div><h3>Better Insights.<br>Greater Impact.</h3><p>Supporting governments, researchers<br>and communities with reliable data.</p></div></div><div class="benefit"><svg class="icon"><use href="#leaf"/></svg><div><h3>A Healthier Planet.<br>A Safer Future.</h3><p>Because every fire tells a story —<br>and now we can see the real one.</p></div></div></footer>
+</main>
+
+<dialog id="detail-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><p class="eyebrow">CEDRUS · NASA SPACE APPS 2026</p><h2 id="dialog-title"></h2><div id="dialog-body"></div><button class="dialog-done">Got it</button></dialog>
+<div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
