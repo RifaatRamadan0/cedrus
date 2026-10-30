@@ -27,7 +27,7 @@ planning, and we rebuild during the 48 hours.
 
 ## Step 2: does it hold up somewhere else? · owner: _
 
-- [ ] Run the pipeline with `--country Lebanon` (our home audience: the October 2019 fires, the south since 2023). Small country, so check whether 0.25° cells are too coarse.
+- [ ] Lebanon analysis, see [tasks/ANALYST_LEBANON.md](tasks/ANALYST_LEBANON.md). Run the pipeline with `--country Lebanon` (our home audience: the October 2019 fires, the south since 2023). Small country, so check whether 0.25° cells are too coarse.
 - [ ] Run one large, very different fire region (Brazil or Australia).
 - [ ] Add a dated section to TEST_PLAN before looking at the new results.
 - **Check:** the retirement test passes or fails in each region, and the website shows that verdict.
