@@ -36,7 +36,7 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 |---|---|---|
 | `B` bridged | 2000-11 .. 2002-06 | Terra detections ÷ Terra's share for that calendar month (below) |
 | `O` observed | 2002-07 .. 2021-12 | MODIS Terra + Aqua detections (nominal orbits) |
-| `E` estimated (S-NPP+NOAA-20) | 2022-01 .. | average of the Suomi NPP-based and the NOAA-20-based MODIS-equivalent estimates |
+| `E` estimated (S-NPP+NOAA-20) | 2022-01 .. | average of the Suomi NPP-based and the NOAA-20-based MODIS-equivalent estimates of model A |
 | `N` estimated (S-NPP only) | 2022-01 .. | Suomi NPP-based estimate; NOAA-20 does not cover the month (Lebanon 2025-12) |
 | `J` estimated (NOAA-20 only) | 2022-01 .. | NOAA-20-based estimate; Suomi NPP does not cover the month (after Suomi NPP ends) |
 | `X` no data | 2022-01 .. | no VIIRS satellite covers the month (none so far) |
@@ -45,15 +45,34 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
   Terra + Aqua detections that month and `s_pool` = Terra / (Terra + Aqua) over all months. No month reaches 0 or 1.
 - **Naive record** (for the toggle that shows the false jump): MODIS Terra + Aqua up to 2011-12 (Terra alone in
   bridged months, unscaled), raw Suomi NPP counts from 2012-01.
+- **Model: A — shrinkage ratio (bake-off winner)** (`pipeline/weights_a.py`, which imports `fit_A` / `predict_A`
+  from `pipeline/bakeoff/models.py`; evidence in `docs/BAKEOFF_RESULTS.md`). Fitted separately for Suomi NPP
+  (2012-02..2019-12) and NOAA-20 (2018-04..2019-12) against Terra + Aqua, per footprint cell × calendar month ×
+  day/night, a = 30. `pipeline/weights_interim.py` is the earlier placeholder, kept for reference and unused.
 - **Weights `w`:** every detection carries its contribution to the harmonized estimate of its month
-  (`r_N`, `r_J1` = the model's ratio for that satellite, calendar month and day/night):
+  (`r_N`, `r_J1` = model A's posterior mean MODIS per detection of that satellite, for the detection's cell,
+  calendar month and day/night: (a + ΣMODIS) / (a / r0 + ΣVIIRS); 0 where r0 = 0):
 
 | Detection | `B` | `O` | `E` | `N` | `J` |
 |---|---|---|---|---|---|
 | Terra (T) | 1 / s_m | 1 | 0 | 0 | 0 |
 | Aqua (A) | 0 | 1 | 0 | 0 | 0 |
-| Suomi NPP (N) | 0 | 0 | ½ · r_N | r_N | 0 |
-| NOAA-20 (J1) | 0 | 0 | ½ · r_J1 | 0 | r_J1 |
+| Suomi NPP (N) | 0 | 0 | ½ · r_N (r_N alone where NOAA-20's r0 = 0) | r_N | 0 |
+| NOAA-20 (J1) | 0 | 0 | ½ · r_J1 (0 where its r0 = 0) | 0 | r_J1 |
+
+- **Combination rule, decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window.** Model A gives
+  each VIIRS satellite a prior ratio r0 per region × calendar month × day/night slot (ΣMODIS / ΣVIIRS in its fit
+  window). NOAA-20's window has months and times of day with no MODIS fire at all, so its r0 is 0 there and A gives
+  its detections weight 0. In a month both satellites cover, a satellite enters a slot's average **only if its
+  r0 > 0 in that slot**; if exactly one qualifies it carries the slot alone (share 1); if none qualifies, A's literal
+  behaviour stays (detections weigh 0, background as fitted, shared between the covering satellites). Model A itself
+  is not changed. Which satellites each slot uses is in `regions.json` `combination`; months where a satellite was
+  left out carry a note in `monthly.json` `slot_notes` and in both CSVs' `source_flag`. Lebanon: 12 of 24 slots use
+  Suomi NPP alone or neither; Portugal: November nights use Suomi NPP alone.
+- **Background `bg`:** model A's forecast where a covering satellite saw nothing in a footprint cell × month ×
+  day/night: b_A (the mean MODIS count in training rows with no VIIRS detection), times the satellite's share of that
+  slot (½ or 1, by the combination rule). Only estimated months have one. Portugal's background adds 586 detections
+  over 2022–2025, Lebanon's 25.
 
   So for any set of cells and months, **Σ harmonized estimate = Σ w + Σ bg**, up to rounding (`m` and `bg` to
   2 decimals per cell-month, `w` to 4 decimals per detection). `tools/probe_site.py` checks this through the two CSVs.
@@ -74,17 +93,18 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
       "detections_after_record_dropped": 0, "viirs_outage_months": [], "rule": "…", "after": "2026 … API key (pending)"
     },
     "default_view": {"bounds": [[lon_min, lat_min], [lon_max, lat_max]]},
-    "model": "interim",                       // name of the weight model; "interim" until the bake-off winner replaces it
-    "model_detail": {                         // from weights_interim.describe()
-      "name": "interim",
+    "model": "A — shrinkage ratio (bake-off winner)",
+    "model_detail": {                         // from weights_a.describe()
+      "name": "A — shrinkage ratio (bake-off winner)", "a": 30,
       "satellites": {
-        "snpp":   {"train": ["2012-02", "2019-12"], "ratio": {"01D": 0.3337, …}, "ratio_basis": {"01D": "<MODIS> MODIS / <V> Suomi NPP", …},
-                   "pooled_ratio": {"D": …, "N": …}, "overall_ratio": …, "train_detections": {"modis": …, "snpp": …}},
+        "snpp":   {"train": ["2012-02", "2019-12"], "prior_ratio_r0": {"01D": 0.328, …}, "background_bA": {"01D": …, …},
+                   "r0_fallback_months": 0, "train_detections": {"modis": …, "snpp": …}, "train_rows": …},
         "noaa20": {"train": ["2018-04", "2019-12"], …same keys…}
       },
-      "shrinkage": "each ratio = (MODIS + 30 x pooled) / (VIIRS + 30), pooled per satellite and day/night",
-      "interval": "…placeholder…"
+      "method": "…", "interval": "…", "evidence": "docs/BAKEOFF_RESULTS.md",
+      "check": {"max_gap_between_A_predictive_mean_and_m": 0.0706, "background_total": 585.98}  // m vs A's own mean: rounding only
     },
+    "combination": {"rule": "…", "slots_when_both_cover": {"01D": ["snpp", "noaa20"], …, "11N": ["snpp"], …}},
     "terra_share": {"years": [2003, 2011], "by_month": {"01": 0.4084, …}, "pooled": 0.4512, "prior_detections": 20,
                     "basis": {"01": "(89 Terra + 20 x 0.4512) / (220 MODIS + 20)", …}},
     "policy": {"bridged": [first, last], "observed": [first, last], "estimated": [first, last], "naive_switch": "2012-01"},
@@ -113,20 +133,25 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
   "flags": "BBBB…OOO…EEE",                    // one character per month: B / O / E / N / J / X (table above)
   "flag_codes": {"B": "bridged", "O": "observed", "E": "estimated (S-NPP+NOAA-20)", "N": "estimated (S-NPP only)",
                  "J": "estimated (NOAA-20 only)", "X": "no data"},
+  "slot_notes": {"2022-11": "night: S-NPP only", …},  // months where the combination rule left a satellite out of a time of day
   "cells": {"ix": [-38, …], "iy": [147, …]},  // cell c = (ix[c], iy[c])
   "m":     [[…n values…], …],                 // per cell: harmonized estimate (expected value) = Σ w + bg, 2 decimals
-  "bg":    [[…], …],                          // per cell: background term already inside m (interim model: all 0)
+  "bg":    [[…], …],                          // per cell: background term already inside m (model A: b_A where VIIRS saw nothing)
   "p10":   [[…], …],                          // per cell: 10th percentile
   "p90":   [[…], …],                          // per cell: 90th percentile
   "naive": [[…], …]                           // per cell: naive record, integers
 }
 ```
 
-- `p10`/`p90`: in `B`, `E`, `N` and `J` months, the 10th/90th percentile of a negative binomial with mean `m` and
-  size 5 — an **interim placeholder, not fitted to data, replaced by the bake-off winner**. In `O` months `p10 = p90 = m`.
+- `p10`/`p90`: in `E`, `N` and `J` months, from model A's predictive distribution per cell × month × day/night
+  (negative binomial with size a + ΣMODIS and p = rate / (rate + V) where V > 0; Poisson(b_A) where V = 0), day and
+  night added, the two satellites averaged (mean = Σ share × mean, variance = Σ share² × variance, as if independent),
+  then the 10th/90th percentile of the negative binomial with that mean and variance (Poisson when the variance is not
+  above the mean). **Approximate.** In `B` months: a placeholder, negative binomial with mean `m` and size 5 (model A
+  describes VIIRS, not Terra alone). In `O` months `p10 = p90 = m`.
 - `bg` is optional for readers: if absent, treat it as zero.
 
-Sizes (31 Oct 2026): Portugal 1.02 MB (185 cells), Lebanon 0.15 MB (28 cells).
+Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
 
 ## How the website turns these into an area's calendar
 
@@ -171,11 +196,12 @@ Sizes: Portugal 14.6 MB over 26 files (largest 2025, about 2 MB), Lebanon 1.0 MB
   "region": "portugal",
   "months": {"first": "2012-02", "last": "2025-11", "n": 166},   // Suomi NPP's first full month .. MODIS's last complete month
   "observed_modis": [...],                    // Terra + Aqua detections in the region, per month
-  "predicted_modis": [...],                   // MODIS predicted from VIIRS: average of the Suomi NPP- and NOAA-20-based
-                                              // predictions when both cover the month (as the estimated record), 2 decimals
+  "predicted_modis": [...],                   // MODIS predicted by model A (weights + background) from each covering VIIRS
+                                              // satellite, averaged when both cover the month (as the estimated record), 2 decimals
   "trailing12_ratio": [null × 11, ...],       // Σ observed / Σ predicted over the 12 months ending here
   "band": {"what": "…", "range": [lo, hi], "fitted": ["2012-02", "2019-12"]},  // min–max of the trailing ratio, windows ending in 2012-02..2019-12
-  "predicted_from": "Suomi NPP and NOAA-20, averaged in months both cover (as the estimated record)",
+  "predicted_from": "model A from Suomi NPP and NOAA-20 (weights + background), averaged in months both cover",
+  "model": "A — shrinkage ratio (bake-off winner)",
   "modis_archive_ends": "2025-11-28",
   "complete_rule": "a file's final month counts if it has a detection in that month's last 3 days"
 }
@@ -187,24 +213,24 @@ Lebanon's MODIS file ends 2025-11-23, so its drift series ends 2025-10.
 
 - **Hotspots:** `latitude, longitude, brightness, bright_t31, bright_ti4, bright_ti5, scan, track, acq_date, acq_time,
   satellite, instrument, confidence, version, frp, daynight, type, sensor, source_flag, w` — every detection inside
-  the exact area for the chosen years; `version` exactly as in the FIRMS file; `source_flag` is the month's flag name.
+  the exact area for the chosen years; `version` exactly as in the FIRMS file; `source_flag` is the month's flag name,
+  followed by its slot note in parentheses where the combination rule left a satellite out.
 - **Monthly:** a `#` methods line, then `month, harmonized_estimate, p10, p90, naive, background, source_flag` for the
-  area (4 decimals for the estimate and the background). `harmonized_estimate` already includes `background`.
+  area (4 decimals for the estimate and the background). `harmonized_estimate` already includes `background`;
+  `source_flag` carries the slot note as in the hotspot CSV.
 
-## Swapping in the bake-off winner
+## The model interface
 
-`export_v2.py` talks to the model only through `pipeline/weights_interim.py`:
+`export_v2.py` talks to the model only through `pipeline/weights_a.py` (the same functions as `weights_interim.py`):
 
 ```python
 model = fit(det, region)                     # det: filtered detections (columns month, moy, dn, fam, …); fits never see 2020+
 w = hotspot_weights(model, rows)             # full weight of each Suomi NPP or NOAA-20 row; the export applies the ½ share
-bg = cell_month_background(model, grid)      # grid: one row per cell-month (ci, mi, month, w); expected detections no row carries
-p10, p90 = cell_month_interval(model, cm)    # cm: DataFrame with column m (the cell-month expected value)
+bg = cell_month_background(model, grid)      # grid: one row per cell-month: ci, moy, m, share_N, share_J1, V_N_D, V_N_N, V_J1_D, V_J1_N
+p10, p90 = cell_month_interval(model, grid)  # same grid rows (estimated months)
 describe(model)                              # dict stored as regions.json model_detail
 ```
 
-A replacement module with the same five functions and a different `NAME` changes `"model"` in `regions.json`
-and nothing else in the contract. A model with a term for cells or months without VIIRS detections (bake-off
-candidate A's `b_A`, candidate B's `b`) returns it from `cell_month_background`; it lands in `bg`, is included in `m`,
-and the CSV check becomes Σ harmonized estimate = Σ w + Σ background. The bake-off as pre-registered fits Suomi NPP
-only; the NOAA-20 half of the estimated record would need the winner fitted to NOAA-20 as well.
+A replacement module with the same functions and a different `NAME` changes `"model"` in `regions.json`
+and nothing else in the contract. The bake-off as pre-registered fitted model A to Suomi NPP only; the product also
+fits it to NOAA-20 (2018-04..2019-12, 21 months), which the bake-off did not test.

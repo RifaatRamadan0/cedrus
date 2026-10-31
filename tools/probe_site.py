@@ -131,16 +131,19 @@ def compare_csvs(page, label, dest, tol=None):
     check(f"{label}: calendar sum == hotspot CSV sum(w) + background", abs(a - b) <= tol,
           f"calendar {a:.4f} vs hotspots {b - bg:.4f} + background {bg:.4f}, |diff| {abs(a - b):.4f}, tolerance {tol:.4f} ({why})")
     flags = set(monthly.source_flag)
-    check(f"{label}: source flags are the documented ones",
-          flags <= {"bridged", "observed", "estimated (S-NPP+NOAA-20)", "estimated (S-NPP only)", "estimated (NOAA-20 only)"}, str(sorted(flags)))
+    known = ("bridged", "observed", "estimated (S-NPP+NOAA-20)", "estimated (S-NPP only)", "estimated (NOAA-20 only)")
+    bases = {next((k for k in known if f == k or f.startswith(k + " (")), None) for f in flags}
+    check(f"{label}: source flags are the documented ones (plus the combination note)", None not in bases, str(sorted(flags))[:200])
     return monthly, hot
 
 
 def month_matches(monthly, hot, month, label):
-    """One month: the monthly CSV value against the hotspot CSV's weights in that month."""
-    a = float(monthly.loc[monthly.month == month, "harmonized_estimate"].sum())
+    """One month: the monthly CSV value against the hotspot CSV's weights in that month plus its background."""
+    row = monthly[monthly.month == month]
+    a, bg = float(row.harmonized_estimate.sum()), float(row.background.sum())
     b = float(hot.loc[hot.acq_date.str[:7] == month, "w"].sum())
-    check(f"{label}: {month} calendar == sum(w) of its detections", abs(a - b) <= 0.01, f"{a:.4f} vs {b:.4f}")
+    check(f"{label}: {month} calendar == sum(w) of its detections + background", abs(a - (b + bg)) <= 0.01,
+          f"{a:.4f} vs {b:.4f} + {bg:.4f}")
     return a
 
 
@@ -155,7 +158,56 @@ def wait_season(page):
     page.wait_for_function("!document.querySelector('#cal-start').textContent.includes('…')", timeout=120000)
 
 
+def model_checks():
+    """Model A in the data, its fit windows, and its refusal to be fitted on 2020 or later."""
+    idx = json.loads((ROOT / "web" / "data" / "regions.json").read_text(encoding="utf-8"))
+    names = {r["id"]: r["model"] for r in idx["regions"]}
+    check("regions.json: model is A, the bake-off winner, in every region", set(names.values()) == {"A — shrinkage ratio (bake-off winner)"}, str(names))
+    wins = {r["id"]: {k: v["train"] for k, v in r["model_detail"]["satellites"].items()} for r in idx["regions"]}
+    ok = all(w == {"snpp": ["2012-02", "2019-12"], "noaa20": ["2018-04", "2019-12"]} for w in wins.values())
+    check("model A fit windows: Suomi NPP 2012-02..2019-12, NOAA-20 2018-04..2019-12", ok, str(wins))
+    sys.path.insert(0, str(ROOT / "pipeline"))
+    import weights_a
+    saved = dict(weights_a.TRAIN)
+    det = pd.DataFrame({"month": ["2019-12", "2020-01"], "moy": [12, 1], "dn": ["D", "D"], "fam": ["snpp", "modis"], "ci": [0, 0]})
+    try:
+        weights_a.TRAIN["snpp"] = ("2012-02", "2020-03")
+        try:
+            weights_a.fit(det, "probe")
+            refused = False
+        except AssertionError:
+            refused = True
+    finally:
+        weights_a.TRAIN.clear(); weights_a.TRAIN.update(saved)
+    check("model A refuses a fit window reaching into 2020", refused)
+
+    # Combination rule: a satellite enters a slot's average only where A's prior ratio r0 > 0.
+    bad = [(r["id"], slot, f) for r in idx["regions"] for slot, sats in r["combination"]["slots_when_both_cover"].items()
+           for f in sats if not r["model_detail"]["satellites"][f]["prior_ratio_r0"][slot] > 0]
+    check("combination rule: no slot's average includes a satellite with r0 = 0", not bad, str(bad[:5]))
+    # Lebanon December days: NOAA-20's r0 is 0, so Suomi NPP carries the slot alone in 2022-2024 (both satellites fly)
+    # exactly as in Dec 2025 (Suomi NPP only): one weight per cell, not halved; NOAA-20 weighs 0 there.
+    w_n, w_j = {}, []
+    for y in (2022, 2023, 2024, 2025):
+        h = json.loads((ROOT / "web/data/lebanon/hotspots" / f"{y}.json").read_text(encoding="utf-8"))["cols"]
+        for i in range(len(h["lat"])):
+            if h["doy"][i] < 335 or h["dn"][i] != 0:
+                continue  # December starts on day 335 in these years (336 in 2024 is still December)
+            if pd.Timestamp(y, 1, 1) + pd.Timedelta(days=h["doy"][i] - 1) < pd.Timestamp(y, 12, 1):
+                continue
+            cell = (int(np.floor(h["lon"][i] / 0.25)), int(np.floor(h["lat"][i] / 0.25)))
+            if h["sensor"][i] == 2:
+                w_n.setdefault(cell, set()).add((y == 2025, h["w"][i]))
+            elif h["sensor"][i] == 3:
+                w_j.append(h["w"][i])
+    same = [c for c, v in w_n.items() if len({w for _, w in v}) == 1 and {flag for flag, _ in v} == {True, False}]
+    differ = [c for c, v in w_n.items() if len({w for _, w in v}) > 1]
+    check("Lebanon December days: S-NPP weight in 2022-24 (both fly) equals its Dec 2025 weight (S-NPP only); NOAA-20 weighs 0",
+          same and not differ and all(w == 0 for w in w_j), f"{len(same)} cells compared, {len(differ)} differ; {len(w_j)} NOAA-20 rows, max w {max(w_j, default=0)}")
+
+
 def run(url, shots):
+    model_checks()
     shots.mkdir(parents=True, exist_ok=True)
     dl = shots / "downloads"
     dl.mkdir(exist_ok=True)
@@ -307,9 +359,12 @@ def run(url, shots):
         # ---- whole region CSVs; NOAA-20 in the estimated era; version strings exactly as in FIRMS
         page.select_option("#csv-from", "2000"); page.select_option("#csv-to", "2025")
         monthly, hot = compare_csvs(page, "Portugal whole region 2000-2025", dl, rounding_bound("portugal"))
+        check("model A background is in the record (bg > 0) and inside the equality above", monthly.background.sum() > 0,
+              f"background {monthly.background.sum():.2f} of {monthly.harmonized_estimate.sum():.2f}")
+        check("hero badge names model A", page.inner_text("#data-badge") == "MODEL A · BAKE-OFF WINNER", page.inner_text("#data-badge"))
         j1 = hot[(hot.sensor == "J1") & (hot.acq_date >= "2022-01-01")]
         check("NOAA-20 detections carry weight in the estimated era", (j1.w > 0).mean() > 0.99, f"{(j1.w > 0).sum()} of {len(j1)} with w > 0")
-        check("estimated months are flagged S-NPP+NOAA-20", (monthly[monthly.month >= "2022-01"].source_flag == "estimated (S-NPP+NOAA-20)").all())
+        check("estimated months are flagged S-NPP+NOAA-20", monthly[monthly.month >= "2022-01"].source_flag.str.startswith("estimated (S-NPP+NOAA-20)").all())
         versions = sorted(hot.version.unique())
         check("CSV version strings exactly as in the FIRMS files", versions == ["2", "6.03", "6.2", "61.03"], str(versions))
 
@@ -323,12 +378,12 @@ def run(url, shots):
             if month:
                 page.click("#cal-grid [data-year='2023'][data-moy='8']")
                 shown = page.inner_text("#month-value")
-                want_v = float(h_csv.loc[h_csv.acq_date.str[:7] == month, "w"].sum())
-                check(f"{label}: Aug 2023 panel shows the hotspot sum", shown in (f"{want_v:.1f}", f"{round(want_v):,}"), f"panel {shown} vs {want_v:.3f}")
+                want_v = float(h_csv.loc[h_csv.acq_date.str[:7] == month, "w"].sum()) + float(m_csv.loc[m_csv.month == month, "background"].sum())
+                check(f"{label}: Aug 2023 panel shows the hotspot sum + background", shown in (f"{want_v:.1f}", f"{round(want_v):,}"), f"panel {shown} vs {want_v:.3f}")
                 page.locator(".history").screenshot(path=str(shots / "desktop_circle_12km.png"))
 
         # ---- mouse-drawn rectangle: exact too
-        page.wait_for_selector("#map-panel[data-draw=ready]", timeout=60000)
+        page.wait_for_selector("#map-panel[data-draw=ready]", state="attached", timeout=300000)  # CDN-bound wait
         page.click("#draw-clear")
         page.wait_for_timeout(900)
         page.click("#draw-rectangle")
@@ -359,6 +414,13 @@ def run(url, shots):
         lab = page.get_attribute("#cal-grid .cal-cell.hz", "aria-label") if n_hz else ""
         check("Lebanon: trust overlays drawn and spoken (dashed = care, hatched = too uncertain)",
               (n_care + n_hz) > 0 and "too uncertain" in lab, f"care {n_care}, hatched {n_hz}; {lab}")
+        quiet = page.evaluate(r"""() => [...document.querySelectorAll('#cal-grid .cal-cell.zero')].map((c) => [c.dataset.year, c.getAttribute('aria-label')])""")
+        q22 = [l for y, l in quiet if int(y) >= 2022]
+        check("quiet months under 0.5 use the ≈ zero tile after 2022 too, exact value in the tooltip",
+              any("≈ zero" in l for l in q22) and any(int(y) < 2022 for y, _ in quiet), f"{len(q22)} after 2022, e.g. {q22[:1]}")
+        n_few = page.locator("#cal-grid .cal-cell.few").count()
+        check("few-fires months carry a calendar mark and a legend entry", n_few > 0 and "few fires" in page.inner_text("#calendar-legend"),
+              f"{n_few} cells")
         page.click("#cal-grid [data-year='2025'][data-moy='1']")
         check("Lebanon Jan 2025 (baseline median < 5): 'Few fires — too few to judge'", "Few fires — too few to judge" in page.inner_text("#month-panel"),
               page.inner_text("#trust").split("\n")[0] if page.locator("#trust").count() else "no trust box")
@@ -410,8 +472,12 @@ def run(url, shots):
         page.click(".dialog-done")
         page.click("button[data-dialog=methodology]")
         dlg = page.inner_text("#detail-dialog")
-        check("methodology names the interim model, NOAA-20, SHA-256 and credits",
-              all(k in dlg for k in ("interim", "NOAA-20", "SHA-256", "Kiln Watch", "Agun-Panjika", "Use of AI")))
+        check("methodology: model A in plain words, the bake-off link, B lost, NOAA-20, SHA-256, credits",
+              all(k in dlg for k in ("A — shrinkage ratio (bake-off winner)", "BAKEOFF_RESULTS.md", "lost", "NOAA-20", "SHA-256", "Kiln Watch", "Agun-Panjika", "Use of AI"))
+              and page.locator("#detail-dialog a[href$='BAKEOFF_RESULTS.md']").count() == 1)
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        check("README: Suomi NPP stops delivering data on 2 Nov 2026", "stops delivering data on **2 Nov 2026**" in readme
+              and "1 November 2026" not in readme)
         page.screenshot(path=str(shots / "desktop_methodology.png"))
         page.click(".dialog-done")
         check("unused v1 files removed", not (ROOT / "web/data/portugal.json").exists() and not (ROOT / "web/data/portugal-cells.geojson").exists())
@@ -432,8 +498,11 @@ def run(url, shots):
         check("mobile: calendar cells at least 24 px tall", box[1] >= 24, f"{box[0]:.1f} x {box[1]:.1f} px")
         page.screenshot(path=str(shots / "mobile_early.png"), full_page=True)  # whatever the CDN has delivered by now
         t_map = time.time()
-        page.wait_for_selector("#map-panel[data-draw=ready]", state="attached", timeout=90000)
-        info(f"mobile: map and drawing tools ready {time.time() - t_map + 2.5:.1f} s after the calendar (CDN-bound)")
+        try:  # not a check: how long the CDN takes is not the site's doing; the screenshot just waits for it
+            page.wait_for_selector("#map-panel[data-draw=ready]", state="attached", timeout=150000)
+            info(f"mobile: map and drawing tools ready {time.time() - t_map + 2.5:.1f} s after the calendar (CDN-bound)")
+        except Exception:
+            info(f"mobile: map not ready {time.time() - t_map + 2.5:.0f} s after the calendar (CDN-bound); screenshot shows the loading state")
         page.wait_for_timeout(1500)
         page.screenshot(path=str(shots / "mobile.png"), full_page=True)
         ctx.close()

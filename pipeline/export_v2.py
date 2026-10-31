@@ -10,7 +10,7 @@ The file layout is documented in docs/DATA_CONTRACT.md.
 Source policy for the harmonized record (team lead's ruling):
   2000-11..2002-06  bridged    Terra only, divided by Terra's share of Terra+Aqua for that calendar month (2003-2011)
   2002-07..2021-12  observed   MODIS Terra + Aqua, nominal orbits
-  2022-01..         estimated  VIIRS converted to MODIS-equivalent by the weight model (MODIS drifted):
+  2022-01..         estimated  VIIRS converted to MODIS-equivalent by model A, the bake-off winner (MODIS drifted):
                                the average of the Suomi NPP and NOAA-20 estimates in months both cover,
                                whichever covers otherwise (so the record survives Suomi NPP's end)
 A sensor's final month counts only if its file has a detection in the month's last EDGE_DAYS days.
@@ -26,7 +26,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import weights_interim as model_impl
+import weights_a as model_impl                 # the bake-off winner; weights_interim.py is kept for reference only
+from weights_interim import nb_quantiles         # bridged months keep the placeholder range (A says nothing about Terra)
 from regions import CELL, REGIONS, assert_not_sealed, regions_with
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -144,8 +145,25 @@ def export(region):
         return "E" if len(c) == 2 else "N" if c == ["N"] else "J" if c == ["J1"] else "X"
     flags = "".join(flag_of(m) for m in months)
 
-    # ---- weights: each row's contribution to the harmonized record for its month
+    # ---- cells (model A is fitted per cell), then weights: each row's contribution to its month
+    det["mi"] = det.month.map({m: i for i, m in enumerate(months)})
+    cells = det.groupby(["ix", "iy"]).size().reset_index()[["ix", "iy"]].sort_values(["iy", "ix"]).reset_index(drop=True)
+    cell_index = {(r.ix, r.iy): i for i, r in enumerate(cells.itertuples())}
+    det["ci"] = [cell_index[k] for k in zip(det.ix, det.iy)]
+    shape = (len(cells), len(months))
     model = model_impl.fit(det, region)
+    # Combination rule (lead's ruling, 31 Oct 2026, after observing NOAA-20's short 21-month fit window): in each
+    # region x calendar month x day/night slot, a satellite enters the average only if A's prior ratio r0 > 0 there.
+    # One qualifying satellite carries the whole slot; none qualifying keeps A's literal behaviour (weight 0,
+    # background as fitted) for the satellites that cover the month. A itself is not changed.
+    positive = model_impl.prior_ratio_positive(model)
+
+    def slot_share(m, sat, moy, dn):
+        cov = covering[m]
+        md = (moy - 1) * 2 + (dn == "N")
+        q = [s for s in cov if positive[VIIRS[s]][md]]
+        use = q if q else cov
+        return 1.0 / len(use) if sat in use else 0.0
     share_rows = det[(det.year >= SHARE_YEARS[0]) & (det.year <= SHARE_YEARS[1]) & (det.fam == "modis")]
     st = share_rows.groupby(["moy", "sensor"]).size().unstack(fill_value=0)
     pooled_share = float(st["T"].sum() / (st["T"].sum() + st["A"].sum()))
@@ -166,37 +184,57 @@ def export(region):
     w[br] = 1.0 / det.moy[br].map(terra_share).to_numpy()
     # Estimated months: each VIIRS row carries its satellite's ratio times that satellite's share of the month
     # (1/2 when both cover it, 1 when only it does, 0 when it does not).
-    share = np.array([(1.0 / len(covering[m]) if s in covering[m] else 0.0) if f in "ENJ" else 0.0
-                      for m, s, f in zip(det.month, det.sensor, flag)])
+    share = np.array([slot_share(m, s, moy, dn) if f in "ENJ" and s in VIIRS else 0.0
+                      for m, s, f, moy, dn in zip(det.month, det.sensor, flag, det.moy, det.dn)])
     est = share > 0
     w[est] = share[est] * model_impl.hotspot_weights(model, det[est])
     det["w"] = np.round(w, 4)
 
     # ---- cell x month tables
-    det["mi"] = det.month.map({m: i for i, m in enumerate(months)})
-    cells = det.groupby(["ix", "iy"]).size().reset_index()[["ix", "iy"]].sort_values(["iy", "ix"]).reset_index(drop=True)
-    cell_index = {(r.ix, r.iy): i for i, r in enumerate(cells.itertuples())}
-    det["ci"] = [cell_index[k] for k in zip(det.ix, det.iy)]
-    shape = (len(cells), len(months))
-
     w_arr = np.zeros(shape)
     np.add.at(w_arr, (det.ci.to_numpy(), det.mi.to_numpy()), det.w.to_numpy())
-    grid = pd.DataFrame({"ci": np.repeat(np.arange(shape[0]), shape[1]), "mi": np.tile(np.arange(shape[1]), shape[0]),
-                         "month": np.tile(months, shape[0]), "w": w_arr.ravel()})
+    grid = cell_month_grid(det, months, shape, slot_share, flags)
+    grid["w"] = w_arr.ravel()
     bg = np.round(np.asarray(model_impl.cell_month_background(model, grid), float).reshape(shape), 2)
     m_arr = w_arr + bg  # harmonized estimate (expected value) = sum of hotspot weights + background term
+    grid["m"] = m_arr.ravel()
     naive_rows = det[((det.month < NAIVE_SWITCH) & (det.fam == "modis")) | ((det.month >= NAIVE_SWITCH) & (det.sensor == "N"))]
     naive = np.zeros(shape)
     np.add.at(naive, (naive_rows.ci.to_numpy(), naive_rows.mi.to_numpy()), 1)
 
-    # interval: observed months carry none; estimated and bridged months get the model's (interim placeholder)
+    # interval: observed months carry none; estimated months get model A's predictive (approximate);
+    # bridged months keep the placeholder (negative binomial, mean m, size 5): A models VIIRS, not Terra alone.
     m_round = np.round(m_arr, 2)
     p10, p90 = m_round.copy(), m_round.copy()
-    e_cols = np.array([f in "BENJ" for f in flags])
-    e_vals = m_arr[:, e_cols]
-    lo, hi = model_impl.cell_month_interval(model, pd.DataFrame({"m": e_vals.ravel()}))
-    p10[:, e_cols] = lo.reshape(e_vals.shape)
-    p90[:, e_cols] = hi.reshape(e_vals.shape)
+    e_cols = np.array([f in "ENJ" for f in flags])
+    e_rows = np.tile(e_cols, shape[0])
+    lo, hi = model_impl.cell_month_interval(model, grid[e_rows])
+    mean_a, _ = model_impl.cell_month_moments(model, grid[e_rows])
+    mean_gap = float(np.abs(mean_a - grid.m.to_numpy()[e_rows]).max()) if e_rows.any() else 0.0
+    p10[:, e_cols] = np.asarray(lo).reshape(shape[0], -1)
+    p90[:, e_cols] = np.asarray(hi).reshape(shape[0], -1)
+    b_cols = np.array([f == "B" for f in flags])
+    b_vals = m_arr[:, b_cols]
+    blo, bhi = nb_quantiles(b_vals.ravel(), 5, (0.1, 0.9))
+    p10[:, b_cols] = blo.reshape(b_vals.shape)
+    p90[:, b_cols] = bhi.reshape(b_vals.shape)
+
+    names = {"N": "S-NPP", "J1": "NOAA-20"}
+    slot_notes = {}
+    for m, f in zip(months, flags):
+        if f not in "ENJ":
+            continue
+        parts = []
+        for dn, word in (("D", "day"), ("N", "night")):
+            moy = int(m[5:7])
+            used = [s for s in covering[m] if slot_share(m, s, moy, dn) > 0]
+            md = (moy - 1) * 2 + (dn == "N")
+            if not any(positive[VIIRS[s]][md] for s in covering[m]):
+                parts.append(f"{word}: no MODIS in either fit, detections weigh 0 (background only)")
+            elif len(used) < len(covering[m]):
+                parts.append(f"{word}: {' + '.join(names[s] for s in used)} only")
+        if parts:
+            slot_notes[m] = "; ".join(parts)
 
     out = OUT / region
     (out / "hotspots").mkdir(parents=True, exist_ok=True)
@@ -205,6 +243,7 @@ def export(region):
     monthly = {
         "region": region, "cell_deg": CELL, "months": {"first": months[0], "last": months[-1], "n": len(months)},
         "flags": flags, "flag_codes": FLAG_CODES,
+        "slot_notes": slot_notes,  # month -> which satellites the combination rule used, where not all that cover it
         "cells": {"ix": cells.ix.tolist(), "iy": cells.iy.tolist()},
         "m": [round_list(r, 2) for r in m_round],
         "bg": [round_list(r, 2) for r in bg],
@@ -230,14 +269,25 @@ def export(region):
         write_json(out / "hotspots" / f"{year}.json", {"region": region, "year": int(year), "n": len(g), "cols": cols})
         hot_years.append(int(year))
 
-    # ---- drift: observed MODIS vs MODIS predicted from VIIRS (same averaging as the estimated record), region total
+    # ---- drift: observed MODIS vs MODIS predicted from VIIRS by model A (weights + background, averaged over the
+    # satellites that cover the month, as in the estimated record), region total
     d_months = month_index(DRIFT_FROM, modis_end)
     viirs = det[det.sensor.isin(list(VIIRS))]
-    full = pd.Series(model_impl.hotspot_weights(model, viirs), index=viirs.index).groupby([viirs.month, viirs.sensor]).sum()
+    full = pd.Series(model_impl.hotspot_weights(model, viirs), index=viirs.index).groupby([viirs.month, viirs.sensor, viirs.dn]).sum()
+    d_idx = [months.index(m) for m in d_months]
+    bg_sat = {}
+    for sat in VIIRS:
+        for dn in ("D", "N"):
+            g = grid.copy()
+            for other in VIIRS:
+                for d2 in ("D", "N"):
+                    g[f"share_{other}_{d2}"] = 1.0 if (other == sat and d2 == dn) else 0.0
+            bg_sat[(sat, dn)] = np.asarray(model_impl.cell_month_background(model, g)).reshape(shape)[:, d_idx].sum(axis=0)
     obs_m = det[det.fam == "modis"].groupby("month").size()
     observed = [int(obs_m.get(m, 0)) for m in d_months]
-    predicted = [round(float(np.mean([full.get((m, s), 0.0) for s in covering[m]])), 2) if covering[m] else 0.0
-                 for m in d_months]
+    predicted = [round(float(sum(slot_share(m, s, int(m[5:7]), dn) * (full.get((m, s, dn), 0.0) + bg_sat[(s, dn)][k])
+                                 for s in covering[m] for dn in ("D", "N"))), 2) if covering[m] else 0.0
+                 for k, m in enumerate(d_months)]
     trailing = []
     for i in range(len(d_months)):
         if i < 11:
@@ -252,7 +302,8 @@ def export(region):
         "band": {"what": "min-max of the trailing 12-month ratio over windows ending inside the fitting years",
                  "range": [round(min(band_vals), 4), round(max(band_vals), 4)] if band_vals else None,
                  "fitted": list(model_impl.TRAIN["snpp"])},
-        "predicted_from": "Suomi NPP and NOAA-20, averaged in months both cover (as the estimated record)",
+        "predicted_from": "model A from Suomi NPP and NOAA-20 (weights + background), combined as the estimated record",
+        "model": model_impl.NAME,
         "modis_archive_ends": cov_modis["last_detection"],
         "complete_rule": f"a file's final month counts if it has a detection in that month's last {EDGE_DAYS} days",
     }
@@ -270,8 +321,16 @@ def export(region):
                                "does not cover that month",
                        "after": "2026 to the present needs NASA's FIRMS near-real-time API key (pending)"},
         "default_view": {"bounds": [[lon0, lat0], [lon1, lat1]]},
-        "model": "interim",
+        "model": model_impl.NAME,
         "model_detail": model_impl.describe(model),
+        "combination": {
+            "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's "
+                    "prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's "
+                    "literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's "
+                    "short 21-month fit window. Model A itself is unchanged.",
+            "slots_when_both_cover": {f"{md // 2 + 1:02d}{'DN'[md % 2]}": [f for f in ("snpp", "noaa20") if positive[f][md]]
+                                      for md in range(24)},
+        },
         "terra_share": {"years": list(SHARE_YEARS), "by_month": {f"{m:02d}": round(v, 4) for m, v in terra_share.items()},
                         "pooled": round(pooled_share, 4), "prior_detections": SHARE_PRIOR,
                         "basis": {f"{m:02d}": b for m, b in share_basis.items()}},
@@ -294,11 +353,33 @@ def export(region):
         },
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
+    meta["model_detail"]["check"] = {"max_gap_between_A_predictive_mean_and_m": round(mean_gap, 4),
+                                     "background_total": round(float(bg.sum()), 2)}
     sizes = {p.relative_to(OUT).as_posix(): p.stat().st_size for p in sorted(out.rglob("*.json"))}
     print(f"{region}: {len(det)} detections, {len(cells)} cells, months {months[0]}..{months[-1]}, "
           f"monthly.json {sizes[f'{region}/monthly.json'] / 1e6:.2f} MB, "
-          f"hotspots {sum(v for k, v in sizes.items() if '/hotspots/' in k) / 1e6:.2f} MB in {len(hot_years)} files")
+          f"hotspots {sum(v for k, v in sizes.items() if '/hotspots/' in k) / 1e6:.2f} MB in {len(hot_years)} files; "
+          f"model {model_impl.NAME}: background total {bg.sum():.2f}, max |A mean - m| {mean_gap:.4f}")
     return meta
+
+
+def cell_month_grid(det, months, shape, slot_share, flags):
+    """One row per cell-month: each VIIRS satellite's detections and its share of the month, by day and night."""
+    n_cells, n_months = shape
+    g = pd.DataFrame({"ci": np.repeat(np.arange(n_cells), n_months), "mi": np.tile(np.arange(n_months), n_cells),
+                      "month": np.tile(months, n_cells)})
+    g["moy"] = g.month.str[5:7].astype(int)
+    v = det[det.sensor.isin(list(VIIRS))]
+    for sat in VIIRS:
+        for dn in ("D", "N"):
+            arr = np.zeros(shape)
+            sel = v[(v.sensor == sat) & (v.dn == dn)]
+            np.add.at(arr, (sel.ci.to_numpy(), sel.mi.to_numpy()), 1)
+            g[f"V_{sat}_{dn}"] = arr.ravel()
+        for dn in ("D", "N"):
+            share = np.array([slot_share(m, sat, int(m[5:7]), dn) if f in "ENJ" else 0.0 for m, f in zip(months, flags)])
+            g[f"share_{sat}_{dn}"] = np.tile(share, n_cells)
+    return g
 
 
 def month_after(m):

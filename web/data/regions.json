@@ -1,7 +1,7 @@
 {
  "contract": "docs/DATA_CONTRACT.md",
  "version": 2,
- "generated_at": "2026-10-31T19:30:15+00:00",
+ "generated_at": "2026-10-31T19:57:47+00:00",
  "regions": [
   {
    "id": "portugal",
@@ -52,147 +52,247 @@
      ]
     ]
    },
-   "model": "interim",
+   "model": "A \u2014 shrinkage ratio (bake-off winner)",
    "model_detail": {
-    "name": "interim",
+    "name": "A \u2014 shrinkage ratio (bake-off winner)",
+    "a": 30,
     "satellites": {
      "snpp": {
       "train": [
        "2012-02",
        "2019-12"
       ],
-      "ratio": {
-       "01D": 0.3337,
-       "01N": 0.1084,
-       "02D": 0.4883,
-       "02N": 0.171,
-       "03D": 0.5701,
-       "03N": 0.1581,
-       "04D": 0.4124,
-       "04N": 0.1572,
-       "05D": 0.435,
-       "05N": 0.1579,
-       "06D": 0.4216,
-       "06N": 0.1647,
-       "07D": 0.4679,
-       "07N": 0.3157,
-       "08D": 0.5089,
-       "08N": 0.3393,
-       "09D": 0.5096,
+      "prior_ratio_r0": {
+       "01D": 0.328,
+       "01N": 0.0955,
+       "02D": 0.4885,
+       "02N": 0.1657,
+       "03D": 0.5711,
+       "03N": 0.1558,
+       "04D": 0.4112,
+       "04N": 0.1529,
+       "05D": 0.4335,
+       "05N": 0.1481,
+       "06D": 0.4199,
+       "06N": 0.1628,
+       "07D": 0.4678,
+       "07N": 0.3159,
+       "08D": 0.5091,
+       "08N": 0.3394,
+       "09D": 0.5099,
        "09N": 0.2831,
-       "10D": 0.4192,
-       "10N": 0.3328,
-       "11D": 0.3919,
-       "11N": 0.0973,
-       "12D": 0.3489,
-       "12N": 0.0895
+       "10D": 0.4187,
+       "10N": 0.333,
+       "11D": 0.3886,
+       "11N": 0.0726,
+       "12D": 0.3431,
+       "12N": 0.0768
       },
-      "ratio_basis": {
-       "01D": "246 MODIS / 750 Suomi NPP",
-       "01N": "40 MODIS / 419 Suomi NPP",
-       "02D": "954 MODIS / 1953 Suomi NPP",
-       "02N": "109 MODIS / 658 Suomi NPP",
-       "03D": "1663 MODIS / 2912 Suomi NPP",
-       "03N": "260 MODIS / 1669 Suomi NPP",
-       "04D": "702 MODIS / 1707 Suomi NPP",
-       "04N": "143 MODIS / 935 Suomi NPP",
-       "05D": "342 MODIS / 789 Suomi NPP",
-       "05N": "60 MODIS / 405 Suomi NPP",
-       "06D": "417 MODIS / 993 Suomi NPP",
-       "06N": "317 MODIS / 1947 Suomi NPP",
-       "07D": "894 MODIS / 1911 Suomi NPP",
-       "07N": "1225 MODIS / 3878 Suomi NPP",
-       "08D": "4155 MODIS / 8162 Suomi NPP",
-       "08N": "4678 MODIS / 13783 Suomi NPP",
-       "09D": "1772 MODIS / 3475 Suomi NPP",
-       "09N": "1510 MODIS / 5334 Suomi NPP",
-       "10D": "1540 MODIS / 3678 Suomi NPP",
-       "10N": "1555 MODIS / 4669 Suomi NPP",
-       "11D": "300 MODIS / 772 Suomi NPP",
-       "11N": "17 MODIS / 234 Suomi NPP",
-       "12D": "223 MODIS / 650 Suomi NPP",
-       "12N": "36 MODIS / 469 Suomi NPP"
+      "background_bA": {
+       "01D": 0.0266,
+       "01N": 0.0008,
+       "02D": 0.0494,
+       "02N": 0.0051,
+       "03D": 0.0603,
+       "03N": 0.0078,
+       "04D": 0.0424,
+       "04N": 0.0081,
+       "05D": 0.055,
+       "05N": 0.006,
+       "06D": 0.0743,
+       "06N": 0.0127,
+       "07D": 0.0925,
+       "07N": 0.0412,
+       "08D": 0.0899,
+       "08N": 0.065,
+       "09D": 0.0564,
+       "09N": 0.0555,
+       "10D": 0.0899,
+       "10N": 0.0581,
+       "11D": 0.0602,
+       "11N": 0.0007,
+       "12D": 0.0338,
+       "12N": 0.0007
       },
-      "pooled_ratio": {
-       "D": 0.4759,
-       "N": 0.2892
-      },
-      "overall_ratio": 0.3726,
+      "r0_fallback_months": 0,
       "train_detections": {
        "modis": 23158,
        "snpp": 62152
-      }
+      },
+      "train_rows": 35150
      },
      "noaa20": {
       "train": [
        "2018-04",
        "2019-12"
       ],
-      "ratio": {
-       "01D": 0.3274,
-       "01N": 0.1295,
-       "02D": 0.5103,
-       "02N": 0.1176,
-       "03D": 0.4955,
-       "03N": 0.1791,
-       "04D": 0.3887,
-       "04N": 0.1458,
-       "05D": 0.3885,
-       "05N": 0.1164,
-       "06D": 0.5684,
-       "06N": 0.214,
-       "07D": 0.3277,
-       "07N": 0.4628,
-       "08D": 0.5022,
-       "08N": 0.2514,
-       "09D": 0.6178,
-       "09N": 0.3065,
-       "10D": 0.7139,
-       "10N": 0.1971,
-       "11D": 0.5401,
-       "11N": 0.1808,
-       "12D": 0.3618,
-       "12N": 0.1335
+      "prior_ratio_r0": {
+       "01D": 0.3089,
+       "01N": 0.1092,
+       "02D": 0.5143,
+       "02N": 0.0597,
+       "03D": 0.4961,
+       "03N": 0.1697,
+       "04D": 0.3761,
+       "04N": 0.0968,
+       "05D": 0.3781,
+       "05N": 0.0588,
+       "06D": 0.6154,
+       "06N": 0.1786,
+       "07D": 0.2975,
+       "07N": 0.4912,
+       "08D": 0.5032,
+       "08N": 0.2515,
+       "09D": 0.6279,
+       "09N": 0.3092,
+       "10D": 0.7403,
+       "10N": 0.1909,
+       "11D": 0.5667,
+       "11N": 0.0,
+       "12D": 0.3176,
+       "12N": 0.0794
       },
-      "ratio_basis": {
-       "01D": "80 MODIS / 259 NOAA-20",
-       "01N": "19 MODIS / 174 NOAA-20",
-       "02D": "90 MODIS / 175 NOAA-20",
-       "02N": "4 MODIS / 67 NOAA-20",
-       "03D": "192 MODIS / 387 NOAA-20",
-       "03N": "37 MODIS / 218 NOAA-20",
-       "04D": "88 MODIS / 234 NOAA-20",
-       "04N": "6 MODIS / 62 NOAA-20",
-       "05D": "107 MODIS / 283 NOAA-20",
-       "05N": "4 MODIS / 68 NOAA-20",
-       "06D": "32 MODIS / 52 NOAA-20",
-       "06N": "5 MODIS / 28 NOAA-20",
-       "07D": "47 MODIS / 158 NOAA-20",
-       "07N": "112 MODIS / 228 NOAA-20",
-       "08D": "237 MODIS / 471 NOAA-20",
-       "08N": "413 MODIS / 1642 NOAA-20",
-       "09D": "243 MODIS / 387 NOAA-20",
-       "09N": "205 MODIS / 663 NOAA-20",
-       "10D": "191 MODIS / 258 NOAA-20",
-       "10N": "46 MODIS / 241 NOAA-20",
-       "11D": "34 MODIS / 60 NOAA-20",
-       "11N": "0 MODIS / 11 NOAA-20",
-       "12D": "27 MODIS / 85 NOAA-20",
-       "12N": "5 MODIS / 63 NOAA-20"
+      "background_bA": {
+       "01D": 0.0325,
+       "01N": 0.0064,
+       "02D": 0.0227,
+       "02N": 0.0,
+       "03D": 0.0943,
+       "03N": 0.0065,
+       "04D": 0.0761,
+       "04N": 0.0086,
+       "05D": 0.0637,
+       "05N": 0.0,
+       "06D": 0.0737,
+       "06N": 0.0114,
+       "07D": 0.027,
+       "07N": 0.0203,
+       "08D": 0.0459,
+       "08N": 0.0219,
+       "09D": 0.0651,
+       "09N": 0.0346,
+       "10D": 0.1493,
+       "10N": 0.0182,
+       "11D": 0.0489,
+       "11N": 0.0,
+       "12D": 0.0272,
+       "12N": 0.0
       },
-      "pooled_ratio": {
-       "D": 0.487,
-       "N": 0.247
-      },
-      "overall_ratio": 0.3545,
+      "r0_fallback_months": 0,
       "train_detections": {
        "modis": 2224,
        "noaa20": 6274
-      }
+      },
+      "train_rows": 7770
      }
     },
-    "shrinkage": "each ratio = (MODIS + 30 x pooled) / (VIIRS + 30), pooled per satellite and day/night",
-    "interval": "interim placeholder, replaced by the bake-off winner: 10th/90th percentile of a negative binomial with mean m and size 5 (not fitted to data)"
+    "method": "per 0.25 deg cell x calendar month x day/night: posterior MODIS per VIIRS detection (a + sum MODIS) / (a / r0 + sum VIIRS), r0 = the region's ratio for that month and time of day; b_A = mean MODIS where VIIRS saw nothing (pipeline/bakeoff/models.py fit_A, predict_A)",
+    "interval": "A's predictive per cell-month (negative binomial for V > 0, Poisson(b_A) for V = 0), day + night added, two satellites averaged with variances combined; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+    "evidence": "docs/BAKEOFF_RESULTS.md",
+    "check": {
+     "max_gap_between_A_predictive_mean_and_m": 0.0706,
+     "background_total": 585.98
+    }
+   },
+   "combination": {
+    "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window. Model A itself is unchanged.",
+    "slots_when_both_cover": {
+     "01D": [
+      "snpp",
+      "noaa20"
+     ],
+     "01N": [
+      "snpp",
+      "noaa20"
+     ],
+     "02D": [
+      "snpp",
+      "noaa20"
+     ],
+     "02N": [
+      "snpp",
+      "noaa20"
+     ],
+     "03D": [
+      "snpp",
+      "noaa20"
+     ],
+     "03N": [
+      "snpp",
+      "noaa20"
+     ],
+     "04D": [
+      "snpp",
+      "noaa20"
+     ],
+     "04N": [
+      "snpp",
+      "noaa20"
+     ],
+     "05D": [
+      "snpp",
+      "noaa20"
+     ],
+     "05N": [
+      "snpp",
+      "noaa20"
+     ],
+     "06D": [
+      "snpp",
+      "noaa20"
+     ],
+     "06N": [
+      "snpp",
+      "noaa20"
+     ],
+     "07D": [
+      "snpp",
+      "noaa20"
+     ],
+     "07N": [
+      "snpp",
+      "noaa20"
+     ],
+     "08D": [
+      "snpp",
+      "noaa20"
+     ],
+     "08N": [
+      "snpp",
+      "noaa20"
+     ],
+     "09D": [
+      "snpp",
+      "noaa20"
+     ],
+     "09N": [
+      "snpp",
+      "noaa20"
+     ],
+     "10D": [
+      "snpp",
+      "noaa20"
+     ],
+     "10N": [
+      "snpp",
+      "noaa20"
+     ],
+     "11D": [
+      "snpp",
+      "noaa20"
+     ],
+     "11N": [
+      "snpp"
+     ],
+     "12D": [
+      "snpp",
+      "noaa20"
+     ],
+     "12N": [
+      "snpp",
+      "noaa20"
+     ]
+    }
    },
    "terra_share": {
     "years": [
@@ -743,7 +843,7 @@
      }
     ]
    },
-   "generated_at": "2026-10-31T19:30:13+00:00"
+   "generated_at": "2026-10-31T19:57:46+00:00"
   },
   {
    "id": "lebanon",
@@ -794,147 +894,226 @@
      ]
     ]
    },
-   "model": "interim",
+   "model": "A \u2014 shrinkage ratio (bake-off winner)",
    "model_detail": {
-    "name": "interim",
+    "name": "A \u2014 shrinkage ratio (bake-off winner)",
+    "a": 30,
     "satellites": {
      "snpp": {
       "train": [
        "2012-02",
        "2019-12"
       ],
-      "ratio": {
-       "01D": 0.2096,
-       "01N": 0.0143,
-       "02D": 0.1369,
-       "02N": 0.0141,
-       "03D": 0.1797,
-       "03N": 0.0086,
-       "04D": 0.1556,
-       "04N": 0.0072,
-       "05D": 0.0847,
-       "05N": 0.015,
-       "06D": 0.139,
-       "06N": 0.0059,
-       "07D": 0.1373,
+      "prior_ratio_r0": {
+       "01D": 0.25,
+       "01N": 0.0,
+       "02D": 0.0741,
+       "02N": 0.0,
+       "03D": 0.1579,
+       "03N": 0.0,
+       "04D": 0.1212,
+       "04N": 0.0,
+       "05D": 0.0405,
+       "05N": 0.0096,
+       "06D": 0.1311,
+       "06N": 0.0,
+       "07D": 0.1336,
        "07N": 0.0339,
-       "08D": 0.1331,
-       "08N": 0.051,
-       "09D": 0.2179,
-       "09N": 0.0667,
-       "10D": 0.2797,
-       "10N": 0.0754,
-       "11D": 0.4145,
-       "11N": 0.0277,
-       "12D": 0.2508,
-       "12N": 0.0464
+       "08D": 0.1294,
+       "08N": 0.0551,
+       "09D": 0.2193,
+       "09N": 0.0733,
+       "10D": 0.2869,
+       "10N": 0.0828,
+       "11D": 0.4632,
+       "11N": 0.0261,
+       "12D": 0.2927,
+       "12N": 0.0571
       },
-      "ratio_basis": {
-       "01D": "3 MODIS / 12 Suomi NPP",
-       "01N": "0 MODIS / 41 Suomi NPP",
-       "02D": "2 MODIS / 27 Suomi NPP",
-       "02N": "0 MODIS / 42 Suomi NPP",
-       "03D": "3 MODIS / 19 Suomi NPP",
-       "03N": "0 MODIS / 88 Suomi NPP",
-       "04D": "4 MODIS / 33 Suomi NPP",
-       "04N": "0 MODIS / 111 Suomi NPP",
-       "05D": "3 MODIS / 74 Suomi NPP",
-       "05N": "1 MODIS / 104 Suomi NPP",
-       "06D": "27 MODIS / 206 Suomi NPP",
-       "06N": "0 MODIS / 143 Suomi NPP",
-       "07D": "62 MODIS / 464 Suomi NPP",
-       "07N": "6 MODIS / 177 Suomi NPP",
-       "08D": "63 MODIS / 487 Suomi NPP",
-       "08N": "7 MODIS / 127 Suomi NPP",
-       "09D": "123 MODIS / 561 Suomi NPP",
-       "09N": "11 MODIS / 150 Suomi NPP",
-       "10D": "103 MODIS / 359 Suomi NPP",
-       "10N": "14 MODIS / 169 Suomi NPP",
-       "11D": "63 MODIS / 136 Suomi NPP",
-       "11N": "3 MODIS / 115 Suomi NPP",
-       "12D": "12 MODIS / 41 Suomi NPP",
-       "12N": "2 MODIS / 35 Suomi NPP"
+      "background_bA": {
+       "01D": 0.016,
+       "01N": 0.0,
+       "02D": 0.0049,
+       "02N": 0.0,
+       "03D": 0.0146,
+       "03N": 0.0,
+       "04D": 0.0101,
+       "04N": 0.0,
+       "05D": 0.0,
+       "05N": 0.0054,
+       "06D": 0.0139,
+       "06N": 0.0,
+       "07D": 0.0377,
+       "07N": 0.0,
+       "08D": 0.0254,
+       "08N": 0.0062,
+       "09D": 0.0357,
+       "09N": 0.0063,
+       "10D": 0.049,
+       "10N": 0.0,
+       "11D": 0.0523,
+       "11N": 0.0,
+       "12D": 0.0101,
+       "12N": 0.0
       },
-      "pooled_ratio": {
-       "D": 0.1935,
-       "N": 0.0338
-      },
-      "overall_ratio": 0.1376,
+      "r0_fallback_months": 0,
       "train_detections": {
        "modis": 512,
        "snpp": 3721
-      }
+      },
+      "train_rows": 5320
      },
      "noaa20": {
       "train": [
        "2018-04",
        "2019-12"
       ],
-      "ratio": {
-       "01D": 0.1677,
-       "01N": 0.032,
+      "prior_ratio_r0": {
+       "01D": 0.0,
+       "01N": 0.0,
        "02D": 0.1733,
-       "02N": 0.0283,
-       "03D": 0.1485,
-       "03N": 0.0261,
-       "04D": 0.1405,
-       "04N": 0.0134,
-       "05D": 0.1846,
-       "05N": 0.015,
-       "06D": 0.1308,
-       "06N": 0.0165,
-       "07D": 0.2,
-       "07N": 0.0234,
-       "08D": 0.1194,
-       "08N": 0.0168,
-       "09D": 0.1779,
-       "09N": 0.0383,
-       "10D": 0.2283,
-       "10N": 0.0769,
-       "11D": 0.2269,
-       "11N": 0.0343,
-       "12D": 0.1576,
-       "12N": 0.0283
+       "02N": 0.0,
+       "03D": 0.0,
+       "03N": 0.0,
+       "04D": 0.0,
+       "04N": 0.0,
+       "05D": 0.2222,
+       "05N": 0.0,
+       "06D": 0.1042,
+       "06N": 0.0,
+       "07D": 0.2083,
+       "07N": 0.0182,
+       "08D": 0.1053,
+       "08N": 0.0,
+       "09D": 0.1792,
+       "09N": 0.0455,
+       "10D": 0.25,
+       "10N": 0.09,
+       "11D": 0.2703,
+       "11N": 0.0357,
+       "12D": 0.0,
+       "12N": 0.0
       },
-      "ratio_basis": {
-       "01D": "0 MODIS / 1 NOAA-20",
-       "01N": "0 MODIS / 1 NOAA-20",
-       "02D": "0 MODIS / 0 NOAA-20",
-       "02N": "0 MODIS / 5 NOAA-20",
-       "03D": "0 MODIS / 5 NOAA-20",
-       "03N": "0 MODIS / 8 NOAA-20",
-       "04D": "0 MODIS / 7 NOAA-20",
-       "04N": "0 MODIS / 44 NOAA-20",
-       "05D": "2 MODIS / 9 NOAA-20",
-       "05N": "0 MODIS / 36 NOAA-20",
-       "06D": "5 MODIS / 48 NOAA-20",
-       "06N": "0 MODIS / 30 NOAA-20",
-       "07D": "20 MODIS / 96 NOAA-20",
-       "07N": "1 MODIS / 55 NOAA-20",
-       "08D": "12 MODIS / 114 NOAA-20",
-       "08N": "0 MODIS / 29 NOAA-20",
-       "09D": "19 MODIS / 106 NOAA-20",
-       "09N": "1 MODIS / 22 NOAA-20",
-       "10D": "19 MODIS / 76 NOAA-20",
-       "10N": "9 MODIS / 100 NOAA-20",
-       "11D": "10 MODIS / 37 NOAA-20",
-       "11N": "1 MODIS / 28 NOAA-20",
-       "12D": "0 MODIS / 3 NOAA-20",
-       "12N": "0 MODIS / 5 NOAA-20"
+      "background_bA": {
+       "01D": 0.0,
+       "01N": 0.0,
+       "02D": 0.0,
+       "02N": 0.0,
+       "03D": 0.0,
+       "03N": 0.0,
+       "04D": 0.0,
+       "04N": 0.0,
+       "05D": 0.0,
+       "05N": 0.0,
+       "06D": 0.0789,
+       "06N": 0.0,
+       "07D": 0.0,
+       "07N": 0.0244,
+       "08D": 0.0714,
+       "08N": 0.0,
+       "09D": 0.0,
+       "09N": 0.0,
+       "10D": 0.0857,
+       "10N": 0.0,
+       "11D": 0.0444,
+       "11N": 0.0233,
+       "12D": 0.0,
+       "12N": 0.0
       },
-      "pooled_ratio": {
-       "D": 0.1733,
-       "N": 0.0331
-      },
-      "overall_ratio": 0.1145,
+      "r0_fallback_months": 1,
       "train_detections": {
        "modis": 99,
        "noaa20": 865
-      }
+      },
+      "train_rows": 1176
      }
     },
-    "shrinkage": "each ratio = (MODIS + 30 x pooled) / (VIIRS + 30), pooled per satellite and day/night",
-    "interval": "interim placeholder, replaced by the bake-off winner: 10th/90th percentile of a negative binomial with mean m and size 5 (not fitted to data)"
+    "method": "per 0.25 deg cell x calendar month x day/night: posterior MODIS per VIIRS detection (a + sum MODIS) / (a / r0 + sum VIIRS), r0 = the region's ratio for that month and time of day; b_A = mean MODIS where VIIRS saw nothing (pipeline/bakeoff/models.py fit_A, predict_A)",
+    "interval": "A's predictive per cell-month (negative binomial for V > 0, Poisson(b_A) for V = 0), day + night added, two satellites averaged with variances combined; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+    "evidence": "docs/BAKEOFF_RESULTS.md",
+    "check": {
+     "max_gap_between_A_predictive_mean_and_m": 0.0059,
+     "background_total": 25.12
+    }
+   },
+   "combination": {
+    "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window. Model A itself is unchanged.",
+    "slots_when_both_cover": {
+     "01D": [
+      "snpp"
+     ],
+     "01N": [],
+     "02D": [
+      "snpp",
+      "noaa20"
+     ],
+     "02N": [],
+     "03D": [
+      "snpp"
+     ],
+     "03N": [],
+     "04D": [
+      "snpp"
+     ],
+     "04N": [],
+     "05D": [
+      "snpp",
+      "noaa20"
+     ],
+     "05N": [
+      "snpp"
+     ],
+     "06D": [
+      "snpp",
+      "noaa20"
+     ],
+     "06N": [],
+     "07D": [
+      "snpp",
+      "noaa20"
+     ],
+     "07N": [
+      "snpp",
+      "noaa20"
+     ],
+     "08D": [
+      "snpp",
+      "noaa20"
+     ],
+     "08N": [
+      "snpp"
+     ],
+     "09D": [
+      "snpp",
+      "noaa20"
+     ],
+     "09N": [
+      "snpp",
+      "noaa20"
+     ],
+     "10D": [
+      "snpp",
+      "noaa20"
+     ],
+     "10N": [
+      "snpp",
+      "noaa20"
+     ],
+     "11D": [
+      "snpp",
+      "noaa20"
+     ],
+     "11N": [
+      "snpp",
+      "noaa20"
+     ],
+     "12D": [
+      "snpp"
+     ],
+     "12N": [
+      "snpp"
+     ]
+    }
    },
    "terra_share": {
     "years": [
@@ -1485,7 +1664,7 @@
      }
     ]
    },
-   "generated_at": "2026-10-31T19:30:15+00:00"
+   "generated_at": "2026-10-31T19:57:47+00:00"
   }
  ]
 }

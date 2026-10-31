@@ -9,7 +9,7 @@ retired. VIIRS (Suomi NPP since 2012, then NOAA-20 and NOAA-21) sees smaller
 fires, so a record that simply switches from one to the other jumps upward in
 2012. That jump is the instrument changing, not the fires.
 
-Suomi NPP stopped delivering data products on **1 November 2026**, and MODIS is
+Suomi NPP stops delivering data on **2 Nov 2026**, and MODIS is
 next. CEDRUS builds one fire record that survives the handover, **tests it
 honestly**, and turns it into a fire calendar for any area.
 
@@ -54,7 +54,7 @@ browsers block a page opened from disk from loading its data files.
 |---|---|
 | `web/` | The website: plain HTML/CSS/JS, no build step. Map uses MapLibre (from a CDN). |
 | `web/data/` | Output of `export_v2.py`: per region the monthly record per 0.25° cell, every detection with its weight, the drift check, provenance. Layout in `docs/DATA_CONTRACT.md`. |
-| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid; `weights_interim.py` is the VIIRS → MODIS weight model until the bake-off winner replaces it. |
+| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid; `weights_a.py` is the VIIRS → MODIS weight model, the bake-off winner A (it imports `pipeline/bakeoff/models.py`); `weights_interim.py` is the earlier placeholder, kept for reference and unused. |
 | `tools/probe_site.py` | Loads the site in headless Chrome, clicks through it, checks the two CSV downloads agree, saves screenshots. |
 | `data/` | Raw downloads and intermediate files. **Not committed** (in `.gitignore`); run the pipeline to rebuild. |
 | `docs/TEST_PLAN.md` | The test rules. Never edit old rules; add a dated section. |

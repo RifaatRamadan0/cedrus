@@ -19,6 +19,7 @@ const BASELINE_FIRST = 2003;
 const MIN_BASE_YEARS = 5; // fewer baseline years than this: no normal, no anomaly, no trust check
 const SEASON_MIN = 20;    // detections a year before a season can be dated
 const FEW_FIRES = 5;      // baseline median below this: "few fires — too few to judge"
+const QUIET = 0.5;        // Counts mode draws an expected value below this as "≈ zero", in every era
 const Z80 = 1.2815515655446004; // standard normal 90th percentile
 // cividis (Nuñez, Anderton & Renslow 2018), sampled; colour-blind safe and monotone in lightness
 const CIVIDIS = ['#00204d', '#00336f', '#39486b', '#575c6d', '#707173', '#8a8779', '#a69d75', '#c4b56c', '#e4cf5b', '#ffea46'];
@@ -99,6 +100,9 @@ function years() {
 }
 function flagAt(j) { return state.monthly.flags[j]; }
 function flagName(f) { return state.monthly.flag_codes[f] ?? f; }
+// The month's flag name plus, where the combination rule left a satellite out of a time of day, which one was used.
+function slotNote(j) { return state.monthly.slot_notes?.[iso(j)] ?? ''; }
+function flagLabel(j) { const n = slotNote(j); return `${flagName(flagAt(j))}${n ? ` (${n})` : ''}`; }
 function isEstimated(f) { return f === 'E' || f === 'N' || f === 'J'; }
 
 // ---------- geometry ----------
@@ -173,7 +177,7 @@ function regionSeries() {
 }
 
 // A drawn or circle area: the exact sum of the weights of the detections inside the shape, month by month,
-// plus each cell's background term times the share of the cell inside the shape (interim background: 0).
+// plus each cell's background term (model A's b_A) times the share of the cell inside the shape.
 async function exactSeries(area, token) {
   const meta = state.meta; const mon = state.monthly; const n = mon.months.n;
   const yearsWanted = meta.hotspot_years; let done = 0;
@@ -287,9 +291,11 @@ function cellView(j) {
   const b = baseline(year, moy);
   let bg = null; let text; let zero = false;
   if (state.mode === 'counts') {
-    zero = v < 0.005;
+    // Quiet months look the same in both eras: an expected value under QUIET is drawn as "≈ zero";
+    // the exact value stays in the tooltip.
+    zero = v < QUIET;
     bg = zero ? null : countColor(v, state.vmax);
-    text = zero ? 'no detections' : `${fmt(v)} detections`;
+    text = v < 0.005 ? 'no detections' : zero ? `${v.toFixed(2)} detections (≈ zero, under ${QUIET})` : `${fmt(v)} detections`;
   } else if (!b.enough) {
     text = `${fmt(v)} detections; not enough history for a baseline (${b.years} years)`;
   } else {
@@ -305,7 +311,8 @@ function cellView(j) {
     trust = trustVerdict(j, b);
     if (trust.key !== 'none') text += `; trust check: ${trust.text.toLowerCase()}${Number.isFinite(trust.R) && trust.R > 0 ? ` (R ${trust.R.toFixed(2)})` : ''}`;
   }
-  return { bg, zero, text: `${text} · ${SHORT_FLAG[flag]}`, flag, trust: trust.key };
+  const note = slotNote(j);
+  return { bg, zero, text: `${text} · ${SHORT_FLAG[flag]}${note ? ` (${note})` : ''}`, flag, trust: trust.key };
 }
 
 function renderCalendar() {
@@ -322,7 +329,7 @@ function renderCalendar() {
       const j = indexOf(y, moy); const c = cellView(j);
       const name = `${MONTH_NAMES[moy - 1]} ${y}`;
       const cls = ['cal-cell', c.nd ? 'nd' : '', c.flag === 'B' ? 'b' : '', isEstimated(c.flag) ? 'e' : '', j >= 0 && j === state.sel ? 'sel' : '',
-        !c.nd && !c.bg && !c.zero ? 'nb' : '', c.zero ? 'zero' : '', c.trust === 'care' ? 'care' : '', c.trust === 'uncertain' ? 'hz' : '',
+        !c.nd && !c.bg && !c.zero ? 'nb' : '', c.zero ? 'zero' : '', c.trust === 'care' ? 'care' : '', c.trust === 'uncertain' ? 'hz' : '', c.trust === 'few' ? 'few' : '',
         c.bg && isLight(c.bg) ? 'light' : ''].filter(Boolean).join(' ');
       const style = c.bg ? ` style="background-color:${c.bg}"` : '';
       html += `<span role="gridcell" class="${cls}"${style} data-j="${j}" data-year="${y}" data-moy="${moy}" tabindex="${j >= 0 && j === focus ? 0 : -1}" aria-selected="${j >= 0 && j === state.sel}" aria-label="${name}: ${c.text}" title="${name}: ${c.text}"></span>`;
@@ -359,7 +366,7 @@ function renderLegend() {
       .map(([p, l]) => `<span style="left:${((Math.log2(1 + p) + 2) / 4) * 100}%">${l}</span>`).join('');
     marks.push(`<div class="ramp"><b>Compared with the baseline ${state.ref}</b><i style="background:linear-gradient(90deg,${stops})"></i><div class="ticks">${ticks}</div></div>`);
   }
-  marks.push(`<ul class="keys">${state.mode === 'counts' ? '<li><span class="sw zero"></span>no detections</li>' : '<li><span class="sw nb"></span>not enough history</li>'}<li><span class="sw nd"></span>no data</li><li><span class="sw b"></span>bridged</li><li><span class="sw e"></span>estimated</li>${state.record === 'harmonized' ? '<li><span class="sw care"></span>dashed = use with care</li><li><span class="sw hz"></span>hatched = too uncertain</li>' : ''}</ul>`);
+  marks.push(`<ul class="keys">${state.mode === 'counts' ? `<li><span class="sw zero"></span>≈ zero (under ${QUIET})</li>` : '<li><span class="sw nb"></span>not enough history</li>'}<li><span class="sw nd"></span>no data</li><li><span class="sw b"></span>bridged</li><li><span class="sw e"></span>estimated</li>${state.record === 'harmonized' ? '<li><span class="sw care"></span>dashed = use with care</li><li><span class="sw hz"></span>hatched = too uncertain</li><li><span class="sw few"></span>corner = few fires, too few to judge</li>' : ''}</ul>`);
   $('#calendar-legend').innerHTML = marks.join('');
 }
 
@@ -389,8 +396,9 @@ function renderMonth() {
   const ranged = hi - lo > 1e-9;
   const rows = [];
   if (state.series.exact && state.series.count === 0) rows.push('<p class="no-detections"><strong>No detections here.</strong> No satellite fire detection fell inside this area in the whole record.</p>');
-  rows.push(`<p class="big-value"><strong id="month-value">${fmt(v)}</strong> fire detections, harmonized estimate (expected value)${ranged ? ` <span>80% range ${fmt(lo)}–${fmt(hi)} (approximate)</span>` : ''}</p>`);
-  rows.push(`<p class="source-line"><span class="flag ${isEstimated(flag) ? 'estimated' : flagName(flag)}">${SHORT_FLAG[flag]}</span>${FLAG_TEXT[flag]}.</p>`);
+  const rangeFrom = flag === 'B' ? 'placeholder range' : 'from model A';
+  rows.push(`<p class="big-value"><strong id="month-value">${fmt(v)}</strong> fire detections, harmonized estimate (expected value)${ranged ? ` <span>80% range ${fmt(lo)}–${fmt(hi)} (approximate, ${rangeFrom})</span>` : ''}</p>`);
+  rows.push(`<p class="source-line"><span class="flag ${isEstimated(flag) ? 'estimated' : flagName(flag)}">${SHORT_FLAG[flag]}</span>${FLAG_TEXT[flag]}.${slotNote(j) ? ` <span class="slot-note">Exception this month (a satellite with no ratio for this month and time of day is left out): ${slotNote(j)}.</span>` : ''}</p>`);
   if (!base.enough) {
     rows.push(`<p class="hint" id="no-baseline"><strong>Not enough history for a baseline:</strong> ${base.years} ${mn}${base.years === 1 ? '' : 's'} before this one from 2003 on; at least ${MIN_BASE_YEARS} are needed for a normal, an anomaly or a trust check.</p>`);
   } else {
@@ -735,7 +743,7 @@ async function hotspotsCsv() {
       lines.push([c.lat[i], c.lon[i], modis ? c.bright[i] : '', modis ? c.bright2[i] : '', modis ? '' : c.bright[i], modis ? '' : c.bright2[i],
         c.scan[i], c.track[i], date.toISOString().slice(0, 10), String(c.time[i]).padStart(4, '0'),
         meta.satellite_field[s], meta.instrument_field[s], c.conf[i], meta.versions[c.version[i]], c.frp[i], c.dn[i] ? 'N' : 'D', 0,
-        s, j >= 0 ? flagName(flagAt(j)) : '', c.w[i]].map(csvCell).join(','));
+        s, j >= 0 ? flagLabel(j) : '', c.w[i]].map(csvCell).join(','));
       count += 1; wsum += c.w[i];
     }
   }
@@ -751,12 +759,13 @@ function monthlyCsv() {
     + (state.area.outside >= 0.01 ? `${Math.round(state.area.outside * 100)}% of the area is outside ${meta.name}'s FIRMS country file and not counted. ` : '')
     + `Model ${meta.model} (replaced by the bake-off winner). p10/p90 approximate: cell 80% ranges scaled to the area and combined in quadrature. `
     + 'source_flag: bridged = Terra / Terra share (2000-11..2002-06); observed = MODIS Terra+Aqua (2002-07..2021-12); estimated = from VIIRS (2022-01 on: S-NPP+NOAA-20 averaged or whichever flies). '
+    + 'A satellite enters the average for a calendar month and time of day only if model A has a ratio above 0 there; the flag says where one was left out. '
     + `naive = MODIS to 2011 then raw Suomi NPP counts. Data built ${meta.generated_at} from NASA FIRMS; files and SHA-256 in data/regions.json.`;
   const lines = [methods.replace(/,/g, ';'), 'month,harmonized_estimate,p10,p90,naive,background,source_flag'];
   for (let y = y0; y <= y1; y += 1) {
     for (let moy = 1; moy <= 12; moy += 1) {
       const j = indexOf(y, moy); if (j < 0) continue;
-      lines.push([iso(j), s.m[j].toFixed(4), s.lo[j].toFixed(1), s.hi[j].toFixed(1), Math.round(s.naive[j]), s.bg[j].toFixed(4), csvCell(flagName(flagAt(j)))].join(','));
+      lines.push([iso(j), s.m[j].toFixed(4), s.lo[j].toFixed(1), s.hi[j].toFixed(1), Math.round(s.naive[j]), s.bg[j].toFixed(4), csvCell(flagLabel(j))].join(','));
     }
   }
   download(`${fileStem()}_monthly.csv`, `${lines.join('\n')}\n`);
@@ -839,14 +848,16 @@ function methodologyHtml() {
   const r0 = idx.regions[0];
   return `<p><strong>Data.</strong> ${r0.provenance.source}. Filters: each region’s box; vegetation fires only (type 0); MODIS confidence ≥ 30; VIIRS confidence nominal or high. Unit: ${r0.provenance.unit}.</p>
     <p><strong>One record from three sources.</strong> November 2000 – June 2002: <em>bridged</em>, Terra alone divided by Terra’s share of MODIS detections in the same calendar month of 2003–2011 (each month’s share pulled toward the all-year share by 20 pseudo-detections, so a month with few fires cannot give a share of 0 or 1). July 2002 – December 2021: <em>observed</em>, MODIS Terra + Aqua. From January 2022: <em>estimated</em> from VIIRS, because Terra and Aqua have left their planned orbits: the average of the Suomi NPP and the NOAA-20 estimates when both satellites have data that month, or whichever one does, so the record carries on after Suomi NPP stops. The naive record joins MODIS to raw Suomi NPP counts in 2012, which creates a false jump.</p>
-    <p><strong>Model: <code>${r0.model}</code>.</strong> Each VIIRS detection counts as the ratio of MODIS to that satellite’s detections for its region, calendar month and day/night, pulled toward the satellite’s all-year day or night ratio by 30 pseudo-detections. Suomi NPP is fitted on 2012–2019, NOAA-20 on April 2018 – December 2019; nothing from 2020 on is used. Every value shown is the harmonized estimate (expected value): the sum of each detection’s weight. The 80% ranges of estimated and bridged months are an <em>interim placeholder</em>: the 10th–90th percentile of a negative binomial with the estimate as mean and size 5, not fitted to data. Both will be replaced by the winner of the pre-registered bake-off (docs/BAKEOFF_PLAN.md).</p>
+    <p><strong>Model: <code>${r0.model}</code>.</strong> In plain words: for every 0.25° cell, calendar month and day or night, it learns from the years both satellites flew how many MODIS detections one VIIRS detection stands for. A cell with little history leans on its region’s ratio for that month (30 pseudo-detections of shrinkage); a cell with a long history speaks for itself. Where VIIRS saw nothing, it adds the few detections MODIS typically still saw there (the background). Suomi NPP is fitted on 2012–2019, NOAA-20 on April 2018 – December 2019; nothing from 2020 on is used. NOAA-20’s fit covers only 21 months, so for some months and times of day it saw no MODIS fire at all; there it is left out of the average and Suomi NPP counts alone (rule decided on 31 Oct, after seeing this). Every value shown is the harmonized estimate (expected value): the weights of the detections plus the background. The 80% ranges of estimated months come from the model’s own predictive distribution, combined for day and night and for the two satellites (approximate); bridged months keep a placeholder range (negative binomial, size 5).</p>
+    <p><strong>Why this model.</strong> It won a bake-off whose rules were committed before either model was fitted. The other candidate learned the physics of detection — fire units, their radiative power and how likely MODIS is to see each — and it lost on every region and year (its forecasts scored 1.53 times worse), so the simpler model ships. <a href="https://github.com/hyounes-svg/cedrus/blob/main/docs/BAKEOFF_RESULTS.md">Results: docs/BAKEOFF_RESULTS.md</a>.</p>
     <p><strong>Areas.</strong> For a drawn shape or a circle, the calendar adds up the weight of every detection inside it: an exact sum. Its 80% range scales each touched cell’s range by the share of that cell’s value inside the shape and combines them in quadrature (approximate). The whole-region view adds up its 0.25° cells, which is the same sum. Parts of a shape outside the region’s FIRMS country file are reported, not counted.</p>
     <p><strong>Trust check.</strong> Needs at least ${MIN_BASE_YEARS} baseline years (the same calendar month, 2003 to the year before). R = half of the month’s 80% range ÷ the larger of (a) how far the month is from the baseline median and (b) half the interquartile range. Reliable below 0.5, use with care 0.5–1 (dashed outline in the calendar), too uncertain above 1 (hatched). When the baseline median is below ${FEW_FIRES} the verdict is “few fires — too few to judge”. Observed months have no range, so R = 0.</p>
     <p><strong>Where the record ends.</strong> A satellite file’s final month counts only if the file has a detection in that month’s last 3 days. The record runs to the last month a VIIRS satellite covers; 2026 to the present needs NASA’s FIRMS near-real-time API key, which is pending.</p>
     <p><strong>Limits.</strong></p><ul>
       <li>Detections are not burned area: one large fire produces many detections.</li>
-      <li>Values from 2022 are MODIS-equivalent estimates, not observations, and their ranges are a placeholder.</li>
-      <li>Ranges of bridged months (Nov 2000 – Jun 2002) are the same placeholder as for estimated months.</li>
+      <li>Values from 2022 are MODIS-equivalent estimates, not observations; their ranges are approximate.</li>
+      <li>Ranges of bridged months (Nov 2000 – Jun 2002) are a placeholder: the model describes VIIRS, not Terra alone.</li>
+      <li>Where a month and time of day had no MODIS detection at all in the fitting years, the model gives VIIRS detections there no weight.</li>
       <li>The conversions assume the MODIS-to-VIIRS ratio of a calendar month did not change after the fitting years.</li>
       <li>A region’s data footprint is the set of 0.25° cells where its country file ever had a detection; sea and neighbouring countries fall outside it.</li></ul>
     ${regions}
@@ -876,7 +887,8 @@ async function start() {
   $('#region').innerHTML = state.index.regions.map((r) => `<option value="${r.id}">${r.name}</option>`).join('');
   bindControls();
   await useRegion(state.index.regions[0].id);
-  $('#data-badge').textContent = `MODEL: ${state.meta.model.toUpperCase()}`;
+  const [short, rest] = state.meta.model.split(' — ');
+  $('#data-badge').textContent = `MODEL ${short.toUpperCase()}${rest && rest.includes('bake-off winner') ? ' · BAKE-OFF WINNER' : ''}`;
   initMap();
 }
 
