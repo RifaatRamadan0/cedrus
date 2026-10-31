@@ -186,3 +186,13 @@ Laptop run, 8 worker processes for the folds.
 | response table | 1 |
 | frozen refit of the winner | 160 |
 | total | 516 |
+
+## Independent test of this bake-off (added 31 Oct 2026, after the run)
+
+A separate tester, who had not seen the builder's reasoning, re-ran and attacked the bake-off. **Verdict: the decision stands; B lost fairly.**
+- **No bug sank B.** B's over-prediction (pooled leave-one-year-out +21%, Portugal +68%) is identical in-sample and out-of-sample. It comes from the model form the plan specified: one multiplier scales both the background b and the exposure Ê. The NB2 fit is a verified, unique maximum-likelihood solution.
+- **Even with help B can't pass.** With unfair help (totals recalibrated and dispersion chosen on the held-out years), B is still 1.22× worse than A.
+- **The rule had a flaw: clause (iii) was an automatic veto.** 85–90% of rows are "no fire, forecast 0", so B's coverage could never fall inside 0.75–0.85. It did not decide this result, because (i) and (ii) failed by a wide margin. Future coverage rules count active rows only (Y > 0 or V > 0).
+- **A quirk in A: rows with V = 0 are counted twice.** A's pooled sums include MODIS detections from rows where V = 0, which are also predicted by b_A, giving +9%. This handicaps A, not B. A is frozen as specified.
+- **Overstated claim corrected.** "B worse on every region and year" holds in the leave-one-year-out pool. In the forward check, B beats A slightly in Lebanon (0.989), Jordan (0.991) and Israel (0.977).
+- **Tuning hit the grid edges.** A picked a = 30 in every fold and B picked b = 0.01. b = 0.01 is B's true optimum. A larger a could only widen A's lead.
