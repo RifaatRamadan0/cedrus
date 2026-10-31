@@ -8,7 +8,8 @@ import numpy as np
 CELL = 0.25
 
 REGIONS = {
-    # role: "dev" = bake-off development, "product" = shown in the app, "sealed" = never opened before freeze
+    # role: "dev" = bake-off development, "product" = shown in the app, "sealed" = never opened before freeze,
+    # "confirm" = formerly sealed, opened once for docs/CONFIRMATION_PLAN.md after the model was frozen
     "portugal": {"country": "Portugal", "box": (-9.6, 36.9, -6.1, 42.2), "roles": {"dev", "product"}},
     "lebanon": {"country": "Lebanon", "box": (35.10, 33.05, 36.65, 34.70), "roles": {"dev", "product"}},
     "cyprus": {"country": "Cyprus", "box": None, "roles": {"dev"}},
@@ -18,11 +19,11 @@ REGIONS = {
     "greece": {"country": "Greece", "box": None, "roles": {"dev"}},
     "syria": {"country": "Syria", "box": None, "roles": {"dev"}},
     "turkey": {"country": "Turkey", "box": None, "roles": {"dev"}},
-    # Sealed: do NOT download or read until the model is frozen (docs/BAKEOFF_PLAN.md).
-    "morocco": {"country": "Morocco", "box": None, "roles": {"sealed"}},
-    "tunisia": {"country": "Tunisia", "box": None, "roles": {"sealed"}},
-    "central_chile": {"country": "Chile", "box": (-73.0, -38.5, -70.0, -32.0), "roles": {"sealed"}},
-    "western_cape": {"country": "South_Africa", "box": (17.5, -35.0, 24.0, -31.0), "roles": {"sealed"}},
+    # Sealed until the model was frozen (docs/BAKEOFF_PLAN.md); unsealed 31 Oct 2026 for the confirmation run.
+    "morocco": {"country": "Morocco", "box": None, "roles": {"confirm"}},
+    "tunisia": {"country": "Tunisia", "box": None, "roles": {"confirm"}},
+    "central_chile": {"country": "Chile", "box": (-73.0, -38.5, -70.0, -32.0), "roles": {"confirm"}},
+    "western_cape": {"country": "South_Africa", "box": (17.5, -35.0, 24.0, -31.0), "roles": {"confirm"}},
 }
 
 
