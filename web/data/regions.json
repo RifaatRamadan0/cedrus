@@ -1,7 +1,7 @@
 {
  "contract": "docs/DATA_CONTRACT.md",
  "version": 2,
- "generated_at": "2026-10-31T18:45:25+00:00",
+ "generated_at": "2026-10-31T19:30:15+00:00",
  "regions": [
   {
    "id": "portugal",
@@ -14,16 +14,31 @@
    ],
    "months": {
     "first": "2000-11",
-    "last": "2025-11"
+    "last": "2025-12"
    },
    "record_end": {
-    "suomi_npp_last_detection": "2025-12-31",
-    "final_month_days": 8,
-    "modis_last_detection": "2025-11-28",
-    "modis_final_month_days": 12,
-    "modis_complete_through": "2025-10",
-    "detections_after_record_dropped": 29,
-    "rule": "a sensor file's final month counts only with detections on >= 20 distinct days"
+    "suomi_npp": {
+     "first": "2012-02",
+     "last": "2025-12",
+     "first_detection": "2012-01-20",
+     "last_detection": "2025-12-31"
+    },
+    "noaa20": {
+     "first": "2018-04",
+     "last": "2025-12",
+     "first_detection": "2018-04-03",
+     "last_detection": "2025-12-30"
+    },
+    "modis": {
+     "first": "2000-12",
+     "last": "2025-11",
+     "first_detection": "2000-11-06",
+     "last_detection": "2025-11-28"
+    },
+    "detections_after_record_dropped": 0,
+    "viirs_outage_months": [],
+    "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
+    "after": "2026 to the present needs NASA's FIRMS near-real-time API key (pending)"
    },
    "default_view": {
     "bounds": [
@@ -40,72 +55,143 @@
    "model": "interim",
    "model_detail": {
     "name": "interim",
-    "train": [
-     "2012-02",
-     "2019-12"
-    ],
-    "ratio": {
-     "01D": 0.3337,
-     "01N": 0.1084,
-     "02D": 0.4883,
-     "02N": 0.171,
-     "03D": 0.5701,
-     "03N": 0.1581,
-     "04D": 0.4124,
-     "04N": 0.1572,
-     "05D": 0.435,
-     "05N": 0.1579,
-     "06D": 0.4216,
-     "06N": 0.1647,
-     "07D": 0.4679,
-     "07N": 0.3157,
-     "08D": 0.5089,
-     "08N": 0.3393,
-     "09D": 0.5096,
-     "09N": 0.2831,
-     "10D": 0.4192,
-     "10N": 0.3328,
-     "11D": 0.3919,
-     "11N": 0.0973,
-     "12D": 0.3489,
-     "12N": 0.0895
+    "satellites": {
+     "snpp": {
+      "train": [
+       "2012-02",
+       "2019-12"
+      ],
+      "ratio": {
+       "01D": 0.3337,
+       "01N": 0.1084,
+       "02D": 0.4883,
+       "02N": 0.171,
+       "03D": 0.5701,
+       "03N": 0.1581,
+       "04D": 0.4124,
+       "04N": 0.1572,
+       "05D": 0.435,
+       "05N": 0.1579,
+       "06D": 0.4216,
+       "06N": 0.1647,
+       "07D": 0.4679,
+       "07N": 0.3157,
+       "08D": 0.5089,
+       "08N": 0.3393,
+       "09D": 0.5096,
+       "09N": 0.2831,
+       "10D": 0.4192,
+       "10N": 0.3328,
+       "11D": 0.3919,
+       "11N": 0.0973,
+       "12D": 0.3489,
+       "12N": 0.0895
+      },
+      "ratio_basis": {
+       "01D": "246 MODIS / 750 Suomi NPP",
+       "01N": "40 MODIS / 419 Suomi NPP",
+       "02D": "954 MODIS / 1953 Suomi NPP",
+       "02N": "109 MODIS / 658 Suomi NPP",
+       "03D": "1663 MODIS / 2912 Suomi NPP",
+       "03N": "260 MODIS / 1669 Suomi NPP",
+       "04D": "702 MODIS / 1707 Suomi NPP",
+       "04N": "143 MODIS / 935 Suomi NPP",
+       "05D": "342 MODIS / 789 Suomi NPP",
+       "05N": "60 MODIS / 405 Suomi NPP",
+       "06D": "417 MODIS / 993 Suomi NPP",
+       "06N": "317 MODIS / 1947 Suomi NPP",
+       "07D": "894 MODIS / 1911 Suomi NPP",
+       "07N": "1225 MODIS / 3878 Suomi NPP",
+       "08D": "4155 MODIS / 8162 Suomi NPP",
+       "08N": "4678 MODIS / 13783 Suomi NPP",
+       "09D": "1772 MODIS / 3475 Suomi NPP",
+       "09N": "1510 MODIS / 5334 Suomi NPP",
+       "10D": "1540 MODIS / 3678 Suomi NPP",
+       "10N": "1555 MODIS / 4669 Suomi NPP",
+       "11D": "300 MODIS / 772 Suomi NPP",
+       "11N": "17 MODIS / 234 Suomi NPP",
+       "12D": "223 MODIS / 650 Suomi NPP",
+       "12N": "36 MODIS / 469 Suomi NPP"
+      },
+      "pooled_ratio": {
+       "D": 0.4759,
+       "N": 0.2892
+      },
+      "overall_ratio": 0.3726,
+      "train_detections": {
+       "modis": 23158,
+       "snpp": 62152
+      }
+     },
+     "noaa20": {
+      "train": [
+       "2018-04",
+       "2019-12"
+      ],
+      "ratio": {
+       "01D": 0.3274,
+       "01N": 0.1295,
+       "02D": 0.5103,
+       "02N": 0.1176,
+       "03D": 0.4955,
+       "03N": 0.1791,
+       "04D": 0.3887,
+       "04N": 0.1458,
+       "05D": 0.3885,
+       "05N": 0.1164,
+       "06D": 0.5684,
+       "06N": 0.214,
+       "07D": 0.3277,
+       "07N": 0.4628,
+       "08D": 0.5022,
+       "08N": 0.2514,
+       "09D": 0.6178,
+       "09N": 0.3065,
+       "10D": 0.7139,
+       "10N": 0.1971,
+       "11D": 0.5401,
+       "11N": 0.1808,
+       "12D": 0.3618,
+       "12N": 0.1335
+      },
+      "ratio_basis": {
+       "01D": "80 MODIS / 259 NOAA-20",
+       "01N": "19 MODIS / 174 NOAA-20",
+       "02D": "90 MODIS / 175 NOAA-20",
+       "02N": "4 MODIS / 67 NOAA-20",
+       "03D": "192 MODIS / 387 NOAA-20",
+       "03N": "37 MODIS / 218 NOAA-20",
+       "04D": "88 MODIS / 234 NOAA-20",
+       "04N": "6 MODIS / 62 NOAA-20",
+       "05D": "107 MODIS / 283 NOAA-20",
+       "05N": "4 MODIS / 68 NOAA-20",
+       "06D": "32 MODIS / 52 NOAA-20",
+       "06N": "5 MODIS / 28 NOAA-20",
+       "07D": "47 MODIS / 158 NOAA-20",
+       "07N": "112 MODIS / 228 NOAA-20",
+       "08D": "237 MODIS / 471 NOAA-20",
+       "08N": "413 MODIS / 1642 NOAA-20",
+       "09D": "243 MODIS / 387 NOAA-20",
+       "09N": "205 MODIS / 663 NOAA-20",
+       "10D": "191 MODIS / 258 NOAA-20",
+       "10N": "46 MODIS / 241 NOAA-20",
+       "11D": "34 MODIS / 60 NOAA-20",
+       "11N": "0 MODIS / 11 NOAA-20",
+       "12D": "27 MODIS / 85 NOAA-20",
+       "12N": "5 MODIS / 63 NOAA-20"
+      },
+      "pooled_ratio": {
+       "D": 0.487,
+       "N": 0.247
+      },
+      "overall_ratio": 0.3545,
+      "train_detections": {
+       "modis": 2224,
+       "noaa20": 6274
+      }
+     }
     },
-    "ratio_basis": {
-     "01D": "246 MODIS / 750 Suomi NPP",
-     "01N": "40 MODIS / 419 Suomi NPP",
-     "02D": "954 MODIS / 1953 Suomi NPP",
-     "02N": "109 MODIS / 658 Suomi NPP",
-     "03D": "1663 MODIS / 2912 Suomi NPP",
-     "03N": "260 MODIS / 1669 Suomi NPP",
-     "04D": "702 MODIS / 1707 Suomi NPP",
-     "04N": "143 MODIS / 935 Suomi NPP",
-     "05D": "342 MODIS / 789 Suomi NPP",
-     "05N": "60 MODIS / 405 Suomi NPP",
-     "06D": "417 MODIS / 993 Suomi NPP",
-     "06N": "317 MODIS / 1947 Suomi NPP",
-     "07D": "894 MODIS / 1911 Suomi NPP",
-     "07N": "1225 MODIS / 3878 Suomi NPP",
-     "08D": "4155 MODIS / 8162 Suomi NPP",
-     "08N": "4678 MODIS / 13783 Suomi NPP",
-     "09D": "1772 MODIS / 3475 Suomi NPP",
-     "09N": "1510 MODIS / 5334 Suomi NPP",
-     "10D": "1540 MODIS / 3678 Suomi NPP",
-     "10N": "1555 MODIS / 4669 Suomi NPP",
-     "11D": "300 MODIS / 772 Suomi NPP",
-     "11N": "17 MODIS / 234 Suomi NPP",
-     "12D": "223 MODIS / 650 Suomi NPP",
-     "12N": "36 MODIS / 469 Suomi NPP"
-    },
-    "shrinkage": "each ratio = (MODIS + 30 x pooled) / (Suomi NPP + 30), pooled per day/night",
-    "pooled_ratio": {
-     "D": 0.4759,
-     "N": 0.2892
-    },
-    "overall_ratio": 0.3726,
-    "train_detections": {
-     "modis": 23158,
-     "snpp": 62152
-    },
+    "shrinkage": "each ratio = (MODIS + 30 x pooled) / (VIIRS + 30), pooled per satellite and day/night",
     "interval": "interim placeholder, replaced by the bake-off winner: 10th/90th percentile of a negative binomial with mean m and size 5 (not fitted to data)"
    },
    "terra_share": {
@@ -155,7 +241,7 @@
     ],
     "estimated": [
      "2022-01",
-     "2025-11"
+     "2025-12"
     ],
     "naive_switch": "2012-01"
    },
@@ -207,14 +293,14 @@
     "T": "MODIS"
    },
    "versions": [
-    "2.0",
+    "2",
     "6.03",
     "6.2",
     "61.03"
    ],
    "detections": {
-    "N": 98386,
-    "J1": 43503,
+    "N": 98398,
+    "J1": 43520,
     "A": 37479,
     "T": 35318
    },
@@ -657,7 +743,7 @@
      }
     ]
    },
-   "generated_at": "2026-10-31T18:45:24+00:00"
+   "generated_at": "2026-10-31T19:30:13+00:00"
   },
   {
    "id": "lebanon",
@@ -670,16 +756,31 @@
    ],
    "months": {
     "first": "2000-11",
-    "last": "2025-11"
+    "last": "2025-12"
    },
    "record_end": {
-    "suomi_npp_last_detection": "2025-12-29",
-    "final_month_days": 7,
-    "modis_last_detection": "2025-11-23",
-    "modis_final_month_days": 4,
-    "modis_complete_through": "2025-10",
-    "detections_after_record_dropped": 26,
-    "rule": "a sensor file's final month counts only with detections on >= 20 distinct days"
+    "suomi_npp": {
+     "first": "2012-02",
+     "last": "2025-12",
+     "first_detection": "2012-01-25",
+     "last_detection": "2025-12-29"
+    },
+    "noaa20": {
+     "first": "2018-04",
+     "last": "2025-11",
+     "first_detection": "2018-04-01",
+     "last_detection": "2025-12-24"
+    },
+    "modis": {
+     "first": "2000-12",
+     "last": "2025-10",
+     "first_detection": "2000-11-13",
+     "last_detection": "2025-11-23"
+    },
+    "detections_after_record_dropped": 0,
+    "viirs_outage_months": [],
+    "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
+    "after": "2026 to the present needs NASA's FIRMS near-real-time API key (pending)"
    },
    "default_view": {
     "bounds": [
@@ -696,72 +797,143 @@
    "model": "interim",
    "model_detail": {
     "name": "interim",
-    "train": [
-     "2012-02",
-     "2019-12"
-    ],
-    "ratio": {
-     "01D": 0.2096,
-     "01N": 0.0143,
-     "02D": 0.1369,
-     "02N": 0.0141,
-     "03D": 0.1797,
-     "03N": 0.0086,
-     "04D": 0.1556,
-     "04N": 0.0072,
-     "05D": 0.0847,
-     "05N": 0.015,
-     "06D": 0.139,
-     "06N": 0.0059,
-     "07D": 0.1373,
-     "07N": 0.0339,
-     "08D": 0.1331,
-     "08N": 0.051,
-     "09D": 0.2179,
-     "09N": 0.0667,
-     "10D": 0.2797,
-     "10N": 0.0754,
-     "11D": 0.4145,
-     "11N": 0.0277,
-     "12D": 0.2508,
-     "12N": 0.0464
+    "satellites": {
+     "snpp": {
+      "train": [
+       "2012-02",
+       "2019-12"
+      ],
+      "ratio": {
+       "01D": 0.2096,
+       "01N": 0.0143,
+       "02D": 0.1369,
+       "02N": 0.0141,
+       "03D": 0.1797,
+       "03N": 0.0086,
+       "04D": 0.1556,
+       "04N": 0.0072,
+       "05D": 0.0847,
+       "05N": 0.015,
+       "06D": 0.139,
+       "06N": 0.0059,
+       "07D": 0.1373,
+       "07N": 0.0339,
+       "08D": 0.1331,
+       "08N": 0.051,
+       "09D": 0.2179,
+       "09N": 0.0667,
+       "10D": 0.2797,
+       "10N": 0.0754,
+       "11D": 0.4145,
+       "11N": 0.0277,
+       "12D": 0.2508,
+       "12N": 0.0464
+      },
+      "ratio_basis": {
+       "01D": "3 MODIS / 12 Suomi NPP",
+       "01N": "0 MODIS / 41 Suomi NPP",
+       "02D": "2 MODIS / 27 Suomi NPP",
+       "02N": "0 MODIS / 42 Suomi NPP",
+       "03D": "3 MODIS / 19 Suomi NPP",
+       "03N": "0 MODIS / 88 Suomi NPP",
+       "04D": "4 MODIS / 33 Suomi NPP",
+       "04N": "0 MODIS / 111 Suomi NPP",
+       "05D": "3 MODIS / 74 Suomi NPP",
+       "05N": "1 MODIS / 104 Suomi NPP",
+       "06D": "27 MODIS / 206 Suomi NPP",
+       "06N": "0 MODIS / 143 Suomi NPP",
+       "07D": "62 MODIS / 464 Suomi NPP",
+       "07N": "6 MODIS / 177 Suomi NPP",
+       "08D": "63 MODIS / 487 Suomi NPP",
+       "08N": "7 MODIS / 127 Suomi NPP",
+       "09D": "123 MODIS / 561 Suomi NPP",
+       "09N": "11 MODIS / 150 Suomi NPP",
+       "10D": "103 MODIS / 359 Suomi NPP",
+       "10N": "14 MODIS / 169 Suomi NPP",
+       "11D": "63 MODIS / 136 Suomi NPP",
+       "11N": "3 MODIS / 115 Suomi NPP",
+       "12D": "12 MODIS / 41 Suomi NPP",
+       "12N": "2 MODIS / 35 Suomi NPP"
+      },
+      "pooled_ratio": {
+       "D": 0.1935,
+       "N": 0.0338
+      },
+      "overall_ratio": 0.1376,
+      "train_detections": {
+       "modis": 512,
+       "snpp": 3721
+      }
+     },
+     "noaa20": {
+      "train": [
+       "2018-04",
+       "2019-12"
+      ],
+      "ratio": {
+       "01D": 0.1677,
+       "01N": 0.032,
+       "02D": 0.1733,
+       "02N": 0.0283,
+       "03D": 0.1485,
+       "03N": 0.0261,
+       "04D": 0.1405,
+       "04N": 0.0134,
+       "05D": 0.1846,
+       "05N": 0.015,
+       "06D": 0.1308,
+       "06N": 0.0165,
+       "07D": 0.2,
+       "07N": 0.0234,
+       "08D": 0.1194,
+       "08N": 0.0168,
+       "09D": 0.1779,
+       "09N": 0.0383,
+       "10D": 0.2283,
+       "10N": 0.0769,
+       "11D": 0.2269,
+       "11N": 0.0343,
+       "12D": 0.1576,
+       "12N": 0.0283
+      },
+      "ratio_basis": {
+       "01D": "0 MODIS / 1 NOAA-20",
+       "01N": "0 MODIS / 1 NOAA-20",
+       "02D": "0 MODIS / 0 NOAA-20",
+       "02N": "0 MODIS / 5 NOAA-20",
+       "03D": "0 MODIS / 5 NOAA-20",
+       "03N": "0 MODIS / 8 NOAA-20",
+       "04D": "0 MODIS / 7 NOAA-20",
+       "04N": "0 MODIS / 44 NOAA-20",
+       "05D": "2 MODIS / 9 NOAA-20",
+       "05N": "0 MODIS / 36 NOAA-20",
+       "06D": "5 MODIS / 48 NOAA-20",
+       "06N": "0 MODIS / 30 NOAA-20",
+       "07D": "20 MODIS / 96 NOAA-20",
+       "07N": "1 MODIS / 55 NOAA-20",
+       "08D": "12 MODIS / 114 NOAA-20",
+       "08N": "0 MODIS / 29 NOAA-20",
+       "09D": "19 MODIS / 106 NOAA-20",
+       "09N": "1 MODIS / 22 NOAA-20",
+       "10D": "19 MODIS / 76 NOAA-20",
+       "10N": "9 MODIS / 100 NOAA-20",
+       "11D": "10 MODIS / 37 NOAA-20",
+       "11N": "1 MODIS / 28 NOAA-20",
+       "12D": "0 MODIS / 3 NOAA-20",
+       "12N": "0 MODIS / 5 NOAA-20"
+      },
+      "pooled_ratio": {
+       "D": 0.1733,
+       "N": 0.0331
+      },
+      "overall_ratio": 0.1145,
+      "train_detections": {
+       "modis": 99,
+       "noaa20": 865
+      }
+     }
     },
-    "ratio_basis": {
-     "01D": "3 MODIS / 12 Suomi NPP",
-     "01N": "0 MODIS / 41 Suomi NPP",
-     "02D": "2 MODIS / 27 Suomi NPP",
-     "02N": "0 MODIS / 42 Suomi NPP",
-     "03D": "3 MODIS / 19 Suomi NPP",
-     "03N": "0 MODIS / 88 Suomi NPP",
-     "04D": "4 MODIS / 33 Suomi NPP",
-     "04N": "0 MODIS / 111 Suomi NPP",
-     "05D": "3 MODIS / 74 Suomi NPP",
-     "05N": "1 MODIS / 104 Suomi NPP",
-     "06D": "27 MODIS / 206 Suomi NPP",
-     "06N": "0 MODIS / 143 Suomi NPP",
-     "07D": "62 MODIS / 464 Suomi NPP",
-     "07N": "6 MODIS / 177 Suomi NPP",
-     "08D": "63 MODIS / 487 Suomi NPP",
-     "08N": "7 MODIS / 127 Suomi NPP",
-     "09D": "123 MODIS / 561 Suomi NPP",
-     "09N": "11 MODIS / 150 Suomi NPP",
-     "10D": "103 MODIS / 359 Suomi NPP",
-     "10N": "14 MODIS / 169 Suomi NPP",
-     "11D": "63 MODIS / 136 Suomi NPP",
-     "11N": "3 MODIS / 115 Suomi NPP",
-     "12D": "12 MODIS / 41 Suomi NPP",
-     "12N": "2 MODIS / 35 Suomi NPP"
-    },
-    "shrinkage": "each ratio = (MODIS + 30 x pooled) / (Suomi NPP + 30), pooled per day/night",
-    "pooled_ratio": {
-     "D": 0.1935,
-     "N": 0.0338
-    },
-    "overall_ratio": 0.1376,
-    "train_detections": {
-     "modis": 512,
-     "snpp": 3721
-    },
+    "shrinkage": "each ratio = (MODIS + 30 x pooled) / (VIIRS + 30), pooled per satellite and day/night",
     "interval": "interim placeholder, replaced by the bake-off winner: 10th/90th percentile of a negative binomial with mean m and size 5 (not fitted to data)"
    },
    "terra_share": {
@@ -811,7 +983,7 @@
     ],
     "estimated": [
      "2022-01",
-     "2025-11"
+     "2025-12"
     ],
     "naive_switch": "2012-01"
    },
@@ -863,14 +1035,14 @@
     "T": "MODIS"
    },
    "versions": [
-    "2.0",
+    "2",
     "6.03",
     "6.2",
     "61.03"
    ],
    "detections": {
-    "N": 7801,
-    "J1": 5041,
+    "N": 7814,
+    "J1": 5054,
     "A": 1220,
     "T": 890
    },
@@ -1313,7 +1485,7 @@
      }
     ]
    },
-   "generated_at": "2026-10-31T18:45:25+00:00"
+   "generated_at": "2026-10-31T19:30:15+00:00"
   }
  ]
 }

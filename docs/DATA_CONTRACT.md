@@ -20,33 +20,40 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
   (lon_min ≤ lon < lon_max, lat_min ≤ lat < lat_max); `type == 0`; MODIS `confidence >= 30`; VIIRS confidence `n` or `h`.
 - **Grid:** global 0.25° cells, `ix = floor(lon / 0.25)`, `iy = floor(lat / 0.25)`. Cell `(ix, iy)` spans
   lon `ix*0.25 .. (ix+1)*0.25`, lat `iy*0.25 .. (iy+1)*0.25` (row `iy` counts **north**). Only cells with at least
-  one filtered detection (any sensor, any year) are listed; a missing cell means zero, not missing data.
+  one filtered detection (any sensor, any year) are listed; a missing cell means zero, not missing data. The listed
+  cells are also the region's **data footprint**: the website treats any part of a drawn area outside them (or outside
+  the box) as outside the region's FIRMS country file.
 - **Months:** `"YYYY-MM"`, index `j = 0` is `months.first`. The record starts 2000-11 (Terra's first full month).
-- **Where the record ends:** at Suomi NPP's last complete month. A sensor file's final month counts as complete only
-  if it has detections on at least 20 distinct days in the region; otherwise it is dropped, with every detection in it
-  (all sensors). For MODIS the same rule ends the drift series. In both regions the files' final months had too few
-  days, so the record ends **2025-11** and the drift series **2025-10** (details in `regions.json` `record_end`).
+- **Complete months** (lead's ruling): a sensor file's final month counts only if the file has a detection dated in
+  that month's last 3 days (its first month: in the first 3 days). Every other month inside the file's span counts.
+  The record ends at the last month a VIIRS satellite covers — **2025-12** for both regions; 2026 to the present needs
+  NASA's FIRMS near-real-time API key (pending). Details per sensor in `regions.json` `record_end`.
+- **Which VIIRS satellite covers a month:** it is inside its complete span, and it is not an outage month (zero
+  detections in the region while the other VIIRS satellite has 20 or more; none found so far).
 - **Source policy** (one flag per month, the same for every cell):
 
 | Flag | Months | Harmonized estimate |
 |---|---|---|
 | `B` bridged | 2000-11 .. 2002-06 | Terra detections ÷ Terra's share for that calendar month (below) |
 | `O` observed | 2002-07 .. 2021-12 | MODIS Terra + Aqua detections (nominal orbits) |
-| `E` estimated | 2022-01 .. last | Suomi NPP VIIRS detections × the weight model (MODIS drifted) |
+| `E` estimated (S-NPP+NOAA-20) | 2022-01 .. | average of the Suomi NPP-based and the NOAA-20-based MODIS-equivalent estimates |
+| `N` estimated (S-NPP only) | 2022-01 .. | Suomi NPP-based estimate; NOAA-20 does not cover the month (Lebanon 2025-12) |
+| `J` estimated (NOAA-20 only) | 2022-01 .. | NOAA-20-based estimate; Suomi NPP does not cover the month (after Suomi NPP ends) |
+| `X` no data | 2022-01 .. | no VIIRS satellite covers the month (none so far) |
 
-- **Terra share** (lead's ruling, 31 Oct): for calendar month m, from 2003–2011,
-  `s_m = (T_m + 20 · s_pool) / (N_m + 20)`, where `N_m` = Terra + Aqua detections that month and
-  `s_pool` = Terra / (Terra + Aqua) over all months. No month can reach 0 or 1.
+- **Terra share:** for calendar month m, from 2003–2011, `s_m = (T_m + 20 · s_pool) / (N_m + 20)`, where `N_m` =
+  Terra + Aqua detections that month and `s_pool` = Terra / (Terra + Aqua) over all months. No month reaches 0 or 1.
 - **Naive record** (for the toggle that shows the false jump): MODIS Terra + Aqua up to 2011-12 (Terra alone in
   bridged months, unscaled), raw Suomi NPP counts from 2012-01.
-- **Weights `w`:** every detection carries its contribution to the harmonized estimate of its month:
+- **Weights `w`:** every detection carries its contribution to the harmonized estimate of its month
+  (`r_N`, `r_J1` = the model's ratio for that satellite, calendar month and day/night):
 
-| Detection | In a `B` month | In an `O` month | In an `E` month |
-|---|---|---|---|
-| Terra (T) | 1 / s_m | 1 | 0 |
-| Aqua (A) | 0 | 1 | 0 |
-| Suomi NPP (N) | 0 | 0 | model weight |
-| NOAA-20 (J1) | 0 | 0 | 0 |
+| Detection | `B` | `O` | `E` | `N` | `J` |
+|---|---|---|---|---|---|
+| Terra (T) | 1 / s_m | 1 | 0 | 0 | 0 |
+| Aqua (A) | 0 | 1 | 0 | 0 | 0 |
+| Suomi NPP (N) | 0 | 0 | ½ · r_N | r_N | 0 |
+| NOAA-20 (J1) | 0 | 0 | ½ · r_J1 | 0 | r_J1 |
 
   So for any set of cells and months, **Σ harmonized estimate = Σ w + Σ bg**, up to rounding (`m` and `bg` to
   2 decimals per cell-month, `w` to 4 decimals per detection). `tools/probe_site.py` checks this through the two CSVs.
@@ -59,21 +66,24 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
   "regions": [{
     "id": "portugal", "name": "Portugal",
     "bbox": [lon_min, lat_min, lon_max, lat_max],
-    "months": {"first": "2000-11", "last": "2025-11"},
+    "months": {"first": "2000-11", "last": "2025-12"},
     "record_end": {
-      "suomi_npp_last_detection": "2025-12-31", "final_month_days": 8,
-      "modis_last_detection": "2025-11-28", "modis_final_month_days": 12, "modis_complete_through": "2025-10",
-      "detections_after_record_dropped": 29, "rule": "…>= 20 distinct days"
+      "suomi_npp": {"first": "2012-02", "last": "2025-12", "first_detection": "2012-01-20", "last_detection": "2025-12-31"},
+      "noaa20":    {"first": "2018-04", "last": "2025-12", "first_detection": "2018-04-03", "last_detection": "2025-12-30"},
+      "modis":     {"first": "2000-12", "last": "2025-11", "first_detection": "2000-11-06", "last_detection": "2025-11-28"},
+      "detections_after_record_dropped": 0, "viirs_outage_months": [], "rule": "…", "after": "2026 … API key (pending)"
     },
     "default_view": {"bounds": [[lon_min, lat_min], [lon_max, lat_max]]},
     "model": "interim",                       // name of the weight model; "interim" until the bake-off winner replaces it
     "model_detail": {                         // from weights_interim.describe()
-      "name", "train": ["2012-02", "2019-12"],
-      "ratio": {"01D": 0.3337, "01N": 0.1084, …},       // MODIS-equivalent per Suomi NPP detection, calendar month x day(D)/night(N)
-      "ratio_basis": {"01D": "<MODIS> MODIS / <V> Suomi NPP", …},  // raw training counts behind each ratio
-      "shrinkage": "each ratio = (MODIS + 30 x pooled) / (Suomi NPP + 30), pooled per day/night",
-      "pooled_ratio": {"D": 0.4759, "N": 0.2892},
-      "overall_ratio", "train_detections": {"modis", "snpp"}, "interval": "…placeholder…"
+      "name": "interim",
+      "satellites": {
+        "snpp":   {"train": ["2012-02", "2019-12"], "ratio": {"01D": 0.3337, …}, "ratio_basis": {"01D": "<MODIS> MODIS / <V> Suomi NPP", …},
+                   "pooled_ratio": {"D": …, "N": …}, "overall_ratio": …, "train_detections": {"modis": …, "snpp": …}},
+        "noaa20": {"train": ["2018-04", "2019-12"], …same keys…}
+      },
+      "shrinkage": "each ratio = (MODIS + 30 x pooled) / (VIIRS + 30), pooled per satellite and day/night",
+      "interval": "…placeholder…"
     },
     "terra_share": {"years": [2003, 2011], "by_month": {"01": 0.4084, …}, "pooled": 0.4512, "prior_detections": 20,
                     "basis": {"01": "(89 Terra + 20 x 0.4512) / (220 MODIS + 20)", …}},
@@ -83,7 +93,7 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
     "sensors": {"T": "Terra MODIS", "A": "Aqua MODIS", "N": "Suomi NPP VIIRS", "J1": "NOAA-20 VIIRS"},
     "satellite_field": {"T": "Terra", "A": "Aqua", "N": "N", "J1": "N20"},   // the FIRMS `satellite` value, for CSV export
     "instrument_field": {"T": "MODIS", …},
-    "versions": ["2.0", "6.03", "6.2", "61.03"],  // FIRMS `version` values; hotspot files store an index into this
+    "versions": ["2", "6.03", "6.2", "61.03"],  // FIRMS `version` strings exactly as in the files; hotspots store an index
     "detections": {"N": …, "J1": …, "A": …, "T": …},  // after filters, 2000-11 .. months.last
     "provenance": {
       "source", "filters", "unit",
@@ -99,9 +109,10 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 ```jsonc
 {
   "region": "portugal", "cell_deg": 0.25,
-  "months": {"first": "2000-11", "last": "2025-11", "n": 301},
-  "flags": "BBBB…OOO…EEE",                    // one character per month: B / O / E
-  "flag_codes": {"B": "bridged", "O": "observed", "E": "estimated"},
+  "months": {"first": "2000-11", "last": "2025-12", "n": 302},
+  "flags": "BBBB…OOO…EEE",                    // one character per month: B / O / E / N / J / X (table above)
+  "flag_codes": {"B": "bridged", "O": "observed", "E": "estimated (S-NPP+NOAA-20)", "N": "estimated (S-NPP only)",
+                 "J": "estimated (NOAA-20 only)", "X": "no data"},
   "cells": {"ix": [-38, …], "iy": [147, …]},  // cell c = (ix[c], iy[c])
   "m":     [[…n values…], …],                 // per cell: harmonized estimate (expected value) = Σ w + bg, 2 decimals
   "bg":    [[…], …],                          // per cell: background term already inside m (interim model: all 0)
@@ -111,13 +122,23 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 }
 ```
 
-- `p10`/`p90`: in `E` **and** `B` months, the 10th/90th percentile of a negative binomial with mean `m` and size 5 —
-  an **interim placeholder, not fitted to data, replaced by the bake-off winner**. In `O` months `p10 = p90 = m`.
+- `p10`/`p90`: in `B`, `E`, `N` and `J` months, the 10th/90th percentile of a negative binomial with mean `m` and
+  size 5 — an **interim placeholder, not fitted to data, replaced by the bake-off winner**. In `O` months `p10 = p90 = m`.
 - `bg` is optional for readers: if absent, treat it as zero.
-- Area values in the website: sum `m` over cells whose **centre** is inside the area (cell-level approximation);
-  `lo = Σm − sqrt(Σ(m − p10)²)` (floored at 0), `hi = Σm + sqrt(Σ(p90 − m)²)` (approximate: cells treated as independent).
 
-Sizes (31 Oct 2026): Portugal 1.01 MB (185 cells), Lebanon 0.15 MB (28 cells).
+Sizes (31 Oct 2026): Portugal 1.02 MB (185 cells), Lebanon 0.15 MB (28 cells).
+
+## How the website turns these into an area's calendar
+
+- **Whole region:** the sum of its cells (`m`, `naive`, `bg`); the 80% range adds each cell's half-widths in quadrature.
+  This equals the exact sum of every detection's weight, up to the 2-decimal rounding of `m`.
+- **Drawn shape or circle (exact):** the website loads every hotspot year (cached, with a progress bar) and adds up
+  `w` of the detections inside the shape, month by month, plus `bg` of each touched cell times the share of the cell
+  inside the shape. The naive record counts the naive-record detections inside the shape. The 80% range scales each
+  touched cell's half-widths by (the shape's weight in that cell ÷ the cell's `m`) and combines them in quadrature
+  (approximate). An area with no detection inside is shown as "no detections here".
+- **Outside the data:** the share of a drawn area outside the box or outside the data footprint (cells listed above)
+  is shown as a warning and in the area's name; fires there are not in the country file and are not counted.
 
 ## `<region>/hotspots/<year>.json` — every filtered detection, columnar
 
@@ -135,45 +156,48 @@ Sizes (31 Oct 2026): Portugal 1.01 MB (185 cells), Lebanon 0.15 MB (28 cells).
     "w": [...],                               // contribution to the harmonized estimate, 4 decimals (table above)
     "bright": [...], "bright2": [...],        // MODIS brightness / bright_t31; VIIRS bright_ti4 / bright_ti5 (K)
     "scan": [...], "track": [...],            // pixel size, km
-    "version": [...]                          // index into regions.json versions
+    "version": [...]                          // index into regions.json versions (exact FIRMS strings)
   }
 }
 ```
 
 Rows are sorted by date, time, sensor. `type` is 0 for every row (filter). Only months inside the record are written.
-Sizes: Portugal 14.5 MB over 26 files (largest 2025, about 2 MB), Lebanon 1.0 MB. The website loads a year only
-when a download or the season dates need it.
+Sizes: Portugal 14.6 MB over 26 files (largest 2025, about 2 MB), Lebanon 1.0 MB.
 
 ## `<region>/drift.json` — is MODIS still MODIS?
 
 ```jsonc
 {
   "region": "portugal",
-  "months": {"first": "2012-02", "last": "2025-10", "n": 165},   // Suomi NPP's first full month .. MODIS's last complete month
+  "months": {"first": "2012-02", "last": "2025-11", "n": 166},   // Suomi NPP's first full month .. MODIS's last complete month
   "observed_modis": [...],                    // Terra + Aqua detections in the region, per month
-  "predicted_modis": [...],                   // Σ model weight over every Suomi NPP detection that month (2 decimals)
+  "predicted_modis": [...],                   // MODIS predicted from VIIRS: average of the Suomi NPP- and NOAA-20-based
+                                              // predictions when both cover the month (as the estimated record), 2 decimals
   "trailing12_ratio": [null × 11, ...],       // Σ observed / Σ predicted over the 12 months ending here
-  "band": {"what": "…", "range": [0.8685, 1.0894], "fitted": ["2012-02", "2019-12"]},  // min–max of the trailing ratio, windows ending inside the fitting years
+  "band": {"what": "…", "range": [lo, hi], "fitted": ["2012-02", "2019-12"]},  // min–max of the trailing ratio, windows ending in 2012-02..2019-12
+  "predicted_from": "Suomi NPP and NOAA-20, averaged in months both cover (as the estimated record)",
   "modis_archive_ends": "2025-11-28",
-  "complete_rule": "a sensor file's final month counts only with detections on >= 20 distinct days"
+  "complete_rule": "a file's final month counts if it has a detection in that month's last 3 days"
 }
 ```
+
+Lebanon's MODIS file ends 2025-11-23, so its drift series ends 2025-10.
 
 ## CSV downloads (written by the website)
 
 - **Hotspots:** `latitude, longitude, brightness, bright_t31, bright_ti4, bright_ti5, scan, track, acq_date, acq_time,
   satellite, instrument, confidence, version, frp, daynight, type, sensor, source_flag, w` — every detection inside
-  the exact area for the chosen years.
+  the exact area for the chosen years; `version` exactly as in the FIRMS file; `source_flag` is the month's flag name.
 - **Monthly:** a `#` methods line, then `month, harmonized_estimate, p10, p90, naive, background, source_flag` for the
-  area (cell-level approximation). `harmonized_estimate` already includes `background`.
+  area (4 decimals for the estimate and the background). `harmonized_estimate` already includes `background`.
 
 ## Swapping in the bake-off winner
 
 `export_v2.py` talks to the model only through `pipeline/weights_interim.py`:
 
 ```python
-model = fit(det, region)                     # det: filtered detections (columns month, moy, dn, fam, …); fit uses 2012-02..2019-12 only
-w = hotspot_weights(model, rows)             # weight of each Suomi NPP row in an estimated month
+model = fit(det, region)                     # det: filtered detections (columns month, moy, dn, fam, …); fits never see 2020+
+w = hotspot_weights(model, rows)             # full weight of each Suomi NPP or NOAA-20 row; the export applies the ½ share
 bg = cell_month_background(model, grid)      # grid: one row per cell-month (ci, mi, month, w); expected detections no row carries
 p10, p90 = cell_month_interval(model, cm)    # cm: DataFrame with column m (the cell-month expected value)
 describe(model)                              # dict stored as regions.json model_detail
@@ -182,4 +206,5 @@ describe(model)                              # dict stored as regions.json model
 A replacement module with the same five functions and a different `NAME` changes `"model"` in `regions.json`
 and nothing else in the contract. A model with a term for cells or months without VIIRS detections (bake-off
 candidate A's `b_A`, candidate B's `b`) returns it from `cell_month_background`; it lands in `bg`, is included in `m`,
-and the CSV check becomes Σ harmonized estimate = Σ w + Σ background.
+and the CSV check becomes Σ harmonized estimate = Σ w + Σ background. The bake-off as pre-registered fits Suomi NPP
+only; the NOAA-20 half of the estimated record would need the winner fitted to NOAA-20 as well.

@@ -40,7 +40,7 @@ python tools/probe_site.py                         # headless check of the site 
 ```
 
 `pipeline/04_export_web.py` writes the files the previous version of the site read
-(`web/data/portugal.json`); the current site reads only what `export_v2.py` writes.
+(`web/data/portugal.json`, no longer shipped); the current site reads only what `export_v2.py` writes.
 
 The processed website data is committed in `web/data/`, so you can skip the
 pipeline and just run the last line to work on the website.

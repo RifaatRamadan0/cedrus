@@ -3,17 +3,19 @@
 The export (export_v2.py) only talks to this module through these functions, so the winning model
 can be dropped in with the same signatures:
 
-    model = fit(det, region)                    # det: filtered detections, any years; only TRAIN is used
-    w     = hotspot_weights(model, rows)        # MODIS-equivalent contribution of each Suomi NPP row
+    model = fit(det, region)                    # det: filtered detections, any years; only TRAIN windows are used
+    w     = hotspot_weights(model, rows)        # full MODIS-equivalent weight of each Suomi NPP / NOAA-20 row
     bg    = cell_month_background(model, cm)    # expected detections not carried by any row (interim: 0)
     p10, p90 = cell_month_interval(model, cm)   # 80% range for each estimated or bridged cell-month
 
-Interim model (lead's ruling, 31 Oct 2026):
-- ratio per region x calendar month x day/night, shrunk toward the region's pooled day/night ratio with
-  PRIOR_V Suomi NPP pseudo-detections: r = (sum MODIS + PRIOR_V * r_pool,dn) / (sum Suomi NPP + PRIOR_V),
-  r_pool,dn = sum MODIS / sum Suomi NPP over all calendar months at that time of day. Fitted on TRAIN only.
-  MODIS = Terra + Aqua.
-- each Suomi NPP detection in an estimated month weighs r for its calendar month and day/night.
+The export decides how much of each weight counts: in a month both VIIRS satellites cover, each carries
+half (the record is the average of the two estimates); in a month only one covers, it carries all.
+
+Interim model (lead's rulings, 31 Oct 2026):
+- one ratio per VIIRS satellite x region x calendar month x day/night, shrunk toward that satellite's pooled
+  day/night ratio with PRIOR_V pseudo-detections: r = (sum MODIS + PRIOR_V * r_pool,dn) / (sum VIIRS + PRIOR_V),
+  r_pool,dn = sum MODIS / sum VIIRS over all calendar months at that time of day. MODIS = Terra + Aqua.
+- Suomi NPP fitted on 2012-02..2019-12, NOAA-20 on 2018-04..2019-12 (its first months). Never 2020 or later.
 - interval: placeholder, not fitted. 10th/90th percentile of a negative binomial with mean m and size 5.
 
 `det` / `rows` columns used: month ("YYYY-MM"), moy (1..12), dn ("D"/"N"), fam ("modis"/"snpp"/"noaa20").
@@ -21,37 +23,41 @@ Interim model (lead's ruling, 31 Oct 2026):
 import numpy as np
 
 NAME = "interim"
-TRAIN = ("2012-02", "2019-12")  # Suomi NPP's first full month to the last pre-test month; never 2020+
+TRAIN = {"snpp": ("2012-02", "2019-12"), "noaa20": ("2018-04", "2019-12")}
+LABEL = {"snpp": "Suomi NPP", "noaa20": "NOAA-20"}
 NB_SIZE = 5
-PRIOR_V = 30  # Suomi NPP pseudo-detections pulling a month's ratio toward the pooled day/night ratio
+PRIOR_V = 30  # VIIRS pseudo-detections pulling a month's ratio toward the pooled day/night ratio
 
 
-def fit(det, region):
-    train = det[(det.month >= TRAIN[0]) & (det.month <= TRAIN[1])]
+def _fit_one(det, fam, window):
+    train = det[(det.month >= window[0]) & (det.month <= window[1])]
     assert train.month.max() <= "2019-12", "the interim model may not see 2020 or later"
-    t = train[train.fam.isin(["modis", "snpp"])].groupby(["moy", "dn", "fam"]).size().unstack(fill_value=0)
-    for f in ("modis", "snpp"):
+    t = train[train.fam.isin(["modis", fam])].groupby(["moy", "dn", "fam"]).size().unstack(fill_value=0)
+    for f in ("modis", fam):
         if f not in t:
             t[f] = 0
-    by_dn = t.groupby(level="dn")[["modis", "snpp"]].sum()
-    overall = t.modis.sum() / t.snpp.sum()
-    pool = {dn: float(by_dn.loc[dn, "modis"] / by_dn.loc[dn, "snpp"]) if dn in by_dn.index and by_dn.loc[dn, "snpp"] > 0
+    by_dn = t.groupby(level="dn")[["modis", fam]].sum()
+    overall = t.modis.sum() / t[fam].sum()
+    pool = {dn: float(by_dn.loc[dn, "modis"] / by_dn.loc[dn, fam]) if dn in by_dn.index and by_dn.loc[dn, fam] > 0
             else float(overall) for dn in ("D", "N")}
     ratio, basis = {}, {}
     for moy in range(1, 13):
         for dn in ("D", "N"):
-            y, v = (int(t.loc[(moy, dn), f]) if (moy, dn) in t.index else 0 for f in ("modis", "snpp"))
+            y, v = (int(t.loc[(moy, dn), f]) if (moy, dn) in t.index else 0 for f in ("modis", fam))
             ratio[(moy, dn)] = (y + PRIOR_V * pool[dn]) / (v + PRIOR_V)
-            basis[(moy, dn)] = f"{y} MODIS / {v} Suomi NPP"
-    return {"name": NAME, "region": region, "train": TRAIN, "ratio": ratio, "basis": basis, "pool": pool,
-            "overall": float(overall), "nb_size": NB_SIZE,
-            "train_counts": {"modis": int(t.modis.sum()), "snpp": int(t.snpp.sum())}}
+            basis[(moy, dn)] = f"{y} MODIS / {v} {LABEL[fam]}"
+    return {"train": window, "ratio": ratio, "basis": basis, "pool": pool, "overall": float(overall),
+            "train_counts": {"modis": int(t.modis.sum()), fam: int(t[fam].sum())}}
+
+
+def fit(det, region):
+    return {"name": NAME, "region": region, "nb_size": NB_SIZE,
+            "fams": {fam: _fit_one(det, fam, window) for fam, window in TRAIN.items()}}
 
 
 def hotspot_weights(model, rows):
-    """MODIS-equivalent weight of each row as if it were a Suomi NPP detection (the caller decides which rows count)."""
-    keys = list(zip(rows.moy.astype(int), rows.dn))
-    return np.array([model["ratio"][k] for k in keys], dtype=float)
+    """Full MODIS-equivalent weight of each Suomi NPP or NOAA-20 row (the export decides which share counts)."""
+    return np.array([model["fams"][f]["ratio"][(int(m), dn)] for f, m, dn in zip(rows.fam, rows.moy, rows.dn)], dtype=float)
 
 
 def cell_month_background(model, cm):
@@ -93,13 +99,16 @@ def nb_quantiles(mean, size, qs):
 def describe(model):
     """Plain table of the fitted model for regions.json."""
     return {
-        "name": model["name"], "train": list(model["train"]),
-        "ratio": {f"{moy:02d}{dn}": round(float(r), 4) for (moy, dn), r in sorted(model["ratio"].items())},
-        "ratio_basis": {f"{moy:02d}{dn}": b for (moy, dn), b in sorted(model["basis"].items())},
-        "shrinkage": f"each ratio = (MODIS + {PRIOR_V} x pooled) / (Suomi NPP + {PRIOR_V}), pooled per day/night",
-        "pooled_ratio": {dn: round(r, 4) for dn, r in model["pool"].items()},
-        "overall_ratio": round(model["overall"], 4),
-        "train_detections": model["train_counts"],
+        "name": model["name"],
+        "satellites": {fam: {
+            "train": list(f["train"]),
+            "ratio": {f"{moy:02d}{dn}": round(float(r), 4) for (moy, dn), r in sorted(f["ratio"].items())},
+            "ratio_basis": {f"{moy:02d}{dn}": b for (moy, dn), b in sorted(f["basis"].items())},
+            "pooled_ratio": {dn: round(r, 4) for dn, r in f["pool"].items()},
+            "overall_ratio": round(f["overall"], 4),
+            "train_detections": f["train_counts"],
+        } for fam, f in model["fams"].items()},
+        "shrinkage": f"each ratio = (MODIS + {PRIOR_V} x pooled) / (VIIRS + {PRIOR_V}), pooled per satellite and day/night",
         "interval": f"interim placeholder, replaced by the bake-off winner: 10th/90th percentile of a negative "
                     f"binomial with mean m and size {model['nb_size']} (not fitted to data)",
     }

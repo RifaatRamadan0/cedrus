@@ -15,6 +15,7 @@
   <script type="module" src="app.js" async></script>
 </head>
 <body>
+<a class="skip-link" href="#calendar-panel">Skip to the fire calendar</a>
 <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
   <symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-8 9 8M5 9v12h5v-7h4v7h5V9"/></symbol>
   <symbol id="fire" viewBox="0 0 24 24"><path d="M13 2c2 6-4 6-2 11 2-1 3-3 3-5 4 3 6 7 4 11-2 4-10 4-12 0-2-4 0-7 2-10-1 5 1 6 2 6-1-6 5-7 3-13Z"/></symbol>
@@ -49,7 +50,7 @@
 
 <main id="home">
   <header class="hero">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/wildfire-poster.jpg" aria-label="Wildfire moving through a forest"><source src="assets/wildfire.mp4" type="video/mp4"></video>
+    <video class="hero-video" muted loop playsinline preload="none" poster="assets/wildfire-poster.jpg" aria-label="Wildfire moving through a forest"><source src="assets/wildfire.mp4" type="video/mp4"></video>
     <div class="hero-shade"></div>
     <div class="hero-badge"><svg class="icon"><use href="#satellite"/></svg><span>Satellite data</span><i>•</i><span>25 years</span><i>•</i><span>NASA FIRMS</span><b id="data-badge">LOADING</b></div>
     <div class="hero-copy"><p class="eyebrow">MODIS – VIIRS FIRE CALENDAR</p><h1>A clearer picture<br>of wildfires.</h1><p class="hero-description">By combining MODIS and VIIRS satellite data, we correct<br class="desktop-break"> the false increase in fire detections and provide a consistent<br class="desktop-break"> 25-year fire history — for better decisions, safer communities,<br class="desktop-break"> and a healthier planet.</p></div>
@@ -70,7 +71,7 @@
           <button type="button" class="tool" id="draw-polygon" aria-pressed="false" disabled>Polygon</button>
           <button type="button" class="tool" id="draw-clear">Whole region</button>
         </div>
-        <p class="hint" id="draw-hint">Rectangle: click two corners. Polygon: click each corner, then click the first one again.</p>
+        <p class="hint" id="draw-hint">Drawing tools load with the map…</p>
       </div>
       <fieldset class="field-group circle-group"><legend class="field-label">3. Or enter a point and radius</legend>
         <div class="circle-fields">
@@ -95,13 +96,14 @@
     <div class="map-column">
       <div class="map-panel" id="map-panel" role="region" aria-label="Map: area selection and fire detections per 0.25° cell for the selected month">
         <div class="map-viewport" id="map"></div>
+        <div class="map-loading" id="map-loading" role="status">Loading map…</div>
         <div class="map-zoom"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button></div>
         <span class="map-demo" id="map-demo">0.25° CELLS · SELECTED MONTH</span>
       </div>
       <p class="map-caption" id="map-caption" aria-live="polite">Loading NASA FIRMS record…</p>
     </div>
 
-    <section class="history panel" aria-labelledby="calendar-title">
+    <section class="history panel" id="calendar-panel" tabindex="-1" aria-labelledby="calendar-title">
       <div class="panel-heading"><h2 id="calendar-title">Fire Calendar</h2>
         <div class="view-switch" role="group" aria-label="Calendar colours"><button type="button" class="selected" id="mode-counts" aria-pressed="true">Counts</button><button type="button" id="mode-anomaly" aria-pressed="false">Anomaly</button></div>
       </div>
@@ -111,9 +113,11 @@
         <button type="button" class="link-button" id="table-toggle" aria-pressed="false">Show as table</button>
       </div>
       <p class="calendar-note" id="calendar-note"></p>
+      <div class="cal-progress" id="cal-progress" role="status" hidden><span></span><progress max="1" value="0"></progress></div>
       <div class="calendar" id="cal-grid" role="grid" aria-labelledby="calendar-title" aria-describedby="calendar-note"></div>
       <div class="calendar-table" id="calendar-table" hidden></div>
       <div class="calendar-legend" id="calendar-legend" aria-hidden="true"></div>
+      <p class="hint record-end" id="record-end-note"></p>
     </section>
   </section>
 
