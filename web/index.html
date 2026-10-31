@@ -4,12 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08121c">
-  <meta name="description" content="CEDRUS — a consistent 25-year wildfire record from NASA MODIS and VIIRS satellite fire detections.">
+  <meta name="description" content="CEDRUS — a month-by-month fire calendar for any area, from one consistent 25-year record of NASA MODIS and VIIRS fire detections.">
   <title>CEDRUS — A clearer picture of wildfires</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="icon" href="assets/cedar.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
-  <script src="app.js" defer></script>
+  <link rel="preload" href="data/regions.json" as="fetch" crossorigin>
+  <link rel="preload" href="data/portugal/monthly.json" as="fetch" crossorigin>
+  <script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+  <script type="module" src="app.js" async></script>
 </head>
 <body>
 <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -37,7 +40,7 @@
   </a>
   <nav aria-label="Main navigation">
     <a href="#home" class="nav-item active" aria-current="page"><svg class="icon"><use href="#home"/></svg><span>Home</span></a>
-    <a href="#fire-history" class="nav-item"><svg class="icon"><use href="#fire"/></svg><span>Fire History</span></a>
+    <a href="#fire-history" class="nav-item"><svg class="icon"><use href="#fire"/></svg><span>Fire Calendar</span></a>
     <button class="nav-item" data-dialog="methodology"><svg class="icon"><use href="#layers"/></svg><span>Data &amp; Methodology</span></button>
     <button class="nav-item" data-dialog="about"><svg class="icon"><use href="#info"/></svg><span>About</span></button>
   </nav>
@@ -49,42 +52,88 @@
     <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/wildfire-poster.jpg" aria-label="Wildfire moving through a forest"><source src="assets/wildfire.mp4" type="video/mp4"></video>
     <div class="hero-shade"></div>
     <div class="hero-badge"><svg class="icon"><use href="#satellite"/></svg><span>Satellite data</span><i>•</i><span>25 years</span><i>•</i><span>NASA FIRMS</span><b id="data-badge">LOADING</b></div>
-    <div class="hero-copy"><p class="eyebrow">MODIS – VIIRS FIRE HISTORY</p><h1>A clearer picture<br>of wildfires.</h1><p class="hero-description">By combining MODIS and VIIRS satellite data, we correct<br class="desktop-break"> the false increase in fire detections and provide a consistent<br class="desktop-break"> 25-year fire history — for better decisions, safer communities,<br class="desktop-break"> and a healthier planet.</p></div>
+    <div class="hero-copy"><p class="eyebrow">MODIS – VIIRS FIRE CALENDAR</p><h1>A clearer picture<br>of wildfires.</h1><p class="hero-description">By combining MODIS and VIIRS satellite data, we correct<br class="desktop-break"> the false increase in fire detections and provide a consistent<br class="desktop-break"> 25-year fire history — for better decisions, safer communities,<br class="desktop-break"> and a healthier planet.</p></div>
     <button class="video-toggle" aria-label="Pause background video" title="Pause background video">Ⅱ</button>
   </header>
 
-  <section class="workspace" id="fire-history" aria-label="Explore wildfire history">
-    <form class="controls panel" id="filter-form">
-      <h2>Explore the Fire History</h2>
-      <p class="intro">Select an area and view the corrected 25-year fire history, with the option to compare current year data.</p>
-      <div class="field-group"><label for="location-search">1. Choose a region</label>
-        <div class="search-field"><svg class="icon"><use href="#search"/></svg><input id="location-search" type="search" placeholder="Search for a location..." autocomplete="off" aria-describedby="search-result"></div>
-        <p id="search-result" class="search-result" hidden></p>
-        <div class="select-field"><select id="region" aria-label="Region"><option value="Portugal">Portugal</option></select><svg class="icon"><use href="#chevron"/></svg></div>
+  <section class="workspace" id="fire-history" aria-label="Fire calendar for an area">
+    <form class="controls panel" id="area-form" novalidate>
+      <h2>Explore the Fire Calendar</h2>
+      <p class="intro">Choose an area. The calendar shows satellite fire detections for every month since November 2000, on one consistent scale.</p>
+      <div class="field-group"><label for="region">1. Region</label>
+        <div class="select-field"><select id="region" name="region"></select><svg class="icon"><use href="#chevron"/></svg></div>
+        <button type="button" class="link-button" id="example-lebanon">Example: Lebanon</button>
       </div>
-      <div class="field-group time-field"><label for="time-range">2. Select time range</label><div class="select-field"><svg class="icon calendar-icon"><use href="#calendar"/></svg><select id="time-range"></select><svg class="icon"><use href="#chevron"/></svg></div></div>
-      <button class="update-button" type="submit">Update Map</button>
-      <fieldset class="legend"><legend class="sr-only">Fire intensity legend</legend><h3>Fire detections per year (corrected)</h3><ul><li><span style="--dot:#f4434b"></span>Very high <em data-class="4"></em></li><li><span style="--dot:#ff7146"></span>High <em data-class="3"></em></li><li><span style="--dot:#ffa846"></span>Moderate <em data-class="2"></em></li><li><span style="--dot:#f3d363"></span>Low <em data-class="1"></em></li><li><span style="--dot:#529b6e"></span>No fire</li></ul></fieldset>
+      <div class="field-group draw-group"><span class="field-label" id="draw-label">2. Or draw an area on the map</span>
+        <div class="tool-row" role="group" aria-labelledby="draw-label">
+          <button type="button" class="tool" id="draw-rectangle" aria-pressed="false" disabled>Rectangle</button>
+          <button type="button" class="tool" id="draw-polygon" aria-pressed="false" disabled>Polygon</button>
+          <button type="button" class="tool" id="draw-clear">Whole region</button>
+        </div>
+        <p class="hint" id="draw-hint">Rectangle: click two corners. Polygon: click each corner, then click the first one again.</p>
+      </div>
+      <fieldset class="field-group circle-group"><legend class="field-label">3. Or enter a point and radius</legend>
+        <div class="circle-fields">
+          <label>Latitude<input id="lat" name="lat" type="number" step="any" min="-90" max="90" inputmode="decimal" placeholder="39.6"></label>
+          <label>Longitude<input id="lon" name="lon" type="number" step="any" min="-180" max="180" inputmode="decimal" placeholder="-8.2"></label>
+          <label>Radius km<input id="radius" name="radius" type="number" step="any" min="1" max="500" inputmode="decimal" value="25"></label>
+        </div>
+        <button class="update-button" id="circle-go" type="submit">Use this circle</button>
+      </fieldset>
+      <div class="area-summary" id="area-summary" aria-live="polite"></div>
+      <fieldset class="field-group download-group"><legend class="field-label">4. Download for this area</legend>
+        <div class="year-span">
+          <label>From<span class="select-field"><select id="csv-from" name="csv-from"></select><svg class="icon"><use href="#chevron"/></svg></span></label>
+          <label>To<span class="select-field"><select id="csv-to" name="csv-to"></select><svg class="icon"><use href="#chevron"/></svg></span></label>
+        </div>
+        <button type="button" class="download" id="csv-hotspots">Hotspots (CSV)</button>
+        <button type="button" class="download" id="csv-monthly">Monthly record (CSV)</button>
+        <p class="hint" id="csv-status" aria-live="polite"></p>
+      </fieldset>
     </form>
 
     <div class="map-column">
-      <div class="map-panel" id="map-panel" role="region" aria-label="Map of corrected fire detections">
+      <div class="map-panel" id="map-panel" role="region" aria-label="Map: area selection and fire detections per 0.25° cell for the selected month">
         <div class="map-viewport" id="map"></div>
         <div class="map-zoom"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button></div>
-        <span class="map-demo" id="map-demo">0.25° GRID · CORRECTED</span>
+        <span class="map-demo" id="map-demo">0.25° CELLS · SELECTED MONTH</span>
       </div>
-      <div class="expanded-chart panel" id="expanded-chart" hidden><div><p class="eyebrow" id="expanded-eyebrow">PORTUGAL</p><h2>A consistent view over time.</h2><p class="intro">Fire detections per year: the joined record, the corrected record, and MODIS itself as a check.</p></div><div id="large-chart"></div><p class="chart-disclaimer" id="chart-disclaimer"></p></div>
       <p class="map-caption" id="map-caption" aria-live="polite">Loading NASA FIRMS record…</p>
     </div>
 
-    <section class="history panel" aria-labelledby="history-title">
-      <div class="panel-heading"><h2 id="history-title">Fire History</h2><div class="view-switch" role="group" aria-label="Main visualization"><button class="selected" id="map-tab" aria-pressed="true">Map</button><button id="chart-tab" aria-pressed="false">Chart</button></div></div>
-      <h3 class="chart-title" id="chart-title">Corrected vs. Combined Data</h3>
-      <div class="chart-wrap" id="chart-container"><div class="chart-key"><span><i class="combined"></i>Combined (MODIS + VIIRS)</span><span><i class="corrected"></i>Corrected (MODIS-equivalent)</span><span><i class="modis-check"></i>MODIS itself (check)</span></div><svg id="history-chart" viewBox="0 0 430 188" role="img" aria-label="Fire detections per year: combined record, corrected record, and MODIS"><defs><linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#68b584" stop-opacity=".2"/><stop offset="1" stop-color="#68b584" stop-opacity=".015"/></linearGradient></defs><g id="chart-content"></g></svg></div>
-      <div class="explanation"><svg class="icon"><use href="#info"/></svg><p id="explanation">The 2012 jump is caused by the switch from MODIS to VIIRS, which detects more small fires. The correction removes this artificial increase.</p></div>
-      <h3 class="calendar-title">Fire Calendar <span id="calendar-basis"></span></h3>
-      <div class="fire-calendar"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
-      <button class="comparison" data-dialog="comparison"><span class="comparison-title" id="comparison-title">Latest Year Comparison</span><span class="comparison-body"><svg class="icon green" id="comparison-icon"><use href="#check"/></svg><span id="comparison-text">–</span><svg class="icon arrow"><use href="#arrow"/></svg></span></button>
+    <section class="history panel" aria-labelledby="calendar-title">
+      <div class="panel-heading"><h2 id="calendar-title">Fire Calendar</h2>
+        <div class="view-switch" role="group" aria-label="Calendar colours"><button type="button" class="selected" id="mode-counts" aria-pressed="true">Counts</button><button type="button" id="mode-anomaly" aria-pressed="false">Anomaly</button></div>
+      </div>
+      <div class="calendar-bar">
+        <div class="record-switch" role="group" aria-label="Which record"><button type="button" id="rec-naive" aria-pressed="false">Naive merge</button><button type="button" class="selected" id="rec-harmonized" aria-pressed="true">Harmonized</button></div>
+        <div class="record-switch" id="ref-switch" role="group" aria-label="Anomaly compared with" hidden><button type="button" class="selected" id="ref-median" aria-pressed="true">vs median</button><button type="button" id="ref-mean" aria-pressed="false">vs mean</button></div>
+        <button type="button" class="link-button" id="table-toggle" aria-pressed="false">Show as table</button>
+      </div>
+      <p class="calendar-note" id="calendar-note"></p>
+      <div class="calendar" id="cal-grid" role="grid" aria-labelledby="calendar-title" aria-describedby="calendar-note"></div>
+      <div class="calendar-table" id="calendar-table" hidden></div>
+      <div class="calendar-legend" id="calendar-legend" aria-hidden="true"></div>
+    </section>
+  </section>
+
+  <section class="insights" aria-label="The selected month, the fire season and satellite drift">
+    <section class="panel month-panel" id="month-panel" aria-labelledby="month-title" aria-live="polite">
+      <p class="eyebrow small" id="month-eyebrow">SELECTED MONTH</p>
+      <h2 id="month-title">–</h2>
+      <div id="month-body"></div>
+    </section>
+    <section class="panel season-panel" aria-labelledby="season-title">
+      <p class="eyebrow small" id="season-eyebrow">FIRE SEASON</p>
+      <h2 id="season-title">When the fire season runs here</h2>
+      <div class="fire-calendar" id="season-dates"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
+      <p class="hint" id="season-note">Dates are worked out from individual detections when you open this area.</p>
+    </section>
+    <section class="panel drift-panel" aria-labelledby="drift-title">
+      <p class="eyebrow small" id="drift-eyebrow">SATELLITE CHECK</p>
+      <h2 id="drift-title">Is MODIS still seeing what it used to?</h2>
+      <svg id="drift-chart" viewBox="0 0 430 170" role="img" aria-labelledby="drift-title drift-caption"></svg>
+      <p class="hint" id="drift-caption"></p>
     </section>
   </section>
 
