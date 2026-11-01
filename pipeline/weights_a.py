@@ -11,8 +11,11 @@ Same interface as weights_interim.py, so export_v2.py only changes its import:
 The fitting and the predictive distributions are pipeline/bakeoff/models.py (fit_A, predict_A), imported, not
 re-implemented. This module only builds A's row table from the product's detections and reads A's answers:
 
-- rows: cell x month x day/night for every cell of the region's footprint, Y = Terra + Aqua, V = one VIIRS satellite;
-  Suomi NPP trained on 2012-02..2019-12, NOAA-20 on 2018-04..2019-12 (its first complete month).
+- rows: cell x month x day/night for every cell with a MODIS or that-satellite detection inside the fit window
+  (the fit's footprint, as in the bake-off), Y = Terra + Aqua, V = one VIIRS satellite; Suomi NPP trained on
+  2012-02..2019-12, NOAA-20 on 2018-04..2019-12 (its first complete month). Frozen by construction: detections
+  after the window, and cells that first burn after it, cannot change r0, b_A or the cell sums. A cell outside the
+  fit's footprint gets A's region-level forecast for its slot (no cell history: ratio r0, background b_A).
 - a detection's weight = A's posterior mean MODIS per VIIRS detection, shape / rate, for its cell x calendar month x
   day/night (read from predict_A with V = 1: mean = shape (1 - p) / p with p = rate / (rate + 1)).
 - background = A's forecast for V = 0, Poisson(b_A), for every footprint cell x month x day/night where the satellite
@@ -56,21 +59,30 @@ def _fit_one(det, fam, n_cells):
     assert max(months) <= "2019-12", "model A may not be fitted on 2020 or later"
     train = det[det.month.isin(months) & det.fam.isin(["modis", fam])]
     assert train.month.max() <= "2019-12"
+    fit_cells = np.array(sorted(train.ci.unique()), int)  # the fit's footprint: cells that burned in the window
+    cid = {c: k for k, c in enumerate(fit_cells)}
     cnt = train.groupby(["ci", "month", "dn", "fam"]).size().unstack("fam", fill_value=0)
-    full = pd.MultiIndex.from_product([range(n_cells), months, ["D", "N"]], names=["ci", "month", "dn"])
+    full = pd.MultiIndex.from_product([fit_cells, months, ["D", "N"]], names=["ci", "month", "dn"])
     cnt = cnt.reindex(full, fill_value=0).reset_index()
     for f in ("modis", fam):
         if f not in cnt:
             cnt[f] = 0
-    R = _table(cnt.ci, cnt.month.str[5:7].astype(int), cnt.dn == "N", cnt[fam], cnt.modis)
+    R = _table(cnt.ci.map(cid), cnt.month.str[5:7].astype(int), cnt.dn == "N", cnt[fam], cnt.modis)
     fit = fit_A(R, np.ones(len(R), bool))
-    # Posterior mean ratio per cell x calendar month x day/night: A's forecast for V = 1.
+    # For prediction only: one extra cell index with no history (zero sums) stands for every cell outside the
+    # fit's footprint, so it gets A's region-level forecast. The fitted arrays themselves are left as they are.
+    unseen = len(fit_cells)
+    pred = dict(fit, SY=np.r_[fit["SY"], np.zeros(24)], SV=np.r_[fit["SV"], np.zeros(24)])
+    cmap = np.full(n_cells, unseen, int)
+    cmap[fit_cells] = np.arange(len(fit_cells))
+    # Posterior mean ratio per product cell x calendar month x day/night: A's forecast for V = 1.
     ci, md = np.divmod(np.arange(n_cells * 24), 24)
-    ones = _table(ci, md // 2 + 1, md % 2, np.ones(len(ci)))
-    kind, fa, fb = predict_A(ones, np.ones(len(ones), bool), fit, A)
+    ones = _table(cmap[ci], md // 2 + 1, md % 2, np.ones(len(ci)))
+    kind, fa, fb = predict_A(ones, np.ones(len(ones), bool), pred, A)
     with np.errstate(divide="ignore", invalid="ignore"):
         ratio = np.where(kind == 2, fa * (1 - fb) / fb, 0.0)
-    return {"fit": fit, "ratio": ratio, "train": TRAIN[fam],
+    return {"fit": fit, "pred": pred, "cmap": cmap, "ratio": ratio, "train": TRAIN[fam],
+            "fit_cells": int(len(fit_cells)), "outside_fit_cells": int((cmap == unseen).sum()),
             "train_counts": {"modis": int(cnt.modis.sum()), fam: int(cnt[fam].sum())}, "rows": len(R)}
 
 
@@ -94,8 +106,9 @@ def hotspot_weights(model, rows):
 def _predictive(model, fam, grid, dn):
     """Mean and variance of A's forecast for one satellite and one time of day, per grid row."""
     s = SAT[fam]
-    R = _table(grid.ci, grid.moy, np.full(len(grid), dn == "N"), grid[f"V_{s}_{dn}"])
-    kind, fa, fb = predict_A(R, np.ones(len(R), bool), model["fams"][fam]["fit"], model["a"])
+    f = model["fams"][fam]
+    R = _table(f["cmap"][grid.ci.to_numpy()], grid.moy, np.full(len(grid), dn == "N"), grid[f"V_{s}_{dn}"])
+    kind, fa, fb = predict_A(R, np.ones(len(R), bool), f["pred"], model["a"])
     mean, var = np.zeros(len(R)), np.zeros(len(R))
     pois, nb = kind == 1, kind == 2
     mean[pois] = var[pois] = fa[pois]
@@ -171,6 +184,7 @@ def describe(model):
             "background_bA": {f"{md // 2 + 1:02d}{'DN'[md % 2]}": round(float(b), 4) for md, b in enumerate(fit["bA"])},
             "r0_fallback_months": int((fit["r0_level"] > 0).sum()),
             "train_detections": f["train_counts"], "train_rows": f["rows"],
+            "fit_cells": f["fit_cells"], "cells_outside_fit_region_level": f["outside_fit_cells"],
         }
     return {
         "name": model["name"], "a": model["a"], "satellites": sats,

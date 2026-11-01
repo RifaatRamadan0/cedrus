@@ -53,9 +53,19 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
         pass
 
 
+class Server(socketserver.ThreadingTCPServer):
+    # The page asks for up to 25 hotspot years at once; the default backlog of 5 refuses some of them
+    # (ERR_CONNECTION_REFUSED), which is the test server's limit, not the site's.
+    request_queue_size = 128
+    daemon_threads = True
+
+    def handle_error(self, request, client_address):
+        pass  # a browser context closed mid-download aborts the connection; not a finding
+
+
 def serve(port):
     handler = partial(Quiet, directory=str(ROOT / "web"))
-    httpd = socketserver.ThreadingTCPServer(("127.0.0.1", port), handler)
+    httpd = Server(("127.0.0.1", port), handler)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     return httpd
 
@@ -103,7 +113,29 @@ def expected_default_month(region="portugal"):
         if len(base) >= 5 and np.median(base) >= 5:
             prev = ym[j - 1]
             return f"{NAMES[mo]} {y}", f"{NAMES[prev[1]]} {prev[0]}"
+    for j in range(len(total) - 1, -1, -1):
+        if total[j] >= 1:
+            y, mo = ym[j]
+            prev = ym[j - 1]
+            return f"{NAMES[mo]} {y}", f"{NAMES[prev[1]]} {prev[0]}"
     return None, None
+
+
+def anomaly_shares(page, label):
+    """Anomaly mode, vs median: the share of strongly-above cells (>= +100%) before and from 2022."""
+    page.click("#mode-anomaly")
+    page.click("#ref-median")
+    cells = page.evaluate(r"""() => [...document.querySelectorAll('#cal-grid [role=gridcell]')].map((c) => [Number(c.dataset.year),
+      c.dataset.anom == null ? null : Number(c.dataset.anom), c.classList.contains('few')])""")
+    def share(rows):
+        coloured = [a for _, a, _ in rows if a is not None]
+        return (sum(a >= 1 for a in coloured) / len(coloured)) if coloured else 0.0, len(coloured)
+    pre, n_pre = share([c for c in cells if 2008 <= c[0] < 2022])
+    post, n_post = share([c for c in cells if c[0] >= 2022])
+    few = sum(f for _, _, f in cells)
+    check(f"{label}: no false 2022 jump in anomaly mode (strong-above share from 2022 <= 2x before)", post <= 2 * pre + 1e-9,
+          f"strong-above share 2008-21 {pre:.2f} of {n_pre} coloured, 2022+ {post:.2f} of {n_post}; {few} few-fires neutral cells")
+    page.click("#mode-counts")
 
 
 def rounding_bound(region):
@@ -119,6 +151,9 @@ def compare_csvs(page, label, dest, tol=None):
     hpath = download(page, "#csv-hotspots", dest)
     header, monthly = read_monthly(mpath)
     hot = pd.read_csv(hpath, low_memory=False, dtype={"version": str, "acq_date": str})
+    check(f"{label}: methods line wording", "replaced by the bake-off winner" not in header and "identical to the exact sum" not in header
+          and ("whole" in label.lower() and "equal to the exact sum within rounding; ≤0.1/month" in header or "region" not in label.lower()),
+          header[header.find("Area"):header.find("Area") + 140])
     check(f"{label}: monthly CSV parses with methods line",
           header.startswith("# CEDRUS") and list(monthly.columns) == ["month", "harmonized_estimate", "p10", "p90", "naive", "background", "source_flag"],
           f"{len(monthly)} months")
@@ -180,6 +215,25 @@ def model_checks():
     finally:
         weights_a.TRAIN.clear(); weights_a.TRAIN.update(saved)
     check("model A refuses a fit window reaching into 2020", refused)
+
+    # Frozen by construction: a detection in 2023 in a cell that never burned before changes no fitted parameter,
+    # and that cell gets A's region-level ratio (r0 of its slot).
+    import export_v2
+    det = export_v2.detections("lebanon")
+    cells = det.groupby(["iy", "ix"]).size().reset_index()
+    det["ci"] = [dict(zip(zip(cells.ix, cells.iy), range(len(cells))))[k] for k in zip(det.ix, det.iy)]
+    m1 = weights_a.fit(det, "lebanon")
+    new = det.iloc[[0]].copy()
+    new["month"], new["moy"], new["dn"], new["fam"], new["sensor"], new["ci"] = "2023-07", 7, "D", "snpp", "N", len(cells)
+    m2 = weights_a.fit(pd.concat([det, new], ignore_index=True), "lebanon")
+    same = all(np.array_equal(m1["fams"][f]["fit"][k], m2["fams"][f]["fit"][k])
+               for f in m1["fams"] for k in ("r0", "bA", "SY", "SV", "r0_level"))
+    md = (7 - 1) * 2
+    region_level = abs(m2["fams"]["snpp"]["ratio"][len(cells) * 24 + md] - m2["fams"]["snpp"]["fit"]["r0"][md]) < 1e-12
+    check("model A frozen: a synthetic 2023 detection in a brand-new cell leaves r0, b_A and cell sums bit-identical",
+          same, f"cells {len(cells)} -> {len(cells) + 1}")
+    check("a cell that first burns after the fit window gets A's region-level ratio for its slot", region_level,
+          f"{m2['fams']['snpp']['ratio'][len(cells) * 24 + md]:.6f} vs r0 {m2['fams']['snpp']['fit']['r0'][md]:.6f}")
 
     # Combination rule: a satellite enters a slot's average only where A's prior ratio r0 > 0.
     bad = [(r["id"], slot, f) for r in idx["regions"] for slot, sats in r["combination"]["slots_when_both_cover"].items()
@@ -268,8 +322,8 @@ def run(url, shots):
         n_b = page.locator("#cal-grid .cal-cell.b").count()
         n_e = page.locator("#cal-grid .cal-cell.e").count()
         check("calendar rendered: 26 years x 12 months", n_cells == 312, f"{n_cells} cells; no-data {n_nd}, bridged {n_b}, estimated {n_e}")
-        check("record runs to Dec 2025: no-data = Jan-Oct 2000 only; bridged Nov 2000..Jun 2002; estimated 2022-01..2025-12",
-              (n_nd, n_b, n_e) == (10, 20, 48))
+        check("record = MODIS's first complete month (2000-12) to Dec 2025: no-data Jan-Nov 2000; bridged Dec 2000..Jun 2002; estimated 2022-01..2025-12",
+              (n_nd, n_b, n_e) == (11, 19, 48) and json.loads((ROOT / "web/data/portugal/monthly.json").read_text(encoding="utf-8"))["months"]["first"] == "2000-12")
         note = page.inner_text("#record-end-note")
         check("record-end note names the pending near-real-time key", "December 2025" in note and "near-real-time API key" in note, note)
         check("default area is Portugal, whole region", "Portugal (whole region)" in page.inner_text("#area-summary"))
@@ -397,6 +451,35 @@ def run(url, shots):
         page.wait_for_timeout(900)
         page.screenshot(path=str(shots / "desktop_drawn_rectangle.png"), full_page=True)
         compare_csvs(page, "mouse-drawn rectangle", dl)
+        check("map cells are drawn at fill opacity 0.6", page.evaluate("window.cedrus.state.map.getPaintProperty('cells', 'fill-opacity')") == 0.6)
+        page.click("#draw-rectangle")
+        page.keyboard.press("Escape")
+        st = page.evaluate("() => ({ drawing: window.cedrus.state.drawing, pressed: document.querySelector('#draw-rectangle').getAttribute('aria-pressed') })")
+        check("Escape leaves drawing mode", st["drawing"] is None and st["pressed"] == "false", str(st))
+
+        # ---- quiet areas: no false 2022 jump in anomaly mode
+        for lat, lon, km in ((37.32, -8.55, 3), (39.6, -8.2, 25)):
+            circle(page, lat, lon, km)
+            anomaly_shares(page, f"{km} km circle at {lat},{lon}")
+            if km == 3:
+                page.locator(".history").screenshot(path=str(shots / "desktop_quiet_circle_anomaly.png"))
+        page.click("#mode-anomaly")
+        page.locator(".history").screenshot(path=str(shots / "desktop_quiet25_circle_anomaly.png"))
+        page.click("#mode-counts")
+
+        # ---- a shape over both regions, containing the whole of Portugal
+        big = [[-10.5, 31.5], [37.5, 31.5], [37.5, 43.5], [-10.5, 43.5], [-10.5, 31.5]]
+        page.evaluate("ring => window.cedrus.useRing(ring, 'polygon')", big)
+        page.wait_for_function("document.querySelector('#area-summary').textContent.includes('containing all of')", timeout=120000)
+        summary = page.inner_text("#area-summary")
+        check("a shape over both regions says so and shows one", "spans Portugal and Lebanon — showing Portugal only; draw within one region" in summary, summary[:300])
+        check("a shape containing all of Portugal is not called '100% outside'", "Most of this area is outside our data; showing all of Portugal’s detections inside it." in summary
+              and "100%" not in summary and "containing all of Portugal" in summary)
+        tot_shape = page.evaluate("() => window.cedrus.state.series.m.reduce((a, b) => a + b, 0)")
+        tot_region = float(np.array(json.loads((ROOT / "web/data/portugal/monthly.json").read_text(encoding="utf-8"))["m"]).sum())
+        check("... and its calendar holds all of Portugal's record", abs(tot_shape - tot_region) <= rounding_bound("portugal"),
+              f"shape {tot_shape:.2f} vs region {tot_region:.2f}")
+        page.click("#draw-clear")
 
         # ---- region switch mid-draw cancels the drawing
         page.click("#draw-rectangle")
@@ -438,6 +521,21 @@ def run(url, shots):
         page.screenshot(path=str(shots / "desktop_lebanon.png"), full_page=True)
         compare_csvs(page, "Lebanon whole region", dl, rounding_bound("lebanon"))
 
+        circle(page, 34.4, 36.1, 5)
+        anomaly_shares(page, "Lebanon 5 km circle at 34.4,36.1")
+        page.click("#mode-anomaly")
+        page.locator(".history").screenshot(path=str(shots / "desktop_lebanon_circle_anomaly.png"))
+        page.click("#mode-counts")
+        page.locator("#month-panel").screenshot(path=str(shots / "desktop_lebanon_circle_panel.png"))
+        info(f"Lebanon 5 km circle panel: {page.inner_text('#month-panel').replace(chr(10), ' | ')[:400]}")
+        check("Lebanon 5 km circle: few-fires month in words, no % and no chance; the opening reason is stated",
+              "A typical" in page.inner_text("#few-words") and "%" not in page.inner_text("#few-words")
+              and "Chance it is above" not in page.inner_text("#month-panel")
+              and page.inner_text("#month-eyebrow") in ("MOST RECENT MONTH WITH A FIRE NORMAL", "MOST RECENT MONTH WITH A DETECTION", "LATEST MONTH IN THE RECORD"),
+              page.inner_text("#month-eyebrow"))
+        page.click("#example-lebanon")
+        page.wait_for_function("document.querySelector('#area-summary').textContent.includes('Lebanon (whole region)')", timeout=20000)
+
         # ---- region race: from Lebanon, ask for Portugal and at once for Lebanon again; Lebanon must stay
         outcome = page.evaluate("() => Promise.all([window.cedrus.useRegion('portugal'), window.cedrus.useRegion('lebanon')])")
         page.wait_for_timeout(1000)
@@ -475,7 +573,15 @@ def run(url, shots):
         check("methodology: model A in plain words, the bake-off link, B lost, NOAA-20, SHA-256, credits",
               all(k in dlg for k in ("A — shrinkage ratio (bake-off winner)", "BAKEOFF_RESULTS.md", "lost", "NOAA-20", "SHA-256", "Kiln Watch", "Agun-Panjika", "Use of AI"))
               and page.locator("#detail-dialog a[href$='BAKEOFF_RESULTS.md']").count() == 1)
+        check("methodology: bake-off wording and the background in plain words",
+              "lost in the pre-registered leave-one-year-out test on every region and year (1.53×)" in dlg
+              and "edged ahead in Lebanon, Jordan and Israel by 1–2%" in dlg
+              and "a small region-wide expected count per month and time of day for places where VIIRS saw nothing" in dlg)
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        check("README: evidence is the bake-off; RESULTS.md is an earlier method; MODIS C6.1; GIBS Blue Marble only",
+              "## How we know it works: the pre-registered bake-off" in readme and "docs/BAKEOFF_RESULTS.md" in readme
+              and "is an earlier test of an earlier method" in readme and "MODIS Collection 6.1" in readme
+              and "Basemap: NASA GIBS Blue Marble." in readme and "reference features and labels" not in readme)
         check("README: Suomi NPP stops delivering data on 2 Nov 2026", "stops delivering data on **2 Nov 2026**" in readme
               and "1 November 2026" not in readme)
         page.screenshot(path=str(shots / "desktop_methodology.png"))
@@ -483,6 +589,34 @@ def run(url, shots):
         check("unused v1 files removed", not (ROOT / "web/data/portugal.json").exists() and not (ROOT / "web/data/portugal-cells.geojson").exists())
         page.wait_for_timeout(2500)
         page.screenshot(path=str(shots / "desktop.png"), full_page=True)
+        ctx.close()
+
+        # ---- a failed hotspot year: no numbers under the new name, downloads off, retry works
+        ctx = browser.new_context(viewport={"width": 1440, "height": 900}, accept_downloads=True)
+        page = ctx.new_page()
+        page.route("**/data/portugal/hotspots/2015.json", lambda route: route.fulfill(status=503, body="unavailable"))
+        page.goto(url, wait_until="commit")
+        page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
+        page.fill("#lat", "39.6"); page.fill("#lon", "-8.2"); page.fill("#radius", "25"); page.click("#circle-go")
+        page.wait_for_selector("#load-error", timeout=120000)
+        st = page.evaluate("""() => ({ err: document.querySelector('#load-error').textContent, label: document.querySelector('#area-summary strong').textContent,
+          title: document.querySelector('#month-title').textContent, cells: document.querySelectorAll('#cal-grid [role=gridcell]').length,
+          csv: [document.querySelector('#csv-hotspots').disabled, document.querySelector('#csv-monthly').disabled],
+          retry: !!document.querySelector('#retry-area'), caption: document.querySelector('#map-caption').textContent })""")
+        check("failed year (503): error names the year, offers a retry", st["err"] == "Couldn’t load detections for 2015 — try again." and st["retry"], st["err"])
+        check("failed year: no numbers shown under the new name, label and title agree, downloads disabled",
+              st["cells"] == 0 and st["csv"] == [True, True] and "25 km around 39.600, -8.200" in st["label"] and st["title"] == st["label"]
+              and "over http" not in st["caption"], str(st)[:300])
+        stale = page.evaluate("""() => ({ progress: document.querySelector('#cal-progress').hidden, note: document.querySelector('#calendar-note').textContent,
+          legend: document.querySelector('#calendar-legend').textContent, season: document.querySelector('#season-eyebrow').textContent })""")
+        check("failed year: no stale texts (progress hidden, calendar note and season name the failure and the new area)",
+              stale["progress"] and "2015" in stale["note"] and not stale["legend"] and "25 KM AROUND" in stale["season"], str(stale)[:240])
+        page.screenshot(path=str(shots / "desktop_load_error.png"), full_page=True)
+        page.unroute("**/data/portugal/hotspots/2015.json")
+        page.click("#retry-area")
+        page.wait_for_function("document.querySelectorAll('#cal-grid [role=gridcell]').length === 312", timeout=120000)
+        ok = page.evaluate("() => !document.querySelector('#csv-hotspots').disabled && !document.querySelector('#csv-monthly').disabled && !document.querySelector('#load-error')")
+        check("retry after the failure loads the area and turns downloads back on", ok)
         ctx.close()
 
         # ---- mobile
@@ -496,6 +630,9 @@ def run(url, shots):
         check("mobile 390 px: no horizontal overflow", overflow <= 0, f"scrollWidth - innerWidth = {overflow}")
         box = page.evaluate("(() => { const r = document.querySelector('#cal-grid [role=gridcell]').getBoundingClientRect(); return [r.width, r.height]; })()")
         check("mobile: calendar cells at least 24 px tall", box[1] >= 24, f"{box[0]:.1f} x {box[1]:.1f} px")
+        badge = page.evaluate("(() => { const b = document.querySelector('.hero-badge'); const r = b.getBoundingClientRect(); const h = document.querySelector('.hero').getBoundingClientRect(); return { left: r.left, right: r.right, hRight: h.right, scroll: b.scrollWidth, client: b.clientWidth, text: b.innerText }; })()")
+        check("mobile 390 px: hero badge not clipped", badge["right"] <= badge["hRight"] and badge["left"] >= 0 and badge["scroll"] <= badge["client"] + 1,
+              f"{badge}"[:200])
         page.screenshot(path=str(shots / "mobile_early.png"), full_page=True)  # whatever the CDN has delivered by now
         t_map = time.time()
         try:  # not a check: how long the CDN takes is not the site's doing; the screenshot just waits for it

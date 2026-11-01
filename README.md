@@ -13,13 +13,17 @@ Suomi NPP stops delivering data on **2 Nov 2026**, and MODIS is
 next. CEDRUS builds one fire record that survives the handover, **tests it
 honestly**, and turns it into a fire calendar for any area.
 
-## How we know it works: the MODIS retirement test
+## How we know it works: the pre-registered bake-off
 
-We pretend MODIS ended in 2019. We fit the VIIRS → MODIS conversion only on
-2012–2019, rebuild 2020–2025 from VIIRS alone, and compare with what MODIS
-really saw (it kept flying, so we can check). The rules, including what counts
-as a pass, are in [docs/TEST_PLAN.md](docs/TEST_PLAN.md). They were committed
-**before** the test first ran. The latest scores are in [docs/RESULTS.md](docs/RESULTS.md).
+The conversion the site uses (model A, a shrinkage ratio) won a bake-off whose rules were committed before
+either model was fitted ([docs/BAKEOFF_PLAN.md](docs/BAKEOFF_PLAN.md)). Fitted only on 2012–2019 and scored
+year by year, the learned detection-physics model it competed against lost in the pre-registered
+leave-one-year-out test on every region and year (1.53×); in a forward check it edged ahead in Lebanon, Jordan
+and Israel by 1–2.3%. The scores are in [docs/BAKEOFF_RESULTS.md](docs/BAKEOFF_RESULTS.md).
+
+[docs/RESULTS.md](docs/RESULTS.md) is an earlier test of an earlier method (a ratio per cell, the MODIS
+retirement test of [docs/TEST_PLAN.md](docs/TEST_PLAN.md)); it is kept as a record, not as the evidence for
+the current site.
 
 ## Quick start
 
@@ -85,4 +89,4 @@ browsers block a page opened from disk from loading its data files.
 ## Data credits
 
 Fire detections: NASA FIRMS (Fire Information for Resource Management System),
-MODIS Collection 6 and VIIRS 375 m active fire products (the product version in each file is kept in the data). Basemap: NASA GIBS (Blue Marble, reference features and labels).
+MODIS Collection 6.1 and VIIRS 375 m active fire products (each file's own version string — 6.2, 6.03, 61.03 for MODIS, 2 for VIIRS — is kept in the data). Basemap: NASA GIBS Blue Marble.

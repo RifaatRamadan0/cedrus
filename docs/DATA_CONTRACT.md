@@ -23,9 +23,11 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
   one filtered detection (any sensor, any year) are listed; a missing cell means zero, not missing data. The listed
   cells are also the region's **data footprint**: the website treats any part of a drawn area outside them (or outside
   the box) as outside the region's FIRMS country file.
-- **Months:** `"YYYY-MM"`, index `j = 0` is `months.first`. The record starts 2000-11 (Terra's first full month).
+- **Months:** `"YYYY-MM"`, index `j = 0` is `months.first`. The record starts at MODIS's first complete month by the
+  rule below: both regions' files start after 3 November 2000, so the record starts **2000-12**.
 - **Complete months** (lead's ruling): a sensor file's final month counts only if the file has a detection dated in
-  that month's last 3 days (its first month: in the first 3 days). Every other month inside the file's span counts.
+  that month's last 3 days; its first month only if it has one in the first 3 days. Every other month inside the
+  file's span counts. The same rule sets the record's first month (MODIS) and its last (VIIRS).
   The record ends at the last month a VIIRS satellite covers — **2025-12** for both regions; 2026 to the present needs
   NASA's FIRMS near-real-time API key (pending). Details per sensor in `regions.json` `record_end`.
 - **Which VIIRS satellite covers a month:** it is inside its complete span, and it is not an outage month (zero
@@ -34,7 +36,7 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 
 | Flag | Months | Harmonized estimate |
 |---|---|---|
-| `B` bridged | 2000-11 .. 2002-06 | Terra detections ÷ Terra's share for that calendar month (below) |
+| `B` bridged | 2000-12 .. 2002-06 | Terra detections ÷ Terra's share for that calendar month (below) |
 | `O` observed | 2002-07 .. 2021-12 | MODIS Terra + Aqua detections (nominal orbits) |
 | `E` estimated (S-NPP+NOAA-20) | 2022-01 .. | average of the Suomi NPP-based and the NOAA-20-based MODIS-equivalent estimates of model A |
 | `N` estimated (S-NPP only) | 2022-01 .. | Suomi NPP-based estimate; NOAA-20 does not cover the month (Lebanon 2025-12) |
@@ -49,6 +51,11 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
   from `pipeline/bakeoff/models.py`; evidence in `docs/BAKEOFF_RESULTS.md`). Fitted separately for Suomi NPP
   (2012-02..2019-12) and NOAA-20 (2018-04..2019-12) against Terra + Aqua, per footprint cell × calendar month ×
   day/night, a = 30. `pipeline/weights_interim.py` is the earlier placeholder, kept for reference and unused.
+  **Frozen by construction:** each fit uses only the cells with a MODIS or that-satellite detection inside its window
+  (its own footprint, as in the bake-off). Detections after the window, and cells that first burn after it, cannot
+  change r0, b_A or the cell sums; a cell outside the fit's footprint gets A's region-level forecast for its slot
+  (ratio r0, background b_A). `tools/probe_site.py` adds a synthetic 2023 detection in a new cell and checks the
+  fitted arrays stay bit-identical.
 - **Weights `w`:** every detection carries its contribution to the harmonized estimate of its month
   (`r_N`, `r_J1` = model A's posterior mean MODIS per detection of that satellite, for the detection's cell,
   calendar month and day/night: (a + ΣMODIS) / (a / r0 + ΣVIIRS); 0 where r0 = 0):
@@ -85,12 +92,12 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
   "regions": [{
     "id": "portugal", "name": "Portugal",
     "bbox": [lon_min, lat_min, lon_max, lat_max],
-    "months": {"first": "2000-11", "last": "2025-12"},
+    "months": {"first": "2000-12", "last": "2025-12"},
     "record_end": {
       "suomi_npp": {"first": "2012-02", "last": "2025-12", "first_detection": "2012-01-20", "last_detection": "2025-12-31"},
       "noaa20":    {"first": "2018-04", "last": "2025-12", "first_detection": "2018-04-03", "last_detection": "2025-12-30"},
       "modis":     {"first": "2000-12", "last": "2025-11", "first_detection": "2000-11-06", "last_detection": "2025-11-28"},
-      "detections_after_record_dropped": 0, "viirs_outage_months": [], "rule": "…", "after": "2026 … API key (pending)"
+      "detections_outside_record_dropped": 3, "viirs_outage_months": [], "rule": "…", "after": "2026 … API key (pending)"
     },
     "default_view": {"bounds": [[lon_min, lat_min], [lon_max, lat_max]]},
     "model": "A — shrinkage ratio (bake-off winner)",
@@ -129,7 +136,7 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 ```jsonc
 {
   "region": "portugal", "cell_deg": 0.25,
-  "months": {"first": "2000-11", "last": "2025-12", "n": 302},
+  "months": {"first": "2000-12", "last": "2025-12", "n": 301},
   "flags": "BBBB…OOO…EEE",                    // one character per month: B / O / E / N / J / X (table above)
   "flag_codes": {"B": "bridged", "O": "observed", "E": "estimated (S-NPP+NOAA-20)", "N": "estimated (S-NPP only)",
                  "J": "estimated (NOAA-20 only)", "X": "no data"},
@@ -162,6 +169,15 @@ Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
   inside the shape. The naive record counts the naive-record detections inside the shape. The 80% range scales each
   touched cell's half-widths by (the shape's weight in that cell ÷ the cell's `m`) and combines them in quadrature
   (approximate). An area with no detection inside is shown as "no detections here".
+- **Quiet months:** an expected value under 0.5 counts as zero, before and after 2022 alike, for the colour and for
+  every comparison (baseline, anomaly, rank, chance above the median, trust check). Where the baseline median is under
+  5 ("few fires"), anomaly mode draws the month neutral with the few-fires mark and the panel gives the count against
+  the typical range (interquartile range) in words, without a percentage or a chance. No percentage is ever taken
+  against a normal under 1.
+- **Failed loads:** if a hotspot year cannot be loaded, the area shows no numbers (no calendar, no panel values),
+  the downloads are disabled, and the area names the year with a retry button.
+- **Shapes:** a shape that reaches both product regions is shown for one, with a note; a shape containing a whole
+  region says so instead of reporting a share "outside".
 - **Outside the data:** the share of a drawn area outside the box or outside the data footprint (cells listed above)
   is shown as a warning and in the area's name; fires there are not in the country file and are not counted.
 

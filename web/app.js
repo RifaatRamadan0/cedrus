@@ -19,7 +19,9 @@ const BASELINE_FIRST = 2003;
 const MIN_BASE_YEARS = 5; // fewer baseline years than this: no normal, no anomaly, no trust check
 const SEASON_MIN = 20;    // detections a year before a season can be dated
 const FEW_FIRES = 5;      // baseline median below this: "few fires — too few to judge"
-const QUIET = 0.5;        // Counts mode draws an expected value below this as "≈ zero", in every era
+const QUIET = 0.5;        // an expected value below this counts as zero, in every era, for colour and for every comparison
+const FEW_TILE = '#46525c'; // anomaly mode: months whose normal is under FEW_FIRES are drawn neutral, not compared
+function asCount(v) { return v < QUIET ? 0 : v; }
 const Z80 = 1.2815515655446004; // standard normal 90th percentile
 // cividis (Nuñez, Anderton & Renslow 2018), sampled; colour-blind safe and monotone in lightness
 const CIVIDIS = ['#00204d', '#00336f', '#39486b', '#575c6d', '#707173', '#8a8779', '#a69d75', '#c4b56c', '#e4cf5b', '#ffea46'];
@@ -127,6 +129,11 @@ function ringBounds(ring) {
   const xs = ring.map((p) => p[0]); const ys = ring.map((p) => p[1]);
   return [[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]];
 }
+function regionsTouched(ring) {
+  const [[x0, y0], [x1, y1]] = ringBounds(ring);
+  return state.index.regions.filter((r) => x0 < r.bbox[2] && x1 > r.bbox[0] && y0 < r.bbox[3] && y1 > r.bbox[1]);
+}
+function containsBox(ring, [x0, y0, x1, y1]) { return [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].every(([x, y]) => inRing(x, y, ring)); }
 function regionForRing(ring) {
   const [[x0, y0], [x1, y1]] = ringBounds(ring);
   const cx = (x0 + x1) / 2; const cy = (y0 + y1) / 2;
@@ -180,9 +187,10 @@ function regionSeries() {
 // plus each cell's background term (model A's b_A) times the share of the cell inside the shape.
 async function exactSeries(area, token) {
   const meta = state.meta; const mon = state.monthly; const n = mon.months.n;
-  const yearsWanted = meta.hotspot_years; let done = 0;
+  const yearsWanted = meta.hotspot_years; let done = 0; let failedYear = null;
   progress(0, yearsWanted.length);
-  const files = await Promise.all(yearsWanted.map((y) => loadYear(y).then((f) => { done += 1; if (token === state.areaToken) progress(done, yearsWanted.length); return f; })));
+  const files = await Promise.all(yearsWanted.map((y) => loadYear(y).catch((err) => { failedYear = failedYear ?? y; err.year = y; throw err; })
+    .then((f) => { done += 1; if (token === state.areaToken && failedYear == null) progress(done, yearsWanted.length); return f; })));
   if (token !== state.areaToken) return null;
   const s = { m: new Float64Array(n), lo: new Float64Array(n), hi: new Float64Array(n), naive: new Float64Array(n), bg: new Float64Array(n), exact: true, count: 0 };
   const perCell = new Map(); // cell index -> Float64Array(n) of weights inside the shape
@@ -247,7 +255,7 @@ function value(j, record = state.record) { return record === 'naive' ? state.ser
 // and the selected-month panel all use this one definition.
 function baseline(year, moy, record = state.record) {
   const vals = [];
-  for (let y = BASELINE_FIRST; y < year; y += 1) { const j = indexOf(y, moy); if (j >= 0 && flagAt(j) !== 'X') vals.push(value(j, record)); }
+  for (let y = BASELINE_FIRST; y < year; y += 1) { const j = indexOf(y, moy); if (j >= 0 && flagAt(j) !== 'X') vals.push(asCount(value(j, record))); }
   const sorted = [...vals].sort((a, b) => a - b);
   return {
     years: vals.length, enough: vals.length >= MIN_BASE_YEARS, first: BASELINE_FIRST, last: year - 1, sorted,
@@ -262,7 +270,7 @@ function baseline(year, moy, record = state.record) {
 function trustRatio(j, base) {
   const half = (state.series.hi[j] - state.series.lo[j]) / 2;
   if (half <= 1e-9) return 0;
-  const scale = Math.max(Math.abs(state.series.m[j] - base.median), base.iqr / 2);
+  const scale = Math.max(Math.abs(asCount(state.series.m[j]) - base.median), base.iqr / 2);
   return scale > 0 ? half / scale : Infinity;
 }
 function trustVerdict(j, base) {
@@ -274,22 +282,27 @@ function trustVerdict(j, base) {
   return { key: 'uncertain', text: 'Too uncertain', R };
 }
 
-// The month a new area opens on: the most recent one that normally has at least FEW_FIRES detections.
+// The month a new area opens on: the most recent one that normally has at least FEW_FIRES detections;
+// else the most recent with at least one detection; else the latest month.
 function defaultMonth() {
   const last = state.monthly.months.n - 1;
   for (let j = last; j >= 0; j -= 1) {
     const { year, moy } = monthOf(j); const b = baseline(year, moy, 'harmonized');
-    if (b.enough && b.median >= FEW_FIRES) return j;
+    if (b.enough && b.median >= FEW_FIRES) { state.defaultWhy = 'normal'; return j; }
   }
+  for (let j = last; j >= 0; j -= 1) if (state.series.m[j] >= 1) { state.defaultWhy = 'detection'; return j; }
+  state.defaultWhy = 'latest';
   return last;
 }
+function typicalRange(b) { return [quantile(b.sorted, 0.25), quantile(b.sorted, 0.75)]; }
 
 // ---------- calendar ----------
 function cellView(j) {
   if (j < 0 || flagAt(j) === 'X') return { nd: true, text: j < 0 ? 'no data' : 'no data (no VIIRS satellite this month)' };
   const v = value(j); const { year, moy } = monthOf(j); const flag = flagAt(j);
   const b = baseline(year, moy);
-  let bg = null; let text; let zero = false;
+  const few = b.enough && b.median < FEW_FIRES;
+  let bg = null; let text; let zero = false; let anom = null;
   if (state.mode === 'counts') {
     // Quiet months look the same in both eras: an expected value under QUIET is drawn as "≈ zero";
     // the exact value stays in the tooltip.
@@ -298,13 +311,18 @@ function cellView(j) {
     text = v < 0.005 ? 'no detections' : zero ? `${v.toFixed(2)} detections (≈ zero, under ${QUIET})` : `${fmt(v)} detections`;
   } else if (!b.enough) {
     text = `${fmt(v)} detections; not enough history for a baseline (${b.years} years)`;
+  } else if (few) {
+    // Few fires: no diverging colour; the count is set against the typical range in words.
+    const [q1, q3] = typicalRange(b);
+    bg = FEW_TILE;
+    text = `few fires here, not compared: ${fmt(v)} detections${v < QUIET && v > 0 ? ' (counts as 0)' : ''}; a typical ${MONTH_NAMES[moy - 1]} has ${fmt(q1)}–${fmt(q3)}`;
   } else {
-    const ref = b[state.ref];
-    if (ref > 0) {
-      const r = v / ref; const t = Math.max(-2, Math.min(2, Math.log2(Math.max(r, 1e-9))));
-      bg = ramp(PUOR, (t + 2) / 4);
+    const ref = b[state.ref]; const vc = asCount(v);
+    if (ref >= 1) { // a percentage is never taken against a normal under 1
+      const r = vc / ref; const t = Math.max(-2, Math.min(2, Math.log2(Math.max(r, 1e-9))));
+      bg = ramp(PUOR, (t + 2) / 4); anom = t;
       text = `${signedPct(r - 1)} vs ${b.first}–${b.last} ${state.ref} (${fmt(v)} vs ${fmt(ref)})`;
-    } else { bg = v > 0 ? PUOR[10] : PUOR[5]; text = v > 0 ? `${fmt(v)} detections where the ${state.ref} is 0` : `0, and the ${state.ref} is 0`; }
+    } else { bg = FEW_TILE; text = `${fmt(v)} detections; the ${state.ref} is under 1, not compared`; }
   }
   let trust = { key: 'none' };
   if (state.record === 'harmonized') {
@@ -312,10 +330,11 @@ function cellView(j) {
     if (trust.key !== 'none') text += `; trust check: ${trust.text.toLowerCase()}${Number.isFinite(trust.R) && trust.R > 0 ? ` (R ${trust.R.toFixed(2)})` : ''}`;
   }
   const note = slotNote(j);
-  return { bg, zero, text: `${text} · ${SHORT_FLAG[flag]}${note ? ` (${note})` : ''}`, flag, trust: trust.key };
+  return { bg, zero, few, anom, text: `${text} · ${SHORT_FLAG[flag]}${note ? ` (${note})` : ''}`, flag, trust: trust.key };
 }
 
 function renderCalendar() {
+  if (!state.series) return; // an area whose detections are loading or failed to load shows no numbers
   const ys = years();
   let vmax = 1; for (let j = 0; j < state.series.m.length; j += 1) vmax = Math.max(vmax, state.series.m[j], state.series.naive[j]);
   state.vmax = vmax; // one scale for both records, so the naive 2012 jump is not rescaled away
@@ -329,10 +348,10 @@ function renderCalendar() {
       const j = indexOf(y, moy); const c = cellView(j);
       const name = `${MONTH_NAMES[moy - 1]} ${y}`;
       const cls = ['cal-cell', c.nd ? 'nd' : '', c.flag === 'B' ? 'b' : '', isEstimated(c.flag) ? 'e' : '', j >= 0 && j === state.sel ? 'sel' : '',
-        !c.nd && !c.bg && !c.zero ? 'nb' : '', c.zero ? 'zero' : '', c.trust === 'care' ? 'care' : '', c.trust === 'uncertain' ? 'hz' : '', c.trust === 'few' ? 'few' : '',
+        !c.nd && !c.bg && !c.zero ? 'nb' : '', c.zero ? 'zero' : '', c.trust === 'care' ? 'care' : '', c.trust === 'uncertain' ? 'hz' : '', c.trust === 'few' || (c.few && state.mode === 'anomaly') ? 'few' : '',
         c.bg && isLight(c.bg) ? 'light' : ''].filter(Boolean).join(' ');
       const style = c.bg ? ` style="background-color:${c.bg}"` : '';
-      html += `<span role="gridcell" class="${cls}"${style} data-j="${j}" data-year="${y}" data-moy="${moy}" tabindex="${j >= 0 && j === focus ? 0 : -1}" aria-selected="${j >= 0 && j === state.sel}" aria-label="${name}: ${c.text}" title="${name}: ${c.text}"></span>`;
+      html += `<span role="gridcell" class="${cls}"${style}${c.anom != null ? ` data-anom="${c.anom.toFixed(2)}"` : ''} data-j="${j}" data-year="${y}" data-moy="${moy}" tabindex="${j >= 0 && j === focus ? 0 : -1}" aria-selected="${j >= 0 && j === state.sel}" aria-label="${name}: ${c.text}" title="${name}: ${c.text}"></span>`;
       rows += `<td>${c.nd ? '<span class="muted">no data</span>' : `${fmt(value(j))}${c.flag !== 'O' ? ` <small>${SHORT_FLAG[c.flag]}</small>` : ''}${c.trust === 'care' || c.trust === 'uncertain' || c.trust === 'few' ? ` <small>(${c.trust === 'care' ? 'use with care' : c.trust === 'few' ? 'few fires' : 'too uncertain'})</small>` : ''}`}</td>`;
     }
     html += '</div>'; rows += '</tr>';
@@ -366,7 +385,7 @@ function renderLegend() {
       .map(([p, l]) => `<span style="left:${((Math.log2(1 + p) + 2) / 4) * 100}%">${l}</span>`).join('');
     marks.push(`<div class="ramp"><b>Compared with the baseline ${state.ref}</b><i style="background:linear-gradient(90deg,${stops})"></i><div class="ticks">${ticks}</div></div>`);
   }
-  marks.push(`<ul class="keys">${state.mode === 'counts' ? `<li><span class="sw zero"></span>≈ zero (under ${QUIET})</li>` : '<li><span class="sw nb"></span>not enough history</li>'}<li><span class="sw nd"></span>no data</li><li><span class="sw b"></span>bridged</li><li><span class="sw e"></span>estimated</li>${state.record === 'harmonized' ? '<li><span class="sw care"></span>dashed = use with care</li><li><span class="sw hz"></span>hatched = too uncertain</li><li><span class="sw few"></span>corner = few fires, too few to judge</li>' : ''}</ul>`);
+  marks.push(`<ul class="keys">${state.mode === 'counts' ? `<li><span class="sw zero"></span>≈ zero (under ${QUIET})</li>` : '<li><span class="sw nb"></span>not enough history</li><li><span class="sw fewtile"></span>few fires, not compared</li>'}<li><span class="sw nd"></span>no data</li><li><span class="sw b"></span>bridged</li><li><span class="sw e"></span>estimated</li>${state.record === 'harmonized' ? '<li><span class="sw care"></span>dashed = use with care</li><li><span class="sw hz"></span>hatched = too uncertain</li><li><span class="sw few"></span>corner = few fires, too few to judge</li>' : ''}</ul>`);
   $('#calendar-legend').innerHTML = marks.join('');
 }
 
@@ -386,12 +405,14 @@ function selectMonth(j) {
 
 // ---------- the selected month ----------
 function renderMonth() {
+  if (!state.series) return;
   const j = state.sel; const { year, moy } = monthOf(j); const flag = flagAt(j);
   const v = state.series.m[j]; const lo = state.series.lo[j]; const hi = state.series.hi[j];
   const base = baseline(year, moy, 'harmonized');
   const mn = MONTH_NAMES[moy - 1];
   const last = state.monthly.months.n - 1;
-  $('#month-eyebrow').textContent = j === last ? 'LATEST MONTH IN THE RECORD' : j === state.defaultJ ? 'MOST RECENT MONTH WITH A FIRE NORMAL' : 'SELECTED MONTH';
+  $('#month-eyebrow').textContent = j === last ? 'LATEST MONTH IN THE RECORD'
+    : j === state.defaultJ ? (state.defaultWhy === 'normal' ? 'MOST RECENT MONTH WITH A FIRE NORMAL' : 'MOST RECENT MONTH WITH A DETECTION') : 'SELECTED MONTH';
   $('#month-title').textContent = `${label(j)} · ${areaName()}`;
   const ranged = hi - lo > 1e-9;
   const rows = [];
@@ -401,14 +422,21 @@ function renderMonth() {
   rows.push(`<p class="source-line"><span class="flag ${isEstimated(flag) ? 'estimated' : flagName(flag)}">${SHORT_FLAG[flag]}</span>${FLAG_TEXT[flag]}.${slotNote(j) ? ` <span class="slot-note">Exception this month (a satellite with no ratio for this month and time of day is left out): ${slotNote(j)}.</span>` : ''}</p>`);
   if (!base.enough) {
     rows.push(`<p class="hint" id="no-baseline"><strong>Not enough history for a baseline:</strong> ${base.years} ${mn}${base.years === 1 ? '' : 's'} before this one from 2003 on; at least ${MIN_BASE_YEARS} are needed for a normal, an anomaly or a trust check.</p>`);
+  } else if (base.median < FEW_FIRES) {
+    // Few fires: the count against the typical range, in words; no percentage and no chance-above-median.
+    const vc = asCount(v); const [q1, q3] = typicalRange(base); const t = trustVerdict(j, base);
+    const where = vc > q3 ? 'above' : vc < q1 ? 'below' : 'within';
+    rows.push(`<p class="few-words" id="few-words">This month: <strong>${fmt(v)}</strong> detection${v === 1 ? '' : 's'}${v > 0 && v < QUIET ? ' (counts as none)' : ''}. A typical ${mn} here has <strong>${fmt(q1)}–${fmt(q3)}</strong> (the middle half of ${base.first}–${base.last}; median ${fmt(base.median)}), so this month is <strong>${where}</strong> the usual range.</p>`);
+    rows.push(`<div class="trust ${t.key}" id="trust"><strong>Trust check: ${t.text}</strong><em>A normal ${mn} has fewer than ${FEW_FIRES} detections in this area, so no percentage change or chance is given: a change here is mostly chance.</em></div>`);
   } else {
-    const below = base.sorted.filter((x) => x < v).length; const ties = base.sorted.filter((x) => x === v).length;
+    const vc = asCount(v); // under QUIET counts as zero, in every era
+    const below = base.sorted.filter((x) => x < vc).length; const ties = base.sorted.filter((x) => x === vc).length;
     const rank = ((below + ties / 2) / base.years) * 100;
     const sd = (hi - lo) / (2 * Z80);
-    const pAbove = sd > 0 ? 1 - normalCdf((base.median - v) / sd) : v > base.median ? 1 : v < base.median ? 0 : 0.5;
+    const pAbove = sd > 0 ? 1 - normalCdf((base.median - vc) / sd) : vc > base.median ? 1 : vc < base.median ? 0 : 0.5;
     const t = trustVerdict(j, base);
-    const vsMed = base.median > 0 ? signedPct(v / base.median - 1) : v > 0 ? 'above (median is 0)' : 'same (median is 0)';
-    const vsMean = base.mean > 0 ? signedPct(v / base.mean - 1) : v > 0 ? 'above (mean is 0)' : 'same (mean is 0)';
+    const vs = (ref, word) => (ref >= 1 ? signedPct(vc / ref - 1) : `${word} under 1, not compared`);
+    const vsMed = vs(base.median, 'median'); const vsMean = vs(base.mean, 'mean');
     rows.push(`<dl class="stats">
       <div><dt>Normal ${mn} (median)</dt><dd>${fmt(base.median)} <span>this month ${vsMed}</span></dd></div>
       <div><dt>Multi-year mean</dt><dd>${fmt(base.mean)} <span>this month ${vsMean}</span></dd></div>
@@ -417,10 +445,10 @@ function renderMonth() {
     </dl>`);
     rows.push(`<p class="hint">Baseline: ${mn} in ${base.first}–${base.last} (${base.years} years), harmonized estimates.${sd > 0 ? ' The chance uses a normal approximation of the 80% range.' : ''}</p>`);
     rows.push(`<div class="trust ${t.key}" id="trust"><strong>Trust check: ${t.text}</strong>
-      <span>R = ${Number.isFinite(t.R) ? t.R.toFixed(2) : 'unbounded'}: half of this month’s 80% range (${fmt((hi - lo) / 2)}) compared with how far this month is from normal (${fmt(Math.abs(v - base.median))} from the median), or the usual year-to-year spread of ${mn} (interquartile range ${fmt(base.iqr)} ÷ 2 = ${fmt(base.iqr / 2)}), whichever is larger. Below 0.5 reliable, 0.5–1 use with care, above 1 too uncertain.</span>
-      ${t.key === 'few' ? `<em>A normal ${mn} has fewer than ${FEW_FIRES} detections in this area, so a change here is mostly chance whatever R says.</em>` : ''}</div>`);
+      <span>R = ${Number.isFinite(t.R) ? t.R.toFixed(2) : 'unbounded'}: half of this month’s 80% range (${fmt((hi - lo) / 2)}) compared with how far this month is from normal (${fmt(Math.abs(vc - base.median))} from the median), or the usual year-to-year spread of ${mn} (interquartile range ${fmt(base.iqr)} ÷ 2 = ${fmt(base.iqr / 2)}), whichever is larger. Below 0.5 reliable, 0.5–1 use with care, above 1 too uncertain.</span>
+      </div>`);
   }
-  if (j === state.defaultJ && j !== last) rows.push(`<p class="hint">Opened on this month because it is the most recent one that normally has at least ${FEW_FIRES} detections in this area. The record runs to ${label(last)}.</p>`);
+  if (j === state.defaultJ && j !== last) rows.push(`<p class="hint">Opened on this month because ${state.defaultWhy === 'normal' ? `it is the most recent one that normally has at least ${FEW_FIRES} detections in this area` : `no month here normally has ${FEW_FIRES} detections, and it is the most recent with at least one`}. The record runs to ${label(last)}.</p>`);
   if (Math.abs(state.series.naive[j] - v) > 0.005) rows.push(`<p class="hint">The naive merge would say ${fmt(state.series.naive[j])} for this month.</p>`);
   $('#month-body').innerHTML = rows.join('');
 }
@@ -446,7 +474,10 @@ async function renderSeason() {
   if (!ys.length) { ['start', 'peak', 'end'].forEach((k) => set(k, '–', '')); $('#season-note').textContent = 'No baseline years before the selected month.'; return; }
   $('#season-note').textContent = `Reading detections for ${ys[0]}–${ys.at(-1)}…`;
   let files;
-  try { files = await Promise.all(ys.map(loadYear)); } catch (err) { if (token === state.seasonToken) $('#season-note').textContent = `Could not load detections (${err.message}).`; return; }
+  try { files = await Promise.all(ys.map((y) => loadYear(y).catch((err) => { err.year = y; throw err; }))); } catch (err) {
+    if (token === state.seasonToken) { ['start', 'peak', 'end'].forEach((k) => set(k, '–', '')); $('#season-note').textContent = `Couldn’t load detections for ${err.year} — try again.`; }
+    return;
+  }
   if (token !== state.seasonToken) return;
   const area = state.area; const totals = []; const dates = [];
   for (const f of files) {
@@ -569,7 +600,7 @@ async function initMap() {
   map.once('style.load', () => { // not 'load', which waits for every basemap tile
     map.addSource('cells', { type: 'geojson', data: cellFeatures() });
     map.addSource('area', { type: 'geojson', data: areaFeature() });
-    map.addLayer({ id: 'cells', type: 'fill', source: 'cells', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.75 } });
+    map.addLayer({ id: 'cells', type: 'fill', source: 'cells', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.6 } });
     map.addLayer({ id: 'cells-line', type: 'line', source: 'cells', paint: { 'line-color': ['case', ['get', 'inside'], '#93d9b1', '#3a5160'], 'line-width': ['case', ['get', 'inside'], 1.2, 0.4] } });
     map.addLayer({ id: 'area-line', type: 'line', source: 'area', paint: { 'line-color': '#ffa846', 'line-width': 2, 'line-dasharray': [2, 1.5] } });
     map.on('click', 'cells', (e) => {
@@ -639,7 +670,8 @@ function areaName() {
   const where = a.kind === 'region' ? `${state.meta.name} (whole region)`
     : a.kind === 'circle' ? `${a.radius} km around ${a.lat.toFixed(3)}, ${a.lon.toFixed(3)}` : `drawn ${a.kind}`;
   if (a.kind === 'region') return where;
-  return a.outside >= 0.995 ? `${where}, outside ${state.meta.name}’s data`
+  if (a.containsRegion) return `${where}, containing all of ${state.meta.name}`;
+  return a.outside >= 0.5 ? `${where}, mostly outside ${state.meta.name}’s data`
     : a.outside >= 0.01 ? `${where}, ${Math.round(a.outside * 100)}% outside ${state.meta.name}’s data` : `${where} in ${state.meta.name}`;
 }
 
@@ -667,6 +699,24 @@ async function loadRegion(id) {
   return true;
 }
 
+// No numbers on screen while an area's detections are loading, or after they failed to load: the label, the
+// calendar, the panel and the downloads must never show one area's numbers under another area's name.
+function setDownloads(enabled) { $('#csv-hotspots').disabled = !enabled; $('#csv-monthly').disabled = !enabled; }
+function clearNumbers(message) {
+  state.series = null;
+  setDownloads(false);
+  $('#cal-grid').innerHTML = ''; $('#cal-grid').dataset.cells = '0'; $('#calendar-table').innerHTML = '';
+  $('#month-eyebrow').textContent = 'SELECTED AREA';
+  $('#month-title').textContent = areaName();
+  $('#month-body').innerHTML = `<p class="hint">${message}</p>`;
+  $('#calendar-note').textContent = message;
+  $('#calendar-legend').innerHTML = '';
+  ['start', 'peak', 'end'].forEach((k) => { $(`#cal-${k}`).textContent = '–'; $(`#cal-${k}-spread`).textContent = ''; });
+  $('#season-eyebrow').textContent = `FIRE SEASON · ${areaName().toUpperCase()}`;
+  $('#season-note').textContent = message;
+  state.seasonToken += 1; // a season still loading for the previous area must not write here
+}
+
 async function setArea(area) {
   const token = ++state.areaToken;
   $('#csv-status').textContent = '';
@@ -675,18 +725,37 @@ async function setArea(area) {
     $('#area-summary').innerHTML = `<strong>${areaName()}</strong><span>${state.monthly.cells.ix.length} cells of ${state.monthly.cell_deg}°: every detection in ${state.meta.name}’s FIRMS country file inside its box.</span>`;
   } else {
     area.outside = outsideShare(area.ring);
-    state.area = area;
+    area.containsRegion = containsBox(area.ring, state.meta.bbox);
+    state.area = area; state.areaCells = [];
     $('#area-summary').innerHTML = `<strong>${areaName()}</strong><span>Reading the detections inside this shape…</span>`;
-    $('#cal-grid').classList.add('loading');
+    clearNumbers('Reading the detections inside this shape…');
+    renderMapValues();
     let s;
-    try { s = await exactSeries(area, token); } finally { if (token === state.areaToken) $('#cal-grid').classList.remove('loading'); }
+    try {
+      s = await exactSeries(area, token);
+    } catch (err) {
+      if (token !== state.areaToken) return false;
+      progress(1, 1); // hide the bar
+      const what = err.year ? `Couldn’t load detections for ${err.year} — try again.` : `Couldn’t load detections — try again (${err.message}).`;
+      clearNumbers(what);
+      $('#area-summary').innerHTML = `<strong>${areaName()}</strong><span class="load-error" id="load-error">${what}</span> <button type="button" class="link-button" id="retry-area">Try again</button>`;
+      $('#retry-area').addEventListener('click', () => setArea(area).catch(failed));
+      return false;
+    }
     if (!s) return false; // a newer area or region took over
     state.series = s; state.areaCells = s.cells;
-    const warn = area.outside >= 0.01 ? `<em class="outside-warning" id="outside-warning">${Math.round(area.outside * 100)}% of this area is outside ${state.meta.name}’s data (FIRMS country file) — fires there are not counted.</em>` : '';
+    const name = state.meta.name;
+    const out = Math.round(area.outside * 100);
+    let warn = area.containsRegion ? `Most of this area is outside our data; showing all of ${name}’s detections inside it.`
+      : area.outside >= 0.5 ? `Most of this area (${out}%) is outside ${name}’s data (FIRMS country file) — fires there are not counted.`
+        : area.outside >= 0.01 ? `${out}% of this area is outside ${name}’s data (FIRMS country file) — fires there are not counted.` : '';
+    warn = warn ? `<em class="outside-warning" id="outside-warning">${warn}</em>` : '';
+    if (area.spans?.length > 1) warn += `<em class="outside-warning" id="spans-warning">This area spans ${area.spans.join(' and ')} — showing ${name} only; draw within one region.</em>`;
     const what = s.count ? `${s.count.toLocaleString('en-US')} detections inside the shape (all satellites, ${state.monthly.months.first} to ${state.monthly.months.last}). The calendar adds up the weight of each one: an exact sum, not whole cells.`
       : `<strong class="no-det">No detections here:</strong> no satellite fire detection fell inside this shape between ${state.monthly.months.first} and ${state.monthly.months.last}.`;
     $('#area-summary').innerHTML = `<strong>${areaName()}</strong><span>${what}</span>${warn}`;
   }
+  setDownloads(true);
   state.sel = defaultMonth(); state.defaultJ = state.sel;
   state.focus = null;
   renderCalendar(); renderMonth(); renderMapValues(); renderSeason();
@@ -704,7 +773,8 @@ async function useRing(ring, kind, extra = {}) {
   const region = regionForRing(ring);
   if (!region) { toast(`Outside the regions we cover (${state.index.regions.map((r) => r.name).join(', ')}).`); return false; }
   if (!(await loadRegion(region.id))) return false;
-  return setArea({ kind, ring, ...extra });
+  const spans = regionsTouched(ring).map((r) => r.name);
+  return setArea({ kind, ring, ...extra, spans });
 }
 
 // ---------- CSV ----------
@@ -728,7 +798,7 @@ async function hotspotsCsv() {
   const [y0, y1] = spanYears(); const meta = state.meta; const area = state.area;
   $('#csv-status').textContent = `Reading detections for ${y0}–${y1}…`;
   const ys = []; for (let y = y0; y <= y1; y += 1) ys.push(y);
-  const files = await Promise.all(ys.map(loadYear));
+  const files = await Promise.all(ys.map((y) => loadYear(y).catch((err) => { err.year = y; throw err; })));
   const head = ['latitude', 'longitude', 'brightness', 'bright_t31', 'bright_ti4', 'bright_ti5', 'scan', 'track', 'acq_date', 'acq_time',
     'satellite', 'instrument', 'confidence', 'version', 'frp', 'daynight', 'type', 'sensor', 'source_flag', 'w'];
   const lines = [head.join(',')]; let count = 0; let wsum = 0;
@@ -754,11 +824,11 @@ async function hotspotsCsv() {
 function monthlyCsv() {
   const [y0, y1] = spanYears(); const meta = state.meta; const s = state.series;
   const how = s.exact ? `exact sums of the detection weights inside the shape (${s.count} detections)`
-    : `the sum of its ${state.monthly.cells.ix.length} cells of ${state.monthly.cell_deg} deg (identical to the exact sum)`;
+    : `the sum of its ${state.monthly.cells.ix.length} cells of ${state.monthly.cell_deg} deg (equal to the exact sum within rounding, ≤0.1/month)`;
   const methods = `# CEDRUS monthly fire detections in MODIS-equivalent units; harmonized_estimate is the expected value (sum of hotspot weights w + background). Region ${meta.name}. Area ${areaName()}: ${how}. `
     + (state.area.outside >= 0.01 ? `${Math.round(state.area.outside * 100)}% of the area is outside ${meta.name}'s FIRMS country file and not counted. ` : '')
-    + `Model ${meta.model} (replaced by the bake-off winner). p10/p90 approximate: cell 80% ranges scaled to the area and combined in quadrature. `
-    + 'source_flag: bridged = Terra / Terra share (2000-11..2002-06); observed = MODIS Terra+Aqua (2002-07..2021-12); estimated = from VIIRS (2022-01 on: S-NPP+NOAA-20 averaged or whichever flies). '
+    + `Model ${meta.model}. p10/p90 approximate: cell 80% ranges scaled to the area and combined in quadrature. `
+    + 'source_flag: bridged = Terra / Terra share (2000-12..2002-06); observed = MODIS Terra+Aqua (2002-07..2021-12); estimated = from VIIRS (2022-01 on: S-NPP+NOAA-20 averaged or whichever flies). '
     + 'A satellite enters the average for a calendar month and time of day only if model A has a ratio above 0 there; the flag says where one was left out. '
     + `naive = MODIS to 2011 then raw Suomi NPP counts. Data built ${meta.generated_at} from NASA FIRMS; files and SHA-256 in data/regions.json.`;
   const lines = [methods.replace(/,/g, ';'), 'month,harmonized_estimate,p10,p90,naive,background,source_flag'];
@@ -818,7 +888,8 @@ function bindControls() {
     if (e.key === 'End') { e.preventDefault(); moveFocus(cell, 0, 12 - Number(cell.dataset.moy)); return; }
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectMonth(Number(cell.dataset.j)); }
   });
-  $('#csv-hotspots').addEventListener('click', () => hotspotsCsv().catch((err) => { $('#csv-status').textContent = `Download failed: ${err.message}`; }));
+  $('#csv-hotspots').addEventListener('click', () => hotspotsCsv().catch((err) => { $('#csv-status').textContent = err.year ? `Couldn’t load detections for ${err.year} — try again.` : `Download failed: ${err.message}`; }));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && state.drawing) { stopDrawing(); toast('Drawing cancelled.'); } });
   $('#csv-monthly').addEventListener('click', monthlyCsv);
   $('#zoom-in').addEventListener('click', () => state.map?.zoomIn());
   $('#zoom-out').addEventListener('click', () => state.map?.zoomOut());
@@ -847,16 +918,17 @@ function methodologyHtml() {
   }).join('');
   const r0 = idx.regions[0];
   return `<p><strong>Data.</strong> ${r0.provenance.source}. Filters: each region’s box; vegetation fires only (type 0); MODIS confidence ≥ 30; VIIRS confidence nominal or high. Unit: ${r0.provenance.unit}.</p>
-    <p><strong>One record from three sources.</strong> November 2000 – June 2002: <em>bridged</em>, Terra alone divided by Terra’s share of MODIS detections in the same calendar month of 2003–2011 (each month’s share pulled toward the all-year share by 20 pseudo-detections, so a month with few fires cannot give a share of 0 or 1). July 2002 – December 2021: <em>observed</em>, MODIS Terra + Aqua. From January 2022: <em>estimated</em> from VIIRS, because Terra and Aqua have left their planned orbits: the average of the Suomi NPP and the NOAA-20 estimates when both satellites have data that month, or whichever one does, so the record carries on after Suomi NPP stops. The naive record joins MODIS to raw Suomi NPP counts in 2012, which creates a false jump.</p>
-    <p><strong>Model: <code>${r0.model}</code>.</strong> In plain words: for every 0.25° cell, calendar month and day or night, it learns from the years both satellites flew how many MODIS detections one VIIRS detection stands for. A cell with little history leans on its region’s ratio for that month (30 pseudo-detections of shrinkage); a cell with a long history speaks for itself. Where VIIRS saw nothing, it adds the few detections MODIS typically still saw there (the background). Suomi NPP is fitted on 2012–2019, NOAA-20 on April 2018 – December 2019; nothing from 2020 on is used. NOAA-20’s fit covers only 21 months, so for some months and times of day it saw no MODIS fire at all; there it is left out of the average and Suomi NPP counts alone (rule decided on 31 Oct, after seeing this). Every value shown is the harmonized estimate (expected value): the weights of the detections plus the background. The 80% ranges of estimated months come from the model’s own predictive distribution, combined for day and night and for the two satellites (approximate); bridged months keep a placeholder range (negative binomial, size 5).</p>
-    <p><strong>Why this model.</strong> It won a bake-off whose rules were committed before either model was fitted. The other candidate learned the physics of detection — fire units, their radiative power and how likely MODIS is to see each — and it lost on every region and year (its forecasts scored 1.53 times worse), so the simpler model ships. <a href="https://github.com/hyounes-svg/cedrus/blob/main/docs/BAKEOFF_RESULTS.md">Results: docs/BAKEOFF_RESULTS.md</a>.</p>
+    <p><strong>One record from three sources.</strong> December 2000 – June 2002: <em>bridged</em>, Terra alone divided by Terra’s share of MODIS detections in the same calendar month of 2003–2011 (each month’s share pulled toward the all-year share by 20 pseudo-detections, so a month with few fires cannot give a share of 0 or 1). July 2002 – December 2021: <em>observed</em>, MODIS Terra + Aqua. From January 2022: <em>estimated</em> from VIIRS, because Terra and Aqua have left their planned orbits: the average of the Suomi NPP and the NOAA-20 estimates when both satellites have data that month, or whichever one does, so the record carries on after Suomi NPP stops. The naive record joins MODIS to raw Suomi NPP counts in 2012, which creates a false jump.</p>
+    <p><strong>Model: <code>${r0.model}</code>.</strong> In plain words: for every 0.25° cell, calendar month and day or night, it learns from the years both satellites flew how many MODIS detections one VIIRS detection stands for. A cell with little history leans on its region’s ratio for that month (30 pseudo-detections of shrinkage); a cell with a long history speaks for itself. Where VIIRS saw nothing, it adds the background: a small region-wide expected count per month and time of day for places where VIIRS saw nothing. Suomi NPP is fitted on 2012–2019, NOAA-20 on April 2018 – December 2019; nothing from 2020 on is used. NOAA-20’s fit covers only 21 months, so for some months and times of day it saw no MODIS fire at all; there it is left out of the average and Suomi NPP counts alone (rule decided on 31 Oct, after seeing this). Every value shown is the harmonized estimate (expected value): the weights of the detections plus the background. The 80% ranges of estimated months come from the model’s own predictive distribution, combined for day and night and for the two satellites (approximate); bridged months keep a placeholder range (negative binomial, size 5).</p>
+    <p><strong>Why this model.</strong> It won a bake-off whose rules were committed before either model was fitted. The other candidate learned the physics of detection — fire units, their radiative power and how likely MODIS is to see each — and it lost in the pre-registered leave-one-year-out test on every region and year (1.53×); in a forward check it edged ahead in Lebanon, Jordan and Israel by 1–2.3%, which does not change the pre-registered decision. So the simpler model ships. <a href="https://github.com/hyounes-svg/cedrus/blob/main/docs/BAKEOFF_RESULTS.md">Results: docs/BAKEOFF_RESULTS.md</a>.</p>
     <p><strong>Areas.</strong> For a drawn shape or a circle, the calendar adds up the weight of every detection inside it: an exact sum. Its 80% range scales each touched cell’s range by the share of that cell’s value inside the shape and combines them in quadrature (approximate). The whole-region view adds up its 0.25° cells, which is the same sum. Parts of a shape outside the region’s FIRMS country file are reported, not counted.</p>
+    <p><strong>Quiet months.</strong> Any month whose expected value is under ${QUIET} counts as zero, before and after 2022, for colours and for every comparison; where a normal month has fewer than ${FEW_FIRES} detections, the calendar does not compare it as a percentage.</p>
     <p><strong>Trust check.</strong> Needs at least ${MIN_BASE_YEARS} baseline years (the same calendar month, 2003 to the year before). R = half of the month’s 80% range ÷ the larger of (a) how far the month is from the baseline median and (b) half the interquartile range. Reliable below 0.5, use with care 0.5–1 (dashed outline in the calendar), too uncertain above 1 (hatched). When the baseline median is below ${FEW_FIRES} the verdict is “few fires — too few to judge”. Observed months have no range, so R = 0.</p>
     <p><strong>Where the record ends.</strong> A satellite file’s final month counts only if the file has a detection in that month’s last 3 days. The record runs to the last month a VIIRS satellite covers; 2026 to the present needs NASA’s FIRMS near-real-time API key, which is pending.</p>
     <p><strong>Limits.</strong></p><ul>
       <li>Detections are not burned area: one large fire produces many detections.</li>
       <li>Values from 2022 are MODIS-equivalent estimates, not observations; their ranges are approximate.</li>
-      <li>Ranges of bridged months (Nov 2000 – Jun 2002) are a placeholder: the model describes VIIRS, not Terra alone.</li>
+      <li>Ranges of bridged months (Dec 2000 – Jun 2002) are a placeholder: the model describes VIIRS, not Terra alone.</li>
       <li>Where a month and time of day had no MODIS detection at all in the fitting years, the model gives VIIRS detections there no weight.</li>
       <li>The conversions assume the MODIS-to-VIIRS ratio of a calendar month did not change after the fitting years.</li>
       <li>A region’s data footprint is the set of 0.25° cells where its country file ever had a detection; sea and neighbouring countries fall outside it.</li></ul>
@@ -878,7 +950,9 @@ document.querySelectorAll('nav a').forEach((link) => link.addEventListener('clic
 
 function failed(err) {
   $('#data-badge').textContent = 'NO DATA';
-  $('#map-caption').textContent = `Could not load the fire record (${err.message}). Serve web/ over http rather than opening the file directly.`;
+  $('#map-caption').textContent = location.protocol === 'file:'
+    ? `Could not load the fire record (${err.message}). Serve web/ over http rather than opening the file directly.`
+    : `Could not load the fire record (${err.message}). Reload the page to try again.`;
   console.error(err);
 }
 

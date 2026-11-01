@@ -1,7 +1,7 @@
 {
  "contract": "docs/DATA_CONTRACT.md",
  "version": 2,
- "generated_at": "2026-10-31T19:57:47+00:00",
+ "generated_at": "2026-11-01T09:40:13+00:00",
  "regions": [
   {
    "id": "portugal",
@@ -13,7 +13,7 @@
     42.2
    ],
    "months": {
-    "first": "2000-11",
+    "first": "2000-12",
     "last": "2025-12"
    },
    "record_end": {
@@ -35,7 +35,7 @@
      "first_detection": "2000-11-06",
      "last_detection": "2025-11-28"
     },
-    "detections_after_record_dropped": 0,
+    "detections_outside_record_dropped": 3,
     "viirs_outage_months": [],
     "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
     "after": "2026 to the present needs NASA's FIRMS near-real-time API key (pending)"
@@ -89,29 +89,29 @@
        "12N": 0.0768
       },
       "background_bA": {
-       "01D": 0.0266,
+       "01D": 0.0269,
        "01N": 0.0008,
-       "02D": 0.0494,
-       "02N": 0.0051,
-       "03D": 0.0603,
-       "03N": 0.0078,
-       "04D": 0.0424,
-       "04N": 0.0081,
-       "05D": 0.055,
+       "02D": 0.0501,
+       "02N": 0.0052,
+       "03D": 0.0613,
+       "03N": 0.0079,
+       "04D": 0.0431,
+       "04N": 0.0082,
+       "05D": 0.0557,
        "05N": 0.006,
-       "06D": 0.0743,
-       "06N": 0.0127,
-       "07D": 0.0925,
-       "07N": 0.0412,
-       "08D": 0.0899,
-       "08N": 0.065,
-       "09D": 0.0564,
-       "09N": 0.0555,
-       "10D": 0.0899,
-       "10N": 0.0581,
-       "11D": 0.0602,
+       "06D": 0.0752,
+       "06N": 0.0129,
+       "07D": 0.0938,
+       "07N": 0.0417,
+       "08D": 0.0913,
+       "08N": 0.066,
+       "09D": 0.0572,
+       "09N": 0.0563,
+       "10D": 0.0914,
+       "10N": 0.0588,
+       "11D": 0.061,
        "11N": 0.0007,
-       "12D": 0.0338,
+       "12D": 0.0343,
        "12N": 0.0007
       },
       "r0_fallback_months": 0,
@@ -119,7 +119,9 @@
        "modis": 23158,
        "snpp": 62152
       },
-      "train_rows": 35150
+      "train_rows": 34770,
+      "fit_cells": 183,
+      "cells_outside_fit_region_level": 2
      },
      "noaa20": {
       "train": [
@@ -153,29 +155,29 @@
        "12N": 0.0794
       },
       "background_bA": {
-       "01D": 0.0325,
-       "01N": 0.0064,
-       "02D": 0.0227,
+       "01D": 0.0364,
+       "01N": 0.007,
+       "02D": 0.0252,
        "02N": 0.0,
-       "03D": 0.0943,
-       "03N": 0.0065,
-       "04D": 0.0761,
-       "04N": 0.0086,
-       "05D": 0.0637,
+       "03D": 0.1075,
+       "03N": 0.0071,
+       "04D": 0.084,
+       "04N": 0.0093,
+       "05D": 0.0705,
        "05N": 0.0,
-       "06D": 0.0737,
-       "06N": 0.0114,
-       "07D": 0.027,
-       "07N": 0.0203,
-       "08D": 0.0459,
-       "08N": 0.0219,
-       "09D": 0.0651,
-       "09N": 0.0346,
-       "10D": 0.1493,
-       "10N": 0.0182,
-       "11D": 0.0489,
+       "06D": 0.0799,
+       "06N": 0.0123,
+       "07D": 0.0293,
+       "07N": 0.022,
+       "08D": 0.0502,
+       "08N": 0.0239,
+       "09D": 0.0714,
+       "09N": 0.038,
+       "10D": 0.1653,
+       "10N": 0.0197,
+       "11D": 0.0532,
        "11N": 0.0,
-       "12D": 0.0272,
+       "12D": 0.0295,
        "12N": 0.0
       },
       "r0_fallback_months": 0,
@@ -183,7 +185,9 @@
        "modis": 2224,
        "noaa20": 6274
       },
-      "train_rows": 7770
+      "train_rows": 7224,
+      "fit_cells": 172,
+      "cells_outside_fit_region_level": 13
      }
     },
     "method": "per 0.25 deg cell x calendar month x day/night: posterior MODIS per VIIRS detection (a + sum MODIS) / (a / r0 + sum VIIRS), r0 = the region's ratio for that month and time of day; b_A = mean MODIS where VIIRS saw nothing (pipeline/bakeoff/models.py fit_A, predict_A)",
@@ -191,7 +195,7 @@
     "evidence": "docs/BAKEOFF_RESULTS.md",
     "check": {
      "max_gap_between_A_predictive_mean_and_m": 0.0706,
-     "background_total": 585.98
+     "background_total": 617.17
     }
    },
    "combination": {
@@ -332,7 +336,7 @@
    },
    "policy": {
     "bridged": [
-     "2000-11",
+     "2000-12",
      "2002-06"
     ],
     "observed": [
@@ -347,7 +351,6 @@
    },
    "cells": 185,
    "hotspot_years": [
-    2000,
     2001,
     2002,
     2003,
@@ -402,7 +405,7 @@
     "N": 98398,
     "J1": 43520,
     "A": 37479,
-    "T": 35318
+    "T": 35315
    },
    "provenance": {
     "source": "NASA FIRMS country archive (standard products)",
@@ -843,7 +846,7 @@
      }
     ]
    },
-   "generated_at": "2026-10-31T19:57:46+00:00"
+   "generated_at": "2026-11-01T09:40:12+00:00"
   },
   {
    "id": "lebanon",
@@ -855,7 +858,7 @@
     34.7
    ],
    "months": {
-    "first": "2000-11",
+    "first": "2000-12",
     "last": "2025-12"
    },
    "record_end": {
@@ -877,7 +880,7 @@
      "first_detection": "2000-11-13",
      "last_detection": "2025-11-23"
     },
-    "detections_after_record_dropped": 0,
+    "detections_outside_record_dropped": 2,
     "viirs_outage_months": [],
     "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
     "after": "2026 to the present needs NASA's FIRMS near-real-time API key (pending)"
@@ -961,7 +964,9 @@
        "modis": 512,
        "snpp": 3721
       },
-      "train_rows": 5320
+      "train_rows": 5320,
+      "fit_cells": 28,
+      "cells_outside_fit_region_level": 0
      },
      "noaa20": {
       "train": [
@@ -1005,18 +1010,18 @@
        "04N": 0.0,
        "05D": 0.0,
        "05N": 0.0,
-       "06D": 0.0789,
+       "06D": 0.0938,
        "06N": 0.0,
        "07D": 0.0,
-       "07N": 0.0244,
-       "08D": 0.0714,
+       "07N": 0.0286,
+       "08D": 0.0909,
        "08N": 0.0,
        "09D": 0.0,
        "09N": 0.0,
-       "10D": 0.0857,
+       "10D": 0.1034,
        "10N": 0.0,
-       "11D": 0.0444,
-       "11N": 0.0233,
+       "11D": 0.0513,
+       "11N": 0.027,
        "12D": 0.0,
        "12N": 0.0
       },
@@ -1025,7 +1030,9 @@
        "modis": 99,
        "noaa20": 865
       },
-      "train_rows": 1176
+      "train_rows": 1050,
+      "fit_cells": 25,
+      "cells_outside_fit_region_level": 3
      }
     },
     "method": "per 0.25 deg cell x calendar month x day/night: posterior MODIS per VIIRS detection (a + sum MODIS) / (a / r0 + sum VIIRS), r0 = the region's ratio for that month and time of day; b_A = mean MODIS where VIIRS saw nothing (pipeline/bakeoff/models.py fit_A, predict_A)",
@@ -1033,7 +1040,7 @@
     "evidence": "docs/BAKEOFF_RESULTS.md",
     "check": {
      "max_gap_between_A_predictive_mean_and_m": 0.0059,
-     "background_total": 25.12
+     "background_total": 27.24
     }
    },
    "combination": {
@@ -1153,7 +1160,7 @@
    },
    "policy": {
     "bridged": [
-     "2000-11",
+     "2000-12",
      "2002-06"
     ],
     "observed": [
@@ -1168,7 +1175,6 @@
    },
    "cells": 28,
    "hotspot_years": [
-    2000,
     2001,
     2002,
     2003,
@@ -1223,7 +1229,7 @@
     "N": 7814,
     "J1": 5054,
     "A": 1220,
-    "T": 890
+    "T": 888
    },
    "provenance": {
     "source": "NASA FIRMS country archive (standard products)",
@@ -1664,7 +1670,7 @@
      }
     ]
    },
-   "generated_at": "2026-10-31T19:57:47+00:00"
+   "generated_at": "2026-11-01T09:40:13+00:00"
   }
  ]
 }

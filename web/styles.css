@@ -132,6 +132,11 @@ fieldset.field-group{border:0;padding:0;min-width:0}
 .big-value span{display:block;font-size:12px;color:#a9bccb}
 .source-line{font-size:12px;color:#c7d6e4;line-height:18px;margin:0 0 10px}
 .slot-note{color:#a9bccb}
+.sw.fewtile{background:#46525c}
+.few-words{font-size:13px;line-height:19px;color:#c7d6e4;margin:0 0 8px}
+.load-error{color:#ffd2d2}
+.download:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:760px){.hero-badge{right:16px;left:16px;flex-wrap:wrap;row-gap:4px;max-width:calc(100% - 32px)}.hero-badge b{white-space:nowrap}}
 .flag{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;border-radius:5px;padding:1px 6px;margin-right:7px;border:1px solid}
 .flag.observed{color:#c9f0d7;border-color:#4f8a6a}
 .flag.estimated{color:#ffd9b0;border-color:#a8703c}

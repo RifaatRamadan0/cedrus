@@ -33,7 +33,7 @@ from regions import CELL, REGIONS, assert_not_sealed, regions_with
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "web" / "data"
 
-FIRST = "2000-11"          # Terra's first full month
+FIRST = "2000-11"          # Terra's first month in FIRMS; the record starts at MODIS's first complete month
 BRIDGE_END = "2002-06"     # Aqua's first month is 2002-07
 OBSERVED_END = "2021-12"   # MODIS drifted from its nominal orbits after this
 NAIVE_SWITCH = "2012-01"   # the naive record switches to raw Suomi NPP here
@@ -95,15 +95,13 @@ def coverage(rows):
     return {"first": first, "last": last, "first_detection": first_date, "last_detection": last_date}
 
 
-def export(region):
+def detections(region):
+    """Every filtered detection of a product region, with the columns the export and the model read."""
     assert_not_sealed(region)
-    cfg = REGIONS[region]
-    raw = ROOT / "data" / "raw" / region
-    box = cfg["box"]
+    box = REGIONS[region]["box"]
     if box is None:
         raise SystemExit(f"{region}: product regions need a box")
-    manifest = json.loads((raw / "manifest.json").read_text())
-
+    raw = ROOT / "data" / "raw" / region
     parts = [load(p, box) for p in sorted(raw.glob("*.csv"))]
     det = pd.concat([p for p in parts if not p.empty], ignore_index=True)
     det["acq_time"] = det.acq_time.str.zfill(4)
@@ -114,14 +112,25 @@ def export(region):
     det["fam"] = det.sensor.map(FAMILY)
     det["ix"] = np.floor(det.longitude / CELL).astype(int)
     det["iy"] = np.floor(det.latitude / CELL).astype(int)
-    det = det[det.month >= FIRST]
+    return det
+
+
+def export(region):
+    cfg = REGIONS[region]
+    raw = ROOT / "data" / "raw" / region
+    box = cfg["box"]
+    manifest = json.loads((raw / "manifest.json").read_text())
+    det = detections(region)
     cov = {s: coverage(det[det.sensor == s]) for s in VIIRS}
     cov_modis = coverage(det[det.fam == "modis"])
     modis_end = cov_modis["last"]
+    # The record starts at MODIS's first complete month by the same rule as its end (a detection in the
+    # month's first EDGE_DAYS days), and never before Terra's first month.
+    first = max(FIRST, cov_modis["first"])
     last = max(c["last"] for c in cov.values())
-    dropped = int((det.month > last).sum())
-    det = det[det.month <= last].sort_values(["acq_date", "acq_time", "sensor"]).reset_index(drop=True)
-    months = month_index(FIRST, last)
+    dropped = int((det.month > last).sum()) + int((det.month < first).sum())
+    det = det[(det.month >= first) & (det.month <= last)].sort_values(["acq_date", "acq_time", "sensor"]).reset_index(drop=True)
+    months = month_index(first, last)
 
     # Which VIIRS satellite covers each month: inside its complete span, and not an outage month
     # (zero detections in the region while the other satellite has OUTAGE_OTHER or more).
@@ -314,7 +323,7 @@ def export(region):
         "id": region, "name": cfg["country"], "bbox": [lon0, lat0, lon1, lat1],
         "months": {"first": months[0], "last": months[-1]},
         "record_end": {"suomi_npp": cov["N"], "noaa20": cov["J1"], "modis": cov_modis,
-                       "detections_after_record_dropped": dropped,
+                       "detections_outside_record_dropped": dropped,
                        "viirs_outage_months": [f"{m} {'Suomi NPP' if s == 'N' else 'NOAA-20'}" for m, s in outages],
                        "rule": f"a file's final month counts if it has a detection in that month's last {EDGE_DAYS} days; "
                                f"a VIIRS satellite with 0 detections in a month while the other has >= {OUTAGE_OTHER} "
@@ -334,7 +343,7 @@ def export(region):
         "terra_share": {"years": list(SHARE_YEARS), "by_month": {f"{m:02d}": round(v, 4) for m, v in terra_share.items()},
                         "pooled": round(pooled_share, 4), "prior_detections": SHARE_PRIOR,
                         "basis": {f"{m:02d}": b for m, b in share_basis.items()}},
-        "policy": {"bridged": [FIRST, BRIDGE_END], "observed": [month_after(BRIDGE_END), OBSERVED_END],
+        "policy": {"bridged": [first, BRIDGE_END], "observed": [month_after(BRIDGE_END), OBSERVED_END],
                    "estimated": [month_after(OBSERVED_END), months[-1]], "naive_switch": NAIVE_SWITCH},
         "cells": len(cells),
         "hotspot_years": hot_years,
