@@ -21,7 +21,7 @@ never seen, one ratio per region beat it, and its NOAA-20 handover agreed only 6
 ([docs/CONFIRMATION_RESULTS.md](docs/CONFIRMATION_RESULTS.md)). Round 2 removed A's double-counting quirk (A2) and
 calibrated NOAA-20 against Suomi NPP, which raised handover agreement to 92.6% on the development data
 ([docs/ROUND2_SELECTION.md](docs/ROUND2_SELECTION.md)); that model is frozen (commit 617daff) and is the one the
-site uses. Round-2 confirmation on four new sealed regions: pending.
+site uses. Round-2 confirmation on four new sealed regions (central Spain, southern Italy, southwest Australia, southern California): **CONFIRMED**. All five pre-registered tests passed. See [docs/ROUND2_CONFIRMATION.md](docs/ROUND2_CONFIRMATION.md).
 
 [docs/RESULTS.md](docs/RESULTS.md) is an earlier test of an earlier method (a ratio per cell, the MODIS
 retirement test of [docs/TEST_PLAN.md](docs/TEST_PLAN.md)); it is kept as a record, not as the evidence for
