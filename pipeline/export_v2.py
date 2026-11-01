@@ -10,7 +10,7 @@ The file layout is documented in docs/DATA_CONTRACT.md.
 Source policy for the harmonized record (team lead's ruling):
   2000-11..2002-06  bridged    Terra only, divided by Terra's share of Terra+Aqua for that calendar month (2003-2011)
   2002-07..2021-12  observed   MODIS Terra + Aqua, nominal orbits
-  2022-01..         estimated  VIIRS converted to MODIS-equivalent by model A, the bake-off winner (MODIS drifted):
+  2022-01..         estimated  VIIRS converted to MODIS-equivalent by the round-2 model, frozen (MODIS drifted):
                                the average of the Suomi NPP and NOAA-20 estimates in months both cover,
                                whichever covers otherwise (so the record survives Suomi NPP's end)
 A sensor's final month counts only if its file has a detection in the month's last EDGE_DAYS days.
@@ -26,7 +26,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import weights_a as model_impl                 # the bake-off winner; weights_interim.py is kept for reference only
+import weights_r2 as model_impl                # the round-2 choice, frozen; weights_a.py (round 1) and weights_interim.py kept for reference only
 from weights_interim import nb_quantiles         # bridged months keep the placeholder range (A says nothing about Terra)
 from regions import CELL, REGIONS, assert_not_sealed, regions_with
 
@@ -239,7 +239,7 @@ def export(region):
             used = [s for s in covering[m] if slot_share(m, s, moy, dn) > 0]
             md = (moy - 1) * 2 + (dn == "N")
             if not any(positive[VIIRS[s]][md] for s in covering[m]):
-                parts.append(f"{word}: no MODIS in either fit, detections weigh 0 (background only)")
+                parts.append(f"{word}: no MODIS in the fitting years, detections weigh 0 (background only)")
             elif len(used) < len(covering[m]):
                 parts.append(f"{word}: {' + '.join(names[s] for s in used)} only")
         if parts:
@@ -311,7 +311,7 @@ def export(region):
         "band": {"what": "min-max of the trailing 12-month ratio over windows ending inside the fitting years",
                  "range": [round(min(band_vals), 4), round(max(band_vals), 4)] if band_vals else None,
                  "fitted": list(model_impl.TRAIN["snpp"])},
-        "predicted_from": "model A from Suomi NPP and NOAA-20 (weights + background), combined as the estimated record",
+        "predicted_from": "the model, from Suomi NPP and NOAA-20 (weights + background), combined as the estimated record",
         "model": model_impl.NAME,
         "modis_archive_ends": cov_modis["last_detection"],
         "complete_rule": f"a file's final month counts if it has a detection in that month's last {EDGE_DAYS} days",
@@ -362,13 +362,13 @@ def export(region):
         },
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
-    meta["model_detail"]["check"] = {"max_gap_between_A_predictive_mean_and_m": round(mean_gap, 4),
+    meta["model_detail"]["check"] = {"max_gap_between_model_predictive_mean_and_m": round(mean_gap, 4),
                                      "background_total": round(float(bg.sum()), 2)}
     sizes = {p.relative_to(OUT).as_posix(): p.stat().st_size for p in sorted(out.rglob("*.json"))}
     print(f"{region}: {len(det)} detections, {len(cells)} cells, months {months[0]}..{months[-1]}, "
           f"monthly.json {sizes[f'{region}/monthly.json'] / 1e6:.2f} MB, "
           f"hotspots {sum(v for k, v in sizes.items() if '/hotspots/' in k) / 1e6:.2f} MB in {len(hot_years)} files; "
-          f"model {model_impl.NAME}: background total {bg.sum():.2f}, max |A mean - m| {mean_gap:.4f}")
+          f"model {model_impl.NAME}: background total {bg.sum():.2f}, max |model mean - m| {mean_gap:.4f}")
     return meta
 
 

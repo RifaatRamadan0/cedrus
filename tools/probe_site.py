@@ -194,70 +194,87 @@ def wait_season(page):
 
 
 def model_checks():
-    """Model A in the data, its fit windows, and its refusal to be fitted on 2020 or later."""
+    """The frozen round-2 model in the data: its settings file, fit windows, refusal of 2020+, frozen-by-construction
+    fit, combination rule and NOAA-20 weights."""
+    import hashlib
     idx = json.loads((ROOT / "web" / "data" / "regions.json").read_text(encoding="utf-8"))
     names = {r["id"]: r["model"] for r in idx["regions"]}
-    check("regions.json: model is A, the bake-off winner, in every region", set(names.values()) == {"A — shrinkage ratio (bake-off winner)"}, str(names))
+    check("regions.json: model is the frozen round-2 choice in every region", set(names.values()) == {"A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)"}, str(names))
+    frozen = ROOT / "data" / "processed" / "round2" / "frozen.json"
+    digest = hashlib.sha256(frozen.read_bytes()).hexdigest()
+    recorded = {r["model_detail"]["frozen"]["sha256"] for r in idx["regions"]}
+    check("frozen.json SHA-256 is the one recorded at the freeze, and regions.json names it", digest == "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686" and recorded == {digest},
+          f"file {digest[:16]}…, regions.json {[x[:16] for x in recorded]}")
     wins = {r["id"]: {k: v["train"] for k, v in r["model_detail"]["satellites"].items()} for r in idx["regions"]}
     ok = all(w == {"snpp": ["2012-02", "2019-12"], "noaa20": ["2018-04", "2019-12"]} for w in wins.values())
-    check("model A fit windows: Suomi NPP 2012-02..2019-12, NOAA-20 2018-04..2019-12", ok, str(wins))
+    check("fit windows as frozen: Suomi NPP 2012-02..2019-12, NOAA-20 s on 2018-04..2019-12", ok, str(wins))
     sys.path.insert(0, str(ROOT / "pipeline"))
-    import weights_a
-    saved = dict(weights_a.TRAIN)
+    import weights_r2
+    try:
+        weights_r2.check_frozen(frozen.read_bytes().replace(b'"a": 30', b'"a": 31'))
+        tamper = False
+    except SystemExit:
+        tamper = True
+    check("weights_r2 refuses a frozen.json that is not the frozen file", tamper)
+    saved = dict(weights_r2.WINDOWS)
     det = pd.DataFrame({"month": ["2019-12", "2020-01"], "moy": [12, 1], "dn": ["D", "D"], "fam": ["snpp", "modis"], "ci": [0, 0]})
     try:
-        weights_a.TRAIN["snpp"] = ("2012-02", "2020-03")
+        weights_r2.WINDOWS["snpp"] = ("2012-02", "2020-03")
         try:
-            weights_a.fit(det, "probe")
+            weights_r2.fit(det, "probe")
             refused = False
-        except AssertionError:
+        except (AssertionError, ValueError):
             refused = True
     finally:
-        weights_a.TRAIN.clear(); weights_a.TRAIN.update(saved)
-    check("model A refuses a fit window reaching into 2020", refused)
+        weights_r2.WINDOWS.clear(); weights_r2.WINDOWS.update(saved)
+    check("the round-2 fit refuses a window reaching into 2020", refused)
 
     # Frozen by construction: a detection in 2023 in a cell that never burned before changes no fitted parameter,
-    # and that cell gets A's region-level ratio (r0 of its slot).
+    # and that cell gets A2's region-level ratio (r0 of its slot).
     import export_v2
     det = export_v2.detections("lebanon")
     cells = det.groupby(["iy", "ix"]).size().reset_index()
     det["ci"] = [dict(zip(zip(cells.ix, cells.iy), range(len(cells))))[k] for k in zip(det.ix, det.iy)]
-    m1 = weights_a.fit(det, "lebanon")
+    m1 = weights_r2.fit(det, "lebanon")
     new = det.iloc[[0]].copy()
     new["month"], new["moy"], new["dn"], new["fam"], new["sensor"], new["ci"] = "2023-07", 7, "D", "snpp", "N", len(cells)
-    m2 = weights_a.fit(pd.concat([det, new], ignore_index=True), "lebanon")
-    same = all(np.array_equal(m1["fams"][f]["fit"][k], m2["fams"][f]["fit"][k])
-               for f in m1["fams"] for k in ("r0", "bA", "SY", "SV", "r0_level"))
+    m2 = weights_r2.fit(pd.concat([det, new], ignore_index=True), "lebanon")
+    same = all(np.array_equal(m1["a2"][k], m2["a2"][k]) for k in ("r0", "bA", "SY", "SV", "r0_level")) \
+        and np.array_equal(m1["s"], m2["s"]) and np.array_equal(m1["var_s"], m2["var_s"])
     md = (7 - 1) * 2
-    region_level = abs(m2["fams"]["snpp"]["ratio"][len(cells) * 24 + md] - m2["fams"]["snpp"]["fit"]["r0"][md]) < 1e-12
-    check("model A frozen: a synthetic 2023 detection in a brand-new cell leaves r0, b_A and cell sums bit-identical",
+    region_level = abs(m2["ratio"][len(cells) * 24 + md] - m2["a2"]["r0"][md]) < 1e-12
+    check("frozen by construction: a synthetic 2023 detection in a brand-new cell leaves r0, b, cell sums and s bit-identical",
           same, f"cells {len(cells)} -> {len(cells) + 1}")
-    check("a cell that first burns after the fit window gets A's region-level ratio for its slot", region_level,
-          f"{m2['fams']['snpp']['ratio'][len(cells) * 24 + md]:.6f} vs r0 {m2['fams']['snpp']['fit']['r0'][md]:.6f}")
+    check("a cell that first burns after the fit window gets A2's region-level ratio for its slot", region_level,
+          f"{m2['ratio'][len(cells) * 24 + md]:.6f} vs r0 {m2['a2']['r0'][md]:.6f}")
 
-    # Combination rule: a satellite enters a slot's average only where A's prior ratio r0 > 0.
+    # Combination rule: a satellite enters a slot's average only where its ratio is above 0.
     bad = [(r["id"], slot, f) for r in idx["regions"] for slot, sats in r["combination"]["slots_when_both_cover"].items()
            for f in sats if not r["model_detail"]["satellites"][f]["prior_ratio_r0"][slot] > 0]
-    check("combination rule: no slot's average includes a satellite with r0 = 0", not bad, str(bad[:5]))
-    # Lebanon December days: NOAA-20's r0 is 0, so Suomi NPP carries the slot alone in 2022-2024 (both satellites fly)
-    # exactly as in Dec 2025 (Suomi NPP only): one weight per cell, not halved; NOAA-20 weighs 0 there.
-    w_n, w_j = {}, []
+    check("combination rule: no slot's average includes a satellite with ratio 0", not bad, str(bad[:5]))
+
+    # NOAA-20 weights in months both satellites cover: 1/2 x A2's ratio x s, for a sample of Portugal 2023 detections.
+    mon = json.loads((ROOT / "web/data/portugal/monthly.json").read_text(encoding="utf-8"))
+    cmap = {(x, y): k for k, (x, y) in enumerate(zip(mon["cells"]["ix"], mon["cells"]["iy"]))}
+    det = export_v2.detections("portugal")
+    det["ci"] = [cmap.get(k, -1) for k in zip(det.ix, det.iy)]
+    m = weights_r2.fit(det[det.ci >= 0], "portugal")
+    h = json.loads((ROOT / "web/data/portugal/hotspots/2023.json").read_text(encoding="utf-8"))["cols"]
+    rows = [i for i in range(len(h["lat"])) if h["sensor"][i] == 3][::20][:300]
+    gaps = []
+    for i in rows:
+        moy = (pd.Timestamp(2023, 1, 1) + pd.Timedelta(days=h["doy"][i] - 1)).month
+        ci = cmap[(int(np.floor(h["lon"][i] / 0.25)), int(np.floor(h["lat"][i] / 0.25)))]
+        want = 0.5 * m["ratio"][ci * 24 + (moy - 1) * 2 + h["dn"][i]] * m["s"][h["dn"][i]]
+        gaps.append(abs(h["w"][i] - want))
+    check("NOAA-20 weights in both-covered months = 1/2 x A2 ratio x s (Portugal 2023 sample)", gaps and max(gaps) <= 6e-5,
+          f"{len(gaps)} detections, max |w - expected| {max(gaps, default=0):.6f}; s = {np.round(m['s'], 4).tolist()}")
+    # Lebanon January nights: A2's ratio is 0, so no satellite joins and detections weigh 0 (background only).
+    wj = []
     for y in (2022, 2023, 2024, 2025):
-        h = json.loads((ROOT / "web/data/lebanon/hotspots" / f"{y}.json").read_text(encoding="utf-8"))["cols"]
-        for i in range(len(h["lat"])):
-            if h["doy"][i] < 335 or h["dn"][i] != 0:
-                continue  # December starts on day 335 in these years (336 in 2024 is still December)
-            if pd.Timestamp(y, 1, 1) + pd.Timedelta(days=h["doy"][i] - 1) < pd.Timestamp(y, 12, 1):
-                continue
-            cell = (int(np.floor(h["lon"][i] / 0.25)), int(np.floor(h["lat"][i] / 0.25)))
-            if h["sensor"][i] == 2:
-                w_n.setdefault(cell, set()).add((y == 2025, h["w"][i]))
-            elif h["sensor"][i] == 3:
-                w_j.append(h["w"][i])
-    same = [c for c, v in w_n.items() if len({w for _, w in v}) == 1 and {flag for flag, _ in v} == {True, False}]
-    differ = [c for c, v in w_n.items() if len({w for _, w in v}) > 1]
-    check("Lebanon December days: S-NPP weight in 2022-24 (both fly) equals its Dec 2025 weight (S-NPP only); NOAA-20 weighs 0",
-          same and not differ and all(w == 0 for w in w_j), f"{len(same)} cells compared, {len(differ)} differ; {len(w_j)} NOAA-20 rows, max w {max(w_j, default=0)}")
+        hh = json.loads((ROOT / "web/data/lebanon/hotspots" / f"{y}.json").read_text(encoding="utf-8"))["cols"]
+        wj += [hh["w"][i] for i in range(len(hh["lat"])) if hh["doy"][i] <= 31 and hh["dn"][i] == 1 and hh["sensor"][i] in (2, 3)]
+    check("Lebanon January nights (ratio 0): VIIRS detections weigh 0", all(w == 0 for w in wj), f"{len(wj)} detections")
 
 
 def run(url, shots):
@@ -415,7 +432,7 @@ def run(url, shots):
         monthly, hot = compare_csvs(page, "Portugal whole region 2000-2025", dl, rounding_bound("portugal"))
         check("model A background is in the record (bg > 0) and inside the equality above", monthly.background.sum() > 0,
               f"background {monthly.background.sum():.2f} of {monthly.harmonized_estimate.sum():.2f}")
-        check("hero badge names model A", page.inner_text("#data-badge") == "MODEL A · BAKE-OFF WINNER", page.inner_text("#data-badge"))
+        check("hero badge names the round-2 model", page.inner_text("#data-badge") == "MODEL A2 · ROUND 2, FROZEN", page.inner_text("#data-badge"))
         j1 = hot[(hot.sensor == "J1") & (hot.acq_date >= "2022-01-01")]
         check("NOAA-20 detections carry weight in the estimated era", (j1.w > 0).mean() > 0.99, f"{(j1.w > 0).sum()} of {len(j1)} with w > 0")
         check("estimated months are flagged S-NPP+NOAA-20", monthly[monthly.month >= "2022-01"].source_flag.str.startswith("estimated (S-NPP+NOAA-20)").all())
@@ -570,16 +587,17 @@ def run(url, shots):
         page.click(".dialog-done")
         page.click("button[data-dialog=methodology]")
         dlg = page.inner_text("#detail-dialog")
-        check("methodology: model A in plain words, the bake-off link, B lost, NOAA-20, SHA-256, credits",
-              all(k in dlg for k in ("A — shrinkage ratio (bake-off winner)", "BAKEOFF_RESULTS.md", "lost", "NOAA-20", "SHA-256", "Kiln Watch", "Agun-Panjika", "Use of AI"))
-              and page.locator("#detail-dialog a[href$='BAKEOFF_RESULTS.md']").count() == 1)
-        check("methodology: bake-off wording and the background in plain words",
-              "lost in the pre-registered leave-one-year-out test on every region and year (1.53×)" in dlg
-              and "edged ahead in Lebanon, Jordan and Israel by 1–2%" in dlg
-              and "a small region-wide expected count per month and time of day for places where VIIRS saw nothing" in dlg)
+        check("methodology: the round-2 model in plain words, its history, links, SHA-256, credits",
+              all(k in dlg for k in ("A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)", "failed its sealed confirmation", "69%", "92.6%", "pending", "NOAA-20", "SHA-256",
+                                     "Kiln Watch", "Agun-Panjika", "Use of AI",
+                                     "a small region-wide expected count per month and time of day for places where VIIRS saw nothing"))
+              and page.locator("#detail-dialog a[href$='ROUND2_SELECTION.md']").count() == 1
+              and page.locator("#detail-dialog a[href$='CONFIRMATION_RESULTS.md']").count() == 1
+              and page.inner_text("#r2-confirmation") == "pending")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        check("README: evidence is the bake-off; RESULTS.md is an earlier method; MODIS C6.1; GIBS Blue Marble only",
-              "## How we know it works: the pre-registered bake-off" in readme and "docs/BAKEOFF_RESULTS.md" in readme
+        check("README: round 1 failed, round 2 frozen, its confirmation pending; RESULTS.md earlier; MODIS C6.1; GIBS Blue Marble only",
+              "failed its sealed confirmation" in readme and "docs/ROUND2_SELECTION.md" in readme and "docs/CONFIRMATION_RESULTS.md" in readme
+              and "92.6%" in readme and "69%" in readme and "confirmation on four new sealed regions: pending" in readme
               and "is an earlier test of an earlier method" in readme and "MODIS Collection 6.1" in readme
               and "Basemap: NASA GIBS Blue Marble." in readme and "reference features and labels" not in readme)
         check("README: Suomi NPP stops delivering data on 2 Nov 2026", "stops delivering data on **2 Nov 2026**" in readme

@@ -1,7 +1,7 @@
 {
  "contract": "docs/DATA_CONTRACT.md",
  "version": 2,
- "generated_at": "2026-11-01T09:40:13+00:00",
+ "generated_at": "2026-11-01T11:25:59+00:00",
  "regions": [
   {
    "id": "portugal",
@@ -52,43 +52,51 @@
      ]
     ]
    },
-   "model": "A \u2014 shrinkage ratio (bake-off winner)",
+   "model": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
    "model_detail": {
-    "name": "A \u2014 shrinkage ratio (bake-off winner)",
+    "name": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+    "badge": "MODEL A2 \u00b7 ROUND 2, FROZEN",
     "a": 30,
+    "frozen": {
+     "file": "data/processed/round2/frozen.json",
+     "sha256": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686",
+     "commit": "617daff",
+     "selection": "docs/ROUND2_SELECTION.md"
+    },
     "satellites": {
      "snpp": {
       "train": [
        "2012-02",
        "2019-12"
       ],
+      "method": "A2",
       "prior_ratio_r0": {
-       "01D": 0.328,
-       "01N": 0.0955,
-       "02D": 0.4885,
-       "02N": 0.1657,
-       "03D": 0.5711,
-       "03N": 0.1558,
-       "04D": 0.4112,
-       "04N": 0.1529,
-       "05D": 0.4335,
-       "05N": 0.1481,
-       "06D": 0.4199,
-       "06N": 0.1628,
-       "07D": 0.4678,
-       "07N": 0.3159,
-       "08D": 0.5091,
-       "08N": 0.3394,
-       "09D": 0.5099,
-       "09N": 0.2831,
-       "10D": 0.4187,
-       "10N": 0.333,
-       "11D": 0.3886,
-       "11N": 0.0726,
-       "12D": 0.3431,
-       "12N": 0.0768
+       "01D": 0.2893,
+       "01N": 0.0931,
+       "02D": 0.4608,
+       "02N": 0.155,
+       "03D": 0.5508,
+       "03N": 0.1498,
+       "04D": 0.3855,
+       "04N": 0.1412,
+       "05D": 0.3523,
+       "05N": 0.1284,
+       "06D": 0.3243,
+       "06N": 0.1541,
+       "07D": 0.4113,
+       "07N": 0.3027,
+       "08D": 0.4974,
+       "08N": 0.3343,
+       "09D": 0.4915,
+       "09N": 0.2713,
+       "10D": 0.3948,
+       "10N": 0.3168,
+       "11D": 0.2953,
+       "11N": 0.0684,
+       "12D": 0.2785,
+       "12N": 0.0746
       },
-      "background_bA": {
+      "background_b": {
        "01D": 0.0269,
        "01N": 0.0008,
        "02D": 0.0501,
@@ -114,88 +122,68 @@
        "12D": 0.0343,
        "12N": 0.0007
       },
-      "r0_fallback_months": 0,
       "train_detections": {
        "modis": 23158,
        "snpp": 62152
-      },
-      "train_rows": 34770,
-      "fit_cells": 183,
-      "cells_outside_fit_region_level": 2
+      }
      },
      "noaa20": {
       "train": [
        "2018-04",
        "2019-12"
       ],
+      "method": "J-S: x s (NOAA-20 to Suomi NPP), then A2",
+      "s": {
+       "D": 0.9993,
+       "N": 0.9417
+      },
+      "s_sd": {
+       "D": 0.0556,
+       "N": 0.1338
+      },
       "prior_ratio_r0": {
-       "01D": 0.3089,
-       "01N": 0.1092,
-       "02D": 0.5143,
-       "02N": 0.0597,
-       "03D": 0.4961,
-       "03N": 0.1697,
-       "04D": 0.3761,
-       "04N": 0.0968,
-       "05D": 0.3781,
-       "05N": 0.0588,
-       "06D": 0.6154,
-       "06N": 0.1786,
-       "07D": 0.2975,
-       "07N": 0.4912,
-       "08D": 0.5032,
-       "08N": 0.2515,
-       "09D": 0.6279,
-       "09N": 0.3092,
-       "10D": 0.7403,
-       "10N": 0.1909,
-       "11D": 0.5667,
-       "11N": 0.0,
-       "12D": 0.3176,
-       "12N": 0.0794
+       "01D": 0.2891,
+       "01N": 0.0877,
+       "02D": 0.4605,
+       "02N": 0.146,
+       "03D": 0.5504,
+       "03N": 0.1411,
+       "04D": 0.3852,
+       "04N": 0.1329,
+       "05D": 0.3521,
+       "05N": 0.1209,
+       "06D": 0.324,
+       "06N": 0.1451,
+       "07D": 0.411,
+       "07N": 0.2851,
+       "08D": 0.4971,
+       "08N": 0.3148,
+       "09D": 0.4912,
+       "09N": 0.2555,
+       "10D": 0.3945,
+       "10N": 0.2983,
+       "11D": 0.2951,
+       "11N": 0.0644,
+       "12D": 0.2783,
+       "12N": 0.0703
       },
-      "background_bA": {
-       "01D": 0.0364,
-       "01N": 0.007,
-       "02D": 0.0252,
-       "02N": 0.0,
-       "03D": 0.1075,
-       "03N": 0.0071,
-       "04D": 0.084,
-       "04N": 0.0093,
-       "05D": 0.0705,
-       "05N": 0.0,
-       "06D": 0.0799,
-       "06N": 0.0123,
-       "07D": 0.0293,
-       "07N": 0.022,
-       "08D": 0.0502,
-       "08N": 0.0239,
-       "09D": 0.0714,
-       "09N": 0.038,
-       "10D": 0.1653,
-       "10N": 0.0197,
-       "11D": 0.0532,
-       "11N": 0.0,
-       "12D": 0.0295,
-       "12N": 0.0
-      },
-      "r0_fallback_months": 0,
       "train_detections": {
-       "modis": 2224,
+       "snpp": 6070,
        "noaa20": 6274
-      },
-      "train_rows": 7224,
-      "fit_cells": 172,
-      "cells_outside_fit_region_level": 13
+      }
      }
     },
-    "method": "per 0.25 deg cell x calendar month x day/night: posterior MODIS per VIIRS detection (a + sum MODIS) / (a / r0 + sum VIIRS), r0 = the region's ratio for that month and time of day; b_A = mean MODIS where VIIRS saw nothing (pipeline/bakeoff/models.py fit_A, predict_A)",
-    "interval": "A's predictive per cell-month (negative binomial for V > 0, Poisson(b_A) for V = 0), day + night added, two satellites averaged with variances combined; 10th/90th percentile of the moment-matched negative binomial (approximate)",
-    "evidence": "docs/BAKEOFF_RESULTS.md",
+    "fit_cells": 183,
+    "cells_outside_fit_region_level": 2,
+    "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
+    "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+    "evidence": [
+     "docs/ROUND2_SELECTION.md",
+     "docs/CONFIRMATION_RESULTS.md"
+    ],
     "check": {
-     "max_gap_between_A_predictive_mean_and_m": 0.0706,
-     "background_total": 617.17
+     "max_gap_between_model_predictive_mean_and_m": 0.0824,
+     "background_total": 640.71
     }
    },
    "combination": {
@@ -286,7 +274,8 @@
       "noaa20"
      ],
      "11N": [
-      "snpp"
+      "snpp",
+      "noaa20"
      ],
      "12D": [
       "snpp",
@@ -846,7 +835,7 @@
      }
     ]
    },
-   "generated_at": "2026-11-01T09:40:12+00:00"
+   "generated_at": "2026-11-01T11:25:57+00:00"
   },
   {
    "id": "lebanon",
@@ -897,43 +886,51 @@
      ]
     ]
    },
-   "model": "A \u2014 shrinkage ratio (bake-off winner)",
+   "model": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
    "model_detail": {
-    "name": "A \u2014 shrinkage ratio (bake-off winner)",
+    "name": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+    "badge": "MODEL A2 \u00b7 ROUND 2, FROZEN",
     "a": 30,
+    "frozen": {
+     "file": "data/processed/round2/frozen.json",
+     "sha256": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686",
+     "commit": "617daff",
+     "selection": "docs/ROUND2_SELECTION.md"
+    },
     "satellites": {
      "snpp": {
       "train": [
        "2012-02",
        "2019-12"
       ],
+      "method": "A2",
       "prior_ratio_r0": {
-       "01D": 0.25,
+       "01D": 0.0,
        "01N": 0.0,
-       "02D": 0.0741,
+       "02D": 0.037,
        "02N": 0.0,
-       "03D": 0.1579,
+       "03D": 0.0,
        "03N": 0.0,
-       "04D": 0.1212,
+       "04D": 0.0606,
        "04N": 0.0,
        "05D": 0.0405,
-       "05N": 0.0096,
-       "06D": 0.1311,
+       "05N": 0.0,
+       "06D": 0.1214,
        "06N": 0.0,
-       "07D": 0.1336,
+       "07D": 0.125,
        "07N": 0.0339,
-       "08D": 0.1294,
-       "08N": 0.0551,
-       "09D": 0.2193,
-       "09N": 0.0733,
-       "10D": 0.2869,
+       "08D": 0.1232,
+       "08N": 0.0472,
+       "09D": 0.2121,
+       "09N": 0.0667,
+       "10D": 0.2674,
        "10N": 0.0828,
-       "11D": 0.4632,
+       "11D": 0.3971,
        "11N": 0.0261,
-       "12D": 0.2927,
+       "12D": 0.2439,
        "12N": 0.0571
       },
-      "background_bA": {
+      "background_b": {
        "01D": 0.016,
        "01N": 0.0,
        "02D": 0.0049,
@@ -959,117 +956,92 @@
        "12D": 0.0101,
        "12N": 0.0
       },
-      "r0_fallback_months": 0,
       "train_detections": {
        "modis": 512,
        "snpp": 3721
-      },
-      "train_rows": 5320,
-      "fit_cells": 28,
-      "cells_outside_fit_region_level": 0
+      }
      },
      "noaa20": {
       "train": [
        "2018-04",
        "2019-12"
       ],
+      "method": "J-S: x s (NOAA-20 to Suomi NPP), then A2",
+      "s": {
+       "D": 1.0478,
+       "N": 0.8017
+      },
+      "s_sd": {
+       "D": 0.1118,
+       "N": 0.0644
+      },
       "prior_ratio_r0": {
        "01D": 0.0,
        "01N": 0.0,
-       "02D": 0.1733,
+       "02D": 0.0388,
        "02N": 0.0,
        "03D": 0.0,
        "03N": 0.0,
-       "04D": 0.0,
+       "04D": 0.0635,
        "04N": 0.0,
-       "05D": 0.2222,
+       "05D": 0.0425,
        "05N": 0.0,
-       "06D": 0.1042,
+       "06D": 0.1272,
        "06N": 0.0,
-       "07D": 0.2083,
-       "07N": 0.0182,
-       "08D": 0.1053,
-       "08N": 0.0,
-       "09D": 0.1792,
-       "09N": 0.0455,
-       "10D": 0.25,
-       "10N": 0.09,
-       "11D": 0.2703,
-       "11N": 0.0357,
-       "12D": 0.0,
-       "12N": 0.0
+       "07D": 0.131,
+       "07N": 0.0272,
+       "08D": 0.1291,
+       "08N": 0.0379,
+       "09D": 0.2223,
+       "09N": 0.0534,
+       "10D": 0.2802,
+       "10N": 0.0664,
+       "11D": 0.416,
+       "11N": 0.0209,
+       "12D": 0.2556,
+       "12N": 0.0458
       },
-      "background_bA": {
-       "01D": 0.0,
-       "01N": 0.0,
-       "02D": 0.0,
-       "02N": 0.0,
-       "03D": 0.0,
-       "03N": 0.0,
-       "04D": 0.0,
-       "04N": 0.0,
-       "05D": 0.0,
-       "05N": 0.0,
-       "06D": 0.0938,
-       "06N": 0.0,
-       "07D": 0.0,
-       "07N": 0.0286,
-       "08D": 0.0909,
-       "08N": 0.0,
-       "09D": 0.0,
-       "09N": 0.0,
-       "10D": 0.1034,
-       "10N": 0.0,
-       "11D": 0.0513,
-       "11N": 0.027,
-       "12D": 0.0,
-       "12N": 0.0
-      },
-      "r0_fallback_months": 1,
       "train_detections": {
-       "modis": 99,
+       "snpp": 817,
        "noaa20": 865
-      },
-      "train_rows": 1050,
-      "fit_cells": 25,
-      "cells_outside_fit_region_level": 3
+      }
      }
     },
-    "method": "per 0.25 deg cell x calendar month x day/night: posterior MODIS per VIIRS detection (a + sum MODIS) / (a / r0 + sum VIIRS), r0 = the region's ratio for that month and time of day; b_A = mean MODIS where VIIRS saw nothing (pipeline/bakeoff/models.py fit_A, predict_A)",
-    "interval": "A's predictive per cell-month (negative binomial for V > 0, Poisson(b_A) for V = 0), day + night added, two satellites averaged with variances combined; 10th/90th percentile of the moment-matched negative binomial (approximate)",
-    "evidence": "docs/BAKEOFF_RESULTS.md",
+    "fit_cells": 28,
+    "cells_outside_fit_region_level": 0,
+    "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
+    "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+    "evidence": [
+     "docs/ROUND2_SELECTION.md",
+     "docs/CONFIRMATION_RESULTS.md"
+    ],
     "check": {
-     "max_gap_between_A_predictive_mean_and_m": 0.0059,
-     "background_total": 27.24
+     "max_gap_between_model_predictive_mean_and_m": 0.0064,
+     "background_total": 20.9
     }
    },
    "combination": {
     "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window. Model A itself is unchanged.",
     "slots_when_both_cover": {
-     "01D": [
-      "snpp"
-     ],
+     "01D": [],
      "01N": [],
      "02D": [
       "snpp",
       "noaa20"
      ],
      "02N": [],
-     "03D": [
-      "snpp"
-     ],
+     "03D": [],
      "03N": [],
      "04D": [
-      "snpp"
+      "snpp",
+      "noaa20"
      ],
      "04N": [],
      "05D": [
       "snpp",
       "noaa20"
      ],
-     "05N": [
-      "snpp"
-     ],
+     "05N": [],
      "06D": [
       "snpp",
       "noaa20"
@@ -1088,7 +1060,8 @@
       "noaa20"
      ],
      "08N": [
-      "snpp"
+      "snpp",
+      "noaa20"
      ],
      "09D": [
       "snpp",
@@ -1115,10 +1088,12 @@
       "noaa20"
      ],
      "12D": [
-      "snpp"
+      "snpp",
+      "noaa20"
      ],
      "12N": [
-      "snpp"
+      "snpp",
+      "noaa20"
      ]
     }
    },
@@ -1670,7 +1645,7 @@
      }
     ]
    },
-   "generated_at": "2026-11-01T09:40:13+00:00"
+   "generated_at": "2026-11-01T11:25:59+00:00"
   }
  ]
 }

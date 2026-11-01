@@ -13,13 +13,15 @@ Suomi NPP stops delivering data on **2 Nov 2026**, and MODIS is
 next. CEDRUS builds one fire record that survives the handover, **tests it
 honestly**, and turns it into a fire calendar for any area.
 
-## How we know it works: the pre-registered bake-off
+## How we know it works: pre-registered tests, one of them failed
 
-The conversion the site uses (model A, a shrinkage ratio) won a bake-off whose rules were committed before
-either model was fitted ([docs/BAKEOFF_PLAN.md](docs/BAKEOFF_PLAN.md)). Fitted only on 2012–2019 and scored
-year by year, the learned detection-physics model it competed against lost in the pre-registered
-leave-one-year-out test on every region and year (1.53×); in a forward check it edged ahead in Lebanon, Jordan
-and Israel by 1–2.3%. The scores are in [docs/BAKEOFF_RESULTS.md](docs/BAKEOFF_RESULTS.md).
+Round 1's winner, model A (a shrinkage ratio that beat a learned detection-physics model in the pre-registered
+bake-off, [docs/BAKEOFF_RESULTS.md](docs/BAKEOFF_RESULTS.md)), failed its sealed confirmation: on regions it had
+never seen, one ratio per region beat it, and its NOAA-20 handover agreed only 69%
+([docs/CONFIRMATION_RESULTS.md](docs/CONFIRMATION_RESULTS.md)). Round 2 removed A's double-counting quirk (A2) and
+calibrated NOAA-20 against Suomi NPP, which raised handover agreement to 92.6% on the development data
+([docs/ROUND2_SELECTION.md](docs/ROUND2_SELECTION.md)); that model is frozen (commit 617daff) and is the one the
+site uses. Round-2 confirmation on four new sealed regions: pending.
 
 [docs/RESULTS.md](docs/RESULTS.md) is an earlier test of an earlier method (a ratio per cell, the MODIS
 retirement test of [docs/TEST_PLAN.md](docs/TEST_PLAN.md)); it is kept as a record, not as the evidence for
@@ -58,7 +60,7 @@ browsers block a page opened from disk from loading its data files.
 |---|---|
 | `web/` | The website: plain HTML/CSS/JS, no build step. Map uses MapLibre (from a CDN). |
 | `web/data/` | Output of `export_v2.py`: per region the monthly record per 0.25° cell, every detection with its weight, the drift check, provenance. Layout in `docs/DATA_CONTRACT.md`. |
-| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid; `weights_a.py` is the VIIRS → MODIS weight model, the bake-off winner A (it imports `pipeline/bakeoff/models.py`); `weights_interim.py` is the earlier placeholder, kept for reference and unused. |
+| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid; `weights_r2.py` is the VIIRS → MODIS weight model, the frozen round-2 choice (A2 + NOAA-20 via Suomi NPP; it imports `pipeline/round2/models.py` and checks `data/processed/round2/frozen.json` by SHA-256); `weights_a.py` (round 1) and `weights_interim.py` are kept for reference and unused. |
 | `tools/probe_site.py` | Loads the site in headless Chrome, clicks through it, checks the two CSV downloads agree, saves screenshots. |
 | `data/` | Raw downloads and intermediate files. **Not committed** (in `.gitignore`); run the pipeline to rebuild. |
 | `docs/TEST_PLAN.md` | The test rules. Never edit old rules; add a dated section. |
