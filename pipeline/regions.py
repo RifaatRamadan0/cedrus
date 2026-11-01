@@ -24,11 +24,16 @@ REGIONS = {
     "tunisia": {"country": "Tunisia", "box": None, "roles": {"dev", "spent"}},
     "central_chile": {"country": "Chile", "box": (-73.0, -38.5, -70.0, -32.0), "roles": {"dev", "spent"}},
     "western_cape": {"country": "South_Africa", "box": (17.5, -35.0, 24.0, -31.0), "roles": {"dev", "spent"}},
-    # Round 2 sealed regions (docs/ROUND2_PLAN.md): do NOT read until the round-2 model is frozen.
-    "central_spain": {"country": "Spain", "box": (-6.0, 38.5, -2.0, 41.0), "roles": {"sealed"}},
-    "southern_italy": {"country": "Italy", "box": (12.3, 36.6, 16.7, 39.0), "roles": {"sealed"}},
-    "sw_australia": {"country": "Australia_SW", "box": (114.5, -35.5, 119.0, -30.5), "roles": {"sealed"}},
-    "s_california": {"country": "USA_SoCal", "box": (-121.0, 32.5, -116.0, 35.5), "roles": {"sealed"}},
+    # Round 2 confirmation regions: opened once on 1 Nov 2026 (CONFIRMED) -> spent; usable as development data only.
+    "central_spain": {"country": "Spain", "box": (-6.0, 38.5, -2.0, 41.0), "roles": {"dev", "spent"}},
+    "southern_italy": {"country": "Italy", "box": (12.3, 36.6, 16.7, 39.0), "roles": {"dev", "spent"}},
+    "sw_australia": {"country": "Australia_SW", "box": (114.5, -35.5, 119.0, -30.5), "roles": {"dev", "spent"}},
+    "s_california": {"country": "USA_SoCal", "box": (-121.0, 32.5, -116.0, 35.5), "roles": {"dev", "spent"}},
+    # Round 3 sealed regions (docs/TOURNAMENT_PLAN.md): do NOT download or read until the tournament champion is frozen.
+    "northern_algeria": {"country": "Algeria", "box": (-1.0, 34.5, 8.5, 37.1), "roles": {"sealed"}},
+    "southern_france": {"country": "France", "box": (3.0, 42.5, 7.7, 44.5), "roles": {"sealed"}},
+    "south_australia": {"country": "Australia_SA", "box": (136.5, -36.5, 141.0, -33.0), "roles": {"sealed"}},
+    "n_california": {"country": "USA_NorCal", "box": (-123.5, 37.5, -120.5, 40.5), "roles": {"sealed"}},
 }
 
 
