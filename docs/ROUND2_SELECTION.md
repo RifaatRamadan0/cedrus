@@ -283,3 +283,20 @@ Laptop run, 3 worker processes for the folds.
 | scores | 6 |
 | NOAA-20 stage | 28 |
 | total | 115 |
+
+## Independent test of this selection (added 1 Nov 2026, before the model was frozen and before any sealed data was read)
+
+A separate tester re-ran the committed code from a clean tree, reimplemented R1, Rm and A2 independently, and attacked the selection.
+
+**Verdict: the selection stands.** A2 + J-S.
+- **Reproduced:** the headline numbers came out bit-identical. A2 wins in every outer fold, and still wins without the largest regions (Rm/A2 = 1.05 even without Turkey, Chile, Portugal and the Western Cape).
+- **Margin overstated:** R1 and Rm share one dispersion α between rows with and without VIIRS detections, which makes their CRPS worse than it should be. With separate α, Rm/A2 = 1.14, not 1.27. The decision is unchanged (the threshold is 1.02).
+- **The swap test is lenient (a weakness of the plan):** a systematic NOAA-20 bias of about ±10% would still pass the 80% bar. The confirmation also reports the median |log(NOAA-20 total ÷ Suomi NPP total)|, for information.
+- **The coverage test (b) blends two groups:** rows with VIIRS detections, covered 89%, and rows where only MODIS saw fire, covered 5–8% almost by construction. A region with many MODIS-only rows could fail (b) for reasons that are not about calibration.
+- **Minor:**
+  - A2's rows with V = 0 use Poisson(b_A) rather than the plan's literal NB(b, α); the pooled CRPS difference is 0.0001.
+  - Forecasts with all their mass at zero where r0 = 0 cost 0.00007 CRPS.
+  - J-M's narrower parameter uncertainty does not explain its loss: on matched months it is 71.7% vs J-S 92.2%, and its median |log N/S| is 0.176 vs 0.098.
+- **No leakage found.** The sealed guard refused every attempt, and no sealed-region artifact exists.
+
+**Freeze:** the chosen settings (`data/processed/round2/frozen.json`: A2 with a = 30, NOAA-20 via J-S) are force-added and committed with this note, before any sealed file is read.
