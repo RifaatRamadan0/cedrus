@@ -19,11 +19,16 @@ REGIONS = {
     "greece": {"country": "Greece", "box": None, "roles": {"dev"}},
     "syria": {"country": "Syria", "box": None, "roles": {"dev"}},
     "turkey": {"country": "Turkey", "box": None, "roles": {"dev"}},
-    # Sealed until the model was frozen (docs/BAKEOFF_PLAN.md); unsealed 31 Oct 2026 for the confirmation run.
-    "morocco": {"country": "Morocco", "box": None, "roles": {"confirm"}},
-    "tunisia": {"country": "Tunisia", "box": None, "roles": {"confirm"}},
-    "central_chile": {"country": "Chile", "box": (-73.0, -38.5, -70.0, -32.0), "roles": {"confirm"}},
-    "western_cape": {"country": "South_Africa", "box": (17.5, -35.0, 24.0, -31.0), "roles": {"confirm"}},
+    # Round 1 confirmation regions: opened once on 1 Nov 2026 (NOT CONFIRMED) -> spent; usable as development data only.
+    "morocco": {"country": "Morocco", "box": None, "roles": {"dev", "spent"}},
+    "tunisia": {"country": "Tunisia", "box": None, "roles": {"dev", "spent"}},
+    "central_chile": {"country": "Chile", "box": (-73.0, -38.5, -70.0, -32.0), "roles": {"dev", "spent"}},
+    "western_cape": {"country": "South_Africa", "box": (17.5, -35.0, 24.0, -31.0), "roles": {"dev", "spent"}},
+    # Round 2 sealed regions (docs/ROUND2_PLAN.md): do NOT read until the round-2 model is frozen.
+    "central_spain": {"country": "Spain", "box": (-6.0, 38.5, -2.0, 41.0), "roles": {"sealed"}},
+    "southern_italy": {"country": "Italy", "box": (12.3, 36.6, 16.7, 39.0), "roles": {"sealed"}},
+    "sw_australia": {"country": "Australia_SW", "box": (114.5, -35.5, 119.0, -30.5), "roles": {"sealed"}},
+    "s_california": {"country": "USA_SoCal", "box": (-121.0, 32.5, -116.0, 35.5), "roles": {"sealed"}},
 }
 
 
