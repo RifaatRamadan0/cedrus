@@ -74,3 +74,11 @@
   - the round-3 champion if it passes;
   - otherwise the best champion that passed a sealed exam (round 2's A2, if it passed);
   - otherwise the round-3 champion, labelled honestly as not confirmed.
+
+## Ruling added 1 Nov 2026, after the tournament ran and before any round-3 sealed data was downloaded
+
+The tournament picked C5 as the pixel champion (1.0194 × best, against a 1.02 bar; C0 = A2 sits at 1.0217). Burning days passed all three adoption clauses with D-a (C3 refitted in burning days). The plan did not say who sits round 3 in that case. Ruling:
+1. **Round 3's single sealed exam goes to D-a,** the burning-days champion, because burning days would become the calendar's primary unit. Same tests and pass rules as round 2, applied in the burning-days unit; the floors F0 and F1 are computed in the same unit.
+2. **The hotspot-count view keeps A2, the round-2 confirmed model.** C5 is not exam-tested, because only one sealed exam is allowed. Its margin over A2 (0.3% CRPS) is within noise. This choice follows the plan's "what ships" fallback: the best champion that passed a sealed exam.
+3. **If D-a fails round 3,** the calendar's primary unit stays hotspot counts on A2, and burning days is shown only as a secondary, unconfirmed view.
+4. **An independent test runs first.** A fresh tester checks the tournament before D-a is frozen. If the tester finds the burning-days adoption unsafe (for example, skill not comparable across units), clause 2 of the selection is re-evaluated before freezing, and the reason is recorded here.
