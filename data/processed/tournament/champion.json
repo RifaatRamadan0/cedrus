@@ -1,0 +1,247 @@
+{
+ "plan": "docs/TOURNAMENT_PLAN.md (pre-registered at fa2c956)",
+ "results": "docs/TOURNAMENT_RESULTS.md",
+ "generated": "2026-11-01T15:11:43+00:00",
+ "commit_at_run": "cc30c6e280ffbb91dd077d0623e59823f0bbc4a0",
+ "uncommitted_at_run": "?? pipeline/tournament/",
+ "code_hash": "cd4a4b5470a2c3e3",
+ "champion": "C5",
+ "name": "A2 with 3\u00d73 neighbour shrinkage",
+ "unit": "hotspots (pixel counts)",
+ "selected_by": "rule 1: the simplest candidate within 2% of the best pooled weighted CRPS (pixel unit)",
+ "frozen_setting": [
+  100,
+  100
+ ],
+ "frozen_setting_note": "chosen by inner leave-one-year-out over 2012-2019 on the 17 development regions in the final fit; a new region is refitted on its own 2012-02..2019-12 rows with this setting and nothing is tuned",
+ "refit": {
+  "code": "pipeline.tournament.candidates.fit('C5', T, train, scored, years, label, setting=<frozen_setting>) on a one-region table built by pipeline.tournament.data.rows + pipeline.round2.data.build_table",
+  "rows": "cell x month x day/night from 2012-02 for every cell with a MODIS, Suomi NPP or NOAA-20 detection in 2012-02..2019-12; FIRMS standard; type 0; MODIS confidence >= 30; VIIRS confidence n/h; region box from pipeline/regions.py; Y = Terra + Aqua",
+  "fit_window_suomi_npp": [
+   "2012-02",
+   "2019-12"
+  ],
+  "classes": {
+   "frp": "f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW",
+   "scan": "s0 scan < 0.5, s1 0.5 <= scan <= 0.65, s2 scan > 0.65 km"
+  },
+  "a2_frozen_a": 30,
+  "a2_grid": [
+   10,
+   30,
+   100,
+   300,
+   1000
+  ],
+  "c5_grid": [
+   [
+    10,
+    10
+   ],
+   [
+    10,
+    30
+   ],
+   [
+    10,
+    100
+   ],
+   [
+    10,
+    300
+   ],
+   [
+    10,
+    1000
+   ],
+   [
+    30,
+    10
+   ],
+   [
+    30,
+    30
+   ],
+   [
+    30,
+    100
+   ],
+   [
+    30,
+    300
+   ],
+   [
+    30,
+    1000
+   ],
+   [
+    100,
+    10
+   ],
+   [
+    100,
+    30
+   ],
+   [
+    100,
+    100
+   ],
+   [
+    100,
+    300
+   ],
+   [
+    100,
+    1000
+   ],
+   [
+    300,
+    10
+   ],
+   [
+    300,
+    30
+   ],
+   [
+    300,
+    100
+   ],
+   [
+    300,
+    300
+   ],
+   [
+    300,
+    1000
+   ],
+   [
+    1000,
+    10
+   ],
+   [
+    1000,
+    30
+   ],
+   [
+    1000,
+    100
+   ],
+   [
+    1000,
+    300
+   ],
+   [
+    1000,
+    1000
+   ]
+  ],
+  "em": {
+   "max_iterations": 3000,
+   "relative_tolerance": 1e-07
+  },
+  "gbm": {
+   "backend": "lightgbm",
+   "params": {
+    "objective": "poisson",
+    "n_estimators": 300,
+    "learning_rate": 0.05,
+    "num_leaves": 31,
+    "min_child_samples": 100,
+    "subsample": 1.0,
+    "colsample_bytree": 1.0,
+    "reg_lambda": 0.0,
+    "max_bin": 255,
+    "random_state": 20261101,
+    "deterministic": true,
+    "force_row_wise": true,
+    "n_jobs": 1,
+    "verbose": -1
+   },
+   "features": [
+    "Vf0",
+    "Vf1",
+    "Vf2",
+    "Vf3",
+    "Vs0",
+    "Vs1",
+    "Vs2",
+    "dnN",
+    "moy",
+    "rid",
+    "hist"
+   ]
+  },
+  "noaa20": {
+   "method": "J-S",
+   "window": [
+    "2018-04",
+    "2019-12"
+   ],
+   "s": "sum V_SNPP / sum V_N20 per region x day/night; month-block bootstrap",
+   "bootstrap_resamples": 200,
+   "bootstrap_seed": 20261101
+  },
+  "outage_rule": "bake-off rule (pipeline.bakeoff.data.outages) over the included regions combined"
+ },
+ "dev_fit_for_information": {
+  "a": 100,
+  "a_n": 100,
+  "mean_neighbours": 7.753799392097265
+ },
+ "scores_dev_loyo": {
+  "wcrps": 0.26304341602555775,
+  "skill_vs_R1": 0.23458086467477846,
+  "cov_active": 0.8203530231477897,
+  "swap_median_abs_log": 0.11864480178414027,
+  "headroom": {
+   "wcrps": 0.26304341602555775,
+   "floor": 0.14900466358957856,
+   "headroom": 0.4335358556357061,
+   "below_stop": false,
+   "floor_vpos": 0.6563004957945519
+  }
+ },
+ "primary_unit": "burning days",
+ "unit_rule": {
+  "best_bd": "D-a",
+  "bd_skill": 0.3060058375275153,
+  "px_skill": 0.23458086467477846,
+  "needed_skill": 0.25803895114225633,
+  "i_skill": true,
+  "bd_swap": 0.10843314310913303,
+  "px_swap": 0.11864480178414027,
+  "ii_swap": true,
+  "bd_cov_active": 0.8340713788031276,
+  "iii_coverage": true,
+  "primary": "burning days",
+  "bd_secondary_view_allowed": false
+ },
+ "burning_days_model": {
+  "id": "D-a",
+  "candidate": "C3",
+  "name": "FRP-class A2 ratios",
+  "unit": "burning days",
+  "frozen_setting": 10,
+  "unit_definition": "a 0.01 degree cell (floor(lon/0.01), floor(lat/0.01)) counts once per date and day/night if it has any detection of the family (MODIS = Terra + Aqua); cell-day counts summed per 0.25 degree cell x month x day/night; a burning day takes the FRP and scan classes of its largest-FRP detection",
+  "dev_fit_for_information": {
+   "a": 10,
+   "cols": [
+    "Vf0",
+    "Vf1",
+    "Vf2",
+    "Vf3"
+   ],
+   "em_iterations": 370,
+   "em_delta": 9.331541880317012e-08,
+   "em_converged": true,
+   "r0_groups_on_fallback": 503
+  },
+  "scores_dev_loyo": {
+   "wcrps": 0.2274927310274374,
+   "skill_vs_D_R1": 0.3060058375275153,
+   "cov_active": 0.8340713788031276,
+   "swap_median_abs_log": 0.10843314310913303
+  }
+ },
+ "open_question": "The plan does not say which model sits the round-3 exam when burning days are adopted as the primary unit: the pixel champion of rule 1 or the burning-days model whose skill passed rule 2. Both are recorded here; neither is chosen by this run."
+}

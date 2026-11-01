@@ -364,3 +364,28 @@ This invocation:
 | pixel unit folds | 1 |
 | burning-day unit folds | 0 |
 | total | 40 |
+
+## Independent test of the tournament (added 1 Nov 2026, before D-a was frozen and before any round-3 sealed data was downloaded)
+
+A separate tester reproduced every headline number from the per-row files and attacked the decisions.
+
+| Decision | Verdict |
+|---|---|
+| Burning days as the primary unit | **Stands, with a corrected margin** |
+| D-a as the round-3 entrant | **Fit to freeze**, with two known risks recorded |
+| Pixel champion | **The rule's output stands, but its identity is noise.** In region bootstraps the pixel champion is C3 39%, C5 31%, C0 30% of the time. Keeping A2 (round-2 confirmed) for the hotspot view is sound |
+
+**Corrected margin for burning days.** Skill measured against each unit's own R1 overstates the gain, because R1 itself gets about 3.4% worse in burning days. The unit helps C3 only; A2 and C5 stay about the same. On a common footing, scoring D-a against the pixel-unit R1 normalised by mean Y gives a skill of **28.4%**, which still clears the 25.8% bar. On 2020–21, which no model was fitted on, national-month WAPE is D-a 16.6% (Suomi NPP) / 17.2% (NOAA-20), against pixel C5 at 20.4% / 19.5%.
+
+**Known risks for round 3:**
+1. **FRP ≤ 0 class (f0).** Only 35 f0 burning days fall in 2012–19, so f0's ratio is unstable between folds (median r0 71 vs 9). One such day inside a big fire can add 15–145 to a row; for example, southern California in December 2017 was predicted 305 where 181 was observed. This costs 0.4% of D-a's CRPS on development data, but it is a tail risk for single region-months.
+2. **Swap tail.** The median |log NOAA-20 ÷ Suomi NPP| is good (0.108), but the 90th percentile is 0.46 and the maximum 2.01. Southern Italy in February 2021 is a 7× swing: the satellites differed in their FRP-class mix, not in their totals.
+3. **The unit is not sensor-neutral by itself.** MODIS gives 1.01–1.10 detections per burning day; VIIRS gives 1.2–2.5, varying by region. Comparability comes only through the fitted ratio.
+
+**Other findings:**
+- C3's class allocation is the exact E-step and does not double-count.
+- The a = 10 grid edge is harmless (smaller a is worse).
+- Leakage tests are clean: held-out and 2020+ MODIS were replaced with noise and forecasts were identical.
+- No round-3 sealed data exists anywhere.
+
+**Freeze.** `data/processed/tournament/frozen_round3.json` (D-a, with the champion record) is force-added and committed with this note. SHA-256: f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2.
