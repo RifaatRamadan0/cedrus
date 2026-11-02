@@ -1,0 +1,8 @@
+D target=T national-month       WAPE operator 26.9%  ratio 36.3%   q train 0.51
+D target=T 0.25deg cell-month   WAPE operator 92.9%  ratio 107.3%   q train 0.51
+D target=M national-month       WAPE operator 19.6%  ratio 25.2%   q train 0.54
+D target=M 0.25deg cell-month   WAPE operator 66.7%  ratio 78.2%   q train 0.54
+N target=T national-month       WAPE operator 23.5%  ratio 52.9%   q train 0.17
+N target=T 0.25deg cell-month   WAPE operator 69.7%  ratio 87.1%   q train 0.17
+N target=M national-month       WAPE operator 18.8%  ratio 51.8%   q train 0.40
+N target=M 0.25deg cell-month   WAPE operator 53.1%  ratio 80.4%   q train 0.40

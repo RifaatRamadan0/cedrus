@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CEDRUS — Strategy &amp; Algorithm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root{
+    --ink:#14212b; --muted:#5b6b78; --line:#d9e1e7; --paper:#fbfaf7;
+    --night:#08131d; --night2:#0e2230; --fire:#e8572a; --ember:#f4a340; --gold:#f3d363;
+    --leaf:#4f9a6c; --sky:#2f6f9f; --plain:#fff6e8; --plainline:#f1c27d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:10.4pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:700;letter-spacing:-.01em;margin:0}
+  .page{width:210mm;min-height:297mm;padding:17mm 17mm 16mm;position:relative;page-break-after:always;overflow:hidden}
+  .page:last-child{page-break-after:auto}
+  .folio{position:absolute;bottom:8mm;left:17mm;right:17mm;display:flex;justify-content:space-between;font-size:8pt;color:var(--muted);border-top:1px solid var(--line);padding-top:3mm}
+  .kicker{font:600 8pt Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--fire);margin-bottom:3mm}
+  h2{font-size:22pt;line-height:1.15;margin-bottom:5mm}
+  h3{font-size:13pt;margin:6mm 0 2mm}
+  p{margin:0 0 3mm}
+  .lead{font-size:12pt;color:#2b3a45}
+  .plain{background:var(--plain);border:1px solid var(--plainline);border-left:5px solid var(--ember);border-radius:8px;padding:3.5mm 4.5mm;margin:4mm 0}
+  .plain b.tag{display:inline-block;font:700 7.5pt Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9a5a00;margin-bottom:1mm}
+  .plain p{margin:0 0 1.5mm}.plain p:last-child{margin:0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:4mm}
+  .card h4{margin:0 0 1.5mm;font:700 10.5pt Inter,sans-serif}
+  .card p{margin:0;font-size:9.4pt;color:#33424d}
+  .num{font:700 24pt Fraunces,Georgia,serif;color:var(--fire);line-height:1}
+  table{width:100%;border-collapse:collapse;font-size:8.8pt;margin:2mm 0 3mm}
+  th{background:var(--night2);color:#fff;text-align:left;font-weight:600;padding:2mm 2.4mm}
+  td{border-bottom:1px solid var(--line);padding:1.8mm 2.4mm;vertical-align:top}
+  tr:nth-child(even) td{background:#f4f6f8}
+  .pill{display:inline-block;border-radius:99px;padding:.3mm 2.4mm;font:600 7.6pt Inter,sans-serif}
+  .ok{background:#dcefe2;color:#1f6b3d}.warn{background:#fde7cf;color:#8a4b00}.bad{background:#f9d9d6;color:#8e2219}
+  ul{margin:0 0 3mm;padding-left:5mm}li{margin-bottom:1mm}
+  .muted{color:var(--muted)}
+  .small{font-size:8.6pt}
+  /* cover */
+  .cover{background:radial-gradient(ellipse at 80% 15%,#3a1c10 0%,transparent 55%),radial-gradient(ellipse at 10% 90%,#0f3a2a 0%,transparent 55%),var(--night);color:#eef3f7;padding:22mm 20mm}
+  .cover .brand{display:flex;align-items:center;gap:5mm}
+  .cover .brand strong{font:700 30pt Fraunces,Georgia,serif;letter-spacing:.2em}
+  .cover .brand small{display:block;font-size:9pt;letter-spacing:.06em;color:#b9c9d3}
+  .cover h1{font-size:40pt;line-height:1.06;margin:34mm 0 6mm;color:#fff}
+  .cover h1 em{font-style:normal;color:var(--ember)}
+  .cover .sub{font-size:13pt;color:#cbd7df;max-width:150mm}
+  .cover .meta{position:absolute;left:20mm;bottom:22mm;font-size:9pt;color:#9fb2c0;line-height:1.7}
+  .cover .stamp{position:absolute;right:20mm;bottom:22mm;text-align:right;font-size:9pt;color:#9fb2c0}
+  .cover .stamp b{display:block;font:700 15pt Fraunces,Georgia,serif;color:#fff}
+  .glow{position:absolute;right:-20mm;top:70mm;width:150mm;opacity:.9}
+  .toc{columns:2;column-gap:10mm;margin-top:4mm}
+  .toc div{break-inside:avoid;display:flex;gap:3mm;margin-bottom:3mm}
+  .toc b{font:700 16pt Fraunces,Georgia,serif;color:var(--fire);min-width:9mm}
+  .bar{height:3mm;border-radius:2mm;background:linear-gradient(90deg,var(--leaf),var(--gold),var(--ember),var(--fire))}
+  .quote{font:500 15pt/1.35 Fraunces,Georgia,serif;color:var(--night2);border-left:4px solid var(--fire);padding-left:5mm;margin:4mm 0 6mm}
+  .step{display:flex;gap:4mm;margin-bottom:3mm}
+  .step .n{flex:0 0 8mm;height:8mm;border-radius:50%;background:var(--fire);color:#fff;display:flex;align-items:center;justify-content:center;font:700 10pt Inter,sans-serif}
+  .glossary dt{font-weight:700;margin-top:2mm}.glossary dd{margin:0 0 1mm 0;color:#33424d}
+  svg text{font-family:Inter,Arial,sans-serif}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="page cover">
+  <div class="brand">
+    <svg width="46" height="54" viewBox="0 0 60 68" fill="none" stroke="#eef3f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 2 21 13h6L17 23h9L11 34h11L6 46h17L2 57h25v9m6 0v-9h25L37 46h17L38 34h11L34 23h9L33 13h6L30 2ZM30 13v42M19 66h23"/></svg>
+    <div><strong>CEDRUS</strong><small>Roots in Nature. Data for a Safer Tomorrow.</small></div>
+  </div>
+  <svg class="glow" viewBox="0 0 400 400" aria-hidden="true">
+    <defs><radialGradient id="g1"><stop offset="0" stop-color="#f4a340" stop-opacity=".55"/><stop offset=".5" stop-color="#e8572a" stop-opacity=".18"/><stop offset="1" stop-color="#e8572a" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="200" cy="200" r="190" fill="url(#g1)"/>
+    <circle cx="200" cy="200" r="120" fill="none" stroke="#f4a340" stroke-opacity=".35" stroke-dasharray="2 6"/>
+    <circle cx="200" cy="200" r="160" fill="none" stroke="#f3d363" stroke-opacity=".2" stroke-dasharray="1 9"/>
+    <g fill="#f4a340"><circle cx="200" cy="40" r="5"/><circle cx="340" cy="230" r="4"/><circle cx="90" cy="300" r="3"/></g>
+  </svg>
+  <h1>One fire record<br>that <em>survives</em><br>MODIS going dark.</h1>
+  <p class="sub">Strategy &amp; algorithm for the NASA Space Apps 2026 challenge <b>Harmonization of MODIS and VIIRS Hot Spots</b>, written for the whole team, with a plain-English translation beside every technical part.</p>
+  <div class="meta">Team CEDRUS · NASA Space Apps · Beirut 2026<br>Event: 14–15 November 2026<br>Version 2 · 31 October 2026 · Internal, please don't share outside the team</div>
+  <div class="stamp">Based on<b>8 research reports</b>+ 1 adversarial review</div>
+</section>
+
+<!-- ============ PAGE 2: SUMMARY ============ -->
+<section class="page">
+  <div class="kicker">At a glance</div>
+  <h2>The whole plan on one page</h2>
+  <p class="quote">"MODIS is going dark. We built a fire record that survives the switch, and we tested it honestly, including where it fails."</p>
+
+  <div class="grid3">
+    <div class="card"><div class="num">2.7×</div><h4>The break</h4><p>Glue the newer VIIRS satellite onto the old MODIS record and fire activity "jumps" 2.7× in 2012. The jump comes from the instrument, not from more fires.</p></div>
+    <div class="card"><div class="num">2 Nov</div><h4>The deadline</h4><p>Suomi NPP stopped sending data on 2 Nov 2026. Terra and Aqua (MODIS) have drifted far off schedule and will shut down within a year or so.</p></div>
+    <div class="card"><div class="num">~60</div><h4>The competition</h4><p>About 60 public team repos. We read the best 8 line by line. About half have no working demo, and most test themselves on data they already trained on.</p></div>
+  </div>
+
+  <h3>What we will build</h3>
+  <div class="step"><div class="n">1</div><div><b>A harmonized record, 2000 to today.</b> For every fire VIIRS saw, we estimate how MODIS would have recorded it. The estimate is learned from thousands of moments when both satellites passed at nearly the same time.</div></div>
+  <div class="step"><div class="n">2</div><div><b>A burning calendar for any area you draw.</b> A month × year grid, "this month vs normal", season dates, and a CSV download, all on a fast static website.</div></div>
+  <div class="step"><div class="n">3</div><div><b>A trust check on every number.</b> We compare our own correction error with normal year-to-year variation and say "reliable", "use with care" or "too uncertain to call".</div></div>
+  <div class="step"><div class="n">4</div><div><b>Honest tests.</b> Rules written before running; the model chosen on development data; a pass/fail check on regions we have never opened; a drift-proof satellite-vs-satellite test.</div></div>
+
+  <div class="plain"><b class="tag">In plain English</b>
+    <p>Two generations of satellites count fires differently, like two thermometers that disagree. The old one is being switched off. We build a "translator" so the whole 25-year history reads as if one instrument measured it. Then we show it as a calendar fire chiefs can read, and we always say how sure we are.</p>
+  </div>
+
+  <h3>Awards we are aiming at</h3>
+  <p><span class="pill ok">Best Use of Science</span> &nbsp;<span class="pill ok">Best Use of Data</span> &nbsp;<span class="pill ok">Local Impact</span> &nbsp;<span class="muted small">(the last two Local Impact winners both used NASA FIRMS fire data)</span></p>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>2</span></div>
+</section>
+
+<!-- ============ PAGE 3: CONTENTS + PROBLEM ============ -->
+<section class="page">
+  <div class="kicker">Contents</div>
+  <div class="toc">
+    <div><b>1</b><span>The problem: why the fire record breaks</span></div>
+    <div><b>2</b><span>The competition: what about 60 teams did</span></div>
+    <div><b>3</b><span>Our angle: four things the field lacks</span></div>
+    <div><b>4</b><span>The algorithm, layer by layer</span></div>
+    <div><b>5</b><span>How we test it, honestly</span></div>
+    <div><b>6</b><span>The product: what judges will click</span></div>
+    <div><b>7</b><span>What the reviewer caught</span></div>
+    <div><b>8</b><span>MVP, cut list and submission checklist</span></div>
+    <div><b>9</b><span>Glossary and reading list</span></div>
+  </div>
+  <div class="bar" style="margin:6mm 0 8mm"></div>
+
+  <div class="kicker">1 · The problem</div>
+  <h2>Why the fire record breaks</h2>
+  <svg viewBox="0 0 700 230" width="100%" role="img" aria-label="Fire detections per year: the naive joined record jumps in 2012, the harmonized record stays continuous">
+    <rect x="0" y="0" width="700" height="230" fill="#fff" rx="10" stroke="#d9e1e7"/>
+    <g stroke="#e6ebef"><line x1="60" y1="40" x2="680" y2="40"/><line x1="60" y1="90" x2="680" y2="90"/><line x1="60" y1="140" x2="680" y2="140"/><line x1="60" y1="190" x2="680" y2="190"/></g>
+    <line x1="333" y1="25" x2="333" y2="195" stroke="#14212b" stroke-dasharray="4 4"/>
+    <text x="338" y="35" font-size="11" fill="#14212b" font-weight="600">2012: VIIRS joins</text>
+    <polyline fill="none" stroke="#e8572a" stroke-width="3" points="60,170 100,160 140,120 180,165 220,105 260,168 300,160 333,150 360,95 390,70 420,180 450,120 480,55 510,30 540,150 570,150 600,160 630,140 660,80 680,70"/>
+    <polyline fill="none" stroke="#4f9a6c" stroke-width="3" points="60,170 100,160 140,120 180,165 220,105 260,168 300,160 333,160 360,150 390,140 420,186 450,165 480,140 510,125 540,175 570,176 600,178 630,170 660,150 680,145"/>
+    <g font-size="11"><rect x="70" y="200" width="14" height="4" fill="#e8572a"/><text x="90" y="205">Joined naively (false jump)</text><rect x="290" y="200" width="14" height="4" fill="#4f9a6c"/><text x="310" y="205">Harmonized (one consistent record)</text></g>
+    <text x="60" y="222" font-size="10" fill="#5b6b78">2001</text><text x="650" y="222" font-size="10" fill="#5b6b78">2025</text>
+    <text x="14" y="120" font-size="10" fill="#5b6b78" transform="rotate(-90 14 120)">fire detections / year</text>
+  </svg>
+  <p class="small muted">Shape based on our Portugal results (illustration, not to scale).</p>
+  <div class="grid2">
+    <div>
+      <h3>Three reasons the satellites disagree</h3>
+      <ul>
+        <li><b>Sharper eyes.</b> VIIRS pixels are 375 m; MODIS pixels are 1 km and grow to about 5 km at the edge of its view. VIIRS sees many small fires MODIS cannot.</li>
+        <li><b>Different times of day.</b> Fires follow a daily rhythm. Terra used to pass at 10:30 and Aqua at 13:30; by Feb 2026 they had drifted to about 09:00 and 15:15.</li>
+        <li><b>Satellites retire.</b> Suomi NPP ended on 2 Nov 2026. Its replacements, NOAA-20 and NOAA-21, need their own calibration.</li>
+      </ul>
+    </div>
+    <div class="plain"><b class="tag">In plain English</b>
+      <p>Imagine counting cars on a road for 12 years with a blurry camera, then switching to a sharp one. The new camera counts more cars, not because traffic grew but because it sees motorbikes the old one missed. If you join the two counts naively, you invent a traffic boom.</p>
+      <p>Our job: translate the sharp camera's counts into "blurry-camera units" so the whole 25 years compare fairly.</p>
+    </div>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>3</span></div>
+</section>
+
+<!-- ============ PAGE 4: COMPETITION ============ -->
+<section class="page">
+  <div class="kicker">2 · The competition</div>
+  <h2>What about 60 teams did, and where they fall short</h2>
+  <p>We searched GitHub for every public repo for this challenge (about 60), read the 8 strongest at the code level, and re-ran some of their numbers.</p>
+  <table>
+    <tr><th>Team</th><th>What they do well</th><th>Where they fall short</th></tr>
+    <tr><td><b>Kiln Watch</b> (Bangladesh)</td><td>Rules written before testing; cloud-free counting; publishes its own failed tests</td><td>One country; its main fit was in-sample</td></tr>
+    <tr><td><b>samuelakosa/firecal</b></td><td>Live, 208 countries, the best interface</td><td>No uncertainty; Lebanon error 48.5% and Cyprus 93.6% on the same test as ours</td></tr>
+    <tr><td><b>sagoresarker/nasa</b></td><td>The best science: calibrated 90% intervals, detection-vs-fire-power curves</td><td>Computes the physics but never uses it to harmonize; no live site</td></tr>
+    <tr><td><b>SHIFT</b></td><td>The only tested Suomi NPP → NOAA-20 handover</td><td>Claims "never seen" data but fits on all years; no lat/lon input</td></tr>
+    <tr><td><b>Ember-Line</b></td><td>Polished app, conformal intervals</td><td>Backend dead; chooses its model on the same folds it reports</td></tr>
+    <tr><td><b>Agun-Panjika</b></td><td>Best accessibility (keyboard calendar)</td><td>Site returns 404; features use next week's data (leakage)</td></tr>
+  </table>
+  <div class="grid3">
+    <div class="card"><div class="num">~½</div><h4>No working demo</h4><p>Dead backends, 404s, nothing deployed. A judge can't score what won't load.</p></div>
+    <div class="card"><div class="num">0</div><h4>Use physics to harmonize</h4><p>Detection curves are computed and displayed, but no team uses them to build the record.</p></div>
+    <div class="card"><div class="num">Few</div><h4>Honest tests</h4><p>Most tune on test years, or score themselves on data they trained on.</p></div>
+  </div>
+  <div class="plain"><b class="tag">In plain English</b>
+    <p>The field is strong on ideas but weak on three things judges care about: <b>does it work when I click it</b>, <b>is the testing honest</b>, and <b>does it tell me how sure it is</b>. That is our opening. We don't need more features than everyone; we need the features that matter, done properly.</p>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>4</span></div>
+</section>
+
+<!-- ============ PAGE 5: ANGLE ============ -->
+<section class="page">
+  <div class="kicker">3 · Our angle</div>
+  <h2>Four things the field doesn't have</h2>
+  <div class="grid2">
+    <div class="card"><h4>① A learned detection response</h4><p>For each fire VIIRS saw, how MODIS would have recorded it, depending on the fire's power. It is learned from matched passes of the two satellites. It's the harmonizer itself, not a side chart.</p></div>
+    <div class="card"><h4>② A trust check on every month</h4><p>Our correction error compared with the area's normal year-to-year variation: <span class="pill ok">reliable</span> <span class="pill warn">use with care</span> <span class="pill bad">too uncertain</span>.</p></div>
+    <div class="card"><h4>③ A drift-proof test</h4><p>We build the record twice, once from Suomi NPP and once from NOAA-20. If the two agree, the method works, and MODIS's drift can't fool the test.</p></div>
+    <div class="card"><h4>④ A drift-divergence chart</h4><p>From 2022 real MODIS drifts away from what it "should" see. We show this as a finding: what happened to NASA's longest fire record.</p></div>
+  </div>
+
+  <h3>Where it's shown</h3>
+  <table>
+    <tr><th>Region</th><th>Role</th></tr>
+    <tr><td><b>Portugal</b></td><td>The default view: busy, good data, our development region</td></tr>
+    <tr><td><b>Lebanon</b> + Eastern Mediterranean</td><td>Our local story, and the region where thin areas borrow strength from neighbours</td></tr>
+    <tr><td><b>Chilecito, La Rioja (Argentina)</b></td><td>One-click example: the challenge authors' own case from the official video (July 2026, labelled provisional)</td></tr>
+    <tr><td><b>Morocco, Tunisia, central Chile, Western Cape</b></td><td><b>Sealed.</b> Not opened until the model is frozen; then used once, pass/fail</td></tr>
+  </table>
+  <div class="plain"><b class="tag">In plain English</b>
+    <p><b>①</b> We learn "how likely was the old satellite to notice a fire this strong?" by watching both satellites look at the same fires at the same time. <b>②</b> Every number comes with a confidence grade. <b>③</b> We check our method by comparing two new satellites with each other, so the old satellite's problems can't fool us. <b>④</b> We even show the old satellite going wrong.</p>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>5</span></div>
+</section>
+
+<!-- ============ PAGE 6: ALGORITHM DIAGRAM ============ -->
+<section class="page">
+  <div class="kicker">4 · The algorithm</div>
+  <h2>Four layers, from raw fires to a trusted calendar</h2>
+  <svg viewBox="0 0 700 300" width="100%" role="img" aria-label="Algorithm pipeline in four layers">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5b6b78"/></marker></defs>
+    <g font-size="11">
+      <rect x="10" y="20" width="150" height="110" rx="10" fill="#fff" stroke="#d9e1e7"/>
+      <text x="22" y="42" font-weight="700" fill="#e8572a">LAYER 1</text><text x="22" y="60" font-weight="700">Group VIIRS fires</text>
+      <text x="22" y="80" fill="#33424d">375 m detections →</text><text x="22" y="95" fill="#33424d">fire units, power</text><text x="22" y="110" fill="#33424d">added up per unit</text>
+      <rect x="185" y="20" width="160" height="110" rx="10" fill="#fff" stroke="#d9e1e7"/>
+      <text x="197" y="42" font-weight="700" fill="#e8572a">LAYER 2</text><text x="197" y="60" font-weight="700">Detection response</text>
+      <text x="197" y="80" fill="#33424d">P(MODIS sees it | power),</text><text x="197" y="95" fill="#33424d">learned from matched</text><text x="197" y="110" fill="#33424d">Aqua + Suomi NPP passes</text>
+      <rect x="370" y="20" width="150" height="110" rx="10" fill="#fff" stroke="#d9e1e7"/>
+      <text x="382" y="42" font-weight="700" fill="#e8572a">LAYER 3</text><text x="382" y="60" font-weight="700">Statistical fix</text>
+      <text x="382" y="80" fill="#33424d">Negative binomial:</text><text x="382" y="95" fill="#33424d">month, region,</text><text x="382" y="110" fill="#33424d">background fires</text>
+      <rect x="545" y="20" width="145" height="110" rx="10" fill="#fff" stroke="#d9e1e7"/>
+      <text x="557" y="42" font-weight="700" fill="#e8572a">LAYER 4</text><text x="557" y="60" font-weight="700">Uncertainty</text>
+      <text x="557" y="80" fill="#33424d">300 bootstrap draws,</text><text x="557" y="95" fill="#33424d">ranges checked to</text><text x="557" y="110" fill="#33424d">really cover 80%</text>
+      <line x1="160" y1="75" x2="183" y2="75" stroke="#5b6b78" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="345" y1="75" x2="368" y2="75" stroke="#5b6b78" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="520" y1="75" x2="543" y2="75" stroke="#5b6b78" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="617" y1="130" x2="617" y2="170" stroke="#5b6b78" stroke-width="2" marker-end="url(#ar)"/>
+      <rect x="10" y="172" width="680" height="110" rx="12" fill="#0e2230"/>
+      <text x="30" y="198" font-weight="700" fill="#f4a340">OUTPUT</text>
+      <text x="30" y="220" fill="#fff" font-size="13" font-weight="600">Every VIIRS hotspot gets a weight: its MODIS-equivalent value.</text>
+      <text x="30" y="242" fill="#cbd7df">Any area you draw = the sum of the weights inside it. The map, the calendar and the CSV always agree.</text>
+      <text x="30" y="264" fill="#cbd7df">2000–2002 bridged (Terra only) · Suomi NPP + NOAA-20 averaged · NOAA-21 bridged to NOAA-20</text>
+    </g>
+  </svg>
+  <div class="plain"><b class="tag">In plain English</b>
+    <p><b>Layer 1:</b> the new satellite often breaks one fire into several small dots, so we glue nearby dots back into one fire and add up its heat.</p>
+    <p><b>Layer 2:</b> for each fire we ask "how likely was the old satellite to notice it?" A huge fire: almost certainly. A tiny one: rarely. We learn those odds from days when both satellites flew over the same fires.</p>
+    <p><b>Layer 3:</b> a statistics step fixes what the odds miss: seasons, regions, and small fires the new satellite didn't catch.</p>
+    <p><b>Layer 4:</b> we rerun everything hundreds of times with slightly different data to get an honest "give or take", and we check that the ranges actually contain the truth as often as they claim.</p>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>6</span></div>
+</section>
+
+<!-- ============ PAGE 7: DETECTION CURVE ============ -->
+<section class="page">
+  <div class="kicker">4 · The algorithm · the core idea</div>
+  <h2>The detection response: the heart of the method</h2>
+  <svg viewBox="0 0 700 250" width="100%" role="img" aria-label="Chance Aqua MODIS also saw a fire, by fire power: 3% at 0–2 MW rising to 80% above 100 MW">
+    <rect x="0" y="0" width="700" height="250" fill="#fff" rx="10" stroke="#d9e1e7"/>
+    <g stroke="#e6ebef"><line x1="70" y1="30" x2="680" y2="30"/><line x1="70" y1="80" x2="680" y2="80"/><line x1="70" y1="130" x2="680" y2="130"/><line x1="70" y1="180" x2="680" y2="180"/></g>
+    <g font-size="10" fill="#5b6b78"><text x="40" y="34">100%</text><text x="44" y="84">75%</text><text x="44" y="134">50%</text><text x="44" y="184">25%</text><text x="50" y="214">0%</text></g>
+    <line x1="70" y1="210" x2="680" y2="210" stroke="#14212b"/>
+    <g fill="#e8572a">
+      <rect x="85" y="204" width="60" height="6" rx="2"/><rect x="170" y="192" width="60" height="18" rx="2"/><rect x="255" y="168" width="60" height="42" rx="2"/>
+      <rect x="340" y="132" width="60" height="78" rx="2"/><rect x="425" y="98" width="60" height="112" rx="2"/><rect x="510" y="70" width="60" height="140" rx="2"/><rect x="595" y="50" width="60" height="160" rx="2"/>
+    </g>
+    <g font-size="11" font-weight="700" fill="#14212b"><text x="104" y="198">3%</text><text x="189" y="186">9%</text><text x="275" y="162">21%</text><text x="360" y="126">39%</text><text x="445" y="92">56%</text><text x="530" y="64">70%</text><text x="615" y="44">80%</text></g>
+    <g font-size="10" fill="#33424d"><text x="98" y="228">0–2</text><text x="183" y="228">2–5</text><text x="265" y="228">5–10</text><text x="348" y="228">10–20</text><text x="433" y="228">20–50</text><text x="514" y="228">50–100</text><text x="608" y="228">&gt;100</text></g>
+    <text x="300" y="246" font-size="10.5" fill="#5b6b78">fire power seen by VIIRS (megawatts)</text>
+    <text x="80" y="22" font-size="11" font-weight="700" fill="#14212b">Chance Aqua MODIS also saw it (daytime, Portugal 2012–2019)</text>
+  </svg>
+  <p class="small muted">First measurement, before the chance-match correction. The rate for the smallest fires may partly be coincidence; we subtract that using a "±1 day" control.</p>
+  <h3>Why learn it, rather than copy it from a paper</h3>
+  <p>A 2026 paper (Sofiev &amp; Kouznetsov, GMD) gives detection curves from physics. On our data they predicted Aqua's night counts within 1%, but for the smallest fires they say about 0.2% while matched data say about 13%. So we use the paper as a cross-check and <b>learn the curve from the satellites themselves</b>.</p>
+  <h3>Why "VIIRS → MODIS" and not the other way round</h3>
+  <p>Turning a sharp picture into a blurry one is always possible. Turning a blurry picture sharp means inventing detail, here inventing small fires MODIS never saw. Most competitors go the other way.</p>
+  <div class="plain"><b class="tag">In plain English</b>
+    <p>A 1 MW fire is like a candle: the old satellite almost never notices it. A 100 MW fire is a bonfire: it usually does. We measured these odds ourselves by finding moments when both satellites flew over the same fires within an hour. Then, for every fire the new satellite sees today, we can say "the old satellite would have counted this as 0.03 of a fire" or "as 0.8 of a fire", and add those up.</p>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>7</span></div>
+</section>
+
+<!-- ============ PAGE 8: CALENDAR MATH + TRUST ============ -->
+<section class="page">
+  <div class="kicker">4 · The algorithm · the calendar</div>
+  <h2>From record to calendar, and how sure we are</h2>
+  <div class="grid2">
+    <div>
+      <h3>What each calendar cell shows</h3>
+      <ul>
+        <li><b>Count:</b> MODIS-equivalent hotspots that month (the middle of 300 draws).</li>
+        <li><b>Normal:</b> the median <i>and</i> the mean of that month over 2003–last year. Bridged 2000–02 years are flagged, not used as "normal".</li>
+        <li><b>Anomaly:</b> % above or below the multi-year mean (as the challenge asks), plus the month's rank, e.g. "85th percentile".</li>
+        <li><b>Colour:</b> cividis for counts, a purple–orange diverging ramp for anomalies (both safe for colour-blind readers); uncertain cells fade toward grey.</li>
+        <li><b>Season:</b> start, middle and end dates (10/50/90% of the season's fires), only where there are at least 20 fires.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>The trust check</h3>
+      <svg viewBox="0 0 320 150" width="100%" role="img" aria-label="Trust check scale: reliable, use with care, too uncertain">
+        <rect x="10" y="40" width="100" height="26" rx="6" fill="#4f9a6c"/><rect x="110" y="40" width="100" height="26" fill="#f4a340"/><rect x="210" y="40" width="100" height="26" rx="6" fill="#d9534f"/>
+        <g font-size="11" fill="#fff" font-weight="700"><text x="30" y="58">Reliable</text><text x="120" y="58">Use with care</text><text x="225" y="58">Too uncertain</text></g>
+        <g font-size="10" fill="#33424d"><text x="10" y="84">R &lt; 0.5</text><text x="110" y="84">0.5 – 1</text><text x="210" y="84">R &gt; 1</text></g>
+        <text x="10" y="112" font-size="10.5" fill="#14212b">R = our correction's uncertainty</text>
+        <text x="10" y="127" font-size="10.5" fill="#14212b">÷ the normal year-to-year spread of that month</text>
+        <text x="10" y="24" font-size="11" font-weight="700" fill="#14212b">Shown on every month, for every area</text>
+      </svg>
+      <p class="small">Plus "Few fires here" when a typical month has fewer than 5 detections.</p>
+    </div>
+  </div>
+  <div class="plain"><b class="tag">In plain English</b>
+    <p>Some places naturally swing a lot from year to year: one August has 10 fires, the next has 200. If our correction is "give or take 5", it barely matters there. In a quiet place where every August has 3 or 4 fires, "give or take 5" swamps everything. The trust check says which situation you are in, so nobody panics over a "red" month that is really just noise.</p>
+  </div>
+  <h3>Before 2003 and after Suomi NPP</h3>
+  <ul>
+    <li><b>2000 to mid-2002:</b> only Terra flew, so the record would show a 2× step in 2002. We bridge it using Terra's typical share and mark those months "bridged".</li>
+    <li><b>After 2 Nov 2026:</b> NOAA-20 gets its own learned curve. NOAA-21 is translated via NOAA-20, because it never flew alongside an on-schedule MODIS. Available VIIRS satellites are averaged, as the GFED5 fire dataset does.</li>
+  </ul>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>8</span></div>
+</section>
+
+<!-- ============ PAGE 9: VALIDATION ============ -->
+<section class="page">
+  <div class="kicker">5 · Testing</div>
+  <h2>How we test it, honestly</h2>
+  <svg viewBox="0 0 700 170" width="100%" role="img" aria-label="Validation flow: development, freeze, sealed confirmation">
+    <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5b6b78"/></marker></defs>
+    <g font-size="11">
+      <rect x="10" y="15" width="210" height="140" rx="12" fill="#fff" stroke="#d9e1e7"/>
+      <text x="25" y="40" font-weight="700" fill="#e8572a">① DEVELOP</text>
+      <text x="25" y="62">Portugal + Eastern Med</text><text x="25" y="80">2012–2019 only</text><text x="25" y="98">Leave-one-year-out</text><text x="25" y="116">Baseline A vs learned B</text><text x="25" y="134">Pick ONE by fixed rule</text>
+      <rect x="245" y="15" width="200" height="140" rx="12" fill="#0e2230"/>
+      <text x="262" y="40" font-weight="700" fill="#f4a340">② FREEZE</text>
+      <text x="262" y="62" fill="#fff">Write the rules down</text><text x="262" y="80" fill="#fff">Commit to Git (timestamp)</text><text x="262" y="98" fill="#fff">No more changes to</text><text x="262" y="116" fill="#fff">the model after this</text>
+      <rect x="470" y="15" width="220" height="140" rx="12" fill="#fff" stroke="#d9e1e7"/>
+      <text x="485" y="40" font-weight="700" fill="#e8572a">③ CONFIRM, ONCE</text>
+      <text x="485" y="62">Sealed regions, first look</text><text x="485" y="80">Accuracy: 2020–2021</text><text x="485" y="98">Suomi NPP vs NOAA-20 agree?</text><text x="485" y="116">2012 seam jump, with range</text><text x="485" y="134">PASS or FAIL, published</text>
+      <line x1="220" y1="85" x2="243" y2="85" stroke="#5b6b78" stroke-width="2" marker-end="url(#ar2)"/>
+      <line x1="445" y1="85" x2="468" y2="85" stroke="#5b6b78" stroke-width="2" marker-end="url(#ar2)"/>
+    </g>
+  </svg>
+  <table>
+    <tr><th>Test</th><th>What it proves</th><th>Pass rule</th></tr>
+    <tr><td><b>Accuracy 2020–21</b></td><td>We can rebuild MODIS from VIIRS on years and places we never trained on</td><td>Better score than the baseline; 80% ranges cover 70–90% of the time</td></tr>
+    <tr><td><b>Satellite swap</b></td><td>The method doesn't depend on which VIIRS satellite you feed it, and it is immune to MODIS drift</td><td>Records from Suomi NPP and NOAA-20 agree in at least 80% of months</td></tr>
+    <tr><td><b>2012 seam</b></td><td>The false jump is gone</td><td>Reported as a number with a range, not claimed "proven"</td></tr>
+    <tr><td><b>Drift divergence 2022–25</b></td><td>Shows when MODIS itself went wrong</td><td>A result, not a score</td></tr>
+  </table>
+  <div class="plain"><b class="tag">In plain English</b>
+    <p>It's like a student who mustn't see the exam. We practise on some years and places. Then we write the method down and lock it. Only then do we open regions we have never looked at (Morocco, Tunisia, central Chile, South Africa's Western Cape) and take the exam once. Pass or fail, we publish the grade. Most teams marked their own homework; judges notice.</p>
+  </div>
+  <p class="small muted">Scores used: CRPS (a fair score for a forecast with a range), coverage (do 80% ranges contain the truth 80% of the time?), WAPE (average % error) and season-date error in days.</p>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>9</span></div>
+</section>
+
+<!-- ============ PAGE 10: PRODUCT ============ -->
+<section class="page">
+  <div class="kicker">6 · The product</div>
+  <h2>What a judge clicks in the first 30 seconds</h2>
+  <svg viewBox="0 0 700 300" width="100%" role="img" aria-label="Wireframe of the CEDRUS app: map with drawn area, month by year calendar, this month versus normal, trust check, CSV buttons">
+    <rect x="0" y="0" width="700" height="300" rx="12" fill="#08131d"/>
+    <rect x="12" y="12" width="300" height="276" rx="8" fill="#0e2230"/>
+    <path d="M70 60 L230 70 L260 180 L120 230 L60 150 Z" fill="#f4a340" fill-opacity=".18" stroke="#f4a340" stroke-width="2" stroke-dasharray="5 4"/>
+    <g fill="#e8572a"><circle cx="150" cy="120" r="4"/><circle cx="170" cy="140" r="3"/><circle cx="130" cy="170" r="5"/><circle cx="200" cy="110" r="3"/><circle cx="110" cy="100" r="3"/></g>
+    <text x="24" y="34" fill="#cbd7df" font-size="11">Map: draw an area / type lat-lon</text>
+    <rect x="324" y="12" width="364" height="150" rx="8" fill="#0e2230"/>
+    <text x="336" y="32" fill="#cbd7df" font-size="11">Calendar: month × year, 2000 → today</text>
+    <g id="cal">
+    </g>
+    <rect x="324" y="172" width="178" height="116" rx="8" fill="#0e2230"/>
+    <text x="336" y="192" fill="#cbd7df" font-size="11">This month vs normal</text>
+    <text x="336" y="222" fill="#f4a340" font-size="20" font-weight="700">85th pct</text>
+    <text x="336" y="242" fill="#cbd7df" font-size="10.5">+62% vs mean</text>
+    <rect x="336" y="254" width="70" height="20" rx="10" fill="#4f9a6c"/><text x="346" y="268" fill="#fff" font-size="10" font-weight="700">Reliable</text>
+    <rect x="510" y="172" width="178" height="116" rx="8" fill="#0e2230"/>
+    <text x="522" y="192" fill="#cbd7df" font-size="11">Downloads</text>
+    <rect x="522" y="206" width="154" height="28" rx="6" fill="#4f9a6c"/><text x="534" y="224" fill="#fff" font-size="10.5" font-weight="600">Hotspots CSV (+ weights)</text>
+    <rect x="522" y="244" width="154" height="28" rx="6" fill="#2f6f9f"/><text x="534" y="262" fill="#fff" font-size="10.5" font-weight="600">Monthly CSV (+ ranges)</text>
+  </svg>
+  <script>
+    (function(){var g=document.getElementById('cal');var cols=['#00204c','#31446b','#666970','#958f78','#cbba69','#ffe945'];var s='';for(var y=0;y<10;y++){for(var m=0;m<12;m++){var v=Math.max(0,Math.min(5,Math.round(2.6*Math.exp(-Math.pow((m-7.2)/1.6,2))*(0.6+((y*7+m*3)%5)/5)+(m===3?1:0))));s+='<rect x="'+(336+m*28)+'" y="'+(42+y*11)+'" width="26" height="9" rx="2" fill="'+cols[v]+'"/>';}}g.innerHTML=s;})();
+  </script>
+  <div class="grid2">
+    <div>
+      <h3>MVP features (must exist on 15 Nov)</h3>
+      <ul class="small">
+        <li>Static site (no server), cold load under 5 s</li>
+        <li>Draw an area, type lat/lon, or pick a country</li>
+        <li>Month × year calendar, 2000 → 2026 (2026 marked provisional)</li>
+        <li>"Naive vs harmonized" toggle: watch the 2012 jump disappear</li>
+        <li>This month vs median <i>and</i> mean, rank, trust check</li>
+        <li>Season dates, drift-divergence chart</li>
+        <li>Two CSVs: raw hotspots with weights; monthly with ranges</li>
+        <li>Keyboard-navigable calendar with a table fallback</li>
+      </ul>
+    </div>
+    <div class="plain"><b class="tag">In plain English</b>
+      <p>Open the link and you immediately see a fire calendar: rows are years, columns are months, brighter means more fire. Draw any shape on the map and the calendar updates for that area. A badge tells you whether to trust it. Two buttons download the data. Nothing to install, nothing to log in to, and it works on a phone.</p>
+    </div>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>10</span></div>
+</section>
+
+<!-- ============ PAGE 11: REVIEW ============ -->
+<section class="page">
+  <div class="kicker">7 · Stress test</div>
+  <h2>What an independent reviewer caught</h2>
+  <p>Before calling the plan ready, a reviewer who never saw our reasoning attacked it as a fire scientist and as a Space Apps judge. Its first verdict was <span class="pill bad">not ready</span>. These are the problems and how v2 fixes them.</p>
+  <table>
+    <tr><th>Problem found</th><th>Severity</th><th>Fix in v2</th></tr>
+    <tr><td>We planned to score 2020–25 against MODIS, but MODIS itself drifted from 2022</td><td><span class="pill bad">Critical</span></td><td>Score accuracy on 2020–21 only; add the satellite-swap test; show 2022–25 as drift divergence</td></tr>
+    <tr><td>Trust-check numbers assumed fire counts are "Poisson-random"; real year-to-year swings are 5–276× bigger</td><td><span class="pill bad">Critical</span></td><td>Trust check rebuilt as "our error vs normal year-to-year spread"</td></tr>
+    <tr><td>"Untouched" test regions (Argentina, Cyprus) had already been looked at</td><td><span class="pill bad">Critical</span></td><td>New sealed regions; Argentina and Cyprus marked "partially exposed"</td></tr>
+    <tr><td>Pre-event work could look like breaking the rules</td><td><span class="pill bad">Critical</span></td><td>Local Lead's approval in writing; all pre-event work disclosed on the project page</td></tr>
+    <tr><td>Matching radius too small at MODIS's swath edge; some "matches" are coincidence</td><td><span class="pill warn">Major</span></td><td>Window sized from each pixel; a "±1 day" control measures coincidence</td></tr>
+    <tr><td>2000–2002 (Terra only) would show a false 2× step</td><td><span class="pill warn">Major</span></td><td>Bridged and flagged; "normal" starts in 2003</td></tr>
+    <tr><td>Over-claims ("first calendar for Lebanon", "physics model")</td><td><span class="pill warn">Major</span></td><td>Honest wording throughout</td></tr>
+    <tr><td>Too much to build</td><td><span class="pill warn">Major</span></td><td>MVP fixed; everything else is stretch</td></tr>
+  </table>
+  <div class="plain"><b class="tag">In plain English</b>
+    <p>We asked a tough critic to tear the plan apart before the judges do. It found real holes, including one in our favourite test and some numbers that were simply wrong. We fixed them all. This is the habit that should run through the whole project: <b>try to break it ourselves first</b>.</p>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>11</span></div>
+</section>
+
+<!-- ============ PAGE 12: MVP + CHECKLIST ============ -->
+<section class="page">
+  <div class="kicker">8 · Scope</div>
+  <h2>What we build, what we cut, what we submit</h2>
+  <div class="grid2">
+    <div class="card"><h4 style="color:#1f6b3d">✔ Build (MVP)</h4>
+      <ul class="small">
+        <li>Baseline A (shrinkage ratio) and learned model B; pick one by the fixed rule</li>
+        <li>NOAA-20 curve; NOAA-21 via NOAA-20</li>
+        <li>2000–02 bridge; documented outages masked</li>
+        <li>Sealed confirmation + satellite-swap test + drift chart</li>
+        <li>Static site: calendar, toggle, trust check, two CSVs</li>
+        <li>Project page, AI statement, LICENSE, 30-second video</li>
+      </ul></div>
+    <div class="card"><h4 style="color:#8e2219">✘ Cut (stretch only)</h4>
+      <ul class="small">
+        <li>LightGBM and other extra models; land cover</li>
+        <li>Fancy uncertainty methods (conformal, spatial-block validation)</li>
+        <li>Two-season calendars; conflict overlay for south Lebanon</li>
+        <li>Arabic and Spanish interface; automated accessibility tests</li>
+        <li>Trend analysis; in-browser database</li>
+        <li>Pointing out mistakes in published papers</li>
+      </ul></div>
+  </div>
+  <h3>Submission checklist</h3>
+  <table>
+    <tr><th>Item</th><th>Why</th></tr>
+    <tr><td>Live link that works with an empty cache, on a phone, on slow Wi-Fi</td><td>About half the field fails this</td></tr>
+    <tr><td>Project page: method, results (including failures), every data source cited</td><td>The written page counts most; missing citations can cost an award</td></tr>
+    <tr><td>Credits for every idea borrowed from other teams</td><td>Honest, and judges notice</td></tr>
+    <tr><td>AI-use statement (which tools did what)</td><td>Required in 2026</td></tr>
+    <tr><td>Apache-2.0 LICENSE in the repo</td><td>Space Apps default license; missing today</td></tr>
+    <tr><td>30-second video <b>or</b> at most 7 slides, never both</td><td>Going over disqualifies</td></tr>
+    <tr><td>Local Lead's email approving pre-event work</td><td>Protects us on the "originality" checkbox</td></tr>
+  </table>
+  <h3>The 30-second video</h3>
+  <p class="small"><b>0–3 s</b> "MODIS is going dark." · <b>3–8 s</b> the 2012 jump, naive vs ours · <b>8–20 s</b> draw an area → calendar → "85th percentile, reliable" → CSV · <b>20–27 s</b> "Tested on regions we never looked at, and against a second satellite." · <b>27–30 s</b> "CEDRUS, Beirut."</p>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>12</span></div>
+</section>
+
+<!-- ============ PAGE 13: GLOSSARY + READING ============ -->
+<section class="page">
+  <div class="kicker">9 · Reference</div>
+  <h2>Glossary and reading list</h2>
+  <div class="grid2">
+    <dl class="glossary small">
+      <dt>MODIS</dt><dd>The older fire-detecting instrument, on the Terra (2000) and Aqua (2002) satellites. 1 km pixels. Retiring.</dd>
+      <dt>VIIRS</dt><dd>The newer instrument, on Suomi NPP (2012–2026), NOAA-20 (2018) and NOAA-21 (2024). 375 m pixels: it sees smaller fires.</dd>
+      <dt>Hotspot / detection</dt><dd>One satellite pixel flagged as burning. Not the same as a fire (one fire can make many) or as burned area.</dd>
+      <dt>FIRMS</dt><dd>NASA's fire data service, where all our hotspot data comes from.</dd>
+      <dt>FRP (fire radiative power)</dt><dd>How much heat a fire gives off, in megawatts (MW). Big fires have high FRP.</dd>
+      <dt>Harmonize</dt><dd>Make two records comparable, as if one instrument measured both.</dd>
+      <dt>Overpass / drift</dt><dd>The time a satellite flies over. Terra and Aqua's times have drifted, so they now see fires at different hours than they used to.</dd>
+      <dt>Negative binomial</dt><dd>A statistical model for counts that can swing a lot (like fires).</dd>
+      <dt>Bootstrap</dt><dd>Re-running the analysis many times on reshuffled data to measure uncertainty.</dd>
+      <dt>CRPS / coverage</dt><dd>CRPS scores a forecast that gives a range. Coverage checks whether "80% ranges" really contain the truth 80% of the time.</dd>
+      <dt>Leakage</dt><dd>Accidentally letting the test data influence the model, which makes results look better than they are.</dd>
+      <dt>Sealed region</dt><dd>A region we promise not to look at until the model is frozen, so the final test is fair.</dd>
+    </dl>
+    <div class="small">
+      <h3 style="margin-top:0">Must-read papers</h3>
+      <ul>
+        <li><b>Sofiev &amp; Kouznetsov 2026</b>: detection limits of MODIS and VIIRS. GMD 19:10123. doi:10.5194/gmd-19-10123-2026</li>
+        <li><b>Giglio, Schroeder &amp; Justice 2016</b>: how MODIS detects fire. RSE 178:31. doi:10.1016/j.rse.2016.02.054</li>
+        <li><b>Schroeder et al. 2014</b>: the VIIRS 375 m fire product. RSE 143:85. doi:10.1016/j.rse.2013.12.008</li>
+        <li><b>Fu et al. 2020</b>: MODIS vs VIIRS on matched passes. Remote Sens. 12:2870. doi:10.3390/rs12182870</li>
+        <li><b>Giglio, Csiszar &amp; Justice 2006</b>: fire seasonality. JGR 111:G02016. doi:10.1029/2005JG000142</li>
+        <li><b>Chen et al. 2026 (GFED5NRT)</b>: how a major fire dataset handles VIIRS. ESSD 18:7535. doi:10.5194/essd-18-7535-2026</li>
+        <li><b>Li et al. 2020</b>: harmonizing night-lights satellites (the closest analogue). Sci. Data. doi:10.1038/s41597-020-0510-y</li>
+        <li><b>Correll et al. 2018</b>: colours that show uncertainty (CHI)</li>
+      </ul>
+      <h3>Where things live</h3>
+      <ul>
+        <li>Repo: github.com/hyounes-svg/cedrus</li>
+        <li>Live site: hyounes-svg.github.io/cedrus</li>
+        <li>Full technical documents: STRATEGY.md and ALGORITHM.md (v2)</li>
+        <li>Analyst task: docs/tasks/ANALYST_LEBANON.md</li>
+      </ul>
+    </div>
+  </div>
+  <div class="plain" style="margin-top:6mm"><b class="tag">One last thing</b>
+    <p>We are not trying to have the most features. We are trying to be the entry a NASA fire scientist would trust and a fire chief could actually use. Every choice in this booklet comes back to that.</p>
+  </div>
+  <div class="folio"><span>CEDRUS · Strategy &amp; Algorithm v2</span><span>13</span></div>
+</section>
+
+</body>
+</html>

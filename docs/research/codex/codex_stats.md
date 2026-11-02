@@ -1,0 +1,12 @@
+ROLE: You are a senior statistician specializing in count data, small-area estimation and forecast verification, advising a hackathon team. Read the CONTEXT above, then use web search extensively (papers, docs, package docs) to produce a concrete, implementable statistical design. Final answer as markdown, at most 1800 words.
+
+Answer with citations:
+1. Harmonization model for counts with uncertainty. Compare (a) ratio estimators with empirical-Bayes / hierarchical shrinkage (Poisson-gamma, Fay-Herriot small-area estimation), (b) negative-binomial GLM/GLMM with offset log(E_physical) (statsmodels, glmmTMB, PyMC; what is feasible in Python in 48 hours), (c) Tweedie/Poisson GBMs (LightGBM) with quantile or conformal intervals. Which is best for 0.1-0.5 deg cells by month, many zeros, 2012-2025 overlap? Recommend one primary and one baseline. Give equations.
+2. Calibrated predictive intervals for counts: conformal prediction (split conformal, CQR, conformal under temporal dependence, block/season conformal), parametric bootstrap, season-block bootstrap. How to verify calibration (randomized PIT for discrete data; coverage).
+3. Proper scoring for count forecasts: CRPS for Poisson/NB (closed forms), log score, Dawid-Sebastiani; Python implementations (scoringrules, properscoring). How to compute an "oracle Poisson noise floor" for WAPE and CRPS so we can show how close a model is to the floor.
+4. Minimum detectable change and anomalies with uncertainty: given n baseline years of monthly counts plus harmonization uncertainty, compute P(current month > historical median) and the smallest percent change detectable at 90% (power for Poisson/NB rate ratios). Give formulas and a small table for baseline means 1, 2, 5, 10, 20, 50, 100.
+5. Seam/break tests to prove the 2012 sensor jump is removed (Chow, CUSUM, Bai-Perron, Pettitt) and trend tests for counts (Sen slope plus Hamed-Rao modified Mann-Kendall vs Poisson/NB regression with a year term).
+6. Validation without leakage: leave-one-year-out vs leave-one-season-out vs spatial block CV with buffers (Roberts 2017 Ecography; Ploton 2020), nested CV for tuning. Propose our pre-registered test protocol.
+7. Fire-season metrics robust to bimodal regimes (spring agricultural plus summer fires): onset/peak/end definitions (cumulative 10/90 vs 5/95, circular statistics for peak timing, Giglio 2006, Benali 2017), with uncertainty.
+
+Finish with a section "RECOMMENDED STATISTICAL PIPELINE": numbered steps with exact formulas and Python libraries.
