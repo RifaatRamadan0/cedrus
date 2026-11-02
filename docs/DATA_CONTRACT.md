@@ -196,10 +196,14 @@ Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
 ## How the website turns these into an area's calendar
 
 - **Whole region:** the sum of its cells (`m`, `naive`, `bg`); the 80% range adds each cell's half-widths in quadrature.
-  This equals the exact sum of every detection's weight, up to the 2-decimal rounding of `m`.
+  This equals the exact sum of every detection's weight, up to the 2-decimal rounding of `m`: within 0.1 per month
+  (measured 2 Nov 2026, largest gap per month: Portugal 0.070 detections / 0.092 burning days, Lebanon 0.029 / 0.035;
+  `tools/probe_site.py` checks every month of both units).
 - **Drawn shape or circle (exact):** the website loads every hotspot year (cached, with a progress bar) and adds up
-  `w` of the detections inside the shape, month by month, plus `bg` of each touched cell times the share of the cell
-  inside the shape. The naive record counts the naive-record detections inside the shape. The 80% range scales each
+  `w` of the detections inside the shape, month by month, plus `bg` of each touched cell times the share of the cell's
+  area inside the shape. That share is exact on lon/lat (the same plane as the inside test): the shape clipped to the
+  cell (Sutherland–Hodgman), its area by the shoelace formula, over the cell's area (2 Nov 2026; it was a 10 × 10 point
+  sample). The naive record counts the naive-record detections inside the shape. The 80% range scales each
   touched cell's half-widths by (the shape's weight in that cell ÷ the cell's `m`) and combines them in quadrature
   (approximate). An area with no detection inside is shown as "no detections here".
 - **Quiet months:** an expected value under 0.5 counts as zero, before and after 2022 alike, for the colour and for
@@ -208,7 +212,19 @@ Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
   the typical range (interquartile range) in words, without a percentage or a chance. No percentage is ever taken
   against a normal under 1.
 - **Failed loads:** if a hotspot year cannot be loaded, the area shows no numbers (no calendar, no panel values),
-  the downloads are disabled, and the area names the year with a retry button.
+  the downloads are disabled, and the area names the year with a retry button. If a unit's calendar files
+  (`monthly*.json`, `drift*.json`) cannot be loaded, the switch stays on the unit already shown (its labels and numbers
+  unchanged) and says "Couldn't load hotspot counts — try again" (or "burning days") with a retry; at start-up the
+  calendar shows that message instead of numbers, the other unit's button still works, and the map still loads.
+- **Default month of a new area:** the most recent month in the record's last 3 years whose baseline median is at least
+  5; else the most recent month with a value of at least 1; else the latest month.
+- **Both units side by side:** where the selected month's value is at hand in both units (the whole region once the
+  other unit's calendar file has loaded in the background; a drawn area once it has been worked out in both) and the
+  burning-day estimate is above the hotspot estimate (and at least 0.5), the panel says that the two come from
+  separately tested models and that this cannot happen in real counts. Whole regions, 2 Nov 2026 (report only):
+  Portugal 7 of 301 months (all estimated, 2022+), Lebanon 11 of 301 (all estimated); cell-months: Portugal 810,
+  Lebanon 154. MODIS can never do this in observed months (a burning day needs a detection).
+- **Display:** a value above 0 and under 0.05 is shown as "<0.1"; a value shown as 1 takes the singular unit.
 - **Shapes:** a shape that reaches both product regions is shown for one, with a note; a shape containing a whole
   region says so instead of reporting a share "outside".
 - **Outside the data:** the share of a drawn area outside the box or outside the data footprint (cells listed above)
@@ -336,6 +352,13 @@ It reads a only from `data/processed/tournament/frozen_round3.json` and stops un
   D-a's predictive mean is linear in the class counts, so for every cell-month the weights plus the background are
   its mean; `regions.json` `burning_days.model_detail.check.max_gap_between_model_predictive_mean_and_m` is the
   largest difference, rounding only (Portugal 0.0126, Lebanon 0.0050).
+- **Zero-weight notes (`monthly_bd.json` `zero_notes`, disclosure only):** per month, among the VIIRS burning days of the
+  satellites the month uses, the share that weighs 0 (D-a's ratio for their FRP class is 0 in that calendar month ×
+  day/night). Where it is 10% or more, the month carries the note "N of M VIIRS burning days in <region> this month
+  carry no weight: their fire-power class never matched a MODIS fire in this season during 2012–2019", shown in the
+  tooltip, the panel and both CSVs' `source_flag`. `regions.json` `burning_days.zero_weight` sums 2022+: Portugal 41 of
+  26,515 (0.15%, no month noted), Lebanon 850 of 4,142 (20.5%, 28 months noted). The weights are D-a's own; the note
+  changes no number.
 - **Combination rule:** the hotspot view's, with "ratio above 0" read as "some FRP class has r0_k > 0 in the slot (and
   s > 0 for NOAA-20)". In both product regions every slot has one, so both satellites always share a month they both
   cover and no slot note is written (`burning_days.combination`). A class whose r0_k is 0 weighs 0 (Portugal's and
@@ -409,11 +432,13 @@ predicted by D-a from Suomi NPP and NOAA-20 burning days (weights + background),
 - **Drawn shape or circle:** a burning day is **inside** the shape when the **centre of its square**,
   `((x0 + x + 0.5) × 0.01, (y0 + y + 0.5) × 0.01)` in IEEE double arithmetic, is inside the shape (the same
   ray-casting test as for hotspots). The area's harmonized estimate for a month is Σ `w` of the burning days inside,
-  plus `bg` of each touched 0.25° cell times the share of the cell inside the shape (as the hotspot view). The naive
+  plus `bg` of each touched 0.25° cell times the share of the cell's area inside the shape (exact, as the hotspot view). The naive
   record counts the naive-record burning days inside. One rule decides membership, and every burning day has exactly
   one point, so the same burning days make the calendar, the season dates and the burning-day CSV; shapes that tile an
   area add up to it. A detection inside the shape whose square's centre is outside is not counted in this view (it is
   in the hotspot view), and the other way round.
+- **Hotspot CSV in the burning-day view:** offered too (the challenge asks for hotspots); its `w` is the hotspot
+  view's weight, as its status line says.
 - **Burning-day CSV:** every burning day inside the exact area for the chosen years, one row each:
   `latitude, longitude` (the square's centre, 3 decimals), `cell_x, cell_y` (fx, fy), `acq_date, daynight, family,
   detections, max_frp, frp_class, source_flag, w`. For any area, **Σ monthly `harmonized_estimate` = Σ CSV `w` +

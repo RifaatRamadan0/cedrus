@@ -2,7 +2,7 @@
  "contract": "docs/DATA_CONTRACT.md",
  "version": 2,
  "default_unit": "burning_days",
- "generated_at": "2026-11-02T09:28:18+00:00",
+ "generated_at": "2026-11-02T10:15:11+00:00",
  "regions": [
   {
    "id": "portugal",
@@ -1253,9 +1253,17 @@
      "modis": 66617,
      "snpp": 48598,
      "noaa20": 20359
+    },
+    "zero_weight": {
+     "from": "2022-01",
+     "viirs_burning_days": 26515,
+     "weight_zero": 41,
+     "share": 0.0015,
+     "months_noted": 0,
+     "note_threshold": 0.1
     }
    },
-   "generated_at": "2026-11-02T09:28:16+00:00"
+   "generated_at": "2026-11-02T10:15:09+00:00"
   },
   {
    "id": "lebanon",
@@ -2482,9 +2490,17 @@
      "modis": 2043,
      "snpp": 6193,
      "noaa20": 4049
+    },
+    "zero_weight": {
+     "from": "2022-01",
+     "viirs_burning_days": 4142,
+     "weight_zero": 850,
+     "share": 0.2052,
+     "months_noted": 28,
+     "note_threshold": 0.1
     }
    },
-   "generated_at": "2026-11-02T09:28:18+00:00"
+   "generated_at": "2026-11-02T10:15:11+00:00"
   }
  ]
 }

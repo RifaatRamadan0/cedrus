@@ -176,3 +176,5 @@ dialog p a{color:#93d9b1;text-decoration:underline;text-underline-offset:2px}
 .unit{flex:1;min-height:32px;padding:5px 8px;border-radius:8px;background:#1b2d3b;border:1px solid #283b48;font-size:12px}
 .unit:hover{background:#24404f}
 .unit[aria-pressed=true]{background:#2b574e;border-color:#69b48a;font-weight:600}
+.unit-status{font-size:11px;line-height:16px;color:#ffd2b0;background:#3a2414;border:1px solid #7a4a2a;border-radius:8px;padding:6px 9px;margin:7px 0 0}
+#two-models{margin:8px 0 12px;padding-left:8px;border-left:2px solid #7a6a3a}

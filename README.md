@@ -18,12 +18,14 @@ honestly**, and turns it into a fire calendar for any area.
 The calendar opens in **burning days**: how many days each ~1 km square had a fire detected, in MODIS-equivalent
 terms. A 0.01° square counts once per day and time of day for each satellite family, however many detections fall in
 it. One click switches to **hotspots**: every satellite fire detection, in MODIS-equivalent counts, because those are
-the numbers the challenge asks for. Both views keep the same record (December 2000 to December 2025), the same areas,
-checks and downloads. Layout of the files: [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md).
+the numbers the challenge asks for. Both views keep the same record (December 2000 to December 2025), the same areas
+and checks, and the hotspot CSV can be downloaded in both. Drawn areas are exact sums; whole-region totals equal the
+exact sum within rounding (≤ 0.1 per month). Layout of the files: [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md).
 
 ## How we know it works: pre-registered tests, one of them failed
 
-Every test was written down before it was run, and each sealed region was opened once.
+Each sealed exam was written down before it was run, and each sealed region was opened once. Figures from development
+data (the regions the models were chosen on) are marked as such; they are not exam results.
 
 1. **Round 1 failed.** Model A (a shrinkage ratio that beat a learned detection-physics model in the pre-registered
    bake-off, [docs/BAKEOFF_RESULTS.md](docs/BAKEOFF_RESULTS.md)) failed its sealed confirmation: on regions it had
@@ -100,8 +102,8 @@ browsers block a page opened from disk from loading its data files.
 2. **Write the test before running it.** New claims ("our calendar predicts X") get a
    rule in `docs/TEST_PLAN.md` first, then the code.
 3. **Always compare against a simple method.** If ours doesn't beat the simple method, we say so.
-4. **Say what we don't know.** Detections are not burned area. Corrected values after 2012
-   are estimates. These limits are shown on the site, not hidden.
+4. **Say what we don't know.** Neither detections nor burning days are burned area. Estimates start in 2022
+   (MODIS drifted from its orbit); before that the record is MODIS itself. These limits are shown on the site, not hidden.
 5. **Plain language** on the website. Judges and fire managers aren't satellite experts.
 
 ## Working together

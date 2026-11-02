@@ -48,6 +48,7 @@ SHARE_YEARS = (2003, 2011)
 SHARE_PRIOR = 20           # MODIS pseudo-detections pulling a calendar month's Terra share toward the pooled share
 EDGE_DAYS = 3              # a file's final (first) month counts if it has a detection in its last (first) 3 days
 OUTAGE_OTHER = 20          # a VIIRS satellite with 0 detections in a month while the other has >= this is "no data"
+ZERO_NOTE = 0.10           # burning days: a month is noted when this share of its contributing VIIRS burning days weighs 0
 DRIFT_FROM = model_impl.TRAIN["snpp"][0]
 FLAG_CODES = {"B": "bridged", "O": "observed", "E": "estimated (S-NPP+NOAA-20)", "N": "estimated (S-NPP only)",
               "J": "estimated (NOAA-20 only)", "X": "no data"}
@@ -304,7 +305,7 @@ def export(region):
     }
     write_json(out / "drift.json", drift)
 
-    burning = export_burning_days(det, region, months, flags, covering, cells, out, cov_modis)
+    burning = export_burning_days(det, region, months, flags, covering, cells, out, cov_modis, cfg["country"])
 
     lon0, lat0, lon1, lat1 = box
     meta = {
@@ -408,7 +409,7 @@ def check_unit(bd, model):
     return int(want.to_numpy().sum())
 
 
-def export_burning_days(det, region, months, flags, covering, cells, out, cov_modis):
+def export_burning_days(det, region, months, flags, covering, cells, out, cov_modis, name):
     """The primary view: the same record and policy in MODIS-equivalent burning days, model D-a (weights_bd.py).
     Writes monthly_bd.json, drift_bd.json and burning/<year>.json; returns the regions.json block."""
     shape = (len(cells), len(months))
@@ -445,6 +446,20 @@ def export_burning_days(det, region, months, flags, covering, cells, out, cov_mo
     est = share > 0
     w[est] = share[est] * weights_bd.burning_day_weights(model, bd[est])
     bd["w"] = np.round(w, 4)
+
+    # Disclosure (tester's minor 2, 2 Nov 2026): VIIRS burning days that a covering satellite contributes but that weigh
+    # 0, because D-a's ratio for their FRP class is 0 in that calendar month x day/night (the class never matched a
+    # MODIS fire there in 2012-2019). Counted per month over the region; noted where they are >= ZERO_NOTE of the month.
+    used = pd.Series(est, index=bd.index)
+    zero = used & (bd.w == 0)
+    by_m = pd.DataFrame({"m": used, "z": zero, "month": bd.month}).groupby("month")[["m", "z"]].sum()
+    zero_notes = {m: f"{int(r.z)} of {int(r.m)} VIIRS burning days in {name} this month carry no weight: their fire-power "
+                     "class never matched a MODIS fire in this season during 2012–2019"
+                  for m, r in by_m.iterrows() if r.m > 0 and r.z / r.m >= ZERO_NOTE}
+    late = by_m[by_m.index >= month_after(OBSERVED_END)]
+    zero_weight = {"from": month_after(OBSERVED_END), "viirs_burning_days": int(late.m.sum()),
+                   "weight_zero": int(late.z.sum()), "share": round(float(late.z.sum() / late.m.sum()), 4) if late.m.sum() else None,
+                   "months_noted": len(zero_notes), "note_threshold": ZERO_NOTE}
 
     # ---- cell x month tables
     w_arr = np.zeros(shape)
@@ -484,6 +499,7 @@ def export_burning_days(det, region, months, flags, covering, cells, out, cov_mo
         "months": {"first": months[0], "last": months[-1], "n": len(months)},
         "flags": flags, "flag_codes": FLAG_CODES,
         "slot_notes": slot_notes_of(months, flags, covering, slot_share, positive, "burning days"),
+        "zero_notes": zero_notes,  # month -> VIIRS burning days that carry no weight, where >= ZERO_NOTE of the month
         "cells": {"ix": cells.ix.tolist(), "iy": cells.iy.tolist()},
         "m": [round_list(r, 2) for r in m_round],
         "bg": [round_list(r, 2) for r in bg],
@@ -571,6 +587,7 @@ def export_burning_days(det, region, months, flags, covering, cells, out, cov_mo
                         "basis": {f"{m:02d}": b for m, b in share_basis.items()}},
         "years": years,
         "records": {f: int((bd.fam == f).sum()) for f in FAM_CODE},
+        "zero_weight": zero_weight,
     }
 
 
