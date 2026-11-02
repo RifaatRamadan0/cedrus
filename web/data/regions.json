@@ -1,7 +1,8 @@
 {
  "contract": "docs/DATA_CONTRACT.md",
  "version": 2,
- "generated_at": "2026-11-01T11:25:59+00:00",
+ "default_unit": "burning_days",
+ "generated_at": "2026-11-02T09:28:18+00:00",
  "regions": [
   {
    "id": "portugal",
@@ -835,7 +836,426 @@
      }
     ]
    },
-   "generated_at": "2026-11-01T11:25:57+00:00"
+   "burning_days": {
+    "unit": "MODIS-equivalent burning days: how many days each 0.01 degree cell (about 1 km) had a fire detected",
+    "definition": "a 0.01 degree cell (floor(lon / 0.01), floor(lat / 0.01)) counts once per date and day/night if it has any detection of the family (MODIS = Terra + Aqua; Suomi NPP; NOAA-20); it takes the FRP class of its largest-FRP detection (f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW)",
+    "files": {
+     "monthly": "monthly_bd.json",
+     "drift": "drift_bd.json",
+     "records": "burning/<year>.json"
+    },
+    "fine_cell_deg": 0.01,
+    "origin": {
+     "x0": -950,
+     "y0": 3702
+    },
+    "model": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+    "model_detail": {
+     "name": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+     "badge": "D-a \u00b7 ROUND 3 CONFIRMED",
+     "a": 10,
+     "unit": "burning days",
+     "frozen": {
+      "file": "data/processed/tournament/frozen_round3.json",
+      "sha256": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
+      "commit": "80e297f",
+      "confirmation": "docs/ROUND3_CONFIRMATION.md"
+     },
+     "classes": "f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW",
+     "satellites": {
+      "snpp": {
+       "train": [
+        "2012-02",
+        "2019-12"
+       ],
+       "method": "D-a (C3 in burning days): one A2-style ratio per FRP class",
+       "prior_ratio_r0": {
+        "01D": [
+         0.0,
+         0.1774,
+         0.4969,
+         0.3978
+        ],
+        "01N": [
+         0.0,
+         0.1119,
+         0.2833,
+         0.0
+        ],
+        "02D": [
+         0.0,
+         0.3405,
+         0.7316,
+         0.9293
+        ],
+        "02N": [
+         0.0,
+         0.1208,
+         0.44,
+         3.6594
+        ],
+        "03D": [
+         0.0,
+         0.2483,
+         1.0396,
+         1.2766
+        ],
+        "03N": [
+         0.0,
+         0.1896,
+         0.3784,
+         0.7262
+        ],
+        "04D": [
+         0.0,
+         0.1848,
+         0.7286,
+         1.1436
+        ],
+        "04N": [
+         0.0,
+         0.1689,
+         0.5173,
+         0.6013
+        ],
+        "05D": [
+         0.0,
+         0.2489,
+         0.5662,
+         0.8409
+        ],
+        "05N": [
+         0.0,
+         0.0597,
+         1.2778,
+         8.9189
+        ],
+        "06D": [
+         0.0,
+         0.1636,
+         0.4206,
+         0.7947
+        ],
+        "06N": [
+         0.0,
+         0.1939,
+         0.4434,
+         0.7672
+        ],
+        "07D": [
+         0.0,
+         0.2056,
+         0.5105,
+         0.8878
+        ],
+        "07N": [
+         0.0,
+         0.2755,
+         1.5573,
+         0.9459
+        ],
+        "08D": [
+         0.0,
+         0.295,
+         0.7406,
+         1.1535
+        ],
+        "08N": [
+         0.0,
+         0.4511,
+         1.265,
+         0.8482
+        ],
+        "09D": [
+         0.0,
+         0.2855,
+         0.7108,
+         1.0732
+        ],
+        "09N": [
+         0.0,
+         0.3117,
+         1.0742,
+         0.9311
+        ],
+        "10D": [
+         0.0,
+         0.3654,
+         0.7461,
+         0.6438
+        ],
+        "10N": [
+         0.0,
+         0.4576,
+         0.9805,
+         0.7649
+        ],
+        "11D": [
+         0.0,
+         0.2055,
+         0.5508,
+         0.8733
+        ],
+        "11N": [
+         0.0,
+         0.0095,
+         0.2819,
+         1.0426
+        ],
+        "12D": [
+         0.0,
+         0.2455,
+         0.4459,
+         0.8817
+        ],
+        "12N": [
+         0.0,
+         0.0594,
+         0.4218,
+         0.8626
+        ]
+       },
+       "background_b": {
+        "01D": 0.0269,
+        "01N": 0.0008,
+        "02D": 0.0483,
+        "02N": 0.0052,
+        "03D": 0.0602,
+        "03N": 0.0079,
+        "04D": 0.0431,
+        "04N": 0.0075,
+        "05D": 0.0549,
+        "05N": 0.006,
+        "06D": 0.0736,
+        "06N": 0.0129,
+        "07D": 0.0921,
+        "07N": 0.0417,
+        "08D": 0.0874,
+        "08N": 0.0641,
+        "09D": 0.0537,
+        "09N": 0.0518,
+        "10D": 0.0903,
+        "10N": 0.0565,
+        "11D": 0.0585,
+        "11N": 0.0007,
+        "12D": 0.0343,
+        "12N": 0.0007
+       },
+       "train_burning_days": {
+        "modis": 21147,
+        "snpp": 32170
+       }
+      },
+      "noaa20": {
+       "train": [
+        "2018-04",
+        "2019-12"
+       ],
+       "method": "J-S: x s (NOAA-20 to Suomi NPP, in burning days), then D-a",
+       "s": {
+        "D": 0.9653,
+        "N": 0.9373
+       },
+       "s_sd": {
+        "D": 0.0376,
+        "N": 0.044
+       },
+       "train_burning_days": {
+        "snpp": 3426,
+        "noaa20": 3595
+       }
+      }
+     },
+     "fit_cells": 183,
+     "cells_outside_fit_region_level": 2,
+     "em": {
+      "iterations": 73,
+      "delta": 1.8885117202535892e-08,
+      "converged": true
+     },
+     "method": "D-a: per 0.25 deg cell x calendar month x day/night x FRP class, posterior MODIS burning days per Suomi NPP burning day (a + sum MODIS_k) / (a / r0_k + sum VIIRS_k) over rows with Suomi NPP > 0, MODIS split over classes at the fitted fixed point; b = mean MODIS burning days where Suomi NPP saw nothing. NOAA-20: x s, then D-a (pipeline/round3/model.py, pipeline/tournament/candidates.py)",
+     "interval": "D-a's predictive per cell-month (class negative binomials summed and moment-matched for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+     "evidence": [
+      "docs/ROUND3_CONFIRMATION.md",
+      "docs/TOURNAMENT_RESULTS.md"
+     ],
+     "check": {
+      "max_gap_between_model_predictive_mean_and_m": 0.0126,
+      "background_total": 623.89,
+      "fit_table_burning_days_matched": 56912
+     }
+    },
+    "combination": {
+     "rule": "as the hotspot view: a satellite enters a slot's average only if some FRP class has a prior ratio r0_k > 0 there (and s > 0 for NOAA-20); one qualifying satellite carries the slot alone; none qualifying keeps D-a's literal behaviour (weight 0, background as fitted)",
+     "slots_when_both_cover": {
+      "01D": [
+       "snpp",
+       "noaa20"
+      ],
+      "01N": [
+       "snpp",
+       "noaa20"
+      ],
+      "02D": [
+       "snpp",
+       "noaa20"
+      ],
+      "02N": [
+       "snpp",
+       "noaa20"
+      ],
+      "03D": [
+       "snpp",
+       "noaa20"
+      ],
+      "03N": [
+       "snpp",
+       "noaa20"
+      ],
+      "04D": [
+       "snpp",
+       "noaa20"
+      ],
+      "04N": [
+       "snpp",
+       "noaa20"
+      ],
+      "05D": [
+       "snpp",
+       "noaa20"
+      ],
+      "05N": [
+       "snpp",
+       "noaa20"
+      ],
+      "06D": [
+       "snpp",
+       "noaa20"
+      ],
+      "06N": [
+       "snpp",
+       "noaa20"
+      ],
+      "07D": [
+       "snpp",
+       "noaa20"
+      ],
+      "07N": [
+       "snpp",
+       "noaa20"
+      ],
+      "08D": [
+       "snpp",
+       "noaa20"
+      ],
+      "08N": [
+       "snpp",
+       "noaa20"
+      ],
+      "09D": [
+       "snpp",
+       "noaa20"
+      ],
+      "09N": [
+       "snpp",
+       "noaa20"
+      ],
+      "10D": [
+       "snpp",
+       "noaa20"
+      ],
+      "10N": [
+       "snpp",
+       "noaa20"
+      ],
+      "11D": [
+       "snpp",
+       "noaa20"
+      ],
+      "11N": [
+       "snpp",
+       "noaa20"
+      ],
+      "12D": [
+       "snpp",
+       "noaa20"
+      ],
+      "12N": [
+       "snpp",
+       "noaa20"
+      ]
+     }
+    },
+    "terra_share": {
+     "years": [
+      2003,
+      2011
+     ],
+     "by_month": {
+      "01": 0.4175,
+      "02": 0.4108,
+      "03": 0.4822,
+      "04": 0.4327,
+      "05": 0.4895,
+      "06": 0.4245,
+      "07": 0.4549,
+      "08": 0.4993,
+      "09": 0.4578,
+      "10": 0.4475,
+      "11": 0.4678,
+      "12": 0.4046
+     },
+     "pooled": 0.4722,
+     "prior_burning_days": 20,
+     "basis": {
+      "01": "(87 Terra burning days + 20 x 0.4722) / (211 MODIS burning days + 20)",
+      "02": "(364 Terra burning days + 20 x 0.4722) / (889 MODIS burning days + 20)",
+      "03": "(807 Terra burning days + 20 x 0.4722) / (1673 MODIS burning days + 20)",
+      "04": "(293 Terra burning days + 20 x 0.4722) / (679 MODIS burning days + 20)",
+      "05": "(156 Terra burning days + 20 x 0.4722) / (318 MODIS burning days + 20)",
+      "06": "(432 Terra burning days + 20 x 0.4722) / (1020 MODIS burning days + 20)",
+      "07": "(2084 Terra burning days + 20 x 0.4722) / (4582 MODIS burning days + 20)",
+      "08": "(6434 Terra burning days + 20 x 0.4722) / (12886 MODIS burning days + 20)",
+      "09": "(1424 Terra burning days + 20 x 0.4722) / (3111 MODIS burning days + 20)",
+      "10": "(1454 Terra burning days + 20 x 0.4722) / (3250 MODIS burning days + 20)",
+      "11": "(529 Terra burning days + 20 x 0.4722) / (1131 MODIS burning days + 20)",
+      "12": "(82 Terra burning days + 20 x 0.4722) / (206 MODIS burning days + 20)"
+     }
+    },
+    "years": [
+     2001,
+     2002,
+     2003,
+     2004,
+     2005,
+     2006,
+     2007,
+     2008,
+     2009,
+     2010,
+     2011,
+     2012,
+     2013,
+     2014,
+     2015,
+     2016,
+     2017,
+     2018,
+     2019,
+     2020,
+     2021,
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "records": {
+     "modis": 66617,
+     "snpp": 48598,
+     "noaa20": 20359
+    }
+   },
+   "generated_at": "2026-11-02T09:28:16+00:00"
   },
   {
    "id": "lebanon",
@@ -1645,7 +2065,426 @@
      }
     ]
    },
-   "generated_at": "2026-11-01T11:25:59+00:00"
+   "burning_days": {
+    "unit": "MODIS-equivalent burning days: how many days each 0.01 degree cell (about 1 km) had a fire detected",
+    "definition": "a 0.01 degree cell (floor(lon / 0.01), floor(lat / 0.01)) counts once per date and day/night if it has any detection of the family (MODIS = Terra + Aqua; Suomi NPP; NOAA-20); it takes the FRP class of its largest-FRP detection (f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW)",
+    "files": {
+     "monthly": "monthly_bd.json",
+     "drift": "drift_bd.json",
+     "records": "burning/<year>.json"
+    },
+    "fine_cell_deg": 0.01,
+    "origin": {
+     "x0": 3510,
+     "y0": 3305
+    },
+    "model": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+    "model_detail": {
+     "name": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+     "badge": "D-a \u00b7 ROUND 3 CONFIRMED",
+     "a": 10,
+     "unit": "burning days",
+     "frozen": {
+      "file": "data/processed/tournament/frozen_round3.json",
+      "sha256": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
+      "commit": "80e297f",
+      "confirmation": "docs/ROUND3_CONFIRMATION.md"
+     },
+     "classes": "f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW",
+     "satellites": {
+      "snpp": {
+       "train": [
+        "2012-02",
+        "2019-12"
+       ],
+       "method": "D-a (C3 in burning days): one A2-style ratio per FRP class",
+       "prior_ratio_r0": {
+        "01D": [
+         0.0,
+         0.0,
+         0.0,
+         0.7712
+        ],
+        "01N": [
+         0.0,
+         0.0,
+         0.3689,
+         1.4694
+        ],
+        "02D": [
+         0.0,
+         0.0588,
+         0.0,
+         0.0
+        ],
+        "02N": [
+         0.0,
+         0.0,
+         0.3689,
+         1.4694
+        ],
+        "03D": [
+         0.0,
+         0.0,
+         0.0,
+         0.7712
+        ],
+        "03N": [
+         0.0,
+         0.0,
+         0.0,
+         1.4694
+        ],
+        "04D": [
+         0.0,
+         0.0,
+         0.2,
+         0.7712
+        ],
+        "04N": [
+         0.0,
+         0.0,
+         0.3689,
+         1.4694
+        ],
+        "05D": [
+         0.0,
+         0.0811,
+         0.0,
+         0.0
+        ],
+        "05N": [
+         0.0,
+         0.0,
+         0.0,
+         1.4694
+        ],
+        "06D": [
+         0.0,
+         0.1102,
+         0.1686,
+         0.2827
+        ],
+        "06N": [
+         0.0,
+         0.0,
+         0.0,
+         1.4694
+        ],
+        "07D": [
+         0.0,
+         0.1377,
+         0.0986,
+         0.7369
+        ],
+        "07N": [
+         0.0,
+         0.0143,
+         0.0,
+         1.9388
+        ],
+        "08D": [
+         0.0,
+         0.1039,
+         0.1197,
+         0.7132
+        ],
+        "08N": [
+         0.0,
+         0.0307,
+         0.8845,
+         1.4694
+        ],
+        "09D": [
+         0.0,
+         0.2432,
+         0.2091,
+         0.7046
+        ],
+        "09N": [
+         0.0,
+         0.0725,
+         0.2157,
+         1.4694
+        ],
+        "10D": [
+         0.0,
+         0.0689,
+         0.4535,
+         1.0485
+        ],
+        "10N": [
+         0.0,
+         0.0364,
+         0.5373,
+         1.4694
+        ],
+        "11D": [
+         0.0,
+         0.4646,
+         0.2677,
+         2.258
+        ],
+        "11N": [
+         0.0,
+         0.0113,
+         0.6354,
+         1.4694
+        ],
+        "12D": [
+         0.0,
+         0.2249,
+         0.6958,
+         0.7712
+        ],
+        "12N": [
+         0.0,
+         0.0,
+         0.3689,
+         1.0
+        ]
+       },
+       "background_b": {
+        "01D": 0.016,
+        "01N": 0.0,
+        "02D": 0.0049,
+        "02N": 0.0,
+        "03D": 0.0146,
+        "03N": 0.0,
+        "04D": 0.0101,
+        "04N": 0.0,
+        "05D": 0.0,
+        "05N": 0.0054,
+        "06D": 0.0139,
+        "06N": 0.0,
+        "07D": 0.0377,
+        "07N": 0.0,
+        "08D": 0.0254,
+        "08N": 0.0062,
+        "09D": 0.0357,
+        "09N": 0.0063,
+        "10D": 0.049,
+        "10N": 0.0,
+        "11D": 0.0523,
+        "11N": 0.0,
+        "12D": 0.0101,
+        "12N": 0.0
+       },
+       "train_burning_days": {
+        "modis": 499,
+        "snpp": 3015
+       }
+      },
+      "noaa20": {
+       "train": [
+        "2018-04",
+        "2019-12"
+       ],
+       "method": "J-S: x s (NOAA-20 to Suomi NPP, in burning days), then D-a",
+       "s": {
+        "D": 0.9667,
+        "N": 0.8924
+       },
+       "s_sd": {
+        "D": 0.0992,
+        "N": 0.0871
+       },
+       "train_burning_days": {
+        "snpp": 664,
+        "noaa20": 709
+       }
+      }
+     },
+     "fit_cells": 28,
+     "cells_outside_fit_region_level": 0,
+     "em": {
+      "iterations": 28,
+      "delta": 6.691104249547247e-08,
+      "converged": true
+     },
+     "method": "D-a: per 0.25 deg cell x calendar month x day/night x FRP class, posterior MODIS burning days per Suomi NPP burning day (a + sum MODIS_k) / (a / r0_k + sum VIIRS_k) over rows with Suomi NPP > 0, MODIS split over classes at the fitted fixed point; b = mean MODIS burning days where Suomi NPP saw nothing. NOAA-20: x s, then D-a (pipeline/round3/model.py, pipeline/tournament/candidates.py)",
+     "interval": "D-a's predictive per cell-month (class negative binomials summed and moment-matched for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+     "evidence": [
+      "docs/ROUND3_CONFIRMATION.md",
+      "docs/TOURNAMENT_RESULTS.md"
+     ],
+     "check": {
+      "max_gap_between_model_predictive_mean_and_m": 0.005,
+      "background_total": 20.9,
+      "fit_table_burning_days_matched": 4223
+     }
+    },
+    "combination": {
+     "rule": "as the hotspot view: a satellite enters a slot's average only if some FRP class has a prior ratio r0_k > 0 there (and s > 0 for NOAA-20); one qualifying satellite carries the slot alone; none qualifying keeps D-a's literal behaviour (weight 0, background as fitted)",
+     "slots_when_both_cover": {
+      "01D": [
+       "snpp",
+       "noaa20"
+      ],
+      "01N": [
+       "snpp",
+       "noaa20"
+      ],
+      "02D": [
+       "snpp",
+       "noaa20"
+      ],
+      "02N": [
+       "snpp",
+       "noaa20"
+      ],
+      "03D": [
+       "snpp",
+       "noaa20"
+      ],
+      "03N": [
+       "snpp",
+       "noaa20"
+      ],
+      "04D": [
+       "snpp",
+       "noaa20"
+      ],
+      "04N": [
+       "snpp",
+       "noaa20"
+      ],
+      "05D": [
+       "snpp",
+       "noaa20"
+      ],
+      "05N": [
+       "snpp",
+       "noaa20"
+      ],
+      "06D": [
+       "snpp",
+       "noaa20"
+      ],
+      "06N": [
+       "snpp",
+       "noaa20"
+      ],
+      "07D": [
+       "snpp",
+       "noaa20"
+      ],
+      "07N": [
+       "snpp",
+       "noaa20"
+      ],
+      "08D": [
+       "snpp",
+       "noaa20"
+      ],
+      "08N": [
+       "snpp",
+       "noaa20"
+      ],
+      "09D": [
+       "snpp",
+       "noaa20"
+      ],
+      "09N": [
+       "snpp",
+       "noaa20"
+      ],
+      "10D": [
+       "snpp",
+       "noaa20"
+      ],
+      "10N": [
+       "snpp",
+       "noaa20"
+      ],
+      "11D": [
+       "snpp",
+       "noaa20"
+      ],
+      "11N": [
+       "snpp",
+       "noaa20"
+      ],
+      "12D": [
+       "snpp",
+       "noaa20"
+      ],
+      "12N": [
+       "snpp",
+       "noaa20"
+      ]
+     }
+    },
+    "terra_share": {
+     "years": [
+      2003,
+      2011
+     ],
+     "by_month": {
+      "01": 0.4446,
+      "02": 0.4446,
+      "03": 0.4535,
+      "04": 0.4922,
+      "05": 0.4535,
+      "06": 0.4048,
+      "07": 0.4691,
+      "08": 0.4612,
+      "09": 0.4496,
+      "10": 0.537,
+      "11": 0.456,
+      "12": 0.3396
+     },
+     "pooled": 0.4668,
+     "prior_burning_days": 20,
+     "basis": {
+      "01": "(0 Terra burning days + 20 x 0.4668) / (1 MODIS burning days + 20)",
+      "02": "(0 Terra burning days + 20 x 0.4668) / (1 MODIS burning days + 20)",
+      "03": "(2 Terra burning days + 20 x 0.4668) / (5 MODIS burning days + 20)",
+      "04": "(1 Terra burning days + 20 x 0.4668) / (1 MODIS burning days + 20)",
+      "05": "(2 Terra burning days + 20 x 0.4668) / (5 MODIS burning days + 20)",
+      "06": "(19 Terra burning days + 20 x 0.4668) / (50 MODIS burning days + 20)",
+      "07": "(69 Terra burning days + 20 x 0.4668) / (147 MODIS burning days + 20)",
+      "08": "(52 Terra burning days + 20 x 0.4668) / (113 MODIS burning days + 20)",
+      "09": "(68 Terra burning days + 20 x 0.4668) / (152 MODIS burning days + 20)",
+      "10": "(119 Terra burning days + 20 x 0.4668) / (219 MODIS burning days + 20)",
+      "11": "(39 Terra burning days + 20 x 0.4668) / (86 MODIS burning days + 20)",
+      "12": "(9 Terra burning days + 20 x 0.4668) / (34 MODIS burning days + 20)"
+     }
+    },
+    "years": [
+     2001,
+     2002,
+     2003,
+     2004,
+     2005,
+     2006,
+     2007,
+     2008,
+     2009,
+     2010,
+     2011,
+     2012,
+     2013,
+     2014,
+     2015,
+     2016,
+     2017,
+     2018,
+     2019,
+     2020,
+     2021,
+     2022,
+     2023,
+     2024,
+     2025
+    ],
+    "records": {
+     "modis": 2043,
+     "snpp": 6193,
+     "noaa20": 4049
+    }
+   },
+   "generated_at": "2026-11-02T09:28:18+00:00"
   }
  ]
 }

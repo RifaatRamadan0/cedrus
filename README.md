@@ -13,15 +13,39 @@ Suomi NPP stops delivering data on **2 Nov 2026**, and MODIS is
 next. CEDRUS builds one fire record that survives the handover, **tests it
 honestly**, and turns it into a fire calendar for any area.
 
+## Two ways to count fires
+
+The calendar opens in **burning days**: how many days each ~1 km square had a fire detected, in MODIS-equivalent
+terms. A 0.01° square counts once per day and time of day for each satellite family, however many detections fall in
+it. One click switches to **hotspots**: every satellite fire detection, in MODIS-equivalent counts, because those are
+the numbers the challenge asks for. Both views keep the same record (December 2000 to December 2025), the same areas,
+checks and downloads. Layout of the files: [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md).
+
 ## How we know it works: pre-registered tests, one of them failed
 
-Round 1's winner, model A (a shrinkage ratio that beat a learned detection-physics model in the pre-registered
-bake-off, [docs/BAKEOFF_RESULTS.md](docs/BAKEOFF_RESULTS.md)), failed its sealed confirmation: on regions it had
-never seen, one ratio per region beat it, and its NOAA-20 handover agreed only 69%
-([docs/CONFIRMATION_RESULTS.md](docs/CONFIRMATION_RESULTS.md)). Round 2 removed A's double-counting quirk (A2) and
-calibrated NOAA-20 against Suomi NPP, which raised handover agreement to 92.6% on the development data
-([docs/ROUND2_SELECTION.md](docs/ROUND2_SELECTION.md)); that model is frozen (commit 617daff) and is the one the
-site uses. Round-2 confirmation on four new sealed regions (central Spain, southern Italy, southwest Australia, southern California): **CONFIRMED**. All five pre-registered tests passed. See [docs/ROUND2_CONFIRMATION.md](docs/ROUND2_CONFIRMATION.md).
+Every test was written down before it was run, and each sealed region was opened once.
+
+1. **Round 1 failed.** Model A (a shrinkage ratio that beat a learned detection-physics model in the pre-registered
+   bake-off, [docs/BAKEOFF_RESULTS.md](docs/BAKEOFF_RESULTS.md)) failed its sealed confirmation: on regions it had
+   never seen, one ratio per region beat it, and its NOAA-20 handover agreed only 69%
+   ([docs/CONFIRMATION_RESULTS.md](docs/CONFIRMATION_RESULTS.md)).
+2. **Round 2 confirmed, for hotspots.** A2 removed A's double-counting quirk and calibrated NOAA-20 against Suomi NPP,
+   which raised handover agreement to 92.6% on the development data
+   ([docs/ROUND2_SELECTION.md](docs/ROUND2_SELECTION.md); frozen at commit 617daff). On four new sealed regions
+   (central Spain, southern Italy, southwest Australia, southern California): **CONFIRMED**, all five pre-registered
+   tests passed ([docs/ROUND2_CONFIRMATION.md](docs/ROUND2_CONFIRMATION.md)). It runs the hotspot view.
+3. **The tournament found burning days harmonize better.** Nine candidates on 17 development regions, in both units:
+   the best burning-day model, D-a (fire-power-class ratios), reached a skill of 30.6% against its one-ratio baseline,
+   the hotspot champion 23.5%; the plan needed 10% more in relative terms (25.8%), and an independent tester's common
+   footing still gives 28.4%
+   ([docs/TOURNAMENT_RESULTS.md](docs/TOURNAMENT_RESULTS.md)).
+4. **Round 3 confirmed, for burning days.** D-a, frozen (commit 80e297f), sat one sealed exam on four more regions it
+   had never seen (northern Algeria, southern France, South Australia, northern California): **CONFIRMED**, all five
+   tests passed. Cell-month error 29.7% (one ratio per region: 36.2%); 80% ranges held the observed value in 83.8% of
+   active cell-months (required 70–90%); predicted total 1.069 × observed (required 0.90–1.10); national-month error
+   11.6% (required ≤ 21.3%); NOAA-20 handover agreement 97.3%, 213 of 219 months (required ≥ 80%)
+   ([docs/ROUND3_CONFIRMATION.md](docs/ROUND3_CONFIRMATION.md)). It runs the burning-day view, which is why that view
+   is the default.
 
 [docs/RESULTS.md](docs/RESULTS.md) is an earlier test of an earlier method (a ratio per cell, the MODIS
 retirement test of [docs/TEST_PLAN.md](docs/TEST_PLAN.md)); it is kept as a record, not as the evidence for
@@ -59,9 +83,9 @@ browsers block a page opened from disk from loading its data files.
 | Path | What it is |
 |---|---|
 | `web/` | The website: plain HTML/CSS/JS, no build step. Map uses MapLibre (from a CDN). |
-| `web/data/` | Output of `export_v2.py`: per region the monthly record per 0.25° cell, every detection with its weight, the drift check, provenance. Layout in `docs/DATA_CONTRACT.md`. |
-| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid; `weights_r2.py` is the VIIRS → MODIS weight model, the frozen round-2 choice (A2 + NOAA-20 via Suomi NPP; it imports `pipeline/round2/models.py` and checks `data/processed/round2/frozen.json` by SHA-256); `weights_a.py` (round 1) and `weights_interim.py` are kept for reference and unused. |
-| `tools/probe_site.py` | Loads the site in headless Chrome, clicks through it, checks the two CSV downloads agree, saves screenshots. |
+| `web/data/` | Output of `export_v2.py`, in both units: per region the monthly record per 0.25° cell, every burning day and every detection with its weight, the drift check, provenance. Layout in `docs/DATA_CONTRACT.md`. |
+| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid. `weights_bd.py` is the burning-day model, D-a (round-3 confirmed; it refits through `pipeline/round3/model.py` and `pipeline/tournament/` and checks `data/processed/tournament/frozen_round3.json` by SHA-256); `weights_r2.py` is the hotspot model, the frozen round-2 choice (A2 + NOAA-20 via Suomi NPP; it imports `pipeline/round2/models.py` and checks `data/processed/round2/frozen.json` by SHA-256); `weights_a.py` (round 1) and `weights_interim.py` are kept for reference and unused. |
+| `tools/probe_site.py` | Loads the site in headless Chrome, clicks through both units, checks the CSV downloads agree with the calendar (and, for burning days, with its own Python sum over the files), saves screenshots. |
 | `data/` | Raw downloads and intermediate files. **Not committed** (in `.gitignore`); run the pipeline to rebuild. |
 | `docs/TEST_PLAN.md` | The test rules. Never edit old rules; add a dated section. |
 | `docs/RESULTS.md` | Generated by `03_harmonize.py`. Don't edit by hand. |

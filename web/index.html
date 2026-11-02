@@ -10,7 +10,7 @@
   <link rel="icon" href="assets/cedar.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <link rel="preload" href="data/regions.json" as="fetch" crossorigin>
-  <link rel="preload" href="data/portugal/monthly.json" as="fetch" crossorigin>
+  <link rel="preload" href="data/portugal/monthly_bd.json" as="fetch" crossorigin>
   <script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
   <script type="module" src="app.js" async></script>
 </head>
@@ -60,7 +60,14 @@
   <section class="workspace" id="fire-history" aria-label="Fire calendar for an area">
     <form class="controls panel" id="area-form" novalidate>
       <h2>Explore the Fire Calendar</h2>
-      <p class="intro">Choose an area. The calendar shows satellite fire detections for every month since December 2000, on one consistent scale.</p>
+      <p class="intro">Choose an area. The calendar shows satellite fire activity for every month since December 2000, on one consistent scale.</p>
+      <div class="field-group unit-group"><span class="field-label" id="unit-label">Count fires as</span>
+        <div class="unit-row" role="group" aria-labelledby="unit-label">
+          <button type="button" class="unit" id="unit-bd" aria-pressed="true">Burning days</button>
+          <button type="button" class="unit" id="unit-hot" aria-pressed="false">Hotspots</button>
+        </div>
+        <p class="hint" id="unit-hint">Burning days: how many days each ~1 km square had a fire detected, in MODIS-equivalent terms. Hotspots: the satellites’ fire detections, the numbers the challenge asks for.</p>
+      </div>
       <div class="field-group"><label for="region">1. Region</label>
         <div class="select-field"><select id="region" name="region"></select><svg class="icon"><use href="#chevron"/></svg></div>
         <button type="button" class="link-button" id="example-lebanon">Example: Lebanon</button>
@@ -87,14 +94,15 @@
           <label>From<span class="select-field"><select id="csv-from" name="csv-from"></select><svg class="icon"><use href="#chevron"/></svg></span></label>
           <label>To<span class="select-field"><select id="csv-to" name="csv-to"></select><svg class="icon"><use href="#chevron"/></svg></span></label>
         </div>
-        <button type="button" class="download" id="csv-hotspots">Hotspots (CSV)</button>
+        <button type="button" class="download" id="csv-burning">Burning days (CSV)</button>
+        <button type="button" class="download" id="csv-hotspots" hidden>Hotspots (CSV)</button>
         <button type="button" class="download" id="csv-monthly">Monthly record (CSV)</button>
         <p class="hint" id="csv-status" aria-live="polite"></p>
       </fieldset>
     </form>
 
     <div class="map-column">
-      <div class="map-panel" id="map-panel" role="region" aria-label="Map: area selection and fire detections per 0.25° cell for the selected month">
+      <div class="map-panel" id="map-panel" role="region" aria-label="Map: area selection and fire activity per 0.25° cell for the selected month">
         <div class="map-viewport" id="map"></div>
         <div class="map-loading" id="map-loading" role="status">Loading map…</div>
         <div class="map-zoom"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button></div>
@@ -131,7 +139,7 @@
       <p class="eyebrow small" id="season-eyebrow">FIRE SEASON</p>
       <h2 id="season-title">When the fire season runs here</h2>
       <div class="fire-calendar" id="season-dates"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
-      <p class="hint" id="season-note">Dates are worked out from individual detections when you open this area.</p>
+      <p class="hint" id="season-note">Dates are worked out from the individual records when you open this area.</p>
     </section>
     <section class="panel drift-panel" aria-labelledby="drift-title">
       <p class="eyebrow small" id="drift-eyebrow">SATELLITE CHECK</p>

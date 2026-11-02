@@ -1,4 +1,5 @@
-"""Headless check of the website: loads, renders, toggles, draws, downloads, and compares the two CSVs.
+"""Headless check of the website: loads, renders, toggles, draws, downloads, and compares the CSVs, in both units
+(burning days, the default, against a Python sum over web/data/<region>/burning/; then hotspots, as before).
 
     python tools/probe_site.py              # serves web/ itself on the first free port from 8765
     python tools/probe_site.py --url http://localhost:8000/
@@ -80,7 +81,8 @@ new MutationObserver((_, obs) => {
     const v = document.querySelector('.hero-video');
     window.__atParse = { loading: document.getElementById('map-loading')?.textContent || '',
       drawDisabled: document.getElementById('draw-rectangle')?.disabled, hint: document.getElementById('draw-hint')?.textContent,
-      preload: v?.getAttribute('preload'), autoplay: v?.hasAttribute('autoplay') };
+      preload: v?.getAttribute('preload'), autoplay: v?.hasAttribute('autoplay'),
+      fetched: performance.getEntriesByType('resource').map((e) => e.name).filter((n) => n.includes('/data/')).map((n) => n.split('/data/').pop()) };
   }
 }).observe(document, { subtree: true, childList: true, attributes: true });
 document.addEventListener('play', () => { if (!window.__playAt) window.__playAt = performance.now(); }, true);
@@ -100,10 +102,10 @@ def read_monthly(path):
     return text.splitlines()[0], pd.read_csv(io.StringIO(text), comment="#")
 
 
-def expected_default_month(region="portugal"):
+def expected_default_month(region="portugal", name="monthly.json"):
     """Independent of app.js: the most recent month with >= 5 baseline years (2003..year-1) and a median >= 5,
     whole region."""
-    m = json.loads((ROOT / "web" / "data" / region / "monthly.json").read_text(encoding="utf-8"))
+    m = json.loads((ROOT / "web" / "data" / region / name).read_text(encoding="utf-8"))
     total = np.array(m["m"]).sum(axis=0)
     y0, m0 = map(int, m["months"]["first"].split("-"))
     ym = [divmod(y0 * 12 + m0 - 1 + j, 12) for j in range(len(total))]
@@ -277,8 +279,219 @@ def model_checks():
     check("Lebanon January nights (ratio 0): VIIRS detections weigh 0", all(w == 0 for w in wj), f"{len(wj)} detections")
 
 
+# ---------------------------------------------------------------- burning days (the default view)
+BD_SHA = "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2"
+BD_MODEL = "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)"
+FAMILY = ["MODIS", "Suomi NPP", "NOAA-20"]
+
+
+def in_ring(lon, lat, ring):
+    """app.js inRing, operation for operation (ray casting on lon/lat)."""
+    inside = False
+    k = len(ring) - 1
+    for i in range(len(ring)):
+        xi, yi = ring[i]
+        xk, yk = ring[k]
+        if (yi > lat) != (yk > lat) and lon < ((xk - xi) * (lat - yi)) / (yk - yi) + xi:
+            inside = not inside
+        k = i
+    return inside
+
+
+def burning_files(region):
+    return [json.loads(f.read_text(encoding="utf-8")) for f in sorted((ROOT / "web" / "data" / region / "burning").glob("*.json"))]
+
+
+def bd_inside(region, ring):
+    """Independent of app.js: every burning day whose 0.01 deg square's centre is inside the ring (the contract's rule;
+    ring None = whole region), read straight from burning/<year>.json."""
+    out = []
+    if ring is not None:
+        xs, ys = [p[0] for p in ring], [p[1] for p in ring]
+        bx0, bx1, by0, by1 = min(xs), max(xs), min(ys), max(ys)
+    for d in burning_files(region):
+        c = d["cols"]
+        for i in range(d["n"]):
+            fx, fy = d["x0"] + c["x"][i], d["y0"] + c["y"][i]
+            lon, lat = (fx + 0.5) * 0.01, (fy + 0.5) * 0.01
+            if ring is not None and (lon < bx0 or lon > bx1 or lat < by0 or lat > by1 or not in_ring(lon, lat, ring)):
+                continue
+            day = pd.Timestamp(d["year"], 1, 1) + pd.Timedelta(days=c["doy"][i] - 1)
+            out.append((fx, fy, day.strftime("%Y-%m-%d"), "N" if c["dn"][i] else "D", FAMILY[c["fam"][i]], c["w"][i]))
+    return pd.DataFrame(out, columns=["cell_x", "cell_y", "acq_date", "daynight", "family", "w"])
+
+
+def bd_rounding_bound(region):
+    m = np.array(json.loads((ROOT / "web" / "data" / region / "monthly_bd.json").read_text(encoding="utf-8"))["m"])
+    n_frac = int((np.abs(m - np.round(m)) > 1e-9).sum())
+    return 0.005 * n_frac + 0.00005 * sum(d["n"] for d in burning_files(region))
+
+
+def compare_bd(page, label, dest, region, tol=None):
+    """Burning days: the monthly CSV against the burning-day CSV, and both against a Python sum over the files of the
+    burning days whose square's centre is inside the area's ring (read from the page)."""
+    mpath = download(page, "#csv-monthly", dest)
+    bpath = download(page, "#csv-burning", dest)
+    header, monthly = read_monthly(mpath)
+    rows = pd.read_csv(bpath, dtype={"acq_date": str})
+    check(f"{label}: monthly CSV is in burning days (methods line and file name)",
+          header.startswith("# CEDRUS monthly burning days") and mpath.name.endswith("_monthly_burning_days.csv")
+          and list(monthly.columns) == ["month", "harmonized_estimate", "p10", "p90", "naive", "background", "source_flag"],
+          f"{mpath.name}; {header[:90]}")
+    check(f"{label}: burning-day CSV parses", list(rows.columns) == ["latitude", "longitude", "cell_x", "cell_y", "acq_date", "daynight",
+          "family", "detections", "max_frp", "frp_class", "source_flag", "w"], f"{len(rows)} rows")
+    ring = page.evaluate("() => { const a = window.cedrus.state.area; return a.kind === 'region' ? null : a.ring; }")
+    py = bd_inside(region, ring)
+    key = ["cell_x", "cell_y", "acq_date", "daynight", "family"]
+    same = len(py) == len(rows) and set(map(tuple, py[key].astype(str).to_numpy())) == set(map(tuple, rows[key].astype(str).to_numpy()))
+    check(f"{label}: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files)",
+          same and abs(py.w.sum() - rows.w.sum()) < 1e-6, f"CSV {len(rows)} rows, Python {len(py)}; sum w {rows.w.sum():.4f} vs {py.w.sum():.4f}")
+    shown = page.evaluate("() => window.cedrus.state.series.exact ? window.cedrus.state.series.count : null")
+    if shown is not None:
+        check(f"{label}: the page counts the same burning days", shown == len(py), f"page {shown}, Python {len(py)}")
+    a, bg = float(monthly.harmonized_estimate.sum()), float(monthly.background.sum())
+    tol_ = 0.01 if tol is None else tol
+    check(f"{label}: burning-day calendar sum == sum(w) inside + background", abs(a - (py.w.sum() + bg)) <= tol_,
+          f"calendar {a:.4f} vs burning days {py.w.sum():.4f} + background {bg:.4f}, |diff| {abs(a - py.w.sum() - bg):.4f}, tolerance {tol_:.4f}"
+          f" ({'rounding bound of 2-dp cell values' if tol is not None else 'exact area: both sides add the same 4-dp weights'})")
+    if len(py):
+        py["month"] = py.acq_date.str[:7]
+        top = monthly.loc[monthly.harmonized_estimate.idxmax(), "month"]
+        row = monthly[monthly.month == top]
+        want = float(py.loc[py.month == top, "w"].sum()) + float(row.background.sum())
+        # an exact area adds the same 4-dp weights; the whole region adds its cells' 2-dp values (0.005 each at most)
+        n_cells = len(json.loads((ROOT / "web" / "data" / region / "monthly_bd.json").read_text(encoding="utf-8"))["m"])
+        tol_m = 0.01 if tol is None else 0.005 * n_cells + 0.00005 * int((py.month == top).sum())
+        check(f"{label}: {top} (its largest month) calendar == its burning days' w + background", abs(float(row.harmonized_estimate.sum()) - want) <= tol_m,
+              f"{float(row.harmonized_estimate.sum()):.4f} vs {want:.4f}, tolerance {tol_m:.4f}")
+    known = ("bridged", "observed", "estimated (S-NPP+NOAA-20)", "estimated (S-NPP only)", "estimated (NOAA-20 only)")
+    flags = set(monthly.source_flag) | set(rows.source_flag.dropna())
+    check(f"{label}: source flags are the documented ones", all(any(f == k or f.startswith(k + " (") for k in known) for f in flags), str(sorted(flags))[:160])
+    return monthly, rows
+
+
+def busiest_square(region):
+    """The centre of the 0.01 deg square with the most burning days in the region: a small circle there cannot be empty."""
+    n = {}
+    for d in burning_files(region):
+        c = d["cols"]
+        for i in range(d["n"]):
+            k = (d["x0"] + c["x"][i], d["y0"] + c["y"][i])
+            n[k] = n.get(k, 0) + 1
+    (fx, fy), _ = max(n.items(), key=lambda kv: (kv[1], kv[0]))
+    return round((fy + 0.5) * 0.01, 3), round((fx + 0.5) * 0.01, 3)
+
+
+def bd_model_checks():
+    """The burning-day model in the data: frozen file, fit windows, nothing from 2020 on, frozen by construction, the
+    same refit as the round-3 exam, NOAA-20 via s, and every file adding up."""
+    import hashlib
+    idx = json.loads((ROOT / "web" / "data" / "regions.json").read_text(encoding="utf-8"))
+    check("regions.json: the default unit is burning days", idx.get("default_unit") == "burning_days", str(idx.get("default_unit")))
+    names = {r["id"]: r["burning_days"]["model"] for r in idx["regions"]}
+    check("regions.json: the burning-day model is D-a, round-3 confirmed, in every region", set(names.values()) == {BD_MODEL}, str(names))
+    frozen = ROOT / "data" / "processed" / "tournament" / "frozen_round3.json"
+    digest = hashlib.sha256(frozen.read_bytes()).hexdigest()
+    recorded = {r["burning_days"]["model_detail"]["frozen"]["sha256"] for r in idx["regions"]}
+    check("frozen_round3.json SHA-256 is the one recorded at the freeze, and regions.json names it", digest == BD_SHA and recorded == {digest},
+          f"file {digest[:16]}…, regions.json {[x[:16] for x in recorded]}")
+    check("burning-day model uses the frozen a = 10", {r["burning_days"]["model_detail"]["a"] for r in idx["regions"]} == {10})
+    wins = {r["id"]: {k: v["train"] for k, v in r["burning_days"]["model_detail"]["satellites"].items()} for r in idx["regions"]}
+    check("burning days: fit windows Suomi NPP 2012-02..2019-12, NOAA-20 s on 2018-04..2019-12",
+          all(w == {"snpp": ["2012-02", "2019-12"], "noaa20": ["2018-04", "2019-12"]} for w in wins.values()), str(wins))
+    sys.path.insert(0, str(ROOT / "pipeline"))
+    import weights_bd
+    from pipeline.round3 import data as r3d
+    from pipeline.round3.model import fit_frozen
+    tampered = SHOTS / "frozen_round3_tampered.json"
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    tampered.write_bytes(frozen.read_bytes().replace(b'"frozen_setting": 10', b'"frozen_setting": 30'))
+    try:
+        r3d.load_frozen(tampered)
+        refused = False
+    except SystemExit:
+        refused = True
+    tampered.unlink()
+    check("the burning-day model refuses a frozen_round3.json that is not the frozen file", refused and weights_bd.FROZEN_SHA256 == BD_SHA)
+
+    import export_v2
+    for region in ("lebanon", "portugal"):
+        det = export_v2.detections(region)
+        mon = json.loads((ROOT / "web" / "data" / region / "monthly_bd.json").read_text(encoding="utf-8"))
+        cmap = {(x, y): k for k, (x, y) in enumerate(zip(mon["cells"]["ix"], mon["cells"]["iy"]))}
+        det["ci"] = [cmap[k] for k in zip(det.ix, det.iy)]
+        m1 = weights_bd.fit(det, region)
+        keys = ("r0", "bA", "SY", "SV", "r0_level")
+        if region == "lebanon":
+            saved = dict(weights_bd.WINDOWS)
+            try:
+                weights_bd.WINDOWS["snpp"] = ("2012-02", "2020-03")
+                try:
+                    weights_bd.fit(det, region)
+                    late = False
+                except (AssertionError, ValueError):
+                    late = True
+            finally:
+                weights_bd.WINDOWS.clear(); weights_bd.WINDOWS.update(saved)
+            check("the burning-day fit refuses a window reaching into 2020", late)
+            m0 = weights_bd.fit(det[det.month <= "2019-12"], region)
+            check("no 2020+ in the burning-day fit: dropping every 2020-2025 detection leaves r0, b, cell sums and s bit-identical",
+                  all(np.array_equal(m0["fit"][k], m1["fit"][k]) for k in keys) and np.array_equal(m0["s"], m1["s"])
+                  and np.array_equal(m0["var_s"], m1["var_s"]), f"{int((det.month > '2019-12').sum())} detections after 2019 dropped")
+            new = det.iloc[[0]].copy()
+            new["month"], new["moy"], new["dn"], new["fam"], new["sensor"], new["acq_date"] = "2023-07", 7, "D", "snpp", "N", "2023-07-01"
+            ix, iy = next((x, y) for y in range(132, 139) for x in range(140, 147) if (x, y) not in cmap)  # a cell inside the box that never burned
+            new["longitude"], new["latitude"], new["ix"], new["iy"], new["ci"] = (ix + 0.5) * 0.25, (iy + 0.5) * 0.25, ix, iy, len(cmap)
+            m2 = weights_bd.fit(pd.concat([det, new], ignore_index=True), region)
+            md = (7 - 1) * 2
+            r0 = m2["fit"]["r0"][md]
+            check("burning days frozen by construction: a 2023 burning day in a brand-new cell changes nothing fitted, and that cell gets r0_k of its slot",
+                  all(np.array_equal(m1["fit"][k], m2["fit"][k]) for k in keys) and np.array_equal(m1["s"], m2["s"])
+                  and np.allclose(m2["ratio"][len(cmap) * 24 + md], np.where(r0 > 0, r0, 0.0), rtol=1e-12, atol=0),
+                  f"cells {len(cmap)} -> {len(cmap) + 1}; new cell ratios {np.round(m2['ratio'][len(cmap) * 24 + md], 4).tolist()} vs r0 {np.round(r0, 4).tolist()}")
+        # The same refit as the round-3 exam, through its own code on its own reading of the raw files.
+        px = r3d.pixels(region)
+        R, _ = r3d.rows(region, px)
+        T = r3d.burning_days(R)
+        mr = fit_frozen(r3d.load_frozen()[0], T, (T.ym <= "2019-12").to_numpy(), ("probe", region))
+        check(f"{region}: the product's D-a fit is bit-identical to round 3's own refit of this region (r0, b, cell sums)",
+              all(np.array_equal(mr["fit"][k], m1["fit"][k]) for k in keys), f"{len(T)} rows in round 3's table, {m1['fit_cells']} fit cells")
+        # Every file adds up: per cell-month, the burning days' w + background = m (whole region, from the files).
+        files = burning_files(region)
+        n_m = mon["months"]["n"]
+        y0, mo0 = map(int, mon["months"]["first"].split("-"))
+        w = np.zeros((len(cmap), n_m))
+        sample = []
+        for d in files:
+            c = d["cols"]
+            for i in range(d["n"]):
+                fx, fy = d["x0"] + c["x"][i], d["y0"] + c["y"][i]
+                ci = cmap[(fx // 25, fy // 25)]
+                moy = (pd.Timestamp(d["year"], 1, 1) + pd.Timedelta(days=c["doy"][i] - 1)).month
+                j = (d["year"] * 12 + moy - 1) - (y0 * 12 + mo0 - 1)
+                w[ci, j] += c["w"][i]
+                if d["year"] == 2023 and c["fam"][i] in (1, 2) and mon["flags"][j] == "E":
+                    sample.append((ci, moy, c["dn"][i], c["fam"][i], c["k"][i], c["w"][i]))
+        gap = np.abs(w + np.array(mon["bg"]) - np.array(mon["m"]))
+        check(f"{region}: monthly_bd.json m = the burning days' w + bg in every cell-month", gap.max() <= 0.005 + 1e-9 + 0.00005 * max(d["n"] for d in files),
+              f"max |sum w + bg - m| {gap.max():.5f} over {gap.size} cell-months")
+        gaps = []
+        for ci, moy, dn, fam, k, wv in sample[::7][:400]:
+            r = m1["ratio"][ci * 24 + (moy - 1) * 2 + dn, k]
+            want = 0.5 * r * (m1["s"][dn] if fam == 2 else 1.0)
+            gaps.append(abs(wv - want))
+        check(f"{region}: 2023 VIIRS burning days weigh 1/2 x D-a's class ratio (x s for NOAA-20)", gaps and max(gaps) <= 6e-5,
+              f"{len(gaps)} burning days, max |w - expected| {max(gaps, default=0):.6f}; s = {np.round(m1['s'], 4).tolist()}")
+        ts = {int(k): v for k, v in next(r for r in idx["regions"] if r["id"] == region)["burning_days"]["terra_share"]["by_month"].items()}
+        br = [(abs(c["w"][i] - 1 / ts[(pd.Timestamp(d["year"], 1, 1) + pd.Timedelta(days=c["doy"][i] - 1)).month]))
+              for d in files if d["year"] <= 2002 for c in [d["cols"]] for i in range(d["n"])
+              if mon["flags"][(d["year"] * 12 + (pd.Timestamp(d["year"], 1, 1) + pd.Timedelta(days=c["doy"][i] - 1)).month - 1) - (y0 * 12 + mo0 - 1)] == "B"]
+        check(f"{region}: bridged MODIS burning days weigh 1 / Terra's burning-day share", br and max(br) <= 1e-3, f"{len(br)} burning days")
+
+
 def run(url, shots):
     model_checks()
+    bd_model_checks()
     shots.mkdir(parents=True, exist_ok=True)
     dl = shots / "downloads"
     dl.mkdir(exist_ok=True)
@@ -306,6 +519,13 @@ def run(url, shots):
         page.wait_for_function("window.__calendarAt", timeout=60000)
         t = page.evaluate("window.__calendarAt") / 1000
         check("cold load to rendered calendar < 5 s (20 Mbit/s, 40 ms, no cache)", t < 5, f"{t:.2f} s")
+        # What the calendar waited for: the data files requested before it first had cells (the season dates read the
+        # burning-day records afterwards, which is not part of the cold load).
+        fetched = page.evaluate("window.__atParse.fetched")
+        sizes = {f: (ROOT / "web" / "data" / f).stat().st_size for f in sorted(set(fetched))}
+        check("cold load: the calendar waits only for the burning-day calendar files (no hotspot or burning-day records)",
+              set(fetched) == {"regions.json", "portugal/monthly_bd.json", "portugal/drift_bd.json"},
+              f"{sizes}, {sum(sizes.values()) / 1e6:.2f} MB")
         at = page.evaluate("window.__atParse")
         check("map loading state when the calendar appears: 'Loading map…', draw buttons disabled with a matching hint",
               at["loading"].startswith("Loading map") and at["drawDisabled"] and "load with the map" in at["hint"], str(at))
@@ -334,6 +554,101 @@ def run(url, shots):
         page.add_init_script(INIT)
         page.goto(url, wait_until="commit")  # the calendar does not wait for CDN scripts; neither does the probe
         page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
+
+        # ---- burning days: the default view
+        st = page.evaluate("""() => ({ unit: window.cedrus.state.unit, bd: document.querySelector('#unit-bd').getAttribute('aria-pressed'),
+          hot: document.querySelector('#unit-hot').getAttribute('aria-pressed'), note: document.querySelector('#calendar-note').textContent,
+          legend: document.querySelector('#calendar-legend').textContent, body: document.querySelector('#month-body').textContent,
+          caption: document.querySelector('#map-caption').textContent, area: document.querySelector('#area-summary').textContent,
+          csv: [!document.querySelector('#csv-burning').hidden, !document.querySelector('#csv-hotspots').hidden] })""")
+        check("default unit is burning days: switch pressed, calendar, legend, panel, map caption, area and downloads say so",
+              st["unit"] == "bd" and st["bd"] == "true" and st["hot"] == "false" and "in MODIS-equivalent burning days" in st["note"]
+              and "Burning days per month" in st["legend"] and "burning days (MODIS-equivalent)" in st["body"] and "burning days per 0.25° cell" in st["caption"]
+              and "every burning day in Portugal" in st["area"] and st["csv"] == [True, False], str(st)[:300])
+        want_bd, _ = expected_default_month("portugal", "monthly_bd.json")
+        check("burning days: default month = most recent with >= 5 baseline years and median >= 5 (monthly_bd.json)", want_bd in page.inner_text("#month-title"),
+              f"{page.inner_text('#month-title')} (expected {want_bd})")
+        cnt = [page.locator(f"#cal-grid {s}").count() for s in ("[role=gridcell]", ".cal-cell.nd", ".cal-cell.b", ".cal-cell.e")]
+        check("burning days: the same record and policy (312 cells; no-data 11, bridged 19, estimated 48)", cnt == [312, 11, 19, 48], str(cnt))
+        tot = page.evaluate("() => window.cedrus.state.series.m.reduce((a, b) => a + b, 0)")
+        file_tot = float(np.array(json.loads((ROOT / "web/data/portugal/monthly_bd.json").read_text(encoding="utf-8"))["m"]).sum())
+        check("burning days: the whole-region calendar is monthly_bd.json", abs(tot - file_tot) < 1e-6, f"{tot:.2f} vs {file_tot:.2f}")
+        check("burning days: the drift chart is drift_bd.json, in burning days", page.evaluate("window.cedrus.state.drift.unit") == "burning days"
+              and "MODIS burning days actually observed ÷ MODIS burning days predicted" in page.inner_text("#drift-caption"), page.inner_text("#drift-caption")[:120])
+        wait_season(page)
+        check("burning days: season dates shown for Portugal, counted in burning days", page.locator("#season-dates").get_attribute("data-state") == "dated"
+              and "burning days" in page.inner_text("#season-note"), page.inner_text("#season-dates").replace("\n", " "))
+        jump = page.evaluate(r"""() => { const c = window.cedrus; const s = c.state.series; const y = (yr, a) => { let t = 0; for (let m = 1; m <= 12; m++) t += a[c.indexOf(yr, m)]; return t; };
+          return { h11: y(2011, s.m), h12: y(2012, s.m), n11: y(2011, s.naive), n12: y(2012, s.naive) }; }""")
+        info(f"burning days, 2011 -> 2012 totals: naive {jump['n11']:.0f} -> {jump['n12']:.0f} (x{jump['n12'] / jump['n11']:.2f}); "
+             f"harmonized {jump['h11']:.0f} -> {jump['h12']:.0f} (x{jump['h12'] / jump['h11']:.2f})")
+        page.wait_for_timeout(1500)
+        page.screenshot(path=str(shots / "desktop_bd.png"), full_page=True)
+        page.select_option("#csv-from", "2000"); page.select_option("#csv-to", "2025")
+        compare_bd(page, "burning days: Portugal whole region 2000-2025", dl, "portugal", bd_rounding_bound("portugal"))
+        lat_s, lon_s = busiest_square("portugal")
+        for lat, lon, km in ((37.3, -8.6, 12), (40.13, -8.36, 9), (39.6, -8.2, 25), (lat_s, lon_s, 1), (37.32, -8.55, 1.5), (37.32, -8.55, 3)):
+            circle(page, lat, lon, km)
+            info(f"burning days, {km} km circle at {lat},{lon}: {page.inner_text('#area-summary').replace(chr(10), ' ')[:200]}")
+            compare_bd(page, f"burning days: {km} km circle at {lat},{lon}", dl, "portugal")
+            if km == 12:
+                page.click("#cal-grid [data-year='2023'][data-moy='8']")
+                page.locator(".history").screenshot(path=str(shots / "desktop_bd_circle_12km.png"))
+            if km == 1:
+                page.locator("#month-panel").screenshot(path=str(shots / "desktop_bd_circle_1km_panel.png"))
+            if km in (3, 25):
+                anomaly_shares(page, f"burning days: {km} km circle at {lat},{lon}")
+                if km == 3:
+                    page.click("#mode-anomaly")
+                    page.locator(".history").screenshot(path=str(shots / "desktop_bd_quiet_circle_anomaly.png"))
+                    page.click("#mode-counts")
+        for kind, ring in (("rectangle", [[-8.9, 38.3], [-7.9, 38.3], [-7.9, 39.1], [-8.9, 39.1], [-8.9, 38.3]]),
+                           ("polygon", [[-8.4, 39.7], [-7.6, 40.4], [-7.4, 39.6], [-8.0, 39.3], [-8.4, 39.7]])):
+            page.evaluate("([ring, kind]) => window.cedrus.useRing(ring, kind)", [ring, kind])
+            page.wait_for_function(f"document.querySelector('#area-summary').textContent.includes('drawn {kind}')"
+                                   " && !document.querySelector('#area-summary').textContent.includes('Reading')", timeout=120000)
+            compare_bd(page, f"burning days: drawn {kind}", dl, "portugal")
+
+        # ---- the switch: same area and month, the other unit; back again gives the same number; remembered for the session
+        circle(page, 37.3, -8.6, 12)
+        page.click("#cal-grid [data-year='2023'][data-moy='8']")
+        v_bd = page.inner_text("#month-value")
+        page.click("#unit-hot")
+        page.wait_for_function("window.cedrus.state.loadedUnit === 'hot' && document.querySelector('#area-summary').textContent.includes('detections inside the shape')", timeout=120000)
+        sw = page.evaluate("""() => ({ title: document.querySelector('#month-title').textContent, value: document.querySelector('#month-value').textContent,
+          body: document.querySelector('#month-body').textContent, note: document.querySelector('#calendar-note').textContent,
+          csv: [!document.querySelector('#csv-burning').hidden, !document.querySelector('#csv-hotspots').hidden],
+          pressed: [document.querySelector('#unit-bd').getAttribute('aria-pressed'), document.querySelector('#unit-hot').getAttribute('aria-pressed')] })""")
+        h_csv = pd.read_csv(download(page, "#csv-hotspots", dl), dtype={"acq_date": str})
+        m_csv = read_monthly(download(page, "#csv-monthly", dl))[1]
+        want_h = float(h_csv.loc[h_csv.acq_date.str[:7] == "2023-08", "w"].sum()) + float(m_csv.loc[m_csv.month == "2023-08", "background"].sum())
+        check("switch to hotspots: same area and month, numbers and words in detections, hotspot downloads",
+              sw["title"].startswith("August 2023 · 12 km around 37.300, -8.600") and "fire detections, harmonized" in sw["body"] and "in MODIS-equivalent detections" in sw["note"]
+              and sw["csv"] == [False, True] and sw["pressed"] == ["false", "true"] and sw["value"] in (f"{want_h:.1f}", f"{round(want_h):,}"),
+              f"burning days {v_bd} -> hotspots {sw['value']} (hotspot CSV {want_h:.2f}); {sw['title']}")
+        page.click("#unit-bd")
+        page.wait_for_function("window.cedrus.state.loadedUnit === 'bd' && document.querySelector('#area-summary').textContent.includes('burning days inside the shape')", timeout=120000)
+        check("switch back to burning days: the same value again", page.inner_text("#month-value") == v_bd and "August 2023" in page.inner_text("#month-title"),
+              f"{v_bd} -> {page.inner_text('#month-value')}")
+
+        # ---- Lebanon in burning days: whole region and a small circle
+        page.select_option("#region", "lebanon")
+        page.wait_for_function("document.querySelector('#area-summary').textContent.includes('Lebanon (whole region)')", timeout=20000)
+        compare_bd(page, "burning days: Lebanon whole region", dl, "lebanon", bd_rounding_bound("lebanon"))
+        circle(page, 34.4, 36.1, 5)
+        compare_bd(page, "burning days: Lebanon 5 km circle at 34.4,36.1", dl, "lebanon")
+        page.select_option("#region", "portugal")
+        page.wait_for_function("document.querySelector('#area-summary').textContent.includes('Portugal (whole region)')", timeout=20000)
+
+        page.click("#unit-hot")
+        page.wait_for_function("window.cedrus.state.loadedUnit === 'hot'", timeout=60000)
+        page.goto(url, wait_until="commit")
+        page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
+        st = page.evaluate("() => ({ unit: window.cedrus.state.unit, pressed: document.querySelector('#unit-hot').getAttribute('aria-pressed'), note: document.querySelector('#calendar-note').textContent })")
+        check("the unit is remembered for the session: after a reload the page opens in hotspots", st["unit"] == "hot" and st["pressed"] == "true"
+              and "MODIS-equivalent detections" in st["note"], str(st)[:160])
+
+        # ---- hotspots: everything the site did before, in the hotspot view
         n_cells = page.locator("#cal-grid [role=gridcell]").count()
         n_nd = page.locator("#cal-grid .cal-cell.nd").count()
         n_b = page.locator("#cal-grid .cal-cell.b").count()
@@ -432,7 +747,7 @@ def run(url, shots):
         monthly, hot = compare_csvs(page, "Portugal whole region 2000-2025", dl, rounding_bound("portugal"))
         check("model A background is in the record (bg > 0) and inside the equality above", monthly.background.sum() > 0,
               f"background {monthly.background.sum():.2f} of {monthly.harmonized_estimate.sum():.2f}")
-        check("hero badge names the round-2 model", page.inner_text("#data-badge") == "MODEL A2 · ROUND 2, FROZEN", page.inner_text("#data-badge"))
+        check("hero badge names both confirmed models", page.inner_text("#data-badge") == "BURNING DAYS: D-a · HOTSPOTS: A2 · BOTH CONFIRMED", page.inner_text("#data-badge"))
         j1 = hot[(hot.sensor == "J1") & (hot.acq_date >= "2022-01-01")]
         check("NOAA-20 detections carry weight in the estimated era", (j1.w > 0).mean() > 0.99, f"{(j1.w > 0).sum()} of {len(j1)} with w > 0")
         check("estimated months are flagged S-NPP+NOAA-20", monthly[monthly.month >= "2022-01"].source_flag.str.startswith("estimated (S-NPP+NOAA-20)").all())
@@ -587,17 +902,25 @@ def run(url, shots):
         page.click(".dialog-done")
         page.click("button[data-dialog=methodology]")
         dlg = page.inner_text("#detail-dialog")
-        check("methodology: the round-2 model in plain words, its history, links, SHA-256, credits",
-              all(k in dlg for k in ("A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)", "failed its sealed confirmation", "69%", "92.6%", "pending", "NOAA-20", "SHA-256",
-                                     "Kiln Watch", "Agun-Panjika", "Use of AI",
+        r3 = page.inner_text("#r3-confirmation")
+        check("methodology: both models in plain words, the honest history with round 3's five numbers, links, SHA-256s, credits",
+              all(k in dlg for k in ("A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)", BD_MODEL,
+                                     "Burning days (the default): how many days each ~1 km square had a fire detected, in MODIS-equivalent terms",
+                                     "failed its sealed confirmation", "69%", "92.6%", "burning days harmonize better", "30.6%", "23.5%", "28.4%",
+                                     "NOAA-20", "SHA-256", BD_SHA, "Kiln Watch", "Agun-Panjika", "Use of AI",
                                      "a small region-wide expected count per month and time of day for places where VIIRS saw nothing"))
-              and page.locator("#detail-dialog a[href$='ROUND2_SELECTION.md']").count() == 1
-              and page.locator("#detail-dialog a[href$='CONFIRMATION_RESULTS.md']").count() == 1
-              and page.inner_text("#r2-confirmation") == "pending")
+              and all(k in r3 for k in ("confirmed", "29.7%", "36.2%", "83.8%", "1.069", "11.6%", "97.3%", "213 of 219"))
+              and all(page.locator(f"#detail-dialog a[href$='/{d}']").count() == 1 for d in ("ROUND3_CONFIRMATION.md", "TOURNAMENT_RESULTS.md",
+                      "ROUND2_CONFIRMATION.md", "ROUND2_SELECTION.md", "CONFIRMATION_RESULTS.md"))
+              and page.inner_text("#r2-confirmation").startswith("confirmed") and "pending" not in r3, r3[:200])
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        check("README: round 1 failed, round 2 frozen, its confirmation pending; RESULTS.md earlier; MODIS C6.1; GIBS Blue Marble only",
-              "failed its sealed confirmation" in readme and "docs/ROUND2_SELECTION.md" in readme and "docs/CONFIRMATION_RESULTS.md" in readme
-              and "92.6%" in readme and "69%" in readme and "confirmation on four new sealed regions: pending" in readme
+        know = readme[readme.index("## How we know it works"):readme.index("## Quick start")]
+        check("README: burning days by default; round 1 failed, round 2 confirmed (hotspots), tournament, round 3 confirmed (burning days) with its five numbers; RESULTS.md earlier; MODIS C6.1; GIBS Blue Marble only",
+              "The calendar opens in **burning days**" in readme and "failed its sealed confirmation" in know and "92.6%" in know and "69%" in know
+              and "**Round 2 confirmed, for hotspots.**" in know and "**Round 3 confirmed, for burning days.**" in know
+              and all(k in know for k in ("29.7%", "83.8%", "1.069", "11.6%", "97.3%", "213 of 219", "30.6%", "23.5%", "28.4%"))
+              and all(f"docs/{d}" in know for d in ("ROUND3_CONFIRMATION.md", "TOURNAMENT_RESULTS.md", "ROUND2_CONFIRMATION.md", "ROUND2_SELECTION.md", "CONFIRMATION_RESULTS.md"))
+              and "pending" not in know
               and "is an earlier test of an earlier method" in readme and "MODIS Collection 6.1" in readme
               and "Basemap: NASA GIBS Blue Marble." in readme and "reference features and labels" not in readme)
         check("README: Suomi NPP stops delivering data on 2 Nov 2026", "stops delivering data on **2 Nov 2026**" in readme
@@ -612,7 +935,7 @@ def run(url, shots):
         # ---- a failed hotspot year: no numbers under the new name, downloads off, retry works
         ctx = browser.new_context(viewport={"width": 1440, "height": 900}, accept_downloads=True)
         page = ctx.new_page()
-        page.route("**/data/portugal/hotspots/2015.json", lambda route: route.fulfill(status=503, body="unavailable"))
+        page.route("**/data/portugal/*/2015.json", lambda route: route.fulfill(status=503, body="unavailable"))  # burning/ (the default view) and hotspots/
         page.goto(url, wait_until="commit")
         page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
         page.fill("#lat", "39.6"); page.fill("#lon", "-8.2"); page.fill("#radius", "25"); page.click("#circle-go")
@@ -621,7 +944,7 @@ def run(url, shots):
           title: document.querySelector('#month-title').textContent, cells: document.querySelectorAll('#cal-grid [role=gridcell]').length,
           csv: [document.querySelector('#csv-hotspots').disabled, document.querySelector('#csv-monthly').disabled],
           retry: !!document.querySelector('#retry-area'), caption: document.querySelector('#map-caption').textContent })""")
-        check("failed year (503): error names the year, offers a retry", st["err"] == "Couldn’t load detections for 2015 — try again." and st["retry"], st["err"])
+        check("failed year (503): error names the year in the view's unit, offers a retry", st["err"] == "Couldn’t load burning days for 2015 — try again." and st["retry"], st["err"])
         check("failed year: no numbers shown under the new name, label and title agree, downloads disabled",
               st["cells"] == 0 and st["csv"] == [True, True] and "25 km around 39.600, -8.200" in st["label"] and st["title"] == st["label"]
               and "over http" not in st["caption"], str(st)[:300])
@@ -630,7 +953,7 @@ def run(url, shots):
         check("failed year: no stale texts (progress hidden, calendar note and season name the failure and the new area)",
               stale["progress"] and "2015" in stale["note"] and not stale["legend"] and "25 KM AROUND" in stale["season"], str(stale)[:240])
         page.screenshot(path=str(shots / "desktop_load_error.png"), full_page=True)
-        page.unroute("**/data/portugal/hotspots/2015.json")
+        page.unroute("**/data/portugal/*/2015.json")
         page.click("#retry-area")
         page.wait_for_function("document.querySelectorAll('#cal-grid [role=gridcell]').length === 312", timeout=120000)
         ok = page.evaluate("() => !document.querySelector('#csv-hotspots').disabled && !document.querySelector('#csv-monthly').disabled && !document.querySelector('#load-error')")

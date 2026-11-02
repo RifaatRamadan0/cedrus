@@ -171,3 +171,8 @@ dialog code{font-size:.92em;color:#d0e2d8;word-break:break-all}
 @media(max-width:1100px){.history{display:flex;grid-column:1/-1}.insights{grid-template-columns:1fr 1fr;padding:0 12px 16px}.drift-panel{grid-column:1/-1}}
 @media(max-width:760px){.insights{grid-template-columns:1fr;padding:0 12px 16px}.cal-row{grid-template-columns:30px repeat(12,minmax(0,1fr))}.cal-head span{font-size:9px}.cal-cell{height:24px}.stats dd{font-size:15px}.calendar-bar{flex-wrap:wrap}}
 dialog p a{color:#93d9b1;text-decoration:underline;text-underline-offset:2px}
+/* ---- unit switch: burning days (primary) | hotspots ---- */
+.unit-row{display:flex;gap:5px}
+.unit{flex:1;min-height:32px;padding:5px 8px;border-radius:8px;background:#1b2d3b;border:1px solid #283b48;font-size:12px}
+.unit:hover{background:#24404f}
+.unit[aria-pressed=true]{background:#2b574e;border-color:#69b48a;font-weight:600}

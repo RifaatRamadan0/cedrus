@@ -10,9 +10,26 @@ python pipeline/export_v2.py --region lebanon # one region; the others in region
 
 All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 
+## Two units, one record (lead's decision, 2 Nov 2026)
+
+The calendar has two views of the same record, policy and areas, switched with one click. By the "what ships" rule of
+`docs/TOURNAMENT_PLAN.md`, the round-3 champion passed (`docs/ROUND3_CONFIRMATION.md`), so its unit is the default.
+
+| View | Unit | Model | Files |
+|---|---|---|---|
+| **Burning days** (default) | MODIS-equivalent burning days | D-a + NOAA-20 via Suomi NPP, round-3 confirmed (`pipeline/weights_bd.py`) | `monthly_bd.json`, `drift_bd.json`, `burning/<year>.json`; `regions.json` `burning_days` |
+| **Hotspots** | MODIS-equivalent detections (the challenge's unit) | A2 + NOAA-20 via Suomi NPP, round-2 confirmed (`pipeline/weights_r2.py`) | `monthly.json`, `drift.json`, `hotspots/<year>.json`; `regions.json` top-level model fields |
+
+`regions.json` `default_unit` is `"burning_days"`. The website remembers a reader's choice for the browser tab's session
+(`sessionStorage` key `cedrus.unit`). Everything in "Units and rules shared by every file" below holds for both views,
+with "detection" read as "burning day" in the burning-day files; the differences are in "The burning-day view" further
+down. The hotspot files are unchanged by the second view (byte-identical on re-export).
+
 ## Units and rules shared by every file
 
-- **Unit:** fire detections (satellite pixels flagged as burning), in **MODIS-equivalent** counts. Not burned area.
+- **Unit (hotspot view):** fire detections (satellite pixels flagged as burning), in **MODIS-equivalent** counts. Not burned area.
+- **Unit (burning-day view):** **MODIS-equivalent burning days**: how many days each 0.01° square (about 1 km) had a
+  fire detected. Not burned area either. Defined under "The burning-day view".
 - **Harmonized estimate (expected value):** the value shown and exported for every cell-month and area-month.
   It is an expected value, not a median: `m = Σ w + bg` (weights of the detections in that cell-month, plus the
   model's background term).
@@ -173,6 +190,8 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 - `bg` is optional for readers: if absent, treat it as zero.
 
 Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
+`monthly_bd.json` has the same layout and cells, in burning days, plus `"unit": "burning days"` (2 Nov 2026: Portugal
+1.03 MB, Lebanon 0.16 MB).
 
 ## How the website turns these into an area's calendar
 
@@ -249,6 +268,161 @@ Lebanon's MODIS file ends 2025-11-23, so its drift series ends 2025-10.
   area (4 decimals for the estimate and the background). `harmonized_estimate` already includes `background`;
   `source_flag` carries the slot note as in the hotspot CSV.
 
+## The burning-day view
+
+### The unit
+
+A **burning day** is the tournament's unit (`pipeline/tournament/data.py`, `docs/TOURNAMENT_RESULTS.md` deviation 11),
+built from the same filtered detections as the hotspot view:
+
+- Each detection's **square** is the 0.01° cell `fx = floor(longitude / 0.01)`, `fy = floor(latitude / 0.01)` of its
+  FIRMS coordinates as written in the file (not the 5-decimal rounding stored in `hotspots/`).
+- A burning day is one **family × 0.25° cell × square × date (`acq_date`, UTC) × day/night** with at least one
+  detection. Families: **MODIS** (Terra and Aqua together), **Suomi NPP**, **NOAA-20**. So a square seen by Terra and
+  Aqua on the same date and time of day is one MODIS burning day; seen by Suomi NPP too, it is also one Suomi NPP
+  burning day.
+- Its **FRP class** is the class of its largest-FRP detection: `f0` FRP ≤ 0 (or missing), `f1` 0 < FRP < 5,
+  `f2` 5 ≤ FRP < 20, `f3` FRP ≥ 20 MW. D-a reads the class of VIIRS burning days only; MODIS burning days carry one too,
+  for information.
+- No square straddles two 0.25° cells: the export checks `floor(fx / 25) = ix` and `floor(fy / 25) = iy` for every
+  burning day and stops otherwise, so a burning day's 0.25° cell is found from its square by integer division.
+- The export also checks that, inside 2012-02..2019-12, its burning days counted per 0.25° cell × month × day/night and
+  by family and FRP class equal the table D-a was fitted on (`regions.json` `burning_days.model_detail.check
+  .fit_table_burning_days_matched` is that total: Portugal 56,912, Lebanon 4,223).
+
+### Source policy (the same months and flags as the hotspot view)
+
+| Flag | Months | Harmonized estimate, in burning days |
+|---|---|---|
+| `B` bridged | 2000-12 .. 2002-06 | MODIS burning days (Terra alone flew; the export checks no Aqua detection) ÷ Terra's share for that calendar month |
+| `O` observed | 2002-07 .. 2021-12 | MODIS burning days (Terra and Aqua together) |
+| `E` / `N` / `J` | 2022-01 .. | from VIIRS burning days by D-a, the two satellites averaged or whichever covers, exactly as the hotspot view |
+
+- **Terra share in burning days:** for calendar month m, from 2003–2011, `s_m = (T_m + 20 · s_pool) / (N_m + 20)`,
+  where `T_m` = Terra's own burning days (its detections alone, the same key) and `N_m` = MODIS burning days (Terra
+  and Aqua together) that month, `s_pool` = ΣT / ΣN over all months. The same shrink rule as the hotspot view.
+  `regions.json` `burning_days.terra_share` holds the values and their basis.
+- **Naive record:** MODIS burning days up to 2011-12, raw Suomi NPP burning days from 2012-01.
+- **Which satellite covers a month, outages, record start and end:** the hotspot view's, shared (they are decided on
+  detections).
+
+### Model: D-a + NOAA-20 via Suomi NPP (round-3 confirmed)
+
+`pipeline/weights_bd.py` refits, on each product region's own rows, exactly what the round-3 exam refitted, through the
+same code: `pipeline.round3.data.rows` / `burning_days` (round 2's rows in the tournament's unit),
+`pipeline.round3.model.fit_frozen` (the tournament's `C3` with the frozen a = 10), `pipeline.round2.models.fit_s`.
+It reads a only from `data/processed/tournament/frozen_round3.json` and stops unless that file's SHA-256 is
+`f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2` (`pipeline.round3.data.load_frozen`).
+
+- **Frozen by construction:** only detections dated 2012-02..2019-12 are passed to the fit; the rows are the cells with
+  a MODIS, Suomi NPP or NOAA-20 detection in that window. A cell outside that footprint gets D-a's region-level ratio
+  r0_k for its slot and class, and its background is region-level.
+- **D-a:** per 0.25° cell × calendar month × day/night × FRP class k, posterior MODIS burning days per Suomi NPP
+  burning day `r_k = (a + SY_k) / (a / r0_k + SV_k)`, sums over training rows with Suomi NPP > 0, MODIS split over the
+  classes at the fitted fixed point; 0 where r0_k = 0. Rows where Suomi NPP saw nothing predict Poisson(b), b = mean
+  MODIS burning days in such training rows.
+- **NOAA-20 (J-S):** s = ΣSuomi NPP / ΣNOAA-20 burning days per day/night over 2018-04..2019-12, month-block bootstrap
+  for Var(s) (200 resamples, seeded with the label ("product", region, "J-S", "burning days")); a NOAA-20 burning day
+  is multiplied by s and goes through D-a.
+- **Weights `w`** (per burning day; `share` = the satellite's share of the month × day/night, ½ or 1, by the
+  combination rule):
+
+| Burning day | `B` | `O` | `E` / `N` / `J` |
+|---|---|---|---|
+| MODIS | 1 / s_m | 1 | 0 |
+| Suomi NPP, class k | 0 | 0 | share · r_k |
+| NOAA-20, class k | 0 | 0 | share · s · r_k |
+
+  D-a's predictive mean is linear in the class counts, so for every cell-month the weights plus the background are
+  its mean; `regions.json` `burning_days.model_detail.check.max_gap_between_model_predictive_mean_and_m` is the
+  largest difference, rounding only (Portugal 0.0126, Lebanon 0.0050).
+- **Combination rule:** the hotspot view's, with "ratio above 0" read as "some FRP class has r0_k > 0 in the slot (and
+  s > 0 for NOAA-20)". In both product regions every slot has one, so both satellites always share a month they both
+  cover and no slot note is written (`burning_days.combination`). A class whose r0_k is 0 weighs 0 (Portugal's and
+  Lebanon's `f0` in every slot, Portugal's `f3` in January nights, and Lebanon's `f1`–`f3` in several slots, mostly
+  winter and spring: `burning_days.model_detail.satellites.snpp.prior_ratio_r0`, one list of four classes per slot).
+- **Background, `p10`/`p90`:** as the hotspot view, from D-a's predictive: the class negative binomials summed and
+  moment-matched per cell × month × day/night (Poisson(b) where V = 0), plus (mean / s)² · Var(s) for NOAA-20, day and
+  night added, the satellites combined with their shares. Bridged months keep the placeholder (negative binomial, mean
+  `m`, size 5). Approximate in the same ways.
+
+### `<region>/burning/<year>.json` — every burning day, columnar
+
+```jsonc
+{
+  "region": "portugal", "year": 2017, "n": 14022,
+  "x0": -950, "y0": 3702,                    // the region's smallest fx and fy (the same in every year's file)
+  "cols": {
+    "x": [...], "y": [...],                  // fx - x0, fy - y0: the 0.01 deg square is fx = x0 + x, fy = y0 + y
+    "doy": [...],                            // day of year of acq_date (1 = 1 Jan)
+    "dn": [...],                             // 0 = day, 1 = night
+    "fam": [...],                            // 0 = MODIS (Terra + Aqua), 1 = Suomi NPP, 2 = NOAA-20
+    "k": [...],                              // FRP class of the largest-FRP detection, 0..3 (f0..f3)
+    "nd": [...],                             // detections in it
+    "frp": [...],                            // its largest FRP, MW, 2 decimals (null if every FRP is missing)
+    "w": [...]                               // contribution to the harmonized estimate, 4 decimals (table above)
+  }
+}
+```
+
+Rows are sorted by date, day/night, family, fy, fx. Only months inside the record are written. Sizes (2 Nov 2026):
+Portugal 135,574 burning days, 3.99 MB over 25 files (largest 2025, 0.45 MB); Lebanon 12,285, 0.35 MB.
+
+### `<region>/drift_bd.json`
+
+The layout of `drift.json`, plus `"unit": "burning days"`: observed MODIS burning days against MODIS burning days
+predicted by D-a from Suomi NPP and NOAA-20 burning days (weights + background), combined as the estimated record.
+
+### `regions.json` `burning_days`
+
+```jsonc
+"burning_days": {
+  "unit": "MODIS-equivalent burning days: …", "definition": "…",
+  "files": {"monthly": "monthly_bd.json", "drift": "drift_bd.json", "records": "burning/<year>.json"},
+  "fine_cell_deg": 0.01, "origin": {"x0": -950, "y0": 3702},
+  "model": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+  "model_detail": {                          // from weights_bd.describe()
+    "name": "…", "badge": "D-a · ROUND 3 CONFIRMED", "a": 10, "unit": "burning days",
+    "frozen": {"file": "data/processed/tournament/frozen_round3.json", "sha256": "f3130df9…", "commit": "80e297f",
+               "confirmation": "docs/ROUND3_CONFIRMATION.md"},
+    "classes": "f0 FRP <= 0, …",
+    "satellites": {
+      "snpp":   {"train": ["2012-02", "2019-12"], "method": "…", "prior_ratio_r0": {"01D": [r0_f0, r0_f1, r0_f2, r0_f3], …},
+                 "background_b": {"01D": …, …}, "train_burning_days": {"modis": …, "snpp": …}},
+      "noaa20": {"train": ["2018-04", "2019-12"], "method": "…", "s": {"D": …, "N": …}, "s_sd": {"D": …, "N": …},
+                 "train_burning_days": {"snpp": …, "noaa20": …}}
+    },
+    "fit_cells": …, "cells_outside_fit_region_level": …, "em": {"iterations": …, "delta": …, "converged": true},
+    "method": "…", "interval": "…", "evidence": ["docs/ROUND3_CONFIRMATION.md", "docs/TOURNAMENT_RESULTS.md"],
+    "check": {"max_gap_between_model_predictive_mean_and_m": …, "background_total": …, "fit_table_burning_days_matched": …}
+  },
+  "combination": {"rule": "…", "slots_when_both_cover": {"01D": ["snpp", "noaa20"], …}},
+  "terra_share": {"years": [2003, 2011], "by_month": {"01": …}, "pooled": …, "prior_burning_days": 20, "basis": {…}},
+  "years": [2001, …, 2025],                  // years with a burning/<year>.json
+  "records": {"modis": …, "snpp": …, "noaa20": …}
+}
+```
+
+### How the website turns burning days into an area's calendar (exact)
+
+- **Whole region:** the sum of the cells of `monthly_bd.json`, as the hotspot view.
+- **Drawn shape or circle:** a burning day is **inside** the shape when the **centre of its square**,
+  `((x0 + x + 0.5) × 0.01, (y0 + y + 0.5) × 0.01)` in IEEE double arithmetic, is inside the shape (the same
+  ray-casting test as for hotspots). The area's harmonized estimate for a month is Σ `w` of the burning days inside,
+  plus `bg` of each touched 0.25° cell times the share of the cell inside the shape (as the hotspot view). The naive
+  record counts the naive-record burning days inside. One rule decides membership, and every burning day has exactly
+  one point, so the same burning days make the calendar, the season dates and the burning-day CSV; shapes that tile an
+  area add up to it. A detection inside the shape whose square's centre is outside is not counted in this view (it is
+  in the hotspot view), and the other way round.
+- **Burning-day CSV:** every burning day inside the exact area for the chosen years, one row each:
+  `latitude, longitude` (the square's centre, 3 decimals), `cell_x, cell_y` (fx, fy), `acq_date, daynight, family,
+  detections, max_frp, frp_class, source_flag, w`. For any area, **Σ monthly `harmonized_estimate` = Σ CSV `w` +
+  Σ monthly `background`** up to the 4-decimal rounding of the monthly CSV (the calendar adds the same 4-decimal
+  weights). `tools/probe_site.py` checks this for both regions as a whole, circles from 1 km to 25 km, a rectangle
+  and a polygon, and recomputes the inside set in Python from the files.
+- **Monthly CSV in burning days:** the hotspot view's columns, with the unit named in the `#` methods line and in the
+  file name (`…_monthly_burning_days.csv`; the hotspot view's is `…_monthly_hotspots.csv`).
+
 ## The model interface
 
 `export_v2.py` talks to the model only through `pipeline/weights_r2.py` (the same functions as `weights_a.py`):
@@ -263,3 +437,13 @@ describe(model)                              # dict stored as regions.json model
 
 A replacement module with the same functions and a different `NAME` changes `"model"` in `regions.json`
 and nothing else in the contract.
+
+The burning-day view talks to `pipeline/weights_bd.py` the same way, in burning days:
+
+```python
+model = weights_bd.fit(det, region)                  # only 2012-02..2019-12 detections reach the fit
+w = weights_bd.burning_day_weights(model, rows)      # rows: burning days (ci, moy, dn, fam, k); full weight, share applied by the export
+bg = weights_bd.cell_month_background(model, grid)   # grid also has V_<s>_<dn>_f0..f3, burning days by FRP class
+p10, p90 = weights_bd.cell_month_interval(model, grid)
+weights_bd.describe(model)                           # regions.json burning_days.model_detail
+```

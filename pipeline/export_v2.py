@@ -16,6 +16,12 @@ Source policy for the harmonized record (team lead's ruling):
 A sensor's final month counts only if its file has a detection in the month's last EDGE_DAYS days.
 The record ends at the last month a VIIRS satellite covers; detections after it are not exported.
 The naive record is MODIS up to 2011 and raw Suomi NPP counts from 2012: the false jump, kept for the toggle.
+
+Two units, the same policy (lead's decision, 2 Nov 2026, by the "what ships" rule of docs/TOURNAMENT_PLAN.md):
+  burning days  the calendar's primary view: D-a, round-3 confirmed (weights_bd.py), in MODIS-equivalent burning days;
+                writes <region>/{monthly_bd.json, drift_bd.json, burning/<year>.json}
+  hotspots      the switch: A2, round-2 confirmed (weights_r2.py), in MODIS-equivalent detections;
+                writes <region>/{monthly.json, drift.json, hotspots/<year>.json}
 """
 import argparse
 import hashlib
@@ -26,7 +32,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import weights_r2 as model_impl                # the round-2 choice, frozen; weights_a.py (round 1) and weights_interim.py kept for reference only
+import weights_bd                              # burning days: D-a, round-3 confirmed (the primary view)
+import weights_r2 as model_impl                # hotspots: the round-2 choice, frozen; weights_a.py (round 1) and weights_interim.py kept for reference only
 from weights_interim import nb_quantiles         # bridged months keep the placeholder range (A says nothing about Terra)
 from regions import CELL, REGIONS, assert_not_sealed, regions_with
 
@@ -166,13 +173,7 @@ def export(region):
     # One qualifying satellite carries the whole slot; none qualifying keeps A's literal behaviour (weight 0,
     # background as fitted) for the satellites that cover the month. A itself is not changed.
     positive = model_impl.prior_ratio_positive(model)
-
-    def slot_share(m, sat, moy, dn):
-        cov = covering[m]
-        md = (moy - 1) * 2 + (dn == "N")
-        q = [s for s in cov if positive[VIIRS[s]][md]]
-        use = q if q else cov
-        return 1.0 / len(use) if sat in use else 0.0
+    slot_share = slot_share_rule(covering, positive)
     share_rows = det[(det.year >= SHARE_YEARS[0]) & (det.year <= SHARE_YEARS[1]) & (det.fam == "modis")]
     st = share_rows.groupby(["moy", "sensor"]).size().unstack(fill_value=0)
     pooled_share = float(st["T"].sum() / (st["T"].sum() + st["A"].sum()))
@@ -228,22 +229,7 @@ def export(region):
     p10[:, b_cols] = blo.reshape(b_vals.shape)
     p90[:, b_cols] = bhi.reshape(b_vals.shape)
 
-    names = {"N": "S-NPP", "J1": "NOAA-20"}
-    slot_notes = {}
-    for m, f in zip(months, flags):
-        if f not in "ENJ":
-            continue
-        parts = []
-        for dn, word in (("D", "day"), ("N", "night")):
-            moy = int(m[5:7])
-            used = [s for s in covering[m] if slot_share(m, s, moy, dn) > 0]
-            md = (moy - 1) * 2 + (dn == "N")
-            if not any(positive[VIIRS[s]][md] for s in covering[m]):
-                parts.append(f"{word}: no MODIS in the fitting years, detections weigh 0 (background only)")
-            elif len(used) < len(covering[m]):
-                parts.append(f"{word}: {' + '.join(names[s] for s in used)} only")
-        if parts:
-            slot_notes[m] = "; ".join(parts)
+    slot_notes = slot_notes_of(months, flags, covering, slot_share, positive, "detections")
 
     out = OUT / region
     (out / "hotspots").mkdir(parents=True, exist_ok=True)
@@ -318,6 +304,8 @@ def export(region):
     }
     write_json(out / "drift.json", drift)
 
+    burning = export_burning_days(det, region, months, flags, covering, cells, out, cov_modis)
+
     lon0, lat0, lon1, lat1 = box
     meta = {
         "id": region, "name": cfg["country"], "bbox": [lon0, lat0, lon1, lat1],
@@ -360,6 +348,7 @@ def export(region):
             "files": [{"name": n, **{k: m[k] for k in ("url", "sensor", "rows", "sha256", "retrieved")},
                        "sha256_ok": sha256(raw / n) == m["sha256"]} for n, m in sorted(manifest.items())],
         },
+        "burning_days": burning,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     meta["model_detail"]["check"] = {"max_gap_between_model_predictive_mean_and_m": round(mean_gap, 4),
@@ -369,7 +358,254 @@ def export(region):
           f"monthly.json {sizes[f'{region}/monthly.json'] / 1e6:.2f} MB, "
           f"hotspots {sum(v for k, v in sizes.items() if '/hotspots/' in k) / 1e6:.2f} MB in {len(hot_years)} files; "
           f"model {model_impl.NAME}: background total {bg.sum():.2f}, max |model mean - m| {mean_gap:.4f}")
+    bc = burning["model_detail"]["check"]
+    print(f"{region}: {sum(burning['records'].values())} burning days, "
+          f"monthly_bd.json {sizes[f'{region}/monthly_bd.json'] / 1e6:.2f} MB, "
+          f"burning {sum(v for k, v in sizes.items() if '/burning/' in k) / 1e6:.2f} MB in {len(burning['years'])} files; "
+          f"model {weights_bd.NAME}: background total {bc['background_total']:.2f}, "
+          f"max |model mean - m| {bc['max_gap_between_model_predictive_mean_and_m']:.4f}")
     return meta
+
+
+FAM_CODE = {"modis": 0, "snpp": 1, "noaa20": 2}   # burning/<year>.json `fam`
+BD_SENSOR = {"modis": "M", "snpp": "N", "noaa20": "J1"}
+
+
+def burning_day_records(det):
+    """One row per burning day (weights_bd.py): family x 0.01 deg cell x date x day/night, with its number of
+    detections, its largest FRP and that FRP's class, and how many of its detections are Aqua's (bridged months)."""
+    fx, fy = weights_bd.fine_cells(det)
+    d = det.assign(fx=fx, fy=fy, frpn=pd.to_numeric(det.frp, errors="coerce"), aqua=(det.sensor == "A").astype(int))
+    key = ["fam", "ix", "iy", "fx", "fy", "acq_date", "dn"]
+    bd = d.groupby(key, sort=False).agg(nd=("frpn", "size"), frp=("frpn", "max"), aqua=("aqua", "sum"),
+                                         ci=("ci", "first"), mi=("mi", "first"), month=("month", "first"),
+                                         moy=("moy", "first"), year=("year", "first")).reset_index()
+    per = int(round(CELL / weights_bd.FINE))
+    # The browser finds a burning day's 0.25 deg cell from its 0.01 deg cell (integer division by 25); the tournament
+    # keyed burning days by both, so this holds only if no 0.01 deg cell straddles two 0.25 deg cells.
+    assert ((bd.fx // per == bd.ix) & (bd.fy // per == bd.iy)).all(), "a 0.01 deg cell straddles two 0.25 deg cells"
+    bd["k"] = weights_bd.burning_class(bd.frp.to_numpy())
+    bd["sensor"] = bd.fam.map(BD_SENSOR)
+    bd["fcode"] = bd.fam.map(FAM_CODE)
+    bd["doy"] = pd.to_datetime(bd.acq_date).dt.dayofyear
+    return bd.sort_values(["acq_date", "dn", "fcode", "fy", "fx"], kind="mergesort").reset_index(drop=True)
+
+
+def check_unit(bd, model):
+    """The records are the model's own unit: inside the fit window, per 0.25 deg cell x month x day/night, their counts
+    by family and FRP class equal the burning days of the table D-a was fitted on (pipeline/round3/data.py)."""
+    T = model["table"]
+    lo, hi = weights_bd.WINDOWS["snpp"]
+    w = bd[(bd.month >= lo) & (bd.month <= hi)]
+    col = w.fam.map({"modis": "Y", "snpp": "Vf", "noaa20": "V20f"}) + np.where(w.fam == "modis", "", w.k.astype(str))
+    got = (w.assign(cell=w.ix.astype(str) + "_" + w.iy.astype(str), ym=w.month, col=col)
+           .groupby(["cell", "ym", "dn", "col"]).size().unstack("col", fill_value=0))
+    cols = ["Y"] + [f"Vf{k}" for k in range(4)] + [f"V20f{k}" for k in range(4)]
+    want = T.loc[(T.ym >= lo) & (T.ym <= hi), ["cell", "ym", "dn"] + cols].set_index(["cell", "ym", "dn"])
+    assert int(got.to_numpy().sum()) == int(want.to_numpy().sum()), "burning days outside the fit table's rows"
+    got = got.reindex(index=want.index, columns=cols, fill_value=0)
+    assert (got.to_numpy() == want.to_numpy()).all(), "burning-day records disagree with the fitted table"
+    return int(want.to_numpy().sum())
+
+
+def export_burning_days(det, region, months, flags, covering, cells, out, cov_modis):
+    """The primary view: the same record and policy in MODIS-equivalent burning days, model D-a (weights_bd.py).
+    Writes monthly_bd.json, drift_bd.json and burning/<year>.json; returns the regions.json block."""
+    shape = (len(cells), len(months))
+    model = weights_bd.fit(det, region)
+    positive = weights_bd.prior_ratio_positive(model)
+    slot_share = slot_share_rule(covering, positive)
+    bd = burning_day_records(det)
+    checked = check_unit(bd, model)
+
+    # Terra's share in burning days, by calendar month, 2003-2011, shrunk as in the hotspot view: Terra's own burning
+    # days (its detections alone) over MODIS burning days (Terra and Aqua together).
+    yrs = (det.year >= SHARE_YEARS[0]) & (det.year <= SHARE_YEARS[1])
+    terra = det[yrs & (det.sensor == "T")]
+    tfx, tfy = weights_bd.fine_cells(terra)
+    t_m = terra.assign(fx=tfx, fy=tfy).drop_duplicates(["ix", "iy", "fx", "fy", "acq_date", "dn"]).groupby("moy").size()
+    n_m = bd[(bd.year >= SHARE_YEARS[0]) & (bd.year <= SHARE_YEARS[1]) & (bd.fam == "modis")].groupby("moy").size()
+    pooled_share = float(t_m.sum() / n_m.sum())
+    terra_share, share_basis = {}, {}
+    for m in range(1, 13):
+        t_, n_ = int(t_m.get(m, 0)), int(n_m.get(m, 0))
+        terra_share[m] = (t_ + SHARE_PRIOR * pooled_share) / (n_ + SHARE_PRIOR)
+        share_basis[m] = (f"({t_} Terra burning days + {SHARE_PRIOR} x {pooled_share:.4f}) / "
+                          f"({n_} MODIS burning days + {SHARE_PRIOR})")
+
+    month_flag = dict(zip(months, flags))
+    flag = bd.month.map(month_flag)
+    w = np.zeros(len(bd))
+    w[((flag == "O") & (bd.fam == "modis")).to_numpy()] = 1.0
+    br = ((flag == "B") & (bd.fam == "modis")).to_numpy()
+    assert int(bd.aqua[br].sum()) == 0, "an Aqua detection in a bridged month"
+    w[br] = 1.0 / bd.moy[br].map(terra_share).to_numpy()
+    share = np.array([slot_share(m, s, moy, dn) if f in "ENJ" and s in VIIRS else 0.0
+                      for m, s, f, moy, dn in zip(bd.month, bd.sensor, flag, bd.moy, bd.dn)])
+    est = share > 0
+    w[est] = share[est] * weights_bd.burning_day_weights(model, bd[est])
+    bd["w"] = np.round(w, 4)
+
+    # ---- cell x month tables
+    w_arr = np.zeros(shape)
+    np.add.at(w_arr, (bd.ci.to_numpy(), bd.mi.to_numpy()), bd.w.to_numpy())
+    grid = cell_month_grid(bd, months, shape, slot_share, flags)
+    v = bd[bd.sensor.isin(list(VIIRS))]
+    for sat in VIIRS:
+        for dn in ("D", "N"):
+            for k in range(4):
+                arr = np.zeros(shape)
+                sel = v[(v.sensor == sat) & (v.dn == dn) & (v.k == k)]
+                np.add.at(arr, (sel.ci.to_numpy(), sel.mi.to_numpy()), 1)
+                grid[f"V_{sat}_{dn}_f{k}"] = arr.ravel()
+    bg = np.round(np.asarray(weights_bd.cell_month_background(model, grid), float).reshape(shape), 2)
+    m_arr = w_arr + bg
+    naive_rows = bd[((bd.month < NAIVE_SWITCH) & (bd.fam == "modis")) | ((bd.month >= NAIVE_SWITCH) & (bd.fam == "snpp"))]
+    naive = np.zeros(shape)
+    np.add.at(naive, (naive_rows.ci.to_numpy(), naive_rows.mi.to_numpy()), 1)
+
+    m_round = np.round(m_arr, 2)
+    p10, p90 = m_round.copy(), m_round.copy()
+    e_cols = np.array([f in "ENJ" for f in flags])
+    e_rows = np.tile(e_cols, shape[0])
+    lo, hi = weights_bd.cell_month_interval(model, grid[e_rows])
+    mean_d, _ = weights_bd.cell_month_moments(model, grid[e_rows])
+    mean_gap = float(np.abs(mean_d - m_arr.ravel()[e_rows]).max()) if e_rows.any() else 0.0
+    p10[:, e_cols] = np.asarray(lo).reshape(shape[0], -1)
+    p90[:, e_cols] = np.asarray(hi).reshape(shape[0], -1)
+    b_cols = np.array([f == "B" for f in flags])
+    b_vals = m_arr[:, b_cols]
+    blo, bhi = nb_quantiles(b_vals.ravel(), 5, (0.1, 0.9))
+    p10[:, b_cols] = blo.reshape(b_vals.shape)
+    p90[:, b_cols] = bhi.reshape(b_vals.shape)
+
+    monthly = {
+        "region": region, "unit": "burning days", "cell_deg": CELL,
+        "months": {"first": months[0], "last": months[-1], "n": len(months)},
+        "flags": flags, "flag_codes": FLAG_CODES,
+        "slot_notes": slot_notes_of(months, flags, covering, slot_share, positive, "burning days"),
+        "cells": {"ix": cells.ix.tolist(), "iy": cells.iy.tolist()},
+        "m": [round_list(r, 2) for r in m_round],
+        "bg": [round_list(r, 2) for r in bg],
+        "p10": [round_list(r, 2) for r in p10],
+        "p90": [round_list(r, 2) for r in p90],
+        "naive": [round_list(r, 0) for r in naive],
+    }
+    write_json(out / "monthly_bd.json", monthly)
+
+    # ---- burning days, one file per year, columnar; positions as 0.01 deg cells from the region's origin
+    x0, y0 = int(bd.fx.min()), int(bd.fy.min())
+    (out / "burning").mkdir(parents=True, exist_ok=True)
+    for old in (out / "burning").glob("*.json"):  # a year that drops out must not linger
+        old.unlink()
+    years = []
+    for year, g in bd.groupby("year"):
+        cols = {"x": (g.fx - x0).tolist(), "y": (g.fy - y0).tolist(), "doy": g.doy.tolist(),
+                "dn": (g.dn == "N").astype(int).tolist(), "fam": g.fcode.tolist(), "k": g.k.astype(int).tolist(),
+                "nd": g.nd.tolist(), "frp": [None if np.isnan(x) else round(float(x), 2) for x in g.frp],
+                "w": g.w.tolist()}
+        write_json(out / "burning" / f"{year}.json",
+                   {"region": region, "year": int(year), "n": len(g), "x0": x0, "y0": y0, "cols": cols})
+        years.append(int(year))
+
+    # ---- drift in burning days: observed MODIS burning days vs MODIS burning days predicted from VIIRS by D-a
+    modis_end = cov_modis["last"]
+    d_months = month_index(weights_bd.TRAIN["snpp"][0], modis_end)
+    full = pd.Series(weights_bd.burning_day_weights(model, v), index=v.index).groupby([v.month, v.sensor, v.dn]).sum()
+    d_idx = [months.index(m) for m in d_months]
+    bg_sat = {}
+    for sat in VIIRS:
+        for dn in ("D", "N"):
+            g = grid.copy()
+            for other in VIIRS:
+                for d2 in ("D", "N"):
+                    g[f"share_{other}_{d2}"] = 1.0 if (other == sat and d2 == dn) else 0.0
+            bg_sat[(sat, dn)] = np.asarray(weights_bd.cell_month_background(model, g)).reshape(shape)[:, d_idx].sum(axis=0)
+    obs_m = bd[bd.fam == "modis"].groupby("month").size()
+    observed = [int(obs_m.get(m, 0)) for m in d_months]
+    predicted = [round(float(sum(slot_share(m, s, int(m[5:7]), dn) * (full.get((m, s, dn), 0.0) + bg_sat[(s, dn)][k])
+                                 for s in covering[m] for dn in ("D", "N"))), 2) if covering[m] else 0.0
+                 for k, m in enumerate(d_months)]
+    trailing = []
+    for i in range(len(d_months)):
+        if i < 11:
+            trailing.append(None)
+            continue
+        o, p = sum(observed[i - 11:i + 1]), sum(predicted[i - 11:i + 1])
+        trailing.append(round(o / p, 4) if p > 0 else None)
+    band_vals = [t for m, t in zip(d_months, trailing) if t is not None and m <= weights_bd.TRAIN["snpp"][1]]
+    write_json(out / "drift_bd.json", {
+        "region": region, "unit": "burning days", "months": {"first": d_months[0], "last": d_months[-1], "n": len(d_months)},
+        "observed_modis": observed, "predicted_modis": predicted, "trailing12_ratio": trailing,
+        "band": {"what": "min-max of the trailing 12-month ratio over windows ending inside the fitting years",
+                 "range": [round(min(band_vals), 4), round(max(band_vals), 4)] if band_vals else None,
+                 "fitted": list(weights_bd.TRAIN["snpp"])},
+        "predicted_from": "the model, from Suomi NPP and NOAA-20 burning days (weights + background), combined as the "
+                          "estimated record",
+        "model": weights_bd.NAME,
+        "modis_archive_ends": cov_modis["last_detection"],
+        "complete_rule": f"a file's final month counts if it has a detection in that month's last {EDGE_DAYS} days",
+    })
+
+    detail = weights_bd.describe(model)
+    detail["check"] = {"max_gap_between_model_predictive_mean_and_m": round(mean_gap, 4),
+                       "background_total": round(float(bg.sum()), 2),
+                       "fit_table_burning_days_matched": checked}
+    return {
+        "unit": "MODIS-equivalent burning days: how many days each 0.01 degree cell (about 1 km) had a fire detected",
+        "definition": "a 0.01 degree cell (floor(lon / 0.01), floor(lat / 0.01)) counts once per date and day/night if it "
+                      "has any detection of the family (MODIS = Terra + Aqua; Suomi NPP; NOAA-20); it takes the FRP class "
+                      "of its largest-FRP detection (" + weights_bd.CLASS_EDGES + ")",
+        "files": {"monthly": "monthly_bd.json", "drift": "drift_bd.json", "records": "burning/<year>.json"},
+        "fine_cell_deg": weights_bd.FINE, "origin": {"x0": x0, "y0": y0},
+        "model": weights_bd.NAME, "model_detail": detail,
+        "combination": {
+            "rule": "as the hotspot view: a satellite enters a slot's average only if some FRP class has a prior ratio "
+                    "r0_k > 0 there (and s > 0 for NOAA-20); one qualifying satellite carries the slot alone; none "
+                    "qualifying keeps D-a's literal behaviour (weight 0, background as fitted)",
+            "slots_when_both_cover": {f"{md // 2 + 1:02d}{'DN'[md % 2]}": [f for f in ("snpp", "noaa20") if positive[f][md]]
+                                      for md in range(24)},
+        },
+        "terra_share": {"years": list(SHARE_YEARS), "by_month": {f"{m:02d}": round(v, 4) for m, v in terra_share.items()},
+                        "pooled": round(pooled_share, 4), "prior_burning_days": SHARE_PRIOR,
+                        "basis": {f"{m:02d}": b for m, b in share_basis.items()}},
+        "years": years,
+        "records": {f: int((bd.fam == f).sum()) for f in FAM_CODE},
+    }
+
+
+def slot_share_rule(covering, positive):
+    """Combination rule (lead's ruling, 31 Oct 2026): a covering satellite's share of a month x day/night. It enters
+    the average only if its ratio is above 0 in that calendar month x day/night (positive[fam][md]); one qualifying
+    satellite carries the slot alone; none qualifying keeps the model's literal behaviour for every covering one."""
+    def slot_share(m, sat, moy, dn):
+        cov = covering[m]
+        md = (moy - 1) * 2 + (dn == "N")
+        q = [s for s in cov if positive[VIIRS[s]][md]]
+        use = q if q else cov
+        return 1.0 / len(use) if sat in use else 0.0
+    return slot_share
+
+
+def slot_notes_of(months, flags, covering, slot_share, positive, unit):
+    """month -> which satellites the combination rule used, where not all that cover it (unit: what weighs 0)."""
+    names = {"N": "S-NPP", "J1": "NOAA-20"}
+    slot_notes = {}
+    for m, f in zip(months, flags):
+        if f not in "ENJ":
+            continue
+        parts = []
+        for dn, word in (("D", "day"), ("N", "night")):
+            moy = int(m[5:7])
+            used = [s for s in covering[m] if slot_share(m, s, moy, dn) > 0]
+            md = (moy - 1) * 2 + (dn == "N")
+            if not any(positive[VIIRS[s]][md] for s in covering[m]):
+                parts.append(f"{word}: no MODIS in the fitting years, {unit} weigh 0 (background only)")
+            elif len(used) < len(covering[m]):
+                parts.append(f"{word}: {' + '.join(names[s] for s in used)} only")
+        if parts:
+            slot_notes[m] = "; ".join(parts)
+    return slot_notes
 
 
 def cell_month_grid(det, months, shape, slot_share, flags):
@@ -422,6 +658,7 @@ def main():
         by_id[region] = export(region)
     order = regions_with("product")
     index = {"contract": "docs/DATA_CONTRACT.md", "version": 2,
+             "default_unit": "burning_days",  # the calendar opens in burning days; hotspots are one click away
              "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
              "regions": [by_id[r] for r in order if r in by_id]}
     index_path.write_text(json.dumps(index, indent=1), encoding="utf-8")
