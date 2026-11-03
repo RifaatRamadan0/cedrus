@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <link rel="icon" href="assets/cedar.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="fx.css">
   <link rel="preload" href="data/regions.json" as="fetch" crossorigin>
   <link rel="preload" href="data/portugal/monthly_bd.json" as="fetch" crossorigin>
   <script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+  <link rel="modulepreload" href="fx.js">
   <script type="module" src="app.js" async></script>
 </head>
 <body>
@@ -100,6 +102,13 @@
         <button type="button" class="download" id="csv-monthly">Monthly record (CSV)</button>
         <p class="hint" id="csv-status" aria-live="polite"></p>
       </fieldset>
+      <div class="field-group fx-group"><span class="field-label" id="fx-label">Look &amp; sound</span>
+        <div class="match-row" role="group" aria-labelledby="fx-label">
+          <button type="button" class="match" id="fx-effects" role="switch" aria-checked="true"><span class="stick" aria-hidden="true"></span>Effects</button>
+          <button type="button" class="match" id="fx-sound" role="switch" aria-checked="false"><span class="stick" aria-hidden="true"></span>Sound</button>
+        </div>
+        <p class="hint" id="fx-hint"></p>
+      </div>
     </form>
 
     <div class="map-column">
@@ -108,8 +117,25 @@
         <div class="map-loading" id="map-loading" role="status">Loading map…</div>
         <div class="map-zoom"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button></div>
         <span class="map-demo" id="map-demo">0.25° CELLS · SELECTED MONTH</span>
+        <div class="map-tools">
+          <div class="map-dn" id="map-dn" role="group" aria-label="Satellite passes shown on the map"><button type="button" data-dn="all" aria-pressed="true">All</button><button type="button" data-dn="day" aria-pressed="false">Day</button><button type="button" data-dn="night" aria-pressed="false">Night</button></div>
+          <button type="button" class="map-lens" id="lens-toggle" aria-pressed="false" title="Inside the lens: untranslated satellite counts">Raw lens</button>
+        </div>
+        <p class="map-dn-note" id="map-dn-note" hidden></p>
+        <span class="lens-label" id="lens-label" aria-hidden="true" hidden></span>
+        <div class="cold-ground" id="cold-ground" hidden><span></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="story-card" id="story-card" role="region" aria-label="Story mode" hidden>
+          <p class="story-step" id="story-step"></p><h3 id="story-title"></h3><p class="story-num" id="story-num"></p><p class="story-text" id="story-text" aria-live="polite"></p>
+          <div class="story-nav"><button type="button" class="update-button" id="story-next">Next</button><button type="button" class="link-button" id="story-exit">Exit</button></div>
+        </div>
       </div>
       <p class="map-caption" id="map-caption" aria-live="polite">Loading NASA FIRMS record…</p>
+      <div class="playback" id="playback" role="group" aria-label="Play the record">
+        <button type="button" class="play" id="play" aria-pressed="false" aria-label="Play 25 years in 25 seconds"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+        <div class="fuse"><canvas id="fuse-strip" aria-hidden="true"></canvas><input type="range" id="scrub" min="0" max="300" value="0" aria-label="Month of the record"></div>
+        <button type="button" class="story-go" id="story-go">Story mode</button>
+        <p class="play-label" id="play-label" aria-live="off"></p>
+      </div>
     </div>
 
     <section class="history panel" id="calendar-panel" tabindex="-1" aria-labelledby="calendar-title">
@@ -119,12 +145,14 @@
       <div class="calendar-bar">
         <div class="record-switch" role="group" aria-label="Which record"><button type="button" id="rec-naive" aria-pressed="false">Naive merge</button><button type="button" class="selected" id="rec-harmonized" aria-pressed="true">Harmonized</button></div>
         <div class="record-switch" id="ref-switch" role="group" aria-label="Anomaly compared with" hidden><button type="button" class="selected" id="ref-median" aria-pressed="true">vs median</button><button type="button" id="ref-mean" aria-pressed="false">vs mean</button></div>
-        <button type="button" class="link-button" id="table-toggle" aria-pressed="false">Show as table</button>
+        <span class="view-links"><button type="button" class="link-button" id="rings-toggle" aria-pressed="false">Show as tree rings</button>
+        <button type="button" class="link-button" id="table-toggle" aria-pressed="false">Show as table</button></span>
       </div>
       <p class="calendar-note" id="calendar-note"></p>
       <div class="cal-progress" id="cal-progress" role="status" hidden><span></span><progress max="1" value="0"></progress></div>
       <div class="calendar" id="cal-grid" role="grid" aria-labelledby="calendar-title" aria-describedby="calendar-note"></div>
       <div class="calendar-table" id="calendar-table" hidden></div>
+      <div class="cal-rings" id="cal-rings" hidden><svg id="rings-svg" viewBox="0 0 400 412" tabindex="0" role="img" aria-label="Tree-ring calendar: one ring per year (the first at the centre), one wedge per month, January at the top. Arrow keys move, Enter opens a month."></svg><p class="sr-only" id="rings-live" aria-live="polite"></p></div>
       <div class="calendar-legend" id="calendar-legend" aria-hidden="true"></div>
       <p class="hint record-end" id="record-end-note"></p>
     </section>
@@ -141,6 +169,8 @@
       <h2 id="season-title">When the fire season runs here</h2>
       <div class="fire-calendar" id="season-dates"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
       <p class="hint" id="season-note">Dates are worked out from the individual records when you open this area.</p>
+      <div class="fingerprint"><svg id="fp-svg" viewBox="0 0 220 220" role="img" aria-labelledby="fp-caption"></svg>
+        <div class="fp-side"><p class="eyebrow small">FIRE FINGERPRINT</p><p class="hint" id="fp-caption"></p><button type="button" class="download" id="share-card">Save as image (PNG)</button></div></div>
     </section>
     <section class="panel drift-panel" aria-labelledby="drift-title">
       <p class="eyebrow small" id="drift-eyebrow">SATELLITE CHECK</p>
@@ -148,6 +178,20 @@
       <svg id="drift-chart" viewBox="0 0 430 170" role="img" aria-labelledby="drift-title drift-caption"></svg>
       <p class="hint" id="drift-caption"></p>
     </section>
+  </section>
+
+  <section class="panel eyes-panel" id="eyes-panel" aria-labelledby="eyes-title">
+    <p class="eyebrow small">TWO EYES, ONE FIRE</p>
+    <h2 id="eyes-title">Why raw satellite counts jump in 2012, and how the record fixes it</h2>
+    <div class="eyes-grid">
+      <div><div class="eyes-pixels" id="eyes-pixels"></div>
+        <p class="hint">The same fire, seen by two satellite eyes. MODIS sees in pixels about 1 km wide; VIIRS (from 2012) in pixels 375 m wide, so about seven of its pixels fit in one of MODIS’s, and it also catches smaller, cooler fires. Counted raw, the sharper eye makes fire look as if it jumped overnight. The record translates every count into MODIS-equivalent terms, so 25 years sit on one scale.</p></div>
+      <div><svg id="eyes-chart" viewBox="0 0 520 210" role="img" aria-labelledby="eyes-caption"></svg>
+        <div class="eyes-controls"><button type="button" class="match" id="translate" role="switch" aria-checked="true"><span class="stick" aria-hidden="true"></span>Translate</button>
+          <span class="eyes-key"><i class="k-raw"></i>raw counts <i class="k-harm"></i>translated</span></div>
+        <p class="hint" id="eyes-caption"></p>
+        <p class="hint">On the map, the <strong>Raw lens</strong> shows the untranslated counts inside a circle you move over the map.</p></div>
+    </div>
   </section>
 
   <footer class="benefits"><div class="benefit"><svg class="icon"><use href="#satellite"/></svg><div><h3>Two Satellites.<br>One Clearer Record.</h3><p>MODIS (2000–) + VIIRS (2012–)<br>= one consistent 25-year history.</p></div></div><div class="benefit"><svg class="icon"><use href="#chart"/></svg><div><h3>Corrected Data.<br>Real Trends.</h3><p>We remove the artificial jump and reveal<br>the true patterns of wildfire activity.</p></div></div><div class="benefit"><svg class="icon"><use href="#globe"/></svg><div><h3>Better Insights.<br>Greater Impact.</h3><p>Supporting governments, researchers<br>and communities with reliable data.</p></div></div><div class="benefit"><svg class="icon"><use href="#leaf"/></svg><div><h3>A Healthier Planet.<br>A Safer Future.</h3><p>Because every fire tells a story —<br>and now we can see the real one.</p></div></div></footer>

@@ -847,7 +847,7 @@ def run(url, shots):
         check("vs mean switch recolours and relabels", "baseline mean" in page.inner_text("#calendar-legend") and changed > 0,
               f"{changed} of {len(after_mean)} cells changed colour")
         # the tooltip and the panel use one baseline: the mean in Aug 2019's tooltip is the panel's multi-year mean
-        tip = page.get_attribute("#cal-grid [data-year='2019'][data-moy='8']", "title")
+        tip = page.get_attribute("#cal-grid [data-year='2019'][data-moy='8']", "aria-label")
         tip_mean = tip.split(" vs ")[2].split(")")[0] if tip.count(" vs ") >= 2 else tip
         page.click("#cal-grid [data-year='2019'][data-moy='8']")
         panel_mean = page.inner_text("#month-body dl.stats div:nth-child(2) dd").split()[0]

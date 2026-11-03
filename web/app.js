@@ -1,6 +1,8 @@
 // CEDRUS front end. Reads the static data contract that pipeline/export_v2.py writes into web/data/
 // (layout in docs/DATA_CONTRACT.md). No build step: serve the web/ folder with any static server.
 // MapLibre comes from a classic script tag; terra-draw is imported from the CDN once the map is up.
+// fx.js draws the record as fire (embers, ash, smoke); every rule and number stays here.
+import { createFx, EMBER, FLARE, COOL, FLARE_MIN } from './fx.js';
 
 const $ = (selector) => document.querySelector(selector);
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -23,8 +25,7 @@ const QUIET = 0.5;        // an expected value below this counts as zero, in eve
 const FEW_TILE = '#46525c'; // anomaly mode: months whose normal is under FEW_FIRES are drawn neutral, not compared
 function asCount(v) { return v < QUIET ? 0 : v; }
 const Z80 = 1.2815515655446004; // standard normal 90th percentile
-// cividis (Nuñez, Anderton & Renslow 2018), sampled; colour-blind safe and monotone in lightness
-const CIVIDIS = ['#00204d', '#00336f', '#39486b', '#575c6d', '#707173', '#8a8779', '#a69d75', '#c4b56c', '#e4cf5b', '#ffea46'];
+// Counts are drawn on the ember scale (fx.js): monotone in lightness, so it reads in every colour-vision type and in grey.
 // ColorBrewer PuOr, 11 classes: purple = fewer fires than normal, orange = more
 const PUOR = ['#2d004b', '#542788', '#8073ac', '#b2abd2', '#d8daeb', '#f7f7f7', '#fee0b6', '#fdb863', '#e08214', '#b35806', '#7f3b08'];
 // The two units (docs/DATA_CONTRACT.md). Burning days are the primary view: how many days each ~1 km square had a fire
@@ -40,7 +41,7 @@ const FAMILY = ['MODIS', 'Suomi NPP', 'NOAA-20']; // burning/<year>.json `fam`
 const state = {
   index: null, meta: null, monthly: null, drift: null, cellIndex: null, footprint: null,
   area: null, areaCells: [], series: null, sel: null, focus: null, vmax: 1, cellMax: 1,
-  mode: 'counts', record: 'harmonized', ref: 'median', table: false, defaultJ: null,
+  mode: 'counts', record: 'harmonized', ref: 'median', table: false, view: 'grid', defaultJ: null,
   unit: 'bd', loadedUnit: null, data: new Map(), loaded: new Map(), seriesCache: null, wantRegion: null,
   map: null, draw: null, drawing: null, drawnAt: -1e9, hot: new Map(),
   seasonToken: 0, regionToken: 0, areaToken: 0, calendarShown: false,
@@ -98,7 +99,9 @@ function isLight(hex) { // relative luminance > 0.45: overlays on it are drawn d
   const [r, g, b] = [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16) / 255);
   return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.45;
 }
-function countColor(v, vmax) { return ramp(CIVIDIS, 0.12 + 0.88 * (Math.log10(1 + v) / Math.log10(1 + vmax))); }
+function countColor(v, vmax) { return ramp(EMBER, 0.08 + 0.92 * (Math.log10(1 + v) / Math.log10(1 + vmax))); }
+// The map's cells sit in the darker half of the scale, so the embers on top of them carry the brightness.
+function mapColor(v, vmax) { return ramp(EMBER, 0.06 + 0.5 * (Math.log10(1 + v) / Math.log10(1 + vmax))); }
 
 // ---------- months and flags ----------
 function monthOf(j) { // index -> {year, moy (1..12)}
@@ -350,7 +353,7 @@ function cellView(j) {
   const v = value(j); const { year, moy } = monthOf(j); const flag = flagAt(j);
   const b = baseline(year, moy);
   const few = b.enough && b.median < FEW_FIRES;
-  let bg = null; let text; let zero = false; let anom = null;
+  let bg = null; let text; let zero = false; let anom = null; let flare = null;
   if (state.mode === 'counts') {
     // Quiet months look the same in both eras: an expected value under QUIET is drawn as "≈ zero";
     // the exact value stays in the tooltip.
@@ -358,6 +361,12 @@ function cellView(j) {
     bg = zero ? null : countColor(v, state.vmax);
     // only a true zero says "no …": a small expected value (the background) is something, as the panel's "<0.1" says
     text = v <= 0 ? `no ${unit().many}` : zero ? `${v < 0.005 ? 'under 0.01' : v.toFixed(2)} ${unit().many} (≈ zero, under ${QUIET})` : many(v);
+    // Flare-ups and cooled months, against the same baseline as everything else; never where a normal month has few fires.
+    if (b.enough && b.median >= FLARE_MIN) {
+      const r = asCount(v) / b.median;
+      if (r >= FLARE) { flare = 'up'; text += `; flare-up: ${r >= 10 ? Math.round(r) : r.toFixed(1)}× the ${b.first}–${b.last} median (${fmt(b.median)})`; }
+      else if (r <= COOL) { flare = 'down'; text += `; cooled: ${Math.round(r * 100)}% of the ${b.first}–${b.last} median (${fmt(b.median)})`; }
+    }
   } else if (!b.enough) {
     text = `${many(v)}; not enough history for a baseline (${b.years} years)`;
   } else if (few) {
@@ -379,7 +388,7 @@ function cellView(j) {
     if (trust.key !== 'none') text += `; trust check: ${trust.text.toLowerCase()}${Number.isFinite(trust.R) && trust.R > 0 ? ` (R ${trust.R.toFixed(2)})` : ''}`;
   }
   const note = notes(j);
-  return { bg, zero, few, anom, text: `${text} · ${SHORT_FLAG[flag]}${note ? ` (${note})` : ''}`, flag, trust: trust.key };
+  return { bg, zero, few, anom, flare, text: `${text} · ${SHORT_FLAG[flag]}${note ? ` (${note})` : ''}`, flag, trust: trust.key };
 }
 
 function renderCalendar() {
@@ -398,9 +407,11 @@ function renderCalendar() {
       const name = `${MONTH_NAMES[moy - 1]} ${y}`;
       const cls = ['cal-cell', c.nd ? 'nd' : '', c.flag === 'B' ? 'b' : '', isEstimated(c.flag) ? 'e' : '', j >= 0 && j === state.sel ? 'sel' : '',
         !c.nd && !c.bg && !c.zero ? 'nb' : '', c.zero ? 'zero' : '', c.trust === 'care' ? 'care' : '', c.trust === 'uncertain' ? 'hz' : '', c.trust === 'few' || (c.few && state.mode === 'anomaly') ? 'few' : '',
-        c.bg && isLight(c.bg) ? 'light' : ''].filter(Boolean).join(' ');
+        c.bg && isLight(c.bg) ? 'light' : '', c.flare === 'up' ? 'flare' : '', c.flare === 'down' ? 'cool' : ''].filter(Boolean).join(' ');
       const style = c.bg ? ` style="background-color:${c.bg}"` : '';
-      html += `<span role="gridcell" class="${cls}"${style}${c.anom != null ? ` data-anom="${c.anom.toFixed(2)}"` : ''} data-j="${j}" data-year="${y}" data-moy="${moy}" tabindex="${j >= 0 && j === focus ? 0 : -1}" aria-selected="${j >= 0 && j === state.sel}" aria-label="${name}: ${c.text}" title="${name}: ${c.text}"></span>`;
+      const glyph = c.flare ? `<i aria-hidden="true">${c.flare === 'up' ? '▲' : '▽'}</i>` : '';
+      // The tooltip is fx.js's ember card, from aria-label (a title attribute would show a second, native one).
+      html += `<span role="gridcell" class="${cls}"${style}${c.anom != null ? ` data-anom="${c.anom.toFixed(2)}"` : ''} data-j="${j}" data-year="${y}" data-moy="${moy}" tabindex="${j >= 0 && j === focus ? 0 : -1}" aria-selected="${j >= 0 && j === state.sel}" aria-label="${name}: ${c.text}">${glyph}</span>`;
       rows += `<td>${c.nd ? '<span class="muted">no data</span>' : `${fmt(value(j))}${c.flag !== 'O' ? ` <small>${SHORT_FLAG[c.flag]}</small>` : ''}${c.trust === 'care' || c.trust === 'uncertain' || c.trust === 'few' ? ` <small>(${c.trust === 'care' ? 'use with care' : c.trust === 'few' ? 'few fires' : 'too uncertain'})</small>` : ''}`}</td>`;
     }
     html += '</div>'; rows += '</tr>';
@@ -419,13 +430,14 @@ function renderCalendar() {
     + (state.mode === 'anomaly' ? (state.ref === 'median' ? ' Median by default: one extreme year cannot move it.' : ' The mean is pulled up by the few worst years; the median is the sturdier normal.') : '')
     + (state.series.exact ? (state.unit === 'bd' ? ' Exact sums of the burning days inside your shape (a ~1 km square counts when its centre is inside).' : ' Exact sums of the detections inside your shape.') : ' Whole region: the sum of its 0.25° cells.');
   if (!state.calendarShown) { state.calendarShown = true; startVideo(); }
+  fx.afterCalendar();
 }
 
 function renderLegend() {
   const marks = [];
   if (state.mode === 'counts') {
-    const k = CIVIDIS.length - 1;
-    const stops = CIVIDIS.map((_, i) => `${ramp(CIVIDIS, 0.12 + 0.88 * (i / k))} ${(i / k) * 100}%`).join(',');
+    const k = EMBER.length - 1;
+    const stops = EMBER.map((_, i) => `${ramp(EMBER, 0.08 + 0.92 * (i / k))} ${(i / k) * 100}%`).join(',');
     const ticks = [1, 10, 100, 1000, 10000].filter((t) => t <= state.vmax).map((t) => `<span style="left:${(Math.log10(1 + t) / Math.log10(1 + state.vmax)) * 100}%">${t.toLocaleString('en-US')}</span>`).join('');
     marks.push(`<div class="ramp"><b>${unit().name} per month</b><i style="background:linear-gradient(90deg,${stops})"></i><div class="ticks">${ticks}</div></div>`);
   } else {
@@ -434,7 +446,7 @@ function renderLegend() {
       .map(([p, l]) => `<span style="left:${((Math.log2(1 + p) + 2) / 4) * 100}%">${l}</span>`).join('');
     marks.push(`<div class="ramp"><b>Compared with the baseline ${state.ref}</b><i style="background:linear-gradient(90deg,${stops})"></i><div class="ticks">${ticks}</div></div>`);
   }
-  marks.push(`<ul class="keys">${state.mode === 'counts' ? `<li><span class="sw zero"></span>≈ zero (under ${QUIET})</li>` : '<li><span class="sw nb"></span>not enough history</li><li><span class="sw fewtile"></span>few fires, not compared</li>'}<li><span class="sw nd"></span>no data</li><li><span class="sw b"></span>bridged</li><li><span class="sw e"></span>estimated</li>${state.record === 'harmonized' ? '<li><span class="sw care"></span>dashed = use with care</li><li><span class="sw hz"></span>hatched = too uncertain</li><li><span class="sw few"></span>corner = few fires, too few to judge</li>' : ''}</ul>`);
+  marks.push(`<ul class="keys">${state.mode === 'counts' ? `<li><span class="sw zero"></span>≈ zero (under ${QUIET})</li><li><span class="sw flare">▲</span>flare-up: ${FLARE}× the median or more</li><li><span class="sw cool">▽</span>cooled: a third of the median or less (both only where a normal month has ${FLARE_MIN}+)</li>` :'<li><span class="sw nb"></span>not enough history</li><li><span class="sw fewtile"></span>few fires, not compared</li>'}<li><span class="sw nd"></span>no data</li><li><span class="sw b"></span>bridged</li><li><span class="sw e"></span>estimated</li>${state.record === 'harmonized' ? '<li><span class="sw care"></span>dashed = use with care</li><li><span class="sw hz"></span>hatched = too uncertain</li><li><span class="sw few"></span>corner = few fires, too few to judge</li>' : ''}</ul>`);
   $('#calendar-legend').innerHTML = marks.join('');
 }
 
@@ -448,6 +460,7 @@ function moveFocus(cell, dYear, dMonth) {
 
 function selectMonth(j) {
   if (j < 0 || flagAt(j) === 'X') { toast('No satellite data for that month.'); return; }
+  fx.stop(); // a month picked by hand ends a playback
   state.sel = j; state.focus = j;
   renderCalendar(); renderMonth(); renderMapValues(); renderSeason();
 }
@@ -470,7 +483,10 @@ function renderMonth() {
       : '<p class="no-detections"><strong>No detections here.</strong> No satellite fire detection fell inside this area in the whole record.</p>');
   }
   const rangeFrom = flag === 'B' ? 'placeholder range' : 'from the model';
-  rows.push(`<p class="big-value"><strong id="month-value">${fmt(v)}</strong> ${state.unit === 'bd' ? 'burning days (MODIS-equivalent)' : 'fire detections'}, harmonized estimate (expected value)${ranged ? ` <span>80% range ${fmt(lo)}–${fmt(hi)} (approximate, ${rangeFrom})</span>` : ''}</p>`);
+  // Smoke is doubt: the trust check's verdict drawn on the number itself (hover or focus clears it; the words below stay).
+  const smoke = base.enough ? fx.smokeClass(trustVerdict(j, base).key) : '';
+  const plume = ranged ? `<i class="plume" aria-hidden="true" style="--lo:${(Math.min(1, lo / Math.max(hi, 1e-9)) * 100).toFixed(1)}%"></i>` : '';
+  rows.push(`<p class="big-value"><strong id="month-value"${smoke ? ` class="${smoke}" tabindex="0"` : ''}>${fmt(v)}</strong> ${state.unit === 'bd' ? 'burning days (MODIS-equivalent)' : 'fire detections'}, harmonized estimate (expected value)${ranged ? ` <span>80% range ${fmt(lo)}–${fmt(hi)} (approximate, ${rangeFrom})${plume}</span>` : ''}</p>`);
   rows.push(`<p class="source-line"><span class="flag ${isEstimated(flag) ? 'estimated' : flagName(flag)}">${SHORT_FLAG[flag]}</span>${flagText(flag)}.${slotNote(j) ? ` <span class="slot-note">Exception this month (a satellite with no ratio for this month and time of day is left out): ${slotNote(j)}.</span>` : ''}${zeroNote(j) ? ` <span class="slot-note" id="zero-note">${zeroNote(j)}.</span>` : ''}</p>`);
   const two = bothUnits(j);
   if (two && two.bd > two.hot && two.bd >= QUIET) rows.push(`<p class="hint" id="two-models">Burning days and hotspots come from two separately tested models; here the burning-day estimate (${fmt(two.bd)}) is above the hotspot estimate (${fmt(two.hot)}), which can’t happen in real counts — read both as estimates within their ranges.</p>`);
@@ -491,6 +507,7 @@ function renderMonth() {
     const t = trustVerdict(j, base);
     const vs = (ref, word) => (ref >= 1 ? signedPct(vc / ref - 1) : `${word} under 1, not compared`);
     const vsMed = vs(base.median, 'median'); const vsMean = vs(base.mean, 'mean');
+    rows.push(fx.ghostFlame(vc, base, mn));
     rows.push(`<dl class="stats">
       <div><dt>Normal ${mn} (median)</dt><dd>${fmt(base.median)} <span>this month ${vsMed}</span></dd></div>
       <div><dt>Multi-year mean</dt><dd>${fmt(base.mean)} <span>this month ${vsMean}</span></dd></div>
@@ -505,6 +522,7 @@ function renderMonth() {
   if (j === state.defaultJ && j !== last) rows.push(`<p class="hint">Opened on this month because ${state.defaultWhy === 'normal' ? `it is the most recent month in the record’s last ${DEFAULT_YEARS} years that normally has at least ${FEW_FIRES} ${unit().many} in this area` : `no month in the record’s last ${DEFAULT_YEARS} years normally has ${FEW_FIRES} ${unit().many} here, and it is the most recent with at least one`}. The record runs to ${label(last)}.</p>`);
   if (Math.abs(state.series.naive[j] - v) > 0.005) rows.push(`<p class="hint">The naive merge would say ${fmt(state.series.naive[j])} for this month.</p>`);
   $('#month-body').innerHTML = rows.join('');
+  fx.renderFingerprint(); fx.syncScrub();
 }
 
 // ---------- records: hotspots or burning days (loaded only when an area, a download or the season dates need them; cached) ----------
@@ -618,7 +636,7 @@ function cellFeatures() {
   return { type: 'FeatureCollection', features: ix.map((x, c) => {
     const lon0 = x * deg; const lat0 = iy[c] * deg; const lon1 = lon0 + deg; const lat1 = lat0 + deg;
     const v = state.monthly.m[c][state.sel];
-    return { type: 'Feature', id: c, properties: { v, inside: inside.has(c), color: v < 0.005 ? 'rgba(0,0,0,0)' : countColor(v, state.cellMax) },
+    return { type: 'Feature', id: c, properties: { v, inside: inside.has(c), region: state.area?.kind === 'region', color: v < 0.005 ? 'rgba(0,0,0,0)' : mapColor(v, state.cellMax) },
       geometry: { type: 'Polygon', coordinates: [[[lon0, lat0], [lon1, lat0], [lon1, lat1], [lon0, lat1], [lon0, lat0]]] } };
   }) };
 }
@@ -627,10 +645,11 @@ function areaFeature() {
   const ring = state.area.kind === 'region' ? bboxRing(state.meta.bbox) : state.area.ring;
   return { type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [ring] } }] };
 }
-function renderMapValues() {
+function renderMapValues(opts = {}) {
   const map = state.map;
   if (map?.getSource('cells')) { map.getSource('cells').setData(cellFeatures()); map.getSource('area').setData(areaFeature()); }
-  $('#map-caption').textContent = `${areaName()} · ${state.unit === 'bd' ? 'burning days' : 'fire detections'} per 0.25° cell in ${label(state.sel)}, harmonized estimate (whole cells, for orientation) · green outlines: cells the area touches · NASA FIRMS`;
+  $('#map-caption').textContent = `${areaName()} · ${state.unit === 'bd' ? 'burning days' : 'fire detections'} per 0.25° cell in ${label(state.sel)}, harmonized estimate (whole cells, for orientation; ember size = the cell’s value) · gold outlines: cells the area touches · NASA FIRMS`;
+  fx.mapMonth(opts);
 }
 
 // app.js runs async, so the calendar does not wait for MapLibre; the map waits for its script instead.
@@ -670,8 +689,9 @@ async function initMap() {
     map.addSource('cells', { type: 'geojson', data: cellFeatures() });
     map.addSource('area', { type: 'geojson', data: areaFeature() });
     map.addLayer({ id: 'cells', type: 'fill', source: 'cells', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.6 } });
-    map.addLayer({ id: 'cells-line', type: 'line', source: 'cells', paint: { 'line-color': ['case', ['get', 'inside'], '#93d9b1', '#3a5160'], 'line-width': ['case', ['get', 'inside'], 1.2, 0.4] } });
+    map.addLayer({ id: 'cells-line', type: 'line', source: 'cells', paint: { 'line-color': ['case', ['get', 'inside'], '#ffc35a', '#3a4a52'], 'line-width': ['case', ['get', 'inside'], 1.1, 0.4], 'line-opacity': ['case', ['get', 'inside'], ['case', ['get', 'region'], 0.3, 0.75], 1] } });
     map.addLayer({ id: 'area-line', type: 'line', source: 'area', paint: { 'line-color': '#ffa846', 'line-width': 2, 'line-dasharray': [2, 1.5] } });
+    fx.mapReady(map);
     map.on('click', 'cells', (e) => {
       if (state.drawing || performance.now() - state.drawnAt < 400) return; // the click that finished a drawing
       const p = e.features[0].properties;
@@ -690,7 +710,10 @@ async function initDraw(map) {
     const { TerraDrawMapLibreGLAdapter } = await import('https://cdn.jsdelivr.net/npm/terra-draw-maplibre-gl-adapter@1.5.0/+esm');
     const draw = new td.TerraDraw({
       adapter: new TerraDrawMapLibreGLAdapter({ map }),
-      modes: [new td.TerraDrawRectangleMode(), new td.TerraDrawPolygonMode()],
+      // Drawn in fire: the outline glows like a fuse; the torch and its cooling trail are fx.js's (drawing()).
+      modes: [new td.TerraDrawRectangleMode({ styles: { fillColor: '#ff7a2a', fillOpacity: 0.08, outlineColor: '#ffb04a', outlineWidth: 2 } }),
+        new td.TerraDrawPolygonMode({ styles: { fillColor: '#ff7a2a', fillOpacity: 0.08, outlineColor: '#ffb04a', outlineWidth: 2,
+          closingPointColor: '#fff3cf', closingPointWidth: 5, closingPointOutlineColor: '#ff8a2a', closingPointOutlineWidth: 2 } })],
     });
     draw.start();
     draw.on('finish', (id) => {
@@ -720,13 +743,13 @@ function disableDraw(message) {
 function startDrawing(mode) {
   if (!state.draw) return;
   if (state.drawing === mode) { stopDrawing(); return; }
-  state.draw.clear(); state.draw.setMode(mode); state.drawing = mode;
+  state.draw.clear(); state.draw.setMode(mode); state.drawing = mode; fx.drawing(mode);
   document.querySelectorAll('.tool[aria-pressed]').forEach((b) => b.setAttribute('aria-pressed', String(b.id === `draw-${mode}`)));
   $('#draw-hint').textContent = mode === 'rectangle' ? 'Click one corner on the map, then the opposite corner.' : 'Click each corner on the map, then click the first corner again to close.';
 }
 // Ends any drawing: leaves the mode, removes a half-drawn shape, releases the buttons.
 function stopDrawing() {
-  state.drawing = null;
+  state.drawing = null; fx.drawing(null);
   if (state.draw) { state.draw.setMode('static'); state.draw.clear(); }
   document.querySelectorAll('.tool[aria-pressed]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
   if (state.draw) $('#draw-hint').textContent = DRAW_HINT;
@@ -790,6 +813,7 @@ async function loadRegion(id, u = state.unit) {
 // offered in both views (the challenge asks for hotspots); the burning-day CSV in the burning-day view.
 function renderUnitSwitch() {
   ['bd', 'hot'].forEach((u) => $(`#unit-${u}`).setAttribute('aria-pressed', String(u === state.unit)));
+  $('.unit-row').dataset.sel = state.unit; // the heat slides to the chosen unit
   $('#csv-burning').hidden = state.unit !== 'bd'; $('#csv-hotspots').hidden = false;
 }
 // A unit's calendar files did not load: say so with a retry; the unit in force (if any) keeps its labels and numbers.
@@ -858,6 +882,7 @@ function clearNumbers(message) {
 async function setArea(area, opts = {}) {
   const token = ++state.areaToken;
   $('#csv-status').textContent = '';
+  if (!opts.keepMonth) fx.areaChanged(area); // fire runs once round the new area's edge
   if (area.kind === 'region') {
     state.area = area; state.series = regionSeries(); state.areaCells = state.monthly.cells.ix.map((_, c) => c);
     $('#area-summary').innerHTML = `<strong>${areaName()}</strong><span>${state.monthly.cells.ix.length} cells of ${state.monthly.cell_deg}°: every ${unit().one} in ${state.meta.name}’s FIRMS country file inside its box.</span>`;
@@ -909,7 +934,8 @@ async function setArea(area, opts = {}) {
   const sel = state.sel;
   state.defaultJ = defaultMonth(); state.sel = keep ? sel : state.defaultJ;
   state.focus = null;
-  renderCalendar(); renderMonth(); renderMapValues(); renderSeason();
+  fx.stop();
+  renderCalendar(); renderMonth(); renderMapValues(); renderSeason(); fx.seriesChanged();
   if (state.map && area.kind !== 'region' && !opts.keepMonth) state.map.fitBounds(ringBounds(area.ring), { padding: 40, duration: 600, maxZoom: 9 });
   return true;
 }
@@ -1032,7 +1058,7 @@ function bindControls() {
     if (!$('#lat').value || !$('#lon').value || !(Math.abs(lat) <= 90) || !(Math.abs(lon) <= 180)) { toast('Enter a latitude (−90 to 90) and a longitude (−180 to 180).'); $('#lat').focus(); return; }
     if (!(radius >= 1 && radius <= 500)) { toast('Radius must be between 1 and 500 km.'); $('#radius').focus(); return; }
     stopDrawing();
-    useRing(circleRing(lat, lon, radius), 'circle', { lat, lon, radius }).catch(failed);
+    fx.burn($('#circle-go'), () => useRing(circleRing(lat, lon, radius), 'circle', { lat, lon, radius })).catch(failed);
   });
   ['counts', 'anomaly'].forEach((m) => $(`#mode-${m}`).addEventListener('click', () => {
     state.mode = m;
@@ -1050,11 +1076,16 @@ function bindControls() {
     ['naive', 'harmonized'].forEach((k) => { $(`#rec-${k}`).classList.toggle('selected', k === r); $(`#rec-${k}`).setAttribute('aria-pressed', String(k === r)); });
     renderCalendar();
   }));
-  $('#table-toggle').addEventListener('click', (e) => {
-    state.table = !state.table;
-    e.currentTarget.setAttribute('aria-pressed', String(state.table)); e.currentTarget.textContent = state.table ? 'Show as calendar' : 'Show as table';
-    $('#cal-grid').hidden = state.table; $('#calendar-table').hidden = !state.table;
-  });
+  // Three views of one calendar: the grid, the tree rings (fx.js), the table.
+  const setView = (v) => {
+    state.view = v; state.table = v === 'table';
+    $('#table-toggle').setAttribute('aria-pressed', String(v === 'table')); $('#table-toggle').textContent = v === 'table' ? 'Show as calendar' : 'Show as table';
+    $('#rings-toggle').setAttribute('aria-pressed', String(v === 'rings')); $('#rings-toggle').textContent = v === 'rings' ? 'Show as grid' : 'Show as tree rings';
+    $('#cal-grid').hidden = v !== 'grid'; $('#calendar-table').hidden = v !== 'table'; $('#cal-rings').hidden = v !== 'rings';
+    if (v === 'rings') fx.renderRings();
+  };
+  $('#table-toggle').addEventListener('click', () => setView(state.view === 'table' ? 'grid' : 'table'));
+  $('#rings-toggle').addEventListener('click', () => setView(state.view === 'rings' ? 'grid' : 'rings'));
   const grid = $('#cal-grid');
   grid.addEventListener('click', (e) => { const cell = e.target.closest('[role=gridcell]'); if (cell) selectMonth(Number(cell.dataset.j)); });
   grid.addEventListener('keydown', (e) => {
@@ -1065,10 +1096,11 @@ function bindControls() {
     if (e.key === 'End') { e.preventDefault(); moveFocus(cell, 0, 12 - Number(cell.dataset.moy)); return; }
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectMonth(Number(cell.dataset.j)); }
   });
-  $('#csv-hotspots').addEventListener('click', () => hotspotsCsv().catch((err) => { $('#csv-status').textContent = err.year ? `Couldn’t load detections for ${err.year} — try again.` : `Download failed: ${err.message}`; }));
-  $('#csv-burning').addEventListener('click', () => burningCsv().catch((err) => { $('#csv-status').textContent = err.year ? `Couldn’t load burning days for ${err.year} — try again.` : `Download failed: ${err.message}`; }));
+  // A download is a burning button: a fuse runs its edge while the file is built, embers drop into the file when it is.
+  $('#csv-hotspots').addEventListener('click', () => fx.burn($('#csv-hotspots'), hotspotsCsv).catch((err) => { $('#csv-status').textContent = err.year ? `Couldn’t load detections for ${err.year} — try again.` : `Download failed: ${err.message}`; }));
+  $('#csv-burning').addEventListener('click', () => fx.burn($('#csv-burning'), burningCsv).catch((err) => { $('#csv-status').textContent = err.year ? `Couldn’t load burning days for ${err.year} — try again.` : `Download failed: ${err.message}`; }));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && state.drawing) { stopDrawing(); toast('Drawing cancelled.'); } });
-  $('#csv-monthly').addEventListener('click', monthlyCsv);
+  $('#csv-monthly').addEventListener('click', () => fx.burn($('#csv-monthly'), monthlyCsv).catch((err) => { $('#csv-status').textContent = `Download failed: ${err.message}`; }));
   $('#zoom-in').addEventListener('click', () => state.map?.zoomIn());
   $('#zoom-out').addEventListener('click', () => state.map?.zoomOut());
 }
@@ -1153,7 +1185,7 @@ async function start() {
   state.unit = UNITS[remembered] ? remembered : (state.index.default_unit === 'hotspots' ? 'hot' : 'bd');
   renderUnitSwitch();
   $('#region').innerHTML = state.index.regions.map((r) => `<option value="${r.id}">${r.name}</option>`).join('');
-  bindControls();
+  bindControls(); fx.init();
   const first = state.index.regions[0].id;
   try { await useRegion(first); } catch { const u = state.unit; unitFailed(u, () => setUnit(u)); }
   // Both models the site runs on, each confirmed on sealed regions it had never seen (the dialog names them).
@@ -1161,5 +1193,11 @@ async function start() {
   initMap();
 }
 
+// The creative layer reads the record only through these.
+const fx = createFx({
+  $, state, fmt, label, monthOf, indexOf, years, cellView, selectMonth, renderMapValues, renderMonth, baseline, asCount, quantile, countColor,
+  unit, areaName, flagAt, loadYear, cellKey, bboxRing, toast, MONTHS, MONTH_NAMES, QUIET, FEW_FIRES,
+});
+
 // For tools/probe_site.py: the same entry points the controls use.
-window.cedrus = { state, useRing, useRegion, setUnit, selectMonth, indexOf, ready: start().catch((err) => { failed(err); throw err; }) };
+window.cedrus = { state, useRing, useRegion, setUnit, selectMonth, indexOf, fx, ready: start().catch((err) => { failed(err); throw err; }) };
