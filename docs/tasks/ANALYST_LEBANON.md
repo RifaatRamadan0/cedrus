@@ -1,3 +1,5 @@
+> **Start with [ANALYST_REALITY_CHECK.md](ANALYST_REALITY_CHECK.md).** This Lebanon task is the deeper, optional follow-up; parts of its setup notes predate the current pipeline, so ask before running the pipeline steps.
+
 # Task: Lebanon's fire history, and how much we can trust a small area
 
 **For:** our data analyst · **Size:** a first pass in 3–4 days · **Tools:** Python + pandas + matplotlib (or anything you prefer)
