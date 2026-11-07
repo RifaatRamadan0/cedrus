@@ -18,9 +18,17 @@ honestly**, and turns it into a fire calendar for any area.
 The calendar opens in **burning days**: how many days each ~1 km square had a fire detected, in MODIS-equivalent
 terms. A 0.01° square counts once per day and time of day for each satellite family, however many detections fall in
 it. One click switches to **hotspots**: every satellite fire detection, in MODIS-equivalent counts, because those are
-the numbers the challenge asks for. Both views keep the same record (December 2000 to December 2025), the same areas
+the numbers the challenge asks for. Both views keep the same region-specific record, the same areas
 and checks, and the hotspot CSV can be downloaded in both. Drawn areas are exact sums; whole-region totals equal the
 exact sum within rounding (bound: 0.005 × cells + 0.00005 × monthly records + 0.0001; Syria hotspots reached 0.1235). Layout of the files: [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md).
+
+## Current regions and map coverage
+
+The product includes Portugal, Lebanon, Syria, Jordan, Cyprus and the La Rioja area in Argentina. Israel and Palestine are Deferred. Exported records start in November or December 2000 and end in November or December 2025, depending on the region; exact ranges are in [the data contract](docs/DATA_CONTRACT.md#current-product-records).
+
+The orange dashed outline is an analysis extent, not a country boundary. Faint outlined cells are included in the exported grid with a near-zero estimate for the selected month; shaded dashed cells have no qualifying records in that region's exported grid. Neither state establishes complete observations or confirms that a location was fire-free. Click the map for details. Monthly observation completeness remains unknown.
+
+Latest full browser/data probe: **468/468 passed**, including both units, all six regions and the final console-error check. See [implementation status](docs/TIER1_IMPLEMENTATION_STATUS.md) and [the completed Tier 1 plan](docs/TIER1_PLAN.md). Live 2026 ingestion is not implemented; the local ignored FIRMS key has been used for availability/gap audits.
 
 ## How we know it works: pre-registered tests, one of them failed
 

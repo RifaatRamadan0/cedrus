@@ -1,4 +1,6 @@
-# Roadmap
+# Roadmap — historical early-stage plan
+
+This roadmap predates the model tournaments and completed Tier 1 scope. Its checkboxes and example commands are historical, not a current completion checklist. For current scope, tests and limitations, use [TIER1_PLAN.md](TIER1_PLAN.md) and [TIER1_IMPLEMENTATION_STATUS.md](TIER1_IMPLEMENTATION_STATUS.md). The original proposals below are retained rather than retroactively marked complete.
 
 We go one step at a time. A step is done when its check passes, not when the
 code exists. Put your name next to a step before you start it.

@@ -13,13 +13,13 @@ Changed implementation: `web/app.js`, `web/index.html`, `web/styles.css`; tests:
 
 ---
 
-# Commit checkpoint — 7 November 2026
+## Historical commit checkpoint — 7 November 2026
 
-User approved committing all six reviewed groups. Changes are committed on `add-tier1-regions`; nothing was pushed. See [commit groups, messages and exact file lists](../analysis/tier1/commit_groups.json). All 317 reviewed files passed the exclusion and local-credential scan before staging. Raw archives, deferred web exports, `.env`, `.claude/` and frozen-model files are excluded. Preservation verification still passes; the last full probe passed 360/360. Earlier “uncommitted” statements below describe their historical checkpoints.
+User approved committing all six reviewed groups. Changes are committed on `add-tier1-regions`; nothing was pushed. See the [historical six-group manifest](../analysis/tier1/commit_groups.json); it records the original commits, including the Markdown manifest later deleted by `11bb436`. All 317 reviewed files passed the exclusion and local-credential scan before staging. Raw archives, deferred web exports, `.env`, `.claude/` and frozen-model files are excluded. Preservation verification still passes; the full probe at that checkpoint passed 360/360; the latest result above is 468/468. Earlier “uncommitted” statements below describe their historical checkpoints.
 
 ---
 
-# Final Tier 1 checkpoint — 6 November 2026
+## Historical pre-commit checkpoint — 6 November 2026
 
 **Full probe passed: 360/360 checks, 0 failures, 235 seconds, round 1 of at most 3.** Stopped the run/fix cycle at this pass as requested. No commits or pushes.
 
@@ -43,7 +43,7 @@ Remaining failing checks: **none**. Scope remains four new product regions; Isra
 
 Final [preservation verification](../analysis/tier1/scope_revision_preservation.json) passed: all 108 Portugal/Lebanon data files, their catalog entries, and both frozen models are unchanged. `.env` is ignored. The data inventory remains 222 new region files plus catalog (42,451,808 bytes); only Syria hotspots 2019 exceeds 3 MB (3,548,856 bytes).
 
-## Proposed commits
+## Historical proposed commit grouping (subsequently committed)
 
 [Exact per-group file manifest and diff summary](../analysis/tier1/commit_groups.json). Raw archives, `data/raw/deferred_web_exports`, `.env`, `.claude/`, generated browser screenshots/downloads and frozen-model files are excluded. The original user-supplied plan outside the repo has also been updated, but cannot be part of a commit in this repository.
 

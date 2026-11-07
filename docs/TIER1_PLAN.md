@@ -1,6 +1,6 @@
-# Hackathon scope amendment — 6 November 2026
+# Tier 1 hackathon plan — completion update, 7 November 2026
 
-This user-approved amendment supersedes conflicting requirements below. The original plan is retained in full; completed audits remain unchanged. Stop conditions, frozen models, preservation of Portugal/Lebanon exports, no commits without approval, and no pushes remain in force.
+This current completion record and the user-approved scope amendments supersede conflicting requirements in the historical plan below. The original plan is retained in full; completed audits remain unchanged. Stop conditions, frozen models, preservation of Portugal/Lebanon exports, no commits without approval, and no pushes remain in force.
 
 ## Latest scope: four new product regions
 
@@ -18,19 +18,51 @@ Israel and Palestine are excluded from product exports; raw files and completed 
 - **Deferred — Per-month coverage ledger in exports:** the evidence ledger stays in analysis; visible notes disclose unknown completeness and link documented gaps.
 - **Deferred — Suomi NPP gap impact check:** retained gap evidence is disclosed without a new sensitivity study in the hackathon scope.
 
-## Keep and finish
+## Completed hackathon work
 
-1. Correct stale implementation status; finish Argentina 2018–2024 per-file audit and verified Argentina-to-la_rioja mapping.
-2. Add six product regions using audited boxes; support display names and notes in exports. Export only the six new regions with export_v2.py --region; preserve existing countries and index entries.
-3. Every region displays: "Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs." Keep the type-0 vegetation eligibility visible too.
-4. La Rioja also displays its original evidence note and "Annual totals in the 2020-2021 test were above the 80% range."
-5. Resolve overlapping boxes by largest sampled footprint share using outsideShare, never fire totals. If a second region exceeds 10% of the drawn area's footprint share, name both regions in a warning and allow the existing picker to switch the same drawing. Show notes under the area summary.
-6. Preserve the full probe and add six-region whole-region CSV reconciliation in both units, Aug–Feb La Rioja season sums, and the specified 5 km city cases. Report Israel/Palestine picks and warnings without imposing unsupported country expectations. Check every new region's calendars, notes and whole-region creative features.
-7. Report every new web-data file's bytes and decimal MB, flag >3 MB; report La Rioja yearly/monthly activity, quiet/busiest months and zero-weight share against measured Lebanon.
-8. Verify dates/sources and check capture for Latakia July 2025 and one Cyprus event in 2022–2025 using scratch check_reality.py --fires inputs. No flare-up requirement.
-9. Deliver reviewable diff, actual test results, remaining limitations and proposed commit groups. No commits or pushes.
+1. **Complete — Audits and mapping:** corrected implementation status; finished Argentina 2018–2024 per-file filters/box audit and verified original-archive mapping into `data/raw/la_rioja`. Earlier source, type-filter and coverage-service audits remain intact.
+2. **Complete — Four new product regions:** Syria, Jordan, Cyprus and La Rioja use audited boxes, display names and notes, with individual exports. Israel/Palestine are Deferred as above; their raw files and audit evidence remain. Portugal/Lebanon exports and catalog entries are unchanged.
+3. **Complete — Shared notes:** every region displays "Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs." The type-0 eligibility explanation remains visible.
+4. **Complete — La Rioja notes:** retained the original evidence note and added "Annual totals in the 2020-2021 test were above the 80% range."
+5. **Complete — Selection and dates:** positive sampled footprint share determines region selection, never fire totals; zero-share candidates use the outside-coverage path. The >10% alternative-footprint warning remains. Same-area manual region/unit switches align months by YYYY-MM; examples, initial load and new drawings use default months. Notes appear below the area summary.
+6. **Complete — Browser and numerical verification:** four new regions reconcile whole-region CSVs in both units; La Rioja Aug–Feb sums, all region calendars/notes/creative features, five prescribed city selections, Tel Aviv/Mediterranean outside coverage, region/unit round trips and the console-error check pass. The unchanged original Lebanon-default assertion passes. The final full probe passed **468/468**, including 108 map-clarity checks across all six product regions in both units.
+7. **Complete — Size and demo reports:** every new web-data file is inventoried; Syria hotspots 2019 is the sole file over 3 MB (3,548,856 bytes). La Rioja annual/monthly totals, empty/busiest months and zero-weight share versus Lebanon are reported.
+8. **Complete — Known-event capture:** dates and sources verified for Latakia July 2025 and Cyprus July 2025; scratch-input `check_reality.py --fires` checks report capture only. No attribution, burned-area accuracy or flare-up validation is claimed.
+9. **Complete — Review and approved commits:** user reviewed and approved six implementation groups, then the map-clarity follow-up. Seven commits are recorded below. No pushes. The obsolete `TIER1_COMMIT_GROUPS.md` was deleted at the user's request; historical machine-readable manifest remains.
+10. **Complete — Map clarity:** orange dashed extent explicitly labelled as not a country boundary; faint outlines distinguish included near-zero cells from shaded dashed cells absent from the exported grid. Click explanations show inclusion and selected-month estimates when available, disclose unknown observation completeness, and clear when the selection changes. Shading is display-only and changes no data, models or totals.
+
+## Final validation and commits — 7 November 2026
+
+- Full probe: **468 passed, 0 failed**, 346 seconds, round 1; final console-error check passed. Evidence: `analysis/tier1/probe_map_clarity_round1.log` and `analysis/tier1/map_clarity_summary.json`.
+- Preservation: all 108 Portugal/Lebanon export files, both catalog entries and both frozen models unchanged. Evidence: `analysis/tier1/scope_revision_preservation.json`.
+- Earlier reduced-scope full probe: 360/360 passed. The earlier skip-link failure did not recur in these passing runs; no timing workaround was introduced or claim made that its intermittent cause was diagnosed.
+- Branch: `add-tier1-regions`; base: `84d2c0c`. Raw archives, `.env`, deferred web exports and `.claude/` remain excluded from commits.
+
+| Commit | Completed group |
+|---|---|
+| `8a0d014` | Audits, filters, coverage and provenance |
+| `3017410` | Region definitions and verified staged exporter |
+| `c48a487` | Browser footprint selection and date alignment |
+| `e7836f8` | Region, area-selection and round-trip checks |
+| `2a860d6` | Four new region datasets and catalog |
+| `d0f8c06` | Scope, validation and review documentation |
+| `11bb436` | Map coverage clarity, 108 new checks and obsolete document removal |
+
+The user approved committing this documentation-only plan synchronization and consistency corrections on 7 November 2026. The implementation commits are listed above; future commits still require approval. Nothing has been pushed.
+
+## Remaining limitations
+
+- Boxes and 0.25° historical detection footprints are approximate analysis extents, not national boundaries. La Rioja is a rectangular study area, not the exact province. Polygon work remains Deferred.
+- An absent grid cell means no qualifying records in the imported dataset; it does not distinguish no fires from missing observations. Included cells can have near-zero monthly estimates. Observation/monthly completeness remains unknown; the FIRMS gap evidence and monthly ledger stay in analysis.
+- Whole-region serialization reconciliation uses `0.005 * cells + 0.00005 * monthly_records + 0.0001`; Syria hotspots reached a 0.1235 monthly gap. Existing numerical tolerances were not loosened.
+- La Rioja 2020–2021 validation does not establish local accuracy or 2022–2025 accuracy; retain the exported evidence notes. Known-event checks establish capture only.
+- All eight Deferred items above remain retained and unfinished. Completion here refers only to the approved reduced hackathon scope.
 
 ---
+
+## Historical original plan — retained for provenance, superseded above
+
+The following text records the original proposals, not outstanding requirements for the completed hackathon scope. Deferred work is not marked complete by this update.
 
 # Tier 1 regions: La Rioja, Syria, Jordan, Cyprus, Palestine, Israel
 
