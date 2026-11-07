@@ -44,7 +44,7 @@ const state = {
   mode: 'counts', record: 'harmonized', ref: 'median', table: false, view: 'grid', defaultJ: null,
   unit: 'bd', loadedUnit: null, data: new Map(), loaded: new Map(), seriesCache: null, wantRegion: null,
   map: null, draw: null, drawing: null, drawnAt: -1e9, hot: new Map(),
-  seasonToken: 0, regionToken: 0, areaToken: 0, calendarShown: false,
+  seasonToken: 0, regionToken: 0, areaToken: 0, selectionToken: 0, calendarShown: false,
 };
 let toastTimer;
 
@@ -109,10 +109,10 @@ function monthOf(j) { // index -> {year, moy (1..12)}
   const k = y0 * 12 + (m0 - 1) + j;
   return { year: Math.floor(k / 12), moy: (k % 12) + 1 };
 }
-function indexOf(year, moy) {
-  const [y0, m0] = state.monthly.months.first.split('-').map(Number);
+function indexOf(year, moy, mon = state.monthly) {
+  const [y0, m0] = mon.months.first.split('-').map(Number);
   const j = (year * 12 + moy - 1) - (y0 * 12 + m0 - 1);
-  return j >= 0 && j < state.monthly.months.n ? j : -1;
+  return j >= 0 && j < mon.months.n ? j : -1;
 }
 function label(j) { const { year, moy } = monthOf(j); return `${MONTH_NAMES[moy - 1]} ${year}`; }
 function iso(j) { const { year, moy } = monthOf(j); return `${year}-${String(moy).padStart(2, '0')}`; }
@@ -159,12 +159,16 @@ function regionsTouched(ring) {
   return state.index.regions.filter((r) => x0 < r.bbox[2] && x1 > r.bbox[0] && y0 < r.bbox[3] && y1 > r.bbox[1]);
 }
 function containsBox(ring, [x0, y0, x1, y1]) { return [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].every(([x, y]) => inRing(x, y, ring)); }
-function regionForRing(ring) {
-  const [[x0, y0], [x1, y1]] = ringBounds(ring);
-  const cx = (x0 + x1) / 2; const cy = (y0 + y1) / 2;
-  const regions = state.index.regions;
-  return regions.find((r) => cx >= r.bbox[0] && cx <= r.bbox[2] && cy >= r.bbox[1] && cy <= r.bbox[3])
-    || regions.find((r) => x0 < r.bbox[2] && x1 > r.bbox[0] && y0 < r.bbox[3] && y1 > r.bbox[1]) || null;
+async function regionForRing(ring) {
+  const candidates = regionsTouched(ring);
+  const scores = await Promise.all(candidates.map(async (meta) => {
+    const [mon] = await unitData(meta.id, state.unit);
+    const footprint = new Set(mon.cells.ix.map((x, i) => `${x}_${mon.cells.iy[i]}`));
+    return { id: meta.id, name: meta.name, share: 1 - outsideShare(ring, meta, mon.cell_deg, footprint) };
+  }));
+  // Stable index order breaks exact ties; no counts or weights participate.
+  scores.sort((a, b) => b.share - a.share);
+  return { region: scores[0]?.share > 0 ? candidates.find((r) => r.id === scores[0].id) ?? null : null, scores };
 }
 function cellKey(lon, lat) { const d = state.monthly.cell_deg; return `${Math.floor(lon / d)}_${Math.floor(lat / d)}`; }
 
@@ -205,11 +209,11 @@ function cellShare(ring, x0, y0, deg) {
 
 // Share of the area outside this region's data: outside its box, or in a 0.25° cell where its FIRMS
 // country file never had a detection (the country file stops at the border; e.g. Spain inside Portugal's box).
-function outsideShare(ring) {
+function outsideShare(ring, meta = state.meta, deg = state.monthly.cell_deg, footprint = state.footprint) {
   const pts = samplePoints(ring, ringBounds(ring));
   if (!pts.length) return 0;
-  const [bx0, by0, bx1, by1] = state.meta.bbox;
-  const out = pts.filter(([lon, lat]) => lon < bx0 || lon >= bx1 || lat < by0 || lat >= by1 || !state.footprint.has(cellKey(lon, lat)));
+  const [bx0, by0, bx1, by1] = meta.bbox;
+  const out = pts.filter(([lon, lat]) => lon < bx0 || lon >= bx1 || lat < by0 || lat >= by1 || !footprint.has(`${Math.floor(lon / deg)}_${Math.floor(lat / deg)}`));
   return out.length / pts.length;
 }
 
@@ -522,7 +526,7 @@ function renderMonth() {
   if (j === state.defaultJ && j !== last) rows.push(`<p class="hint">Opened on this month because ${state.defaultWhy === 'normal' ? `it is the most recent month in the record’s last ${DEFAULT_YEARS} years that normally has at least ${FEW_FIRES} ${unit().many} in this area` : `no month in the record’s last ${DEFAULT_YEARS} years normally has ${FEW_FIRES} ${unit().many} here, and it is the most recent with at least one`}. The record runs to ${label(last)}.</p>`);
   if (Math.abs(state.series.naive[j] - v) > 0.005) rows.push(`<p class="hint">The naive merge would say ${fmt(state.series.naive[j])} for this month.</p>`);
   $('#month-body').innerHTML = rows.join('');
-  fx.renderFingerprint(); fx.syncScrub();
+  renderCrossYearSeason(); fx.renderFingerprint(); fx.syncScrub();
 }
 
 // ---------- records: hotspots or burning days (loaded only when an area, a download or the season dates need them; cached) ----------
@@ -648,8 +652,8 @@ function areaFeature() {
 function renderMapValues(opts = {}) {
   const map = state.map;
   if (map?.getSource('cells')) { map.getSource('cells').setData(cellFeatures()); map.getSource('area').setData(areaFeature()); }
-  $('#map-caption').textContent = `${areaName()} · ${state.unit === 'bd' ? 'burning days' : 'fire detections'} per 0.25° cell in ${label(state.sel)}, harmonized estimate (whole cells, for orientation; ember size = the cell’s value) · gold outlines: cells the area touches · NASA FIRMS`;
-  fx.mapMonth(opts);
+  $('#map-caption').textContent = `${areaName()} · ${state.unit === 'bd' ? 'burning days' : 'fire detections'} per 0.25° cell in ${state.sel == null ? 'no selected month' : label(state.sel)}, harmonized estimate (whole cells, for orientation; ember size = the cell’s value) · gold outlines: cells the area touches · NASA FIRMS`;
+  if (state.sel != null) fx.mapMonth(opts);
 }
 
 // app.js runs async, so the calendar does not wait for MapLibre; the map waits for its script instead.
@@ -790,6 +794,14 @@ async function loadRegion(id, u = state.unit) {
   const meta = state.index.regions.find((r) => r.id === id);
   const [monthly, drift] = await unitData(id, u);
   if (token !== state.regionToken) return false;
+  fx.stop();
+  const selectedKey = state.monthly && state.sel != null ? iso(state.sel) : null;
+  const focusKey = state.monthly && state.focus != null ? iso(state.focus) : null;
+  const align = (key) => { const j = key ? indexOf(...key.split('-').map(Number), monthly) : -1; return j < 0 ? null : j; };
+  // Rebase before any map, ramp or series reader sees the new calendar.
+  state.sel = align(selectedKey); state.focus = align(focusKey);
+  state.series = null;
+  if (newRegion) state.seriesCache = null;
   state.areaToken += 1; // an area still loading for the previous region or unit must not render
   state.meta = meta; state.monthly = monthly; state.drift = drift; state.loadedUnit = u; state.unit = u;
   renderUnitSwitch(); $('#unit-status').hidden = true;
@@ -836,6 +848,7 @@ function unitFailed(u, retry) {
   }
 }
 async function setUnit(u) {
+  state.selectionToken += 1;
   if (!UNITS[u]) return false;
   const id = state.meta?.id ?? state.wantRegion;
   if (!id) return false;
@@ -857,7 +870,11 @@ function bothUnits(j) {
   let o = null;
   if (state.area?.kind === 'region') { const d = state.loaded.get(`${state.meta.id}/${other}`); if (d) o = regionSeries(d[0]); } else if (state.seriesCache?.area === state.area) o = state.seriesCache.by[other] ?? null;
   if (!o || !state.series) return null;
-  const here = state.series.m[j]; const there = o.m[j];
+  const otherMon = state.loaded.get(`${state.meta.id}/${other}`)?.[0];
+  if (!otherMon) return null;
+  const otherJ = indexOf(...iso(j).split('-').map(Number), otherMon);
+  if (otherJ < 0) return null;
+  const here = state.series.m[j]; const there = o.m[otherJ];
   return state.unit === 'bd' ? { bd: here, hot: there } : { bd: there, hot: here };
 }
 
@@ -881,6 +898,7 @@ function clearNumbers(message) {
 
 async function setArea(area, opts = {}) {
   const token = ++state.areaToken;
+  renderRegionNotes();
   $('#csv-status').textContent = '';
   if (!opts.keepMonth) fx.areaChanged(area); // fire runs once round the new area's edge
   if (area.kind === 'region') {
@@ -913,7 +931,9 @@ async function setArea(area, opts = {}) {
       : area.outside >= 0.5 ? `Most of this area (${out}%) is outside ${name}’s data (FIRMS country file) — fires there are not counted.`
         : area.outside >= 0.01 ? `${out}% of this area is outside ${name}’s data (FIRMS country file) — fires there are not counted.` : '';
     warn = warn ? `<em class="outside-warning" id="outside-warning">${warn}</em>` : '';
-    if (area.spans?.length > 1) warn += `<em class="outside-warning" id="spans-warning">This area spans ${area.spans.join(' and ')} — showing ${name} only; draw within one region.</em>`;
+    const alternatives = area.footprintScores?.filter((r) => r.id !== state.meta.id && r.share > 0.10) ?? [];
+    if (alternatives.length) warn += `<em class="outside-warning" id="spans-warning">This drawing overlaps the historical grid footprints of ${[name, ...alternatives.map((r) => r.name)].join(' and ')}. Showing ${name} only. Use the region picker to switch the same drawing. Footprints are approximate, not country boundaries.</em>`;
+    else if (area.containsRegion && area.footprintScores?.length > 1) warn += `<em class="outside-warning" id="spans-warning">This area spans ${area.footprintScores.map((r) => r.name).join(' and ')} — showing ${name} only; draw within one region. These are bounding-box candidates, not country boundaries.</em>`;
     const span = `${state.monthly.months.first} to ${state.monthly.months.last}`;
     const what = state.unit === 'bd'
       ? (s.count ? `${s.count.toLocaleString('en-US')} burning days inside the shape (all satellites, ${span}; a ~1 km square counts when its centre is inside). The calendar adds up the weight of each one: an exact sum, not whole cells.`
@@ -923,6 +943,7 @@ async function setArea(area, opts = {}) {
     $('#area-summary').innerHTML = `<strong>${areaName()}</strong><span>${what}</span>${warn}`;
   }
   setDownloads(true);
+  renderRegionNotes();
   if (state.seriesCache?.area !== area) state.seriesCache = { area, by: {} };
   state.seriesCache.by[state.unit] = state.series;
   if (area.kind === 'region') { // the other unit's calendar, for the two-models note; quietly, after this one rendered
@@ -940,18 +961,47 @@ async function setArea(area, opts = {}) {
   return true;
 }
 
-async function useRegion(id) {
+function renderRegionNotes() {
+  const target = $('#region-notes');
+  target.replaceChildren();
+  for (const note of [...(state.index.shared_notes ?? []), ...(state.meta.notes ?? [])]) {
+    const p = document.createElement('p'); p.textContent = note; target.append(p);
+  }
+}
+
+function seasonTotal(startYear) {
+  const indices = Array.from({ length: 7 }, (_, i) => indexOf(startYear + (i >= 5 ? 1 : 0), i < 5 ? i + 8 : i - 4));
+  if (!state.series || indices.some((j) => j < 0 || flagAt(j) === 'X')) return null;
+  return indices.reduce((sum, j) => sum + state.series.m[j], 0);
+}
+
+function renderCrossYearSeason() {
+  const el = $('#cross-year-season');
+  el.hidden = state.meta.id !== 'la_rioja' || !state.series || state.sel == null;
+  if (el.hidden) return;
+  const { year, moy } = monthOf(state.sel); const start = year - (moy < 8 ? 1 : 0);
+  const total = seasonTotal(start);
+  el.dataset.startYear = start; el.dataset.total = total == null ? '' : String(total);
+  el.textContent = `August ${start}–February ${start + 1}: ${total == null ? 'incomplete estimate' : many(total)}. Monthly completeness is unknown.`;
+}
+
+async function useRegion(id, { keepDrawing = false, keepMonth = false } = {}) {
+  state.selectionToken += 1;
+  const drawing = keepDrawing && state.area?.kind !== 'region' ? state.area : null;
+  const sameArea = !!drawing || state.area?.kind === 'region';
   stopDrawing();
   if (!(await loadRegion(id))) return false;
-  return setArea({ kind: 'region' });
+  return setArea(drawing ?? { kind: 'region' }, { keepMonth: keepMonth && sameArea });
 }
 
 async function useRing(ring, kind, extra = {}) {
-  const region = regionForRing(ring);
+  const token = ++state.selectionToken;
+  state.regionToken += 1; state.areaToken += 1;
+  const { region, scores } = await regionForRing(ring);
+  if (token !== state.selectionToken) return false;
   if (!region) { toast(`Outside the regions we cover (${state.index.regions.map((r) => r.name).join(', ')}).`); return false; }
   if (!(await loadRegion(region.id))) return false;
-  const spans = regionsTouched(ring).map((r) => r.name);
-  return setArea({ kind, ring, ...extra, spans });
+  return setArea({ kind, ring, ...extra, footprintScores: scores });
 }
 
 // ---------- CSV ----------
@@ -1026,7 +1076,7 @@ async function burningCsv() {
 function monthlyCsv() {
   const [y0, y1] = spanYears(); const meta = state.meta; const s = state.series; const bd = state.unit === 'bd';
   const how = s.exact ? (bd ? `exact sums of the burning-day weights inside the shape (${s.count} burning days; a 0.01-degree square counts when its centre is inside)` : `exact sums of the detection weights inside the shape (${s.count} detections)`)
-    : `the sum of its ${state.monthly.cells.ix.length} cells of ${state.monthly.cell_deg} deg (equal to the exact sum within rounding, ≤0.1/month)`;
+    : `the sum of its ${state.monthly.cells.ix.length} cells of ${state.monthly.cell_deg} deg (equal to the exact sum within rounding, bound: 0.005 × cells + 0.00005 × monthly records + 0.0001)`;
   const methods = `# CEDRUS monthly ${bd ? 'burning days (days each 0.01-degree square had a fire detected)' : 'fire detections'} in MODIS-equivalent units; harmonized_estimate is the expected value (sum of ${bd ? 'burning-day' : 'hotspot'} weights w + background). Region ${meta.name}. Area ${areaName()}: ${how}. `
     + (state.area.outside >= 0.01 ? `${Math.round(state.area.outside * 100)}% of the area is outside ${meta.name}'s FIRMS country file and not counted. ` : '')
     + `Model ${unitMeta().model}. p10/p90 approximate: cell 80% ranges scaled to the area and combined in quadrature. `
@@ -1034,6 +1084,13 @@ function monthlyCsv() {
     + 'A satellite enters the average for a calendar month and time of day only if the model has a ratio above 0 there; the flag says where one was left out. '
     + `naive = MODIS to 2011 then raw Suomi NPP ${bd ? 'burning days' : 'counts'}. Data built ${meta.generated_at} from NASA FIRMS; files and SHA-256 in data/regions.json.`;
   const lines = [methods.replace(/,/g, ';'), 'month,harmonized_estimate,p10,p90,naive,background,source_flag'];
+  if (meta.id === 'la_rioja' && state.sel != null) {
+    const { year, moy } = monthOf(state.sel); const start = year - (moy < 8 ? 1 : 0);
+    if (y0 <= start && y1 >= start + 1) {
+      const total = seasonTotal(start);
+      lines.splice(1, 0, `# Season ${start}-08 to ${start + 1}-02; total=${total == null ? 'uncomputable' : total.toFixed(4)}; monthly completeness unknown`);
+    }
+  }
   for (let y = y0; y <= y1; y += 1) {
     for (let moy = 1; moy <= 12; moy += 1) {
       const j = indexOf(y, moy); if (j < 0) continue;
@@ -1046,7 +1103,7 @@ function monthlyCsv() {
 
 // ---------- controls ----------
 function bindControls() {
-  $('#region').addEventListener('change', (e) => useRegion(e.target.value).catch(failed));
+  $('#region').addEventListener('change', (e) => useRegion(e.target.value, { keepDrawing: !!$('#spans-warning'), keepMonth: true }).catch(failed));
   ['bd', 'hot'].forEach((u) => $(`#unit-${u}`).addEventListener('click', () => setUnit(u).catch(failed))); // also cancels a pending switch
   $('#example-lebanon').addEventListener('click', () => useRegion('lebanon').catch(failed));
   $('#draw-rectangle').addEventListener('click', () => startDrawing('rectangle'));
@@ -1141,7 +1198,7 @@ function methodologyHtml() {
     <p><strong>Hotspots: model <code>${r0.model}</code>.</strong> The same idea in detections, without the fire-power classes: for every 0.25° cell, calendar month and day or night, how many MODIS detections one Suomi NPP detection stands for, learned from 2012–2019. A cell with little history leans on its region’s ratio for that month (30 pseudo-detections of shrinkage); only months in which Suomi NPP saw something enter the ratio. Where VIIRS saw nothing, it adds the background: a small region-wide expected count per month and time of day for places where VIIRS saw nothing. NOAA-20 is put on Suomi NPP’s scale the same way. The export refuses to run unless data/processed/round2/frozen.json has the SHA-256 recorded at the freeze. Where a month and time of day had no MODIS fire at all in the fitting years, detections there weigh 0.</p>
     <p><strong>What is shown.</strong> Every value is the harmonized estimate (expected value): the weights of the records (detections or burning days) plus the background. The 80% ranges of estimated months come from the model’s own predictive distribution plus the uncertainty of NOAA-20’s factor, combined for day and night and for the two satellites (approximate); bridged months keep a placeholder range (negative binomial, size 5).</p>
     <p><strong>How we know it works — including what failed.</strong> Each sealed exam below was written down before it was run, on regions the model had never seen; the figures said to come from development data are from the regions the models were chosen on, and are not exam results. Round 1’s winner, model A, failed its sealed confirmation: on new regions, one ratio per region beat it, and its NOAA-20 handover agreed only 69%. Round 2 removed A’s double-counting quirk and calibrated NOAA-20 against Suomi NPP, which raised handover agreement to 92.6% on the development data. Round-2 confirmation on four new sealed regions: <span id="r2-confirmation"><strong>confirmed</strong> on central Spain, southern Italy, southwest Australia and southern California (all five pre-registered tests passed: cell-month error 55.8% vs 60.9% for one ratio per region, totals within 3.7%, NOAA-20 handover agreement 92.1%)</span>; that is the hotspot model. A tournament of nine candidates on 17 development regions then found that burning days harmonize better than hotspot counts: skill 30.6% against 23.5% for the hotspot champion, each measured against its own one-ratio baseline (the plan needed 25.8%; an independent tester’s common footing still gives 28.4%). Its best model, D-a, was frozen and sat one sealed exam on four more regions it had never seen — northern Algeria, southern France, South Australia and northern California: <span id="r3-confirmation"><strong>confirmed</strong>, all five pre-registered tests passed: cell-month error 29.7% (one ratio per region: 36.2%); the 80% ranges held the observed value in 83.8% of active cell-months (required 70–90%); predicted total 1.069 × observed (required 0.90–1.10); national-month error 11.6% (required ≤ 21.3%); NOAA-20 handover agreement 97.3%, 213 of 219 months (required ≥ 80%)</span>. That is the burning-day model, and why burning days are the default. ${docLink('ROUND3_CONFIRMATION.md')} · ${docLink('TOURNAMENT_RESULTS.md')} · ${docLink('ROUND2_CONFIRMATION.md')} · ${docLink('ROUND2_SELECTION.md')} · ${docLink('CONFIRMATION_RESULTS.md')}</p>
-    <p><strong>Areas.</strong> For a drawn shape or a circle, the calendar adds up the weight of every record inside it: an exact sum. A hotspot is inside if its position is; a burning day is inside if the centre of its ~1 km square is. Its 80% range scales each touched cell’s range by the share of that cell’s value inside the shape and combines them in quadrature (approximate); each touched cell’s background counts by the share of the cell’s area inside the shape. Drawn shapes and circles are exact sums; the whole-region view adds up its 0.25° cells, which equals the exact sum within rounding (≤ 0.1 per month). Parts of a shape outside the region’s FIRMS country file are reported, not counted.</p>
+    <p><strong>Areas.</strong> For a drawn shape or a circle, the calendar adds up the weight of every record inside it: an exact sum. A hotspot is inside if its position is; a burning day is inside if the centre of its ~1 km square is. Its 80% range scales each touched cell’s range by the share of that cell’s value inside the shape and combines them in quadrature (approximate); each touched cell’s background counts by the share of the cell’s area inside the shape. Drawn shapes and circles are exact sums; the whole-region view adds up its 0.25° cells, which equals the exact sum within rounding (bound: 0.005 × cells + 0.00005 × monthly records + 0.0001; Syria hotspots reached a 0.1235 monthly gap). Parts of a shape outside the region’s FIRMS country file are reported, not counted.</p>
     <p><strong>Quiet months.</strong> Any month whose expected value is under ${QUIET} counts as zero, before and after 2022, for colours and for every comparison; where a normal month has fewer than ${FEW_FIRES} detections (or burning days, in that view), the calendar does not compare it as a percentage.</p>
     <p><strong>Trust check.</strong> Needs at least ${MIN_BASE_YEARS} baseline years (the same calendar month, 2003 to the year before). R = half of the month’s 80% range ÷ the larger of (a) how far the month is from the baseline median and (b) half the interquartile range. Reliable below 0.5, use with care 0.5–1 (dashed outline in the calendar), too uncertain above 1 (hatched). When the baseline median is below ${FEW_FIRES} the verdict is “few fires — too few to judge”. Observed months have no range, so R = 0.</p>
     <p><strong>Where the record ends.</strong> A satellite file’s final month counts only if the file has a detection in that month’s last 3 days. The record runs to the last month a VIIRS satellite covers; 2026 to the present needs NASA’s FIRMS near-real-time API key, which is pending.</p>
@@ -1200,4 +1257,4 @@ const fx = createFx({
 });
 
 // For tools/probe_site.py: the same entry points the controls use.
-window.cedrus = { state, useRing, useRegion, setUnit, selectMonth, indexOf, fx, ready: start().catch((err) => { failed(err); throw err; }) };
+window.cedrus = { state, useRing, useRegion, setUnit, selectMonth, indexOf, seasonTotal, fx, ready: start().catch((err) => { failed(err); throw err; }) };

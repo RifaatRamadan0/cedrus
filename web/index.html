@@ -92,6 +92,7 @@
         <button class="update-button" id="circle-go" type="submit">Use this circle</button>
       </fieldset>
       <div class="area-summary" id="area-summary" aria-live="polite"></div>
+      <div class="hint" id="region-notes" aria-live="polite"></div>
       <fieldset class="field-group download-group"><legend class="field-label">4. Download for this area</legend>
         <div class="year-span">
           <label>From<span class="select-field"><select id="csv-from" name="csv-from"></select><svg class="icon"><use href="#chevron"/></svg></span></label>
@@ -169,6 +170,7 @@
       <h2 id="season-title">When the fire season runs here</h2>
       <div class="fire-calendar" id="season-dates"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
       <p class="hint" id="season-note">Dates are worked out from the individual records when you open this area.</p>
+      <p class="hint" id="cross-year-season" hidden></p>
       <div class="fingerprint"><svg id="fp-svg" viewBox="0 0 220 220" role="img" aria-labelledby="fp-caption"></svg>
         <div class="fp-side"><p class="eyebrow small">FIRE FINGERPRINT</p><p class="hint" id="fp-caption"></p><button type="button" class="download" id="share-card">Save as image (PNG)</button></div></div>
     </section>
