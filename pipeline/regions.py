@@ -7,17 +7,28 @@ import numpy as np
 
 CELL = 0.25
 
+SHARED_NOTES = [
+    "Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. "
+    "Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.",
+    "Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.",
+]
+
 REGIONS = {
     # role: "dev" = bake-off development, "product" = shown in the app, "sealed" = never opened before freeze,
     # "confirm" = formerly sealed, opened once for docs/CONFIRMATION_PLAN.md after the model was frozen
     "portugal": {"country": "Portugal", "box": (-9.6, 36.9, -6.1, 42.2), "roles": {"dev", "product"}},
     "lebanon": {"country": "Lebanon", "box": (35.10, 33.05, 36.65, 34.70), "roles": {"dev", "product"}},
-    "cyprus": {"country": "Cyprus", "box": None, "roles": {"dev"}},
-    "jordan": {"country": "Jordan", "box": None, "roles": {"dev"}},
-    "israel": {"country": "Israel", "box": None, "roles": {"dev"}},
-    "palestine": {"country": "Palestine", "box": None, "roles": {"dev"}},
+    "cyprus": {"country": "Cyprus", "box": (32.1, 34.4, 34.8, 35.8), "roles": {"dev", "product"}},
+    "jordan": {"country": "Jordan", "box": (34.8, 29.0, 39.5, 33.5), "roles": {"dev", "product"}},
+    "israel": {"country": "Israel", "box": (34.2, 29.4, 35.95, 33.4), "roles": {"dev"}},
+    "palestine": {"country": "Palestine", "box": (34.1, 31.1, 35.7, 32.7), "roles": {"dev"}},
     "greece": {"country": "Greece", "box": None, "roles": {"dev"}},
-    "syria": {"country": "Syria", "box": None, "roles": {"dev"}},
+    "syria": {"country": "Syria", "box": (35.5, 32.2, 42.5, 37.5), "roles": {"dev", "product"}},
+    "la_rioja": {"country": "Argentina", "name": "La Rioja area, Argentina",
+                 "box": (-69.7, -32.8, -65.4, -27.7), "roles": {"product"},
+                 "notes": ["Regional monthly summaries were tested against MODIS in 2020–2021. Local grid-cell errors remain substantial, around 60%. Accuracy for 2022–2025 has not been directly established. This region is outside the climates used in the earlier Mediterranean validation.",
+                           "Annual totals in the 2020-2021 test were above the 80% range.",
+                           "This is a rectangular area including neighboring provincial land, not the exact La Rioja province."]},
     "turkey": {"country": "Turkey", "box": None, "roles": {"dev"}},
     # Round 1 confirmation regions: opened once on 1 Nov 2026 (NOT CONFIRMED) -> spent; usable as development data only.
     "morocco": {"country": "Morocco", "box": None, "roles": {"dev", "spent"}},

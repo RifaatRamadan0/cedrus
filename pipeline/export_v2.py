@@ -26,6 +26,7 @@ Two units, the same policy (lead's decision, 2 Nov 2026, by the "what ships" rul
 import argparse
 import hashlib
 import json
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -35,7 +36,7 @@ import pandas as pd
 import weights_bd                              # burning days: D-a, round-3 confirmed (the primary view)
 import weights_r2 as model_impl                # hotspots: the round-2 choice, frozen; weights_a.py (round 1) and weights_interim.py kept for reference only
 from weights_interim import nb_quantiles         # bridged months keep the placeholder range (A says nothing about Terra)
-from regions import CELL, REGIONS, assert_not_sealed, regions_with
+from regions import CELL, REGIONS, SHARED_NOTES, assert_not_sealed, regions_with
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "web" / "data"
@@ -58,9 +59,11 @@ FAMILY = {"T": "modis", "A": "modis", "N": "snpp", "J1": "noaa20"}
 SENSOR_OF_FILE = {"viirs-snpp": "N", "viirs-jpss1": "J1"}
 
 
-def load(path, box):
+def load(path, box, require_type=False):
     """One raw FIRMS file, filtered exactly as 02_aggregate.py, keeping every original field."""
     df = pd.read_csv(path, low_memory=False, dtype={"acq_time": str, "version": str})  # version kept exactly as written
+    if require_type and "type" not in df.columns:
+        raise ValueError(f"{path.name}: type-0 eligibility cannot be verified")
     if df.empty:
         return df
     stem = path.name.split("_")[0]
@@ -110,7 +113,7 @@ def detections(region):
     if box is None:
         raise SystemExit(f"{region}: product regions need a box")
     raw = ROOT / "data" / "raw" / region
-    parts = [load(p, box) for p in sorted(raw.glob("*.csv"))]
+    parts = [load(p, box, require_type=region not in ("portugal", "lebanon")) for p in sorted(raw.glob("*.csv"))]
     det = pd.concat([p for p in parts if not p.empty], ignore_index=True)
     det["acq_time"] = det.acq_time.str.zfill(4)
     det["month"] = det.acq_date.str[:7]
@@ -305,11 +308,11 @@ def export(region):
     }
     write_json(out / "drift.json", drift)
 
-    burning = export_burning_days(det, region, months, flags, covering, cells, out, cov_modis, cfg["country"])
+    burning = export_burning_days(det, region, months, flags, covering, cells, out, cov_modis, cfg.get("name", cfg["country"]))
 
     lon0, lat0, lon1, lat1 = box
     meta = {
-        "id": region, "name": cfg["country"], "bbox": [lon0, lat0, lon1, lat1],
+        "id": region, "name": cfg.get("name", cfg["country"]), "notes": cfg.get("notes", []), "bbox": [lon0, lat0, lon1, lat1],
         "months": {"first": months[0], "last": months[-1]},
         "record_end": {"suomi_npp": cov["N"], "noaa20": cov["J1"], "modis": cov_modis,
                        "detections_outside_record_dropped": dropped,
@@ -657,10 +660,13 @@ def sha256(path):
 
 
 def write_json(path, obj):
-    path.write_text(json.dumps(obj, separators=(",", ":"), allow_nan=False), encoding="utf-8")
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(obj, separators=(",", ":"), allow_nan=False), encoding="utf-8")
+    temporary.replace(path)
 
 
 def main():
+    global OUT
     ap = argparse.ArgumentParser()
     ap.add_argument("--region", choices=regions_with("product"))
     args = ap.parse_args()
@@ -672,13 +678,38 @@ def main():
         if not (ROOT / "data" / "raw" / region / "manifest.json").exists():
             print(f"{region}: no raw files yet, skipped")
             continue
-        by_id[region] = export(region)
-    order = regions_with("product")
+        manifest = json.loads((ROOT / "data/raw" / region / "manifest.json").read_text())
+        for name, source in manifest.items():
+            if sha256(ROOT / "data/raw" / region / name) != source["sha256"]:
+                raise SystemExit(f"{region}/{name}: source checksum mismatch; refusing export")
+        # Build privately: model or serialization failures cannot expose half a dataset.
+        public = OUT
+        with tempfile.TemporaryDirectory(prefix=".staging-", dir=public) as staging:
+            try:
+                OUT = Path(staging)
+                meta = export(region)
+            finally:
+                OUT = public
+            target = public / region
+            backup = Path(staging) / "previous"
+            if target.exists():
+                target.rename(backup)
+            try:
+                (Path(staging) / region).rename(target)
+            except Exception:
+                if backup.exists():
+                    backup.rename(target)
+                raise
+            by_id[region] = meta
+    order = list(dict.fromkeys(regions_with("product") + list(by_id)))
     index = {"contract": "docs/DATA_CONTRACT.md", "version": 2,
              "default_unit": "burning_days",  # the calendar opens in burning days; hotspots are one click away
              "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+             "shared_notes": SHARED_NOTES,
              "regions": [by_id[r] for r in order if r in by_id]}
-    index_path.write_text(json.dumps(index, indent=1), encoding="utf-8")
+    temporary = index_path.with_suffix(".json.tmp")
+    temporary.write_text(json.dumps(index, indent=1, allow_nan=False), encoding="utf-8")
+    temporary.replace(index_path)
     print(f"-> {index_path}")
 
 
