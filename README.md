@@ -20,7 +20,7 @@ terms. A 0.01° square counts once per day and time of day for each satellite fa
 it. One click switches to **hotspots**: every satellite fire detection, in MODIS-equivalent counts, because those are
 the numbers the challenge asks for. Both views keep the same record (December 2000 to December 2025), the same areas
 and checks, and the hotspot CSV can be downloaded in both. Drawn areas are exact sums; whole-region totals equal the
-exact sum within rounding (≤ 0.1 per month). Layout of the files: [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md).
+exact sum within rounding (bound: 0.005 × cells + 0.00005 × monthly records + 0.0001; Syria hotspots reached 0.1235). Layout of the files: [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md).
 
 ## How we know it works: pre-registered tests, one of them failed
 

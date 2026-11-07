@@ -1,0 +1,366 @@
+# Tier 1 commit groups — exact file lists
+
+User approved all six groups on 7 November 2026. These lists enumerate the committed files, with no globs. No pushes. Baseline: `84d2c0c`; branch: `add-tier1-regions`.
+
+Validation: full probe 360/360, zero failures (round 1, 235 seconds), including final console-error check. Portugal/Lebanon files and catalog entries and both frozen models are unchanged. Historical failing-run logs are intentionally included as evidence and are superseded by `probe_batch_round1.log`.
+
+Excluded: all raw archives, `data/raw/deferred_web_exports/`, `.env`, `.claude/`, frozen models, environment/dependency directories, generated browser screenshots and downloads. The external original plan is outside this repository; the repo copy is listed below.
+
+## 1. Audits, provenance and analysis (51 files)
+
+Commit message: `chore(data): audit Tier 1 sources, filters, coverage and provenance`
+
+Restore/download provenance handling; preserve type, box, source and FIRMS coverage audits, Argentina mapping, La Rioja evidence and data-size/demo reports.
+
+- `analysis/tier1/argentina_crop_2000_2017.json`
+- `analysis/tier1/argentina_mapping.json`
+- `analysis/tier1/baseline.json`
+- `analysis/tier1/box_audit.json`
+- `analysis/tier1/box_audit_2000_2017_argentina.json`
+- `analysis/tier1/box_audit_2000_2017_neighbours.json`
+- `analysis/tier1/box_audit_2018_2024.json`
+- `analysis/tier1/box_audit_2018_2024_argentina.json`
+- `analysis/tier1/coverage_services/MODIS_SP.txt`
+- `analysis/tier1/coverage_services/VIIRS_NOAA20_SP.txt`
+- `analysis/tier1/coverage_services/VIIRS_SNPP_SP.txt`
+- `analysis/tier1/coverage_services/missing_data.txt`
+- `analysis/tier1/coverage_services/requests.json`
+- `analysis/tier1/coverage_services/satellite_month_evidence.csv`
+- `analysis/tier1/coverage_services/summary.json`
+- `analysis/tier1/download_lebanon.log`
+- `analysis/tier1/download_portugal.log`
+- `analysis/tier1/existing_type_counts.csv`
+- `analysis/tier1/existing_type_impact.json`
+- `analysis/tier1/export_cyprus.log`
+- `analysis/tier1/export_israel.log`
+- `analysis/tier1/export_jordan.log`
+- `analysis/tier1/export_la_rioja.log`
+- `analysis/tier1/export_palestine.log`
+- `analysis/tier1/export_syria.log`
+- `analysis/tier1/la_rioja_demo.json`
+- `analysis/tier1/la_rioja_evidence/REPORT.md`
+- `analysis/tier1/la_rioja_evidence/dataset_summary.json`
+- `analysis/tier1/la_rioja_evidence/results.json`
+- `analysis/tier1/la_rioja_evidence/run_validation.py`
+- `analysis/tier1/la_rioja_evidence_audit.json`
+- `analysis/tier1/la_rioja_monthly_burning_days.csv`
+- `analysis/tier1/la_rioja_monthly_hotspots.csv`
+- `analysis/tier1/la_rioja_yearly_burning_days.csv`
+- `analysis/tier1/la_rioja_yearly_hotspots.csv`
+- `analysis/tier1/redownload_comparison.json`
+- `analysis/tier1/source_audit_2000_2017_argentina.log`
+- `analysis/tier1/source_audit_2000_2017_inventory.csv`
+- `analysis/tier1/source_audit_2000_2017_neighbours.log`
+- `analysis/tier1/source_audit_2000_2017_summary.json`
+- `analysis/tier1/source_audit_2018_2024_argentina.log`
+- `analysis/tier1/type_audit.log`
+- `analysis/tier1/web_file_inventory.csv`
+- `pipeline/01_download.py`
+- `tools/audit_existing_types.py`
+- `tools/audit_tier1_boxes.py`
+- `tools/check_argentina_crop.py`
+- `tools/compare_firms_sources.py`
+- `tools/query_firms_coverage.py`
+- `tools/report_tier1_exports.py`
+- `tools/summarize_firms_coverage.py`
+
+## 2. Region definitions and exporter (2 files)
+
+Commit message: `feat(pipeline): add four Tier 1 regions with verified staged exports`
+
+Enable Syria, Jordan, Cyprus and La Rioja; retain Israel/Palestine as development-only; add names/notes, source checks and staged exports.
+
+- `pipeline/export_v2.py`
+- `pipeline/regions.py`
+
+## 3. Browser region and month handling (2 files)
+
+Commit message: `fix(web): align region months and select areas by observed footprint`
+
+Select by positive footprint share; show overlap warnings and region notes; align dates across region/unit changes, preserve example defaults, and display La Rioja seasons.
+
+- `web/app.js`
+- `web/index.html`
+
+## 4. Probe, preservation and event checks (32 files)
+
+Commit message: `test(tier1): cover region exports, area selection and date round trips`
+
+Add full-catalog reconciliation, city/outside-coverage/round-trip checks, UTF-8 preservation, capture-only event checks, aggregate failures, and complete regression evidence.
+
+- `analysis/tier1/city_selection.json`
+- `analysis/tier1/city_selection_partial.json`
+- `analysis/tier1/events/REPORT.md`
+- `analysis/tier1/events/capture.json`
+- `analysis/tier1/events/scratch_fires.csv`
+- `analysis/tier1/final_preservation_check.json`
+- `analysis/tier1/hebron_switch_diagnostic.json`
+- `analysis/tier1/hebron_switch_diagnostic.png`
+- `analysis/tier1/probe_baseline.log`
+- `analysis/tier1/probe_batch_round1.log`
+- `analysis/tier1/probe_batch_summary.json`
+- `analysis/tier1/probe_default_month_fix.log`
+- `analysis/tier1/probe_default_month_fix_summary.json`
+- `analysis/tier1/probe_hackathon.log`
+- `analysis/tier1/probe_hackathon_summary.json`
+- `analysis/tier1/probe_redownload.log`
+- `analysis/tier1/probe_rounding_wording_final.log`
+- `analysis/tier1/probe_rounding_wording_final_summary.json`
+- `analysis/tier1/probe_scope_revision.log`
+- `analysis/tier1/probe_scope_revision_summary.json`
+- `analysis/tier1/probe_wording_update.log`
+- `analysis/tier1/probe_wording_update_summary.json`
+- `analysis/tier1/probe_zero_footprint_fix.log`
+- `analysis/tier1/probe_zero_footprint_fix_summary.json`
+- `analysis/tier1/scope_revision_catalog_diagnostic.json`
+- `analysis/tier1/scope_revision_preservation.json`
+- `analysis/tier1/tier1_reconciliation.json`
+- `tools/check_reality.py`
+- `tools/check_tier1_preservation.py`
+- `tools/probe_site.py`
+- `tools/probe_tier1.py`
+- `tools/test_tier1_preflight.py`
+
+## 5. Four region datasets and catalog (223 files)
+
+Commit message: `feat(data): publish Syria, Jordan, Cyprus and La Rioja web datasets`
+
+Add four audited region exports and shared notes; preserve Portugal/Lebanon data and catalog entries.
+
+- `web/data/cyprus/burning/2001.json`
+- `web/data/cyprus/burning/2002.json`
+- `web/data/cyprus/burning/2003.json`
+- `web/data/cyprus/burning/2004.json`
+- `web/data/cyprus/burning/2005.json`
+- `web/data/cyprus/burning/2006.json`
+- `web/data/cyprus/burning/2007.json`
+- `web/data/cyprus/burning/2008.json`
+- `web/data/cyprus/burning/2009.json`
+- `web/data/cyprus/burning/2010.json`
+- `web/data/cyprus/burning/2011.json`
+- `web/data/cyprus/burning/2012.json`
+- `web/data/cyprus/burning/2013.json`
+- `web/data/cyprus/burning/2014.json`
+- `web/data/cyprus/burning/2015.json`
+- `web/data/cyprus/burning/2016.json`
+- `web/data/cyprus/burning/2017.json`
+- `web/data/cyprus/burning/2018.json`
+- `web/data/cyprus/burning/2019.json`
+- `web/data/cyprus/burning/2020.json`
+- `web/data/cyprus/burning/2021.json`
+- `web/data/cyprus/burning/2022.json`
+- `web/data/cyprus/burning/2023.json`
+- `web/data/cyprus/burning/2024.json`
+- `web/data/cyprus/burning/2025.json`
+- `web/data/cyprus/drift.json`
+- `web/data/cyprus/drift_bd.json`
+- `web/data/cyprus/hotspots/2001.json`
+- `web/data/cyprus/hotspots/2002.json`
+- `web/data/cyprus/hotspots/2003.json`
+- `web/data/cyprus/hotspots/2004.json`
+- `web/data/cyprus/hotspots/2005.json`
+- `web/data/cyprus/hotspots/2006.json`
+- `web/data/cyprus/hotspots/2007.json`
+- `web/data/cyprus/hotspots/2008.json`
+- `web/data/cyprus/hotspots/2009.json`
+- `web/data/cyprus/hotspots/2010.json`
+- `web/data/cyprus/hotspots/2011.json`
+- `web/data/cyprus/hotspots/2012.json`
+- `web/data/cyprus/hotspots/2013.json`
+- `web/data/cyprus/hotspots/2014.json`
+- `web/data/cyprus/hotspots/2015.json`
+- `web/data/cyprus/hotspots/2016.json`
+- `web/data/cyprus/hotspots/2017.json`
+- `web/data/cyprus/hotspots/2018.json`
+- `web/data/cyprus/hotspots/2019.json`
+- `web/data/cyprus/hotspots/2020.json`
+- `web/data/cyprus/hotspots/2021.json`
+- `web/data/cyprus/hotspots/2022.json`
+- `web/data/cyprus/hotspots/2023.json`
+- `web/data/cyprus/hotspots/2024.json`
+- `web/data/cyprus/hotspots/2025.json`
+- `web/data/cyprus/monthly.json`
+- `web/data/cyprus/monthly_bd.json`
+- `web/data/jordan/burning/2000.json`
+- `web/data/jordan/burning/2001.json`
+- `web/data/jordan/burning/2002.json`
+- `web/data/jordan/burning/2003.json`
+- `web/data/jordan/burning/2004.json`
+- `web/data/jordan/burning/2005.json`
+- `web/data/jordan/burning/2006.json`
+- `web/data/jordan/burning/2007.json`
+- `web/data/jordan/burning/2008.json`
+- `web/data/jordan/burning/2009.json`
+- `web/data/jordan/burning/2010.json`
+- `web/data/jordan/burning/2011.json`
+- `web/data/jordan/burning/2012.json`
+- `web/data/jordan/burning/2013.json`
+- `web/data/jordan/burning/2014.json`
+- `web/data/jordan/burning/2015.json`
+- `web/data/jordan/burning/2016.json`
+- `web/data/jordan/burning/2017.json`
+- `web/data/jordan/burning/2018.json`
+- `web/data/jordan/burning/2019.json`
+- `web/data/jordan/burning/2020.json`
+- `web/data/jordan/burning/2021.json`
+- `web/data/jordan/burning/2022.json`
+- `web/data/jordan/burning/2023.json`
+- `web/data/jordan/burning/2024.json`
+- `web/data/jordan/burning/2025.json`
+- `web/data/jordan/drift.json`
+- `web/data/jordan/drift_bd.json`
+- `web/data/jordan/hotspots/2000.json`
+- `web/data/jordan/hotspots/2001.json`
+- `web/data/jordan/hotspots/2002.json`
+- `web/data/jordan/hotspots/2003.json`
+- `web/data/jordan/hotspots/2004.json`
+- `web/data/jordan/hotspots/2005.json`
+- `web/data/jordan/hotspots/2006.json`
+- `web/data/jordan/hotspots/2007.json`
+- `web/data/jordan/hotspots/2008.json`
+- `web/data/jordan/hotspots/2009.json`
+- `web/data/jordan/hotspots/2010.json`
+- `web/data/jordan/hotspots/2011.json`
+- `web/data/jordan/hotspots/2012.json`
+- `web/data/jordan/hotspots/2013.json`
+- `web/data/jordan/hotspots/2014.json`
+- `web/data/jordan/hotspots/2015.json`
+- `web/data/jordan/hotspots/2016.json`
+- `web/data/jordan/hotspots/2017.json`
+- `web/data/jordan/hotspots/2018.json`
+- `web/data/jordan/hotspots/2019.json`
+- `web/data/jordan/hotspots/2020.json`
+- `web/data/jordan/hotspots/2021.json`
+- `web/data/jordan/hotspots/2022.json`
+- `web/data/jordan/hotspots/2023.json`
+- `web/data/jordan/hotspots/2024.json`
+- `web/data/jordan/hotspots/2025.json`
+- `web/data/jordan/monthly.json`
+- `web/data/jordan/monthly_bd.json`
+- `web/data/la_rioja/burning/2000.json`
+- `web/data/la_rioja/burning/2001.json`
+- `web/data/la_rioja/burning/2002.json`
+- `web/data/la_rioja/burning/2003.json`
+- `web/data/la_rioja/burning/2004.json`
+- `web/data/la_rioja/burning/2005.json`
+- `web/data/la_rioja/burning/2006.json`
+- `web/data/la_rioja/burning/2007.json`
+- `web/data/la_rioja/burning/2008.json`
+- `web/data/la_rioja/burning/2009.json`
+- `web/data/la_rioja/burning/2010.json`
+- `web/data/la_rioja/burning/2011.json`
+- `web/data/la_rioja/burning/2012.json`
+- `web/data/la_rioja/burning/2013.json`
+- `web/data/la_rioja/burning/2014.json`
+- `web/data/la_rioja/burning/2015.json`
+- `web/data/la_rioja/burning/2016.json`
+- `web/data/la_rioja/burning/2017.json`
+- `web/data/la_rioja/burning/2018.json`
+- `web/data/la_rioja/burning/2019.json`
+- `web/data/la_rioja/burning/2020.json`
+- `web/data/la_rioja/burning/2021.json`
+- `web/data/la_rioja/burning/2022.json`
+- `web/data/la_rioja/burning/2023.json`
+- `web/data/la_rioja/burning/2024.json`
+- `web/data/la_rioja/burning/2025.json`
+- `web/data/la_rioja/drift.json`
+- `web/data/la_rioja/drift_bd.json`
+- `web/data/la_rioja/hotspots/2000.json`
+- `web/data/la_rioja/hotspots/2001.json`
+- `web/data/la_rioja/hotspots/2002.json`
+- `web/data/la_rioja/hotspots/2003.json`
+- `web/data/la_rioja/hotspots/2004.json`
+- `web/data/la_rioja/hotspots/2005.json`
+- `web/data/la_rioja/hotspots/2006.json`
+- `web/data/la_rioja/hotspots/2007.json`
+- `web/data/la_rioja/hotspots/2008.json`
+- `web/data/la_rioja/hotspots/2009.json`
+- `web/data/la_rioja/hotspots/2010.json`
+- `web/data/la_rioja/hotspots/2011.json`
+- `web/data/la_rioja/hotspots/2012.json`
+- `web/data/la_rioja/hotspots/2013.json`
+- `web/data/la_rioja/hotspots/2014.json`
+- `web/data/la_rioja/hotspots/2015.json`
+- `web/data/la_rioja/hotspots/2016.json`
+- `web/data/la_rioja/hotspots/2017.json`
+- `web/data/la_rioja/hotspots/2018.json`
+- `web/data/la_rioja/hotspots/2019.json`
+- `web/data/la_rioja/hotspots/2020.json`
+- `web/data/la_rioja/hotspots/2021.json`
+- `web/data/la_rioja/hotspots/2022.json`
+- `web/data/la_rioja/hotspots/2023.json`
+- `web/data/la_rioja/hotspots/2024.json`
+- `web/data/la_rioja/hotspots/2025.json`
+- `web/data/la_rioja/monthly.json`
+- `web/data/la_rioja/monthly_bd.json`
+- `web/data/regions.json`
+- `web/data/syria/burning/2000.json`
+- `web/data/syria/burning/2001.json`
+- `web/data/syria/burning/2002.json`
+- `web/data/syria/burning/2003.json`
+- `web/data/syria/burning/2004.json`
+- `web/data/syria/burning/2005.json`
+- `web/data/syria/burning/2006.json`
+- `web/data/syria/burning/2007.json`
+- `web/data/syria/burning/2008.json`
+- `web/data/syria/burning/2009.json`
+- `web/data/syria/burning/2010.json`
+- `web/data/syria/burning/2011.json`
+- `web/data/syria/burning/2012.json`
+- `web/data/syria/burning/2013.json`
+- `web/data/syria/burning/2014.json`
+- `web/data/syria/burning/2015.json`
+- `web/data/syria/burning/2016.json`
+- `web/data/syria/burning/2017.json`
+- `web/data/syria/burning/2018.json`
+- `web/data/syria/burning/2019.json`
+- `web/data/syria/burning/2020.json`
+- `web/data/syria/burning/2021.json`
+- `web/data/syria/burning/2022.json`
+- `web/data/syria/burning/2023.json`
+- `web/data/syria/burning/2024.json`
+- `web/data/syria/burning/2025.json`
+- `web/data/syria/drift.json`
+- `web/data/syria/drift_bd.json`
+- `web/data/syria/hotspots/2000.json`
+- `web/data/syria/hotspots/2001.json`
+- `web/data/syria/hotspots/2002.json`
+- `web/data/syria/hotspots/2003.json`
+- `web/data/syria/hotspots/2004.json`
+- `web/data/syria/hotspots/2005.json`
+- `web/data/syria/hotspots/2006.json`
+- `web/data/syria/hotspots/2007.json`
+- `web/data/syria/hotspots/2008.json`
+- `web/data/syria/hotspots/2009.json`
+- `web/data/syria/hotspots/2010.json`
+- `web/data/syria/hotspots/2011.json`
+- `web/data/syria/hotspots/2012.json`
+- `web/data/syria/hotspots/2013.json`
+- `web/data/syria/hotspots/2014.json`
+- `web/data/syria/hotspots/2015.json`
+- `web/data/syria/hotspots/2016.json`
+- `web/data/syria/hotspots/2017.json`
+- `web/data/syria/hotspots/2018.json`
+- `web/data/syria/hotspots/2019.json`
+- `web/data/syria/hotspots/2020.json`
+- `web/data/syria/hotspots/2021.json`
+- `web/data/syria/hotspots/2022.json`
+- `web/data/syria/hotspots/2023.json`
+- `web/data/syria/hotspots/2024.json`
+- `web/data/syria/hotspots/2025.json`
+- `web/data/syria/monthly.json`
+- `web/data/syria/monthly_bd.json`
+
+## 6. Plan, contract and review documentation (7 files)
+
+Commit message: `docs(tier1): document scope, validation results and commit groups`
+
+Record reduced scope, Deferred items, rounding formula, final status and exact commit manifest.
+
+- `README.md`
+- `analysis/tier1/commit_groups.json`
+- `docs/DATA_CONTRACT.md`
+- `docs/TIER1_AUDIT_CHECKPOINT.md`
+- `docs/TIER1_COMMIT_GROUPS.md`
+- `docs/TIER1_IMPLEMENTATION_STATUS.md`
+- `docs/TIER1_PLAN.md`

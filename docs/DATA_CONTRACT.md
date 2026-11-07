@@ -1,5 +1,13 @@
 # Data contract — the static files the website reads (v2)
 
+## Tier 1 working-tree checkpoint
+
+Four new product regions use audited rectangular boxes and type-0 eligibility. The catalog adds shared notes and optional per-region names/notes without changing version 2. Monthly completeness is unknown: the per-month service evidence ledger remains an analysis artifact, not an exported coverage guarantee. Existing first/last-detection metadata is not proof of complete observation.
+
+The exporter verifies source provenance and stages each region before replacing its directory. Existing Portugal/Lebanon files and catalog entries are preserved. Browser area selection compares sampled grid-footprint shares; ties use stable catalog order, never fire totals. A second share above 10% triggers a warning and permits manual selection. Footprints are not country boundaries.
+
+Region and unit switches rebase selected months by YYYY-MM before reading the new calendar; see [implementation status](TIER1_IMPLEMENTATION_STATUS.md). Combined-country aggregation and boundary assets are Deferred. Reconciliation uses the monthly serialization bound `0.005 * cells + 0.00005 * monthly_records + 0.0001` (observed Syria hotspots discrepancy: 0.1235). The exact test bound is given below.
+
 Written by `pipeline/export_v2.py` into `web/data/`. The website (`web/app.js`) reads nothing else.
 Rebuild with:
 
@@ -196,9 +204,10 @@ Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
 ## How the website turns these into an area's calendar
 
 - **Whole region:** the sum of its cells (`m`, `naive`, `bg`); the 80% range adds each cell's half-widths in quadrature.
-  This equals the exact sum of every detection's weight, up to the 2-decimal rounding of `m`: within 0.1 per month
-  (measured 2 Nov 2026, largest gap per month: Portugal 0.070 detections / 0.092 burning days, Lebanon 0.029 / 0.035;
-  `tools/probe_site.py` checks every month of both units).
+  The probe compares the whole-region CSV with monthly cell sums to 0.000051, and compares it with serialized record weights plus background using the unchanged monthly bound
+  `0.005 * number_of_cells + 0.00005 * number_of_monthly_records + 0.0001`.
+  This accounts for cell rounding to two decimals, record weights to four decimals and the residual CSV/background allowance.
+  Syria hotspots reached a 0.1235 monthly discrepancy, within the serialization bound above.
 - **Drawn shape or circle (exact):** the website loads every hotspot year (cached, with a progress bar) and adds up
   `w` of the detections inside the shape, month by month, plus `bg` of each touched cell times the share of the cell's
   area inside the shape. That share is exact on lon/lat (the same plane as the inside test): the shape clipped to the
