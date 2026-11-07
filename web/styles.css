@@ -178,3 +178,6 @@ dialog p a{color:#93d9b1;text-decoration:underline;text-underline-offset:2px}
 .unit[aria-pressed=true]{background:#2b574e;border-color:#69b48a;font-weight:600}
 .unit-status{font-size:11px;line-height:16px;color:#ffd2b0;background:#3a2414;border:1px solid #7a4a2a;border-radius:8px;padding:6px 9px;margin:7px 0 0}
 #two-models{margin:8px 0 12px;padding-left:8px;border-left:2px solid #7a6a3a}
+
+/* Explain the analysis extent and distinguish record absence from near-zero estimates. */
+.map-coverage{font-size:12px;color:var(--muted);padding:10px 14px;border:1px solid var(--border);border-radius:8px;margin:8px 0 12px}.map-coverage p{margin:4px 0}.map-coverage-key{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}.map-coverage-key li{display:flex;align-items:flex-start;gap:8px}.coverage-swatch{width:18px;height:18px;flex:0 0 18px}.coverage-quiet{border:1px solid #c0cdd480;background:transparent}.coverage-absent{border:1px dashed #9bb0c0;background:#71899b38}#map-cell-detail{border-top:1px solid var(--border);padding-top:8px}.maplibregl-popup-content{max-width:300px}

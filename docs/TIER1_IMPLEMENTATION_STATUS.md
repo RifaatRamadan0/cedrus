@@ -1,6 +1,21 @@
+# Map clarity follow-up — 7 November 2026 (committed)
+
+Implemented user-approved clarification across all six product regions and both units:
+
+- Label the orange dashed line as analysis extent, not a national boundary; label drawn areas separately.
+- Give included near-zero cells a faint outline and shade cells absent from the exported grid with dashed edges. The latter are display-only features clipped to the box; they do not add observations or model cells.
+- Explain that blank areas are not confirmed fire-free and observation completeness is unknown.
+- Map clicks explain grid inclusion, selected-month estimate where available, missing-record status, and the possibility of land outside the country inside the box. Clear stale inspection text/popups when month, area or region changes.
+
+**Full probe passed 468/468 in 346 seconds, round 1**, including 108 new map-clarity checks across six regions/two units, existing region/city/creative checks and final console-error check. Syria screenshot reviewed. [Log](../analysis/tier1/probe_map_clarity_round1.log), [summary](../analysis/tier1/map_clarity_summary.json). Preservation checker passed. No export or model changes. User approved committing this follow-up on 7 November 2026; nothing was pushed. The obsolete commit-groups Markdown document was deleted at the user’s request.
+
+Changed implementation: `web/app.js`, `web/index.html`, `web/styles.css`; tests: `tools/probe_tier1.py`; evidence: the linked log/summary and this status file. The six original Tier 1 commits below remain intact.
+
+---
+
 # Commit checkpoint — 7 November 2026
 
-User approved committing all six reviewed groups. Changes are committed on `add-tier1-regions`; nothing was pushed. See [commit groups, messages and exact file lists](TIER1_COMMIT_GROUPS.md). All 317 reviewed files passed the exclusion and local-credential scan before staging. Raw archives, deferred web exports, `.env`, `.claude/` and frozen-model files are excluded. Preservation verification still passes; the last full probe passed 360/360. Earlier “uncommitted” statements below describe their historical checkpoints.
+User approved committing all six reviewed groups. Changes are committed on `add-tier1-regions`; nothing was pushed. See [commit groups, messages and exact file lists](../analysis/tier1/commit_groups.json). All 317 reviewed files passed the exclusion and local-credential scan before staging. Raw archives, deferred web exports, `.env`, `.claude/` and frozen-model files are excluded. Preservation verification still passes; the last full probe passed 360/360. Earlier “uncommitted” statements below describe their historical checkpoints.
 
 ---
 
@@ -30,7 +45,7 @@ Final [preservation verification](../analysis/tier1/scope_revision_preservation.
 
 ## Proposed commits
 
-[Exact per-group file manifest and diff summary](TIER1_COMMIT_GROUPS.md). Raw archives, `data/raw/deferred_web_exports`, `.env`, `.claude/`, generated browser screenshots/downloads and frozen-model files are excluded. The original user-supplied plan outside the repo has also been updated, but cannot be part of a commit in this repository.
+[Exact per-group file manifest and diff summary](../analysis/tier1/commit_groups.json). Raw archives, `data/raw/deferred_web_exports`, `.env`, `.claude/`, generated browser screenshots/downloads and frozen-model files are excluded. The original user-supplied plan outside the repo has also been updated, but cannot be part of a commit in this repository.
 
 ---
 

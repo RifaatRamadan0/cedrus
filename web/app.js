@@ -47,6 +47,7 @@ const state = {
   seasonToken: 0, regionToken: 0, areaToken: 0, selectionToken: 0, calendarShown: false,
 };
 let toastTimer;
+let mapInspectionPopup = null;
 
 function toast(message) {
   $('.toast').textContent = message; $('.toast').classList.add('visible');
@@ -640,9 +641,45 @@ function cellFeatures() {
   return { type: 'FeatureCollection', features: ix.map((x, c) => {
     const lon0 = x * deg; const lat0 = iy[c] * deg; const lon1 = lon0 + deg; const lat1 = lat0 + deg;
     const v = state.monthly.m[c][state.sel];
-    return { type: 'Feature', id: c, properties: { v, inside: inside.has(c), region: state.area?.kind === 'region', color: v < 0.005 ? 'rgba(0,0,0,0)' : mapColor(v, state.cellMax) },
+    return { type: 'Feature', id: c, properties: { v, quiet: v < 0.005, inside: inside.has(c), region: state.area?.kind === 'region', color: v < 0.005 ? 'rgba(0,0,0,0)' : mapColor(v, state.cellMax) },
       geometry: { type: 'Polygon', coordinates: [[[lon0, lat0], [lon1, lat0], [lon1, lat1], [lon0, lat1], [lon0, lat0]]] } };
   }) };
+}
+// Display-only gaps inside the analysis box. These are not observed zero-fire cells.
+function absentCellFeatures() {
+  const features = [];
+  if (!state.monthly || !state.meta || !state.footprint) return { type: 'FeatureCollection', features };
+  const d = state.monthly.cell_deg; const [x0, y0, x1, y1] = state.meta.bbox;
+  for (let x = Math.floor(x0 / d); x < Math.ceil(x1 / d); x += 1) {
+    for (let y = Math.floor(y0 / d); y < Math.ceil(y1 / d); y += 1) {
+      if (state.footprint.has(`${x}_${y}`)) continue;
+      const box = [Math.max(x0, x * d), Math.max(y0, y * d), Math.min(x1, (x + 1) * d), Math.min(y1, (y + 1) * d)];
+      features.push({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [bboxRing(box)] } });
+    }
+  }
+  return { type: 'FeatureCollection', features };
+}
+function inspectMapPoint(lon, lat) {
+  if (!state.monthly || !state.meta || state.sel == null) return;
+  const c = state.cellIndex.get(cellKey(lon, lat));
+  const [x0, y0, x1, y1] = state.meta.bbox;
+  const inBox = lon >= x0 && lon < x1 && lat >= y0 && lat < y1;
+  const month = label(state.sel);
+  let detail;
+  if (c != null) {
+    const v = state.monthly.m[c][state.sel];
+    detail = flagAt(state.sel) === 'X'
+      ? `Included in ${state.meta.name}’s exported grid. No estimate available for ${month}.`
+      : `Included in ${state.meta.name}’s exported grid. ${month}: ${fmt(v)} ${unit().many}, harmonized estimate for this 0.25° cell.${v < 0.005 ? ' Near-zero estimate; this cell is still included in the calculation.' : ''}`;
+  } else {
+    detail = inBox
+      ? `Not included in ${state.meta.name}’s exported grid: no qualifying fire records for this cell in the imported record. No cell estimate is available for ${month}. The analysis box can include land outside the country.`
+      : `Outside ${state.meta.name}’s exported grid and analysis extent. No cell estimate is available for ${month}.`;
+  }
+  detail += ' Observation completeness unknown. This does not establish that the location was fire-free.';
+  $('#map-cell-detail').textContent = `${lat.toFixed(3)}, ${lon.toFixed(3)} — ${detail}`;
+  mapInspectionPopup?.remove();
+  mapInspectionPopup = new maplibregl.Popup().setLngLat([lon, lat]).setText(detail).addTo(state.map);
 }
 function areaFeature() {
   if (!state.area || !state.meta) return { type: 'FeatureCollection', features: [] };
@@ -652,6 +689,11 @@ function areaFeature() {
 function renderMapValues(opts = {}) {
   const map = state.map;
   if (map?.getSource('cells')) { map.getSource('cells').setData(cellFeatures()); map.getSource('area').setData(areaFeature()); }
+  mapInspectionPopup?.remove(); mapInspectionPopup = null;
+  $('#map-cell-detail').textContent = 'Click the map to inspect a location and its selected-month estimate.';
+  $('#map-extent-note').textContent = state.area?.kind === 'region'
+    ? 'Orange dashed outline: analysis extent — not the country boundary.'
+    : 'Orange dashed outline: your drawn analysis area — not a country boundary.';
   $('#map-caption').textContent = `${areaName()} · ${state.unit === 'bd' ? 'burning days' : 'fire detections'} per 0.25° cell in ${state.sel == null ? 'no selected month' : label(state.sel)}, harmonized estimate (whole cells, for orientation; ember size = the cell’s value) · gold outlines: cells the area touches · NASA FIRMS`;
   if (state.sel != null) fx.mapMonth(opts);
 }
@@ -692,14 +734,17 @@ async function initMap() {
   map.once('style.load', () => { // not 'load', which waits for every basemap tile
     map.addSource('cells', { type: 'geojson', data: cellFeatures() });
     map.addSource('area', { type: 'geojson', data: areaFeature() });
+    map.addSource('absent-cells', { type: 'geojson', data: absentCellFeatures() });
+    map.addLayer({ id: 'absent-cells', type: 'fill', source: 'absent-cells', paint: { 'fill-color': '#71899b', 'fill-opacity': 0.22 } });
+    map.addLayer({ id: 'absent-cells-line', type: 'line', source: 'absent-cells', paint: { 'line-color': '#9bb0c0', 'line-width': 0.7, 'line-opacity': 0.55, 'line-dasharray': [2, 3] } });
     map.addLayer({ id: 'cells', type: 'fill', source: 'cells', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.6 } });
     map.addLayer({ id: 'cells-line', type: 'line', source: 'cells', paint: { 'line-color': ['case', ['get', 'inside'], '#ffc35a', '#3a4a52'], 'line-width': ['case', ['get', 'inside'], 1.1, 0.4], 'line-opacity': ['case', ['get', 'inside'], ['case', ['get', 'region'], 0.3, 0.75], 1] } });
+    map.addLayer({ id: 'quiet-cells-line', type: 'line', source: 'cells', filter: ['==', ['get', 'quiet'], true], paint: { 'line-color': '#c0cdd4', 'line-width': 0.8, 'line-opacity': 0.5 } });
     map.addLayer({ id: 'area-line', type: 'line', source: 'area', paint: { 'line-color': '#ffa846', 'line-width': 2, 'line-dasharray': [2, 1.5] } });
     fx.mapReady(map);
-    map.on('click', 'cells', (e) => {
+    map.on('click', (e) => {
       if (state.drawing || performance.now() - state.drawnAt < 400) return; // the click that finished a drawing
-      const p = e.features[0].properties;
-      new maplibregl.Popup().setLngLat(e.lngLat).setHTML(`<strong>${fmt(Number(p.v))}</strong> ${unit().many} in ${label(state.sel)}<br>this 0.25° cell, harmonized estimate`).addTo(map);
+      inspectMapPoint(e.lngLat.lng, e.lngLat.lat);
     });
     mapStatus('Loading drawing tools…');
     initDraw(map);
@@ -807,6 +852,7 @@ async function loadRegion(id, u = state.unit) {
   renderUnitSwitch(); $('#unit-status').hidden = true;
   state.cellIndex = new Map(monthly.cells.ix.map((x, c) => [`${x}_${monthly.cells.iy[c]}`, c]));
   state.footprint = new Set(state.cellIndex.keys());
+  state.map?.getSource('absent-cells')?.setData(absentCellFeatures());
   state.cellMax = Math.max(1, ...monthly.m.map((row) => Math.max(...row)));
   if (newRegion) {
     $('#region').value = id;

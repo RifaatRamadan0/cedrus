@@ -158,4 +158,45 @@ def run_checks(browser, url, shots, check, watch):
                     check(f"Tier 1 switch {rid} {month}: unit round trip preserves date", page.evaluate("key => window.cedrus.state.sel === window.cedrus.indexOf(...key.split('-').map(Number))", month))
     (out / "tier1_reconciliation.json").write_text(json.dumps(reconciliations, indent=2)+"\n")
     (out / "city_selection.json").write_text(json.dumps(cities, indent=2)+"\n")
+    # Coverage explanations must work for existing and new regions, in both units.
+    for meta in catalog:
+        rid = meta["id"]
+        page.evaluate("id => window.cedrus.useRegion(id)", rid)
+        for unit in ("bd", "hot"):
+            page.evaluate("u => window.cedrus.setUnit(u)", unit)
+            prefix = f"Map clarity {rid} {unit}"
+            check(prefix+": analysis extent is not labelled as a border", "analysis extent — not the country boundary" in page.inner_text("#map-extent-note"))
+            check(prefix+": legend explains blank areas and unknown completeness", "Blank does not mean confirmed fire-free" in page.inner_text(".map-coverage") and "Observation completeness is unknown" in page.inner_text(".map-coverage"))
+            point = page.evaluate("""() => {
+                const s = window.cedrus.state, mon = s.monthly;
+                for (let c=0;c<mon.m.length;c++) {
+                    const j=mon.m[c].findIndex((v,j)=>v<0.005 && mon.flags[j]!=='X');
+                    if (j>=0) return {j,lon:(mon.cells.ix[c]+.5)*mon.cell_deg,lat:(mon.cells.iy[c]+.5)*mon.cell_deg};
+                }
+                return null;
+            }""")
+            check(prefix+": near-zero cell fixture exists", point is not None)
+            if point is not None:
+                page.evaluate("j => window.cedrus.selectMonth(j)", point["j"])
+                page.evaluate("p => window.cedrus.state.map.fire('click', {lngLat:{lng:p.lon,lat:p.lat}})", point)
+                detail = page.inner_text("#map-cell-detail")
+                check(prefix+": included near-zero cell explains estimate and uncertainty", "Included in" in detail and "Near-zero estimate" in detail and "Observation completeness unknown" in detail and meta["name"] in detail)
+                check(prefix+": faint outline layer renders included quiet cells", page.evaluate("!!window.cedrus.state.map.getLayer('quiet-cells-line')") and "Near-zero estimate" in page.inner_text(".maplibregl-popup-content"))
+            absent = page.evaluate("""() => {
+                const features=window.cedrus.state.map.getStyle().sources['absent-cells'].data.features;
+                if (!features.length) return null;
+                const ring=features[0].geometry.coordinates[0];
+                return {lon:(ring[0][0]+ring[2][0])/2,lat:(ring[0][1]+ring[2][1])/2};
+            }""")
+            check(prefix+": absent-cell fixture exists", absent is not None)
+            if absent is not None:
+                page.evaluate("p => window.cedrus.state.map.fire('click', {lngLat:{lng:p.lon,lat:p.lat}})", absent)
+                detail = page.inner_text("#map-cell-detail")
+                check(prefix+": gap is not described as observed zero fires", "Not included in" in detail and "no qualifying fire records" in detail and "No cell estimate" in detail and "Observation completeness unknown" in detail)
+                check(prefix+": gap has a separate shaded dashed layer", page.evaluate("window.cedrus.state.map.getPaintProperty('absent-cells', 'fill-opacity') > 0 && window.cedrus.state.map.getPaintProperty('absent-cells-line', 'line-dasharray').length > 0"))
+            page.evaluate("window.cedrus.selectMonth(window.cedrus.indexOf(2020, 7))")
+            check(prefix+": changing month clears stale inspection", page.locator(".maplibregl-popup").count()==0 and page.inner_text("#map-cell-detail").startswith("Click the map"))
+        if rid == "syria":
+            page.locator("#map-panel").scroll_into_view_if_needed()
+            page.screenshot(path=str(shots / "map_clarity_syria.png"), full_page=True)
     ctx.close()
