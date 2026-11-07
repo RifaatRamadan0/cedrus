@@ -18,7 +18,7 @@ import csv
 import json
 import math
 import statistics as st
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -30,7 +30,54 @@ BASELINE_FIRST, MIN_YEARS, FLARE, FLARE_MIN = 2003, 5, 2.5, 20
 
 def load_regions():
     idx = json.loads((WEB / "regions.json").read_text(encoding="utf-8"))
-    return {r["name"].lower(): r for r in idx["regions"]}
+    aliases = {}
+    for region in idx["regions"]:
+        for alias in (region["id"], region["name"]):
+            key = alias.strip().casefold()
+            if key in aliases and aliases[key]["id"] != region["id"]:
+                raise ValueError(f"Ambiguous region alias: {alias}")
+            aliases[key] = region
+    return aliases
+
+
+def capture_report(fires, regions, out):
+    """Exact record capture within explicit scratch date/box windows; no anomaly test."""
+    results = []
+    for event in fires:
+        meta = regions[event["country"].strip().casefold()]
+        start, end = date.fromisoformat(event["start_date"]), date.fromisoformat(event["end_date"])
+        box = [float(event[k]) for k in ("lon_min", "lat_min", "lon_max", "lat_max")]
+        if not event.get("source_url") or start > end or box[0] >= box[2] or box[1] >= box[3]:
+            raise ValueError("Capture input needs source, ordered dates and an explicit valid box")
+        result = dict(region=meta["id"], place=event["place"], start=str(start), end=str(end),
+                      box=box, source_url=event["source_url"], notes=event.get("notes", ""), units={})
+        for unit, folder in (("hotspots", "hotspots"), ("burning_days", "burning")):
+            n = 0; weight = 0.; dates = set(); sensors = {}
+            for year in range(start.year, end.year+1):
+                path = WEB / meta["id"] / folder / f"{year}.json"
+                if not path.exists():
+                    raise ValueError(f"Missing input for capture: {path}")
+                data = json.loads(path.read_text()); c = data["cols"]
+                for i in range(data["n"]):
+                    day = date(year,1,1)+timedelta(days=c["doy"][i]-1)
+                    if not start <= day <= end: continue
+                    lon, lat = ((data["x0"]+c["x"][i]+.5)*.01, (data["y0"]+c["y"][i]+.5)*.01) if unit=="burning_days" else (c["lon"][i],c["lat"][i])
+                    if box[0] <= lon < box[2] and box[1] <= lat < box[3]:
+                        n += 1; weight += c["w"][i]; dates.add(str(day))
+                        sensor = (["MODIS", "Suomi NPP", "NOAA-20"][c["fam"][i]] if unit=="burning_days" else ["Terra", "Aqua", "Suomi NPP", "NOAA-20"][c["sensor"][i]])
+                        sensors[sensor] = sensors.get(sensor,0)+1
+            result["units"][unit] = dict(records=n, weight_sum=weight, dates=sorted(dates), by_sensor=sensors, capture=n>0)
+        results.append(result)
+    (out / "capture.json").write_text(json.dumps(results,indent=2)+"\n",encoding="utf-8")
+    lines = ["# Known-event capture check", "", "Capture only: records in explicit analyst-selected date/box windows. These boxes are not official fire perimeters. Overlap supports capture but does not attribute every detection to that event or validate estimated intensity. Weights exclude background. No flare-up test or burned-area equivalence is asserted.", "",
+             "| Event | Dates checked | Hotspot records | Burning-day records | Capture |", "|---|---|---:|---:|---|"]
+    for r in results:
+        lines.append(f"| {r['place']} | {r['start']}–{r['end']} | {r['units']['hotspots']['records']} | {r['units']['burning_days']['records']} | {'Yes' if r['units']['hotspots']['capture'] else 'No'} |")
+    lines += ["", "## Windows and sources", ""]
+    for r in results:
+        lines += [f"- **{r['place']}**: lon/lat box {r['box']}. [Verified event source]({r['source_url']}). {r['notes']}"]
+    (out / "REPORT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
+    print(f"Wrote capture-only report: {out / 'REPORT.md'}")
 
 
 class Record:
@@ -139,11 +186,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--official", default=str(ROOT / "analysis/reality/official_yearly.csv"))
     ap.add_argument("--fires", default=str(ROOT / "analysis/reality/known_fires.csv"))
+    ap.add_argument("--capture-only", action="store_true", help="Scratch event date/box capture, without flare-up assessment")
     ap.add_argument("--out", default=str(ROOT / "analysis/reality"))
     a = ap.parse_args()
     out = Path(a.out); figs = out / "figures"; figs.mkdir(parents=True, exist_ok=True)
     regions = load_regions()
     official = read_sheet(Path(a.official)); fires = read_sheet(Path(a.fires))
+    if a.capture_only:
+        capture_report(fires, regions, out)
+        return
     lines = [f"# Reality check: our fire calendar vs official records", "",
              f"Generated by `python tools/check_reality.py` on {date.today().isoformat()} from the website's own data files. "
              "Do not edit by hand: change the two sheets in this folder and run it again.", "",
@@ -155,14 +206,14 @@ def main():
     lines += ["## 1. Years: do our big years match the official big years?", ""]
     by_country = {}
     for i, r in enumerate(official, start=2):
-        c = r.get("country", "").lower(); y = num(r.get("year")); ha = num(r.get("burned_area_ha"))
+        c = r.get("country", "").strip().casefold(); y = num(r.get("year")); ha = num(r.get("burned_area_ha"))
         if c not in regions:
             problems.append(f"official_yearly.csv line {i}: country '{r.get('country')}' is not one of {', '.join(x.title() for x in regions)}"); continue
         if y is None or ha is None:
             problems.append(f"official_yearly.csv line {i}: year or burned_area_ha is not a number"); continue
         if not r.get("source_url"):
             problems.append(f"official_yearly.csv line {i}: no source_url (every number needs its source)")
-        by_country.setdefault(c, {})[int(y)] = ha
+        by_country.setdefault(regions[c]["id"].casefold(), {})[int(y)] = ha
     if not by_country:
         lines += ["_No rows yet in `official_yearly.csv`._", ""]
     for c, rows in by_country.items():
@@ -198,7 +249,7 @@ def main():
                   "|---|---|---:|---:|---:|---:|:-:|---|"]
         flagged = 0; judged = 0
         for i, r in enumerate(fires, start=2):
-            c = r.get("country", "").lower()
+            c = r.get("country", "").strip().casefold()
             if c not in regions:
                 problems.append(f"known_fires.csv line {i}: country '{r.get('country')}' is not one of {', '.join(x.title() for x in regions)}"); continue
             try:

@@ -155,7 +155,7 @@ def compare_csvs(page, label, dest, tol=None):
     header, monthly = read_monthly(mpath)
     hot = pd.read_csv(hpath, low_memory=False, dtype={"version": str, "acq_date": str})
     check(f"{label}: methods line wording", "replaced by the bake-off winner" not in header and "identical to the exact sum" not in header
-          and ("whole" in label.lower() and "equal to the exact sum within rounding; ≤0.1/month" in header or "region" not in label.lower()),
+          and ("whole" in label.lower() and "equal to the exact sum within rounding; bound: 0.005 × cells + 0.00005 × monthly records + 0.0001" in header or "region" not in label.lower()),
           header[header.find("Area"):header.find("Area") + 140])
     check(f"{label}: monthly CSV parses with methods line",
           header.startswith("# CEDRUS") and list(monthly.columns) == ["month", "harmonized_estimate", "p10", "p90", "naive", "background", "source_flag"],
@@ -450,7 +450,7 @@ def zero_notes_from_files(region):
 
 
 def rounding_checks():
-    """Whole region: the sum of its cells equals the exact sum of the records' weights + background within 0.1 per month."""
+    """Preserve the existing Portugal/Lebanon numerical regression cap; the general serialization bound is 0.005 * cells + 0.00005 * monthly records + 0.0001."""
     for region in ("portugal", "lebanon"):
         for name, folder in (("monthly.json", "hotspots"), ("monthly_bd.json", "burning")):
             mon = json.loads((ROOT / "web" / "data" / region / name).read_text(encoding="utf-8"))
@@ -461,7 +461,7 @@ def rounding_checks():
                 mo = np.asarray((pd.Timestamp(d["year"], 1, 1) + pd.to_timedelta(np.array(d["cols"]["doy"]) - 1, unit="D")).month)
                 np.add.at(w, (d["year"] * 12 + mo - 1) - (y0 * 12 + m0 - 1), np.array(d["cols"]["w"], float))
             gap = np.abs(np.array(mon["m"]).sum(axis=0) - w - np.array(mon["bg"]).sum(axis=0))
-            check(f"{region} {folder}: whole-region month = exact sum within 0.1 (as the site says)", gap.max() <= 0.1,
+            check(f"{region} {folder}: whole-region month = exact sum within the unchanged Portugal/Lebanon baseline cap", gap.max() <= 0.1,
                   f"largest gap {gap.max():.4f} over {len(gap)} months")
 
 
@@ -572,6 +572,19 @@ def bd_model_checks():
         check(f"{region}: bridged MODIS burning days weigh 1 / Terra's burning-day share", br and max(br) <= 1e-3, f"{len(br)} burning days")
 
 
+def legacy_context(browser, **kwargs):
+    """Keep the original two-region regression fixture and all its assertions.
+
+    Tier 1 checks below use the complete on-disk index without this route.
+    """
+    ctx = browser.new_context(**kwargs)
+    index = json.loads((ROOT / "web/data/regions.json").read_text(encoding="utf-8"))
+    index["regions"] = [r for r in index["regions"] if r["id"] in ("portugal", "lebanon")]
+    ctx.route("**/data/regions.json", lambda route: route.fulfill(
+        status=200, content_type="application/json", body=json.dumps(index)))
+    return ctx
+
+
 def run(url, shots):
     model_checks()
     bd_model_checks()
@@ -599,7 +612,7 @@ def run(url, shots):
         browser = p.chromium.launch(executable_path=CHROME, headless=True)
 
         # ---- cold load on a throttled "normal" connection (20 Mbit/s, 40 ms), cache off
-        ctx = browser.new_context(viewport={"width": 1440, "height": 900})
+        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900})
         page = ctx.new_page()
         watch(page, "cold ")
         cdp = ctx.new_cdp_session(page)
@@ -631,7 +644,7 @@ def run(url, shots):
               f"calendar {t:.2f} s, video play {'never' if play_at is None else f'{play_at / 1000:.2f} s'}")
         ctx.close()
 
-        ctx = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
+        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
         page = ctx.new_page()
         page.add_init_script(INIT)
         page.goto(url, wait_until="commit")  # the calendar does not wait for CDN scripts; neither does the probe
@@ -641,7 +654,7 @@ def run(url, shots):
         ctx.close()
 
         # ---- desktop
-        ctx = browser.new_context(viewport={"width": 1440, "height": 900}, accept_downloads=True)
+        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900}, accept_downloads=True)
         page = ctx.new_page()
         watch(page)
         page.add_init_script(INIT)
@@ -985,6 +998,16 @@ def run(url, shots):
         dec = page.get_attribute("#cal-grid [data-year='2025'][data-moy='12']", "aria-label")
         check("Lebanon Dec 2025 is S-NPP only (NOAA-20 file's last detection 24 Dec)", "S-NPP only" in dec, dec)
         want_lb, _ = expected_default_month("lebanon")
+        # A manual region change preserves the date; an example starts afresh.
+        page.select_option("#region", "portugal")
+        page.wait_for_function("window.cedrus.state.meta.id === 'portugal' && window.cedrus.state.series != null", timeout=20000)
+        check("manual region switch keeps selected January 2025 by date",
+              page.evaluate("window.cedrus.state.sel === window.cedrus.indexOf(2025, 1)")
+              and "January 2025" in page.inner_text("#month-title"))
+        page.click("#example-lebanon")
+        page.wait_for_function("window.cedrus.state.meta.id === 'lebanon' && window.cedrus.state.series != null", timeout=20000)
+        check("Lebanon example resets selected month to October 2025",
+              "October 2025" in page.inner_text("#month-title"), page.inner_text("#month-title"))
         page.click("#example-lebanon")
         page.select_option("#region", "portugal")
         page.wait_for_function("document.querySelector('#area-summary').textContent.includes('Portugal (whole region)')", timeout=20000)
@@ -1057,7 +1080,7 @@ def run(url, shots):
                       "ROUND2_CONFIRMATION.md", "ROUND2_SELECTION.md", "CONFIRMATION_RESULTS.md"))
               and page.inner_text("#r2-confirmation").startswith("confirmed") and "pending" not in r3
               and "Each sealed exam below was written down before it was run" in dlg and "are not exam results" in dlg
-              and "equals the exact sum within rounding (≤ 0.1 per month)" in dlg and "Drawn shapes and circles are exact sums" in dlg
+              and "equals the exact sum within rounding (bound: 0.005 × cells + 0.00005 × monthly records + 0.0001; Syria hotspots reached a 0.1235 monthly gap)" in dlg and "Drawn shapes and circles are exact sums" in dlg
               and "In Lebanon, 850 of 4,142 VIIRS burning days since 2022 (21%) carry no weight" in page.inner_text("#zero-limit"), r3[:200])
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         know = readme[readme.index("## How we know it works"):readme.index("## Quick start")]
@@ -1067,7 +1090,7 @@ def run(url, shots):
               and all(k in know for k in ("29.7%", "83.8%", "1.069", "11.6%", "97.3%", "213 of 219", "30.6%", "23.5%", "28.4%"))
               and all(f"docs/{d}" in know for d in ("ROUND3_CONFIRMATION.md", "TOURNAMENT_RESULTS.md", "ROUND2_CONFIRMATION.md", "ROUND2_SELECTION.md", "CONFIRMATION_RESULTS.md"))
               and "pending" not in know and "Estimates start in 2022" in readme and "Corrected values after 2012" not in readme
-              and "whole-region totals equal the\nexact sum within rounding (≤ 0.1 per month)" in readme.replace("\r\n", "\n")
+              and "whole-region totals equal the\nexact sum within rounding (bound: 0.005 × cells + 0.00005 × monthly records + 0.0001; Syria hotspots reached 0.1235)" in readme.replace("\r\n", "\n")
               and "is an earlier test of an earlier method" in readme and "MODIS Collection 6.1" in readme
               and "Basemap: NASA GIBS Blue Marble." in readme and "reference features and labels" not in readme)
         check("README: Suomi NPP stops delivering data on 2 Nov 2026", "stops delivering data on **2 Nov 2026**" in readme
@@ -1080,7 +1103,7 @@ def run(url, shots):
         ctx.close()
 
         # ---- a unit whose calendar file fails: the switch does not happen, nothing is relabelled, a retry works
-        ctx = browser.new_context(viewport={"width": 1440, "height": 900}, accept_downloads=True)
+        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900}, accept_downloads=True)
         page = ctx.new_page()
         page.route("**/data/portugal/monthly.json", lambda route: route.fulfill(status=503, body="unavailable"))
         page.goto(url, wait_until="commit")
@@ -1104,7 +1127,7 @@ def run(url, shots):
         check("... the retry switches to hotspots", st["status"] == "" and st["pressed"] == ["false", "true"], str(st)[:200])
         ctx.close()
 
-        ctx = browser.new_context(viewport={"width": 1440, "height": 900})
+        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900})
         page = ctx.new_page()
         page.route("**/data/portugal/monthly_bd.json", lambda route: route.fulfill(status=503, body="unavailable"))
         page.goto(url, wait_until="commit")
@@ -1134,7 +1157,7 @@ def run(url, shots):
         ctx.close()
 
         # ---- a failed hotspot year: no numbers under the new name, downloads off, retry works
-        ctx = browser.new_context(viewport={"width": 1440, "height": 900}, accept_downloads=True)
+        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900}, accept_downloads=True)
         page = ctx.new_page()
         page.route("**/data/portugal/*/2015.json", lambda route: route.fulfill(status=503, body="unavailable"))  # burning/ (the default view) and hotspots/
         page.goto(url, wait_until="commit")
@@ -1162,7 +1185,7 @@ def run(url, shots):
         ctx.close()
 
         # ---- mobile
-        ctx = browser.new_context(viewport={"width": 390, "height": 844}, device_scale_factor=2, is_mobile=True, has_touch=True)
+        ctx = legacy_context(browser, viewport={"width": 390, "height": 844}, device_scale_factor=2, is_mobile=True, has_touch=True)
         page = ctx.new_page()
         watch(page, "mobile ")
         page.goto(url, wait_until="commit")  # the calendar does not wait for CDN scripts; neither does the probe
@@ -1185,6 +1208,8 @@ def run(url, shots):
         page.wait_for_timeout(1500)
         page.screenshot(path=str(shots / "mobile.png"), full_page=True)
         ctx.close()
+        from probe_tier1 import run_checks
+        run_checks(browser, url, shots, check, watch)
         browser.close()
 
     check("no console errors", not errors, "; ".join(errors[:8]))

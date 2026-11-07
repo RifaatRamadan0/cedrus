@@ -1,0 +1,14 @@
+{
+  "status": "failed",
+  "passed_checks": 158,
+  "failed_checks": 1,
+  "failure": "Portugal whole region 2000-2025: methods line wording",
+  "cause": "Legacy assertion requires <=0.1/month wording; CSV now states the requested serialization rounding bound.",
+  "numeric_tolerances_changed": false,
+  "region_switch_checks_reached": false,
+  "tier1_city_checks_reached": false,
+  "final_console_error_check_reached": false,
+  "full_probe_pass": false,
+  "preservation_passed": true,
+  "exit_code": 1
+}
