@@ -1,0 +1,194 @@
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+portugal {"raw_types": {"0": 229073, "1": 10, "2": 7328, "3": 148, "missing": 0, "unexpected": 0}, "excluded_by_type_after_box_confidence": {"1": 0, "2": 7293, "3": 124, "missing": 0, "unexpected": 0}, "committed_hotspots": 214712, "type0_expected_hotspots": 214712, "unexpected_hotspots": 0, "missing_hotspots": 0, "non_type0_fingerprint_matches": 0, "committed_burning_days": 135574, "unexpected_burning_days": 0, "missing_burning_days": 0}
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\audit_existing_types.py:64: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  q["doy"] = pd.to_datetime(q.acq_date).dt.dayofyear
+lebanon {"raw_types": {"0": 16257, "1": 0, "2": 1558, "3": 131, "missing": 0, "unexpected": 0}, "excluded_by_type_after_box_confidence": {"1": 0, "2": 1555, "3": 121, "missing": 0, "unexpected": 0}, "committed_hotspots": 14976, "type0_expected_hotspots": 14976, "unexpected_hotspots": 0, "missing_hotspots": 0, "non_type0_fingerprint_matches": 0, "committed_burning_days": 12285, "unexpected_burning_days": 0, "missing_burning_days": 0}

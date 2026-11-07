@@ -41,6 +41,8 @@ def main():
     ap.add_argument("--country", default="Portugal")
     ap.add_argument("--start", type=int, default=2000)
     ap.add_argument("--end", type=int, default=datetime.now().year)
+    ap.add_argument("--sensors", nargs="+", choices=SENSORS, default=list(SENSORS),
+                    help="archive families to download (default: all)")
     ap.add_argument("--insecure", action="store_true",
                     help="skip TLS verification (some corporate networks break it)")
     args = ap.parse_args()
@@ -50,7 +52,7 @@ def main():
     manifest_path = out / "manifest.json"
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
 
-    for sensor in SENSORS:
+    for sensor in args.sensors:
         for year in range(args.start, args.end + 1):
             name = f"{sensor}_{year}_{args.country}.csv"
             path = out / name

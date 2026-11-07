@@ -1,0 +1,2 @@
+data_id,min_date,max_date
+MODIS_SP,2000-11-01,2026-08-31

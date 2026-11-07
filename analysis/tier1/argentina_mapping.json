@@ -1,0 +1,9 @@
+{
+  "source": "C:\\Users\\rifaa\\OneDrive\\Documents\\ChatGPT\\Nasa space apps challenge\\la_rioja_validation\\data\\raw\\argentina",
+  "destination": "data\\raw\\la_rioja",
+  "method": "Verified copy of full original Argentina country archives; exporter applies the audited box. NASA filenames, URLs and checksums unchanged. No source files overwritten.",
+  "files": 48,
+  "bytes": 510628826,
+  "manifest_sha256": "18f1bcc1d421d5d6399afda9ba56259a955c7d5b30048b99c6a257777b2f7933",
+  "all_file_checksums_match": true
+}

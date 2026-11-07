@@ -1,0 +1,328 @@
+{
+  "file_count": 223,
+  "total_bytes": 42451808,
+  "files_over_3_MB": [
+    {
+      "file": "web/data/syria/hotspots/2019.json",
+      "bytes": 3548856,
+      "decimal_MB": 3.548856,
+      "over_3_MB": true,
+      "sha256": "a89f7ee1a0eb1cb9ae2caadfe5154d42339eb86acdfa284788daf81b5a540dd4"
+    }
+  ],
+  "record": {
+    "first": "2000-11",
+    "last": "2025-12"
+  },
+  "units": {
+    "hotspots": {
+      "records": 147063,
+      "empty_record_months": [],
+      "busiest_record_months": [
+        {
+          "month": "2024-09",
+          "exported_records_all_satellites": 7525,
+          "harmonized_estimate": 889.75,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2021-10",
+          "exported_records_all_satellites": 5643,
+          "harmonized_estimate": 645.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-11",
+          "exported_records_all_satellites": 4993,
+          "harmonized_estimate": 864.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-10",
+          "exported_records_all_satellites": 4954,
+          "harmonized_estimate": 914.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2024-08",
+          "exported_records_all_satellites": 4273,
+          "harmonized_estimate": 519.19,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2020-08",
+          "exported_records_all_satellites": 4167,
+          "harmonized_estimate": 501.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2020-11",
+          "exported_records_all_satellites": 3813,
+          "harmonized_estimate": 440.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2022-09",
+          "exported_records_all_satellites": 3515,
+          "harmonized_estimate": 420.95,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2022-11",
+          "exported_records_all_satellites": 2990,
+          "harmonized_estimate": 306.91,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-09",
+          "exported_records_all_satellites": 2762,
+          "harmonized_estimate": 517.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        }
+      ],
+      "busiest_estimate_months": [
+        {
+          "month": "2017-10",
+          "exported_records_all_satellites": 4954,
+          "harmonized_estimate": 914.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2024-09",
+          "exported_records_all_satellites": 7525,
+          "harmonized_estimate": 889.75,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2003-10",
+          "exported_records_all_satellites": 871,
+          "harmonized_estimate": 871.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-11",
+          "exported_records_all_satellites": 4993,
+          "harmonized_estimate": 864.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2009-10",
+          "exported_records_all_satellites": 843,
+          "harmonized_estimate": 843.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2002-10",
+          "exported_records_all_satellites": 768,
+          "harmonized_estimate": 768.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2002-11",
+          "exported_records_all_satellites": 751,
+          "harmonized_estimate": 751.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2003-11",
+          "exported_records_all_satellites": 742,
+          "harmonized_estimate": 742.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2003-08",
+          "exported_records_all_satellites": 708,
+          "harmonized_estimate": 708.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2002-09",
+          "exported_records_all_satellites": 694,
+          "harmonized_estimate": 694.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        }
+      ]
+    },
+    "burning_days": {
+      "records": 100088,
+      "empty_record_months": [],
+      "busiest_record_months": [
+        {
+          "month": "2024-09",
+          "exported_records_all_satellites": 3350,
+          "harmonized_estimate": 788.1800000000001,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2021-10",
+          "exported_records_all_satellites": 2946,
+          "harmonized_estimate": 592.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-11",
+          "exported_records_all_satellites": 2600,
+          "harmonized_estimate": 796.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-10",
+          "exported_records_all_satellites": 2552,
+          "harmonized_estimate": 829.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2020-08",
+          "exported_records_all_satellites": 2460,
+          "harmonized_estimate": 457.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2024-08",
+          "exported_records_all_satellites": 2304,
+          "harmonized_estimate": 496.97,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2022-09",
+          "exported_records_all_satellites": 1980,
+          "harmonized_estimate": 368.88,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2020-11",
+          "exported_records_all_satellites": 1975,
+          "harmonized_estimate": 398.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2022-11",
+          "exported_records_all_satellites": 1674,
+          "harmonized_estimate": 311.37,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-09",
+          "exported_records_all_satellites": 1606,
+          "harmonized_estimate": 484.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        }
+      ],
+      "busiest_estimate_months": [
+        {
+          "month": "2017-10",
+          "exported_records_all_satellites": 2552,
+          "harmonized_estimate": 829.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2003-10",
+          "exported_records_all_satellites": 800,
+          "harmonized_estimate": 800.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2017-11",
+          "exported_records_all_satellites": 2600,
+          "harmonized_estimate": 796.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2024-09",
+          "exported_records_all_satellites": 3350,
+          "harmonized_estimate": 788.1800000000001,
+          "source_flag": "E",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2009-10",
+          "exported_records_all_satellites": 756,
+          "harmonized_estimate": 756.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2002-10",
+          "exported_records_all_satellites": 694,
+          "harmonized_estimate": 694.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2003-11",
+          "exported_records_all_satellites": 680,
+          "harmonized_estimate": 680.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2002-11",
+          "exported_records_all_satellites": 677,
+          "harmonized_estimate": 677.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2002-09",
+          "exported_records_all_satellites": 656,
+          "harmonized_estimate": 656.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        },
+        {
+          "month": "2003-08",
+          "exported_records_all_satellites": 651,
+          "harmonized_estimate": 651.0,
+          "source_flag": "O",
+          "monthly_completeness": "unknown"
+        }
+      ]
+    }
+  },
+  "zero_weight_comparison": {
+    "la_rioja": {
+      "contributing_viirs_burning_days": 22512,
+      "zero_weight": 50,
+      "share": 0.002221037668798863
+    },
+    "lebanon": {
+      "contributing_viirs_burning_days": 4142,
+      "zero_weight": 850,
+      "share": 0.20521487204249156
+    }
+  },
+  "definition": "Counts are satellite detections or family/square/date/day-night burning-day records, not distinct incidents. Estimates are MODIS-equivalent. No direct accuracy validation after 2021."
+}
