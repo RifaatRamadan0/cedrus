@@ -731,6 +731,8 @@ async function initMap() {
       sources: {
         marble: { type: 'raster', tileSize: 256, maxzoom: 8, tiles: [gibs('BlueMarble_ShadedRelief_Bathymetry', 8, 'jpeg')],
           attribution: 'Basemap: <a href="https://earthdata.nasa.gov/gibs">NASA GIBS</a> · Fire data: NASA FIRMS' },
+        // Country borders and coastlines, so a border cell can be read against the actual line. Display only.
+        borders: { type: 'raster', tileSize: 256, maxzoom: 9, tiles: [gibs('Reference_Features', 9, 'png')] },
       },
       layers: [{ id: 'marble', type: 'raster', source: 'marble', paint: { 'raster-brightness-max': 0.6, 'raster-saturation': -0.4, 'raster-contrast': 0.1 } }],
     },
@@ -746,6 +748,8 @@ async function initMap() {
     map.addLayer({ id: 'cells', type: 'fill', source: 'cells', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.6 } });
     map.addLayer({ id: 'cells-line', type: 'line', source: 'cells', paint: { 'line-color': ['case', ['get', 'inside'], '#ffc35a', '#3a4a52'], 'line-width': ['case', ['get', 'inside'], 1.1, 0.4], 'line-opacity': ['case', ['get', 'inside'], ['case', ['get', 'region'], 0.3, 0.75], 1] } });
     map.addLayer({ id: 'quiet-cells-line', type: 'line', source: 'cells', filter: ['==', ['get', 'quiet'], true], paint: { 'line-color': '#c0cdd4', 'line-width': 0.8, 'line-opacity': 0.5 } });
+    // Above the cells so the line stays visible through their colour; below the area outline.
+    map.addLayer({ id: 'borders', type: 'raster', source: 'borders', paint: { 'raster-opacity': 0.9 } });
     map.addLayer({ id: 'area-line', type: 'line', source: 'area', paint: { 'line-color': '#ffa846', 'line-width': 2, 'line-dasharray': [2, 1.5] } });
     fx.mapReady(map);
     map.on('click', (e) => {
