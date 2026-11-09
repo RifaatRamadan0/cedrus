@@ -134,7 +134,11 @@ def run_checks(browser, url, shots, check, watch):
         for name, lat, lon in (("Tel Aviv", 32.0853, 34.7818), ("Mediterranean", 33.5, 33.5)):
             accepted = page.evaluate("o => window.cedrus.useRing(o.ring, 'circle', {lat:o.lat, lon:o.lon, radius:5})",
                                      dict(ring=ring_for(lat, lon), lat=lat, lon=lon))
-            check(f"Tier 1 {name} {unit}: outside covered regions", accepted is False and "Outside the regions we cover" in page.inner_text(".toast") and page.locator(".toast").is_visible())
+            # Tel Aviv's circle touches Jordan's box but no Jordan grid cell: refused, and the toast explains that
+            # instead of listing Jordan among "regions we cover". The open-sea circle touches no box at all.
+            expected = "No fire records from Jordan fall inside this area" if name == "Tel Aviv" else "Outside the regions we cover"
+            toast = page.inner_text(".toast")
+            check(f"Tier 1 {name} {unit}: outside covered regions", accepted is False and expected in toast and page.locator(".toast").is_visible(), toast)
         for target in ("la_rioja", "syria"):
             for month in ("2025-12", "2020-07"):
                 page.evaluate("window.cedrus.useRegion('lebanon')")

@@ -162,14 +162,20 @@ function regionsTouched(ring) {
 function containsBox(ring, [x0, y0, x1, y1]) { return [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].every(([x, y]) => inRing(x, y, ring)); }
 async function regionForRing(ring) {
   const candidates = regionsTouched(ring);
-  const scores = await Promise.all(candidates.map(async (meta) => {
+  const results = await Promise.allSettled(candidates.map(async (meta) => {
     const [mon] = await unitData(meta.id, state.unit);
     const footprint = new Set(mon.cells.ix.map((x, i) => `${x}_${mon.cells.iy[i]}`));
     return { id: meta.id, name: meta.name, share: 1 - outsideShare(ring, meta, mon.cell_deg, footprint) };
   }));
+  // A neighbour whose files did not load is reported as unchecked instead of failing the whole drawing.
+  const scores = results.filter((r) => r.status === 'fulfilled').map((r) => r.value);
+  const unchecked = candidates.filter((_, i) => results[i].status === 'rejected').map((r) => r.name);
   // Stable index order breaks exact ties; no counts or weights participate.
   scores.sort((a, b) => b.share - a.share);
-  return { region: scores[0]?.share > 0 ? candidates.find((r) => r.id === scores[0].id) ?? null : null, scores };
+  const region = scores[0]?.share > 0 ? candidates.find((r) => r.id === scores[0].id) ?? null : null;
+  // Nothing scored above zero and something failed: that is a load error, not "outside coverage".
+  if (!region && unchecked.length) throw results.find((r) => r.status === 'rejected').reason;
+  return { region, scores, candidates, unchecked };
 }
 function cellKey(lon, lat) { const d = state.monthly.cell_deg; return `${Math.floor(lon / d)}_${Math.floor(lat / d)}`; }
 
@@ -980,6 +986,7 @@ async function setArea(area, opts = {}) {
     const alternatives = area.footprintScores?.filter((r) => r.id !== state.meta.id && r.share > 0.10) ?? [];
     if (alternatives.length) warn += `<em class="outside-warning" id="spans-warning">This drawing overlaps the historical grid footprints of ${[name, ...alternatives.map((r) => r.name)].join(' and ')}. Showing ${name} only. Use the region picker to switch the same drawing. Footprints are approximate, not country boundaries.</em>`;
     else if (area.containsRegion && area.footprintScores?.length > 1) warn += `<em class="outside-warning" id="spans-warning">This area spans ${area.footprintScores.map((r) => r.name).join(' and ')} — showing ${name} only; draw within one region. These are bounding-box candidates, not country boundaries.</em>`;
+    if (area.footprintUnchecked?.length) warn += `<em class="outside-warning" id="unchecked-warning">Couldn’t load ${area.footprintUnchecked.join(' and ')}’s grid, so this drawing’s overlap with it was not checked.</em>`;
     const span = `${state.monthly.months.first} to ${state.monthly.months.last}`;
     const what = state.unit === 'bd'
       ? (s.count ? `${s.count.toLocaleString('en-US')} burning days inside the shape (all satellites, ${span}; a ~1 km square counts when its centre is inside). The calendar adds up the weight of each one: an exact sum, not whole cells.`
@@ -1040,14 +1047,24 @@ async function useRegion(id, { keepDrawing = false, keepMonth = false } = {}) {
   return setArea(drawing ?? { kind: 'region' }, { keepMonth: keepMonth && sameArea });
 }
 
+// A refused shape says why: no region's box at all, or boxes whose grids have no cells under it.
+function outsideCoverageMessage(candidates) {
+  if (!candidates.length) return `Outside the regions we cover (${state.index.regions.map((r) => r.name).join(', ')}).`;
+  const names = candidates.map((r) => r.name).join(' and ');
+  return `No fire records from ${names} fall inside this area. It overlaps the analysis box, but the grid has no cells here: the area may be outside ${names}, or no fire was detected there in the record. Analysis boxes are not country boundaries.`;
+}
+
 async function useRing(ring, kind, extra = {}) {
+  // Only the selection token moves here. The region and area tokens move when loadRegion/setArea actually
+  // replace the view, so a shape that is refused (or fails) leaves the previous area loading and rendering.
   const token = ++state.selectionToken;
-  state.regionToken += 1; state.areaToken += 1;
-  const { region, scores } = await regionForRing(ring);
+  let picked;
+  try { picked = await regionForRing(ring); } catch (err) { if (token !== state.selectionToken) return false; throw err; }
   if (token !== state.selectionToken) return false;
-  if (!region) { toast(`Outside the regions we cover (${state.index.regions.map((r) => r.name).join(', ')}).`); return false; }
+  const { region, scores, candidates, unchecked } = picked;
+  if (!region) { toast(outsideCoverageMessage(candidates)); return false; }
   if (!(await loadRegion(region.id))) return false;
-  return setArea({ kind, ring, ...extra, footprintScores: scores });
+  return setArea({ kind, ring, ...extra, footprintScores: scores, footprintUnchecked: unchecked });
 }
 
 // ---------- CSV ----------
