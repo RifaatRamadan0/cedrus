@@ -1,0 +1,649 @@
+{
+  "requested_years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "requested_regions": [
+    "la_rioja"
+  ],
+  "scope": "Box, checksum and filter audit; not evidence of monthly completeness",
+  "files": [
+    {
+      "region": "la_rioja",
+      "file": "modis_2018_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2018/modis_2018_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 4443653,
+      "sha256": "d0dd7be6b8b323854d7540499c6089937d086e113d98407b4901967a52ab45ff",
+      "cached": true,
+      "elapsed_seconds": 0.412,
+      "rows": 55399,
+      "type_field_present": true,
+      "box_retained": 1564,
+      "box_excluded": 53835,
+      "type_counts_before_filters": {
+        "0": 52299,
+        "1": 0,
+        "2": 3095,
+        "3": 5,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1404,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2018_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2018/viirs-snpp_2018_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 14836152,
+      "sha256": "9c236f96a58d65f11c7364d89e3c705a6812649aaf9f73080078ab0b76294e9e",
+      "cached": true,
+      "elapsed_seconds": 1.098,
+      "rows": 184924,
+      "type_field_present": true,
+      "box_retained": 5151,
+      "box_excluded": 179773,
+      "type_counts_before_filters": {
+        "0": 179571,
+        "1": 0,
+        "2": 4791,
+        "3": 562,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 4648,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2018_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2018/viirs-jpss1_2018_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 10703977,
+      "sha256": "57a59b01925e7354fa657e752b4cae8102d21e73dedd282b330599d5d1a4ed3f",
+      "cached": true,
+      "elapsed_seconds": 0.79,
+      "rows": 130089,
+      "type_field_present": true,
+      "box_retained": 4223,
+      "box_excluded": 125866,
+      "type_counts_before_filters": {
+        "0": 125757,
+        "1": 0,
+        "2": 3912,
+        "3": 420,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3770,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "modis_2019_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2019/modis_2019_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 4043829,
+      "sha256": "bcb2bf07943e312f6d61ccd69008a40a09e22216ede34867d59ce88dc56d11d2",
+      "cached": true,
+      "elapsed_seconds": 0.348,
+      "rows": 50370,
+      "type_field_present": true,
+      "box_retained": 1068,
+      "box_excluded": 49302,
+      "type_counts_before_filters": {
+        "0": 47457,
+        "1": 0,
+        "2": 2911,
+        "3": 2,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 957,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2019_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2019/viirs-snpp_2019_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 12976401,
+      "sha256": "b32417ae0437c0de9d5cca73c1214921fcd03e0575869bea6466d8056de9b26a",
+      "cached": true,
+      "elapsed_seconds": 0.793,
+      "rows": 161688,
+      "type_field_present": true,
+      "box_retained": 3496,
+      "box_excluded": 158192,
+      "type_counts_before_filters": {
+        "0": 156501,
+        "1": 0,
+        "2": 4959,
+        "3": 228,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3031,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2019_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2019/viirs-jpss1_2019_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 13216364,
+      "sha256": "9e5781a47a8b532084d57febdf803b33dca0f5db0b0a23a03a644c80910e44fb",
+      "cached": true,
+      "elapsed_seconds": 0.94,
+      "rows": 160664,
+      "type_field_present": true,
+      "box_retained": 3521,
+      "box_excluded": 157143,
+      "type_counts_before_filters": {
+        "0": 154225,
+        "1": 0,
+        "2": 6186,
+        "3": 253,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3023,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "modis_2020_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2020/modis_2020_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 9972297,
+      "sha256": "59d485a2c6a4acc088d90c481d71d34901d1e2b3a5a16d57689865c76aa3a1cf",
+      "cached": true,
+      "elapsed_seconds": 0.736,
+      "rows": 124094,
+      "type_field_present": true,
+      "box_retained": 2115,
+      "box_excluded": 121979,
+      "type_counts_before_filters": {
+        "0": 120889,
+        "1": 0,
+        "2": 3202,
+        "3": 3,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1924,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2020_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2020/viirs-snpp_2020_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 35993088,
+      "sha256": "48ca3db0721d41aa6f0457fc649ef5bf69141b13da964dac73ee1b708cf466f4",
+      "cached": true,
+      "elapsed_seconds": 2.616,
+      "rows": 448313,
+      "type_field_present": true,
+      "box_retained": 7377,
+      "box_excluded": 440936,
+      "type_counts_before_filters": {
+        "0": 441019,
+        "1": 0,
+        "2": 4986,
+        "3": 2308,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 6616,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2020_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2020/viirs-jpss1_2020_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 35781778,
+      "sha256": "e7eed9444abba6dfe8aa9452f3e9a56967215014e3235ba53dce896d3ca663cc",
+      "cached": true,
+      "elapsed_seconds": 3.233,
+      "rows": 434775,
+      "type_field_present": true,
+      "box_retained": 7755,
+      "box_excluded": 427020,
+      "type_counts_before_filters": {
+        "0": 427679,
+        "1": 0,
+        "2": 4821,
+        "3": 2275,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 7061,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "modis_2021_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2021/modis_2021_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 4566299,
+      "sha256": "04cc5b10dfacea4775c1b8bc0a9d1fa7721a21a84c3d396dfca0ac0608d1d857",
+      "cached": true,
+      "elapsed_seconds": 0.629,
+      "rows": 56867,
+      "type_field_present": true,
+      "box_retained": 1780,
+      "box_excluded": 55087,
+      "type_counts_before_filters": {
+        "0": 54234,
+        "1": 0,
+        "2": 2631,
+        "3": 2,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1642,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2021_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2021/viirs-snpp_2021_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 15895377,
+      "sha256": "915bcb6794ab0c11663d9a3c71f4d9ff53bd5700d00ed4deda05ee101938a37c",
+      "cached": true,
+      "elapsed_seconds": 1.127,
+      "rows": 198060,
+      "type_field_present": true,
+      "box_retained": 6394,
+      "box_excluded": 191666,
+      "type_counts_before_filters": {
+        "0": 189390,
+        "1": 0,
+        "2": 7994,
+        "3": 676,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 5616,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2021_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2021/viirs-jpss1_2021_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 16369735,
+      "sha256": "8a2960d54581dce5927709c30db248eb31c30e712ec6e961455859336ada800b",
+      "cached": true,
+      "elapsed_seconds": 1.131,
+      "rows": 198976,
+      "type_field_present": true,
+      "box_retained": 6037,
+      "box_excluded": 192939,
+      "type_counts_before_filters": {
+        "0": 190336,
+        "1": 0,
+        "2": 7948,
+        "3": 692,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 5245,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "modis_2022_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2022/modis_2022_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 6231134,
+      "sha256": "6c5ad252fda14943060fd37f04358bd482b6f107940981cdb1d6bd9be63c4627",
+      "cached": true,
+      "elapsed_seconds": 0.496,
+      "rows": 77521,
+      "type_field_present": true,
+      "box_retained": 1994,
+      "box_excluded": 75527,
+      "type_counts_before_filters": {
+        "0": 75232,
+        "1": 0,
+        "2": 2285,
+        "3": 4,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1840,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2022_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2022/viirs-snpp_2022_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 25114506,
+      "sha256": "c441a07213b84debd04623dde97cc38ac7ebc7286c864f236a0140a6ede7911c",
+      "cached": true,
+      "elapsed_seconds": 2.123,
+      "rows": 312925,
+      "type_field_present": true,
+      "box_retained": 6911,
+      "box_excluded": 306014,
+      "type_counts_before_filters": {
+        "0": 304017,
+        "1": 0,
+        "2": 7753,
+        "3": 1155,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 6167,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2022_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2022/viirs-jpss1_2022_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 25714477,
+      "sha256": "6bcc3e3be9461ecc92d8a2bb87950d97ef7620e7c2ec68f317692ea1a3d35e98",
+      "cached": true,
+      "elapsed_seconds": 1.999,
+      "rows": 312448,
+      "type_field_present": true,
+      "box_retained": 6719,
+      "box_excluded": 305729,
+      "type_counts_before_filters": {
+        "0": 303475,
+        "1": 0,
+        "2": 7792,
+        "3": 1181,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 5881,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "modis_2023_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2023/modis_2023_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 3898226,
+      "sha256": "45152ac1c0569bfd4e0d77127b4a489ea96c1f49a2137536992118dc4440f47f",
+      "cached": true,
+      "elapsed_seconds": 0.425,
+      "rows": 47910,
+      "type_field_present": true,
+      "box_retained": 1260,
+      "box_excluded": 46650,
+      "type_counts_before_filters": {
+        "0": 45925,
+        "1": 0,
+        "2": 1984,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1125,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2023_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2023/viirs-snpp_2023_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 13782846,
+      "sha256": "ca895e71b8e5d878e0c971e643dacb8a018893c237d0ff567c41c921081c1eac",
+      "cached": true,
+      "elapsed_seconds": 0.959,
+      "rows": 171695,
+      "type_field_present": true,
+      "box_retained": 4527,
+      "box_excluded": 167168,
+      "type_counts_before_filters": {
+        "0": 164406,
+        "1": 0,
+        "2": 6918,
+        "3": 371,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3840,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2023_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2023/viirs-jpss1_2023_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 13473948,
+      "sha256": "4dde502dc54871c40d3517ce59da9aa566b85582348c7d13c1dd91e655f1e84f",
+      "cached": true,
+      "elapsed_seconds": 0.954,
+      "rows": 163741,
+      "type_field_present": true,
+      "box_retained": 4514,
+      "box_excluded": 159227,
+      "type_counts_before_filters": {
+        "0": 156791,
+        "1": 0,
+        "2": 6547,
+        "3": 403,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3771,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "modis_2024_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2024/modis_2024_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 4043604,
+      "sha256": "3bdedb8b223b7e3cf472108101ab64e4cefd4a2e41d11d9895d237c1c330c360",
+      "cached": true,
+      "elapsed_seconds": 0.382,
+      "rows": 49843,
+      "type_field_present": true,
+      "box_retained": 1996,
+      "box_excluded": 47847,
+      "type_counts_before_filters": {
+        "0": 47196,
+        "1": 0,
+        "2": 2641,
+        "3": 6,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1808,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2024_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2024/viirs-snpp_2024_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 12276220,
+      "sha256": "27d3c8e6d27b448e101b127decd4c721a20f664298a9475d1698104aa3dd8683",
+      "cached": true,
+      "elapsed_seconds": 1.051,
+      "rows": 152971,
+      "type_field_present": true,
+      "box_retained": 7415,
+      "box_excluded": 145556,
+      "type_counts_before_filters": {
+        "0": 146762,
+        "1": 0,
+        "2": 5914,
+        "3": 295,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 6617,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2024_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2024/viirs-jpss1_2024_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 12982697,
+      "sha256": "f5d22dd92fedb44d7077e1296e8f0d29196a7fdd0ca078c9e1ed27f776fc6a26",
+      "cached": true,
+      "elapsed_seconds": 1.829,
+      "rows": 157781,
+      "type_field_present": true,
+      "box_retained": 8339,
+      "box_excluded": 149442,
+      "type_counts_before_filters": {
+        "0": 151638,
+        "1": 0,
+        "2": 5799,
+        "3": 344,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 7422,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": null
+    }
+  ],
+  "unavailable": [],
+  "status": "Selected files pass box gate; full archive audit still required"
+}

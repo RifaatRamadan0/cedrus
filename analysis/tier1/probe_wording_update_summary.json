@@ -1,0 +1,13 @@
+{
+  "passed_checks": 200,
+  "failed_checks": 1,
+  "exit_code": 1,
+  "full_probe_pass": false,
+  "intentional_wording_update_passed": true,
+  "failure": "Lebanon default month",
+  "actual": "January 2025",
+  "expected": "October 2025",
+  "region_switch_round_trips_reached": false,
+  "tier1_city_checks_reached": false,
+  "final_console_error_check_reached": false
+}

@@ -92,6 +92,7 @@
         <button class="update-button" id="circle-go" type="submit">Use this circle</button>
       </fieldset>
       <div class="area-summary" id="area-summary" aria-live="polite"></div>
+      <div class="hint" id="region-notes" aria-live="polite"></div>
       <fieldset class="field-group download-group"><legend class="field-label">4. Download for this area</legend>
         <div class="year-span">
           <label>From<span class="select-field"><select id="csv-from" name="csv-from"></select><svg class="icon"><use href="#chevron"/></svg></span></label>
@@ -130,6 +131,16 @@
         </div>
       </div>
       <p class="map-caption" id="map-caption" aria-live="polite">Loading NASA FIRMS record…</p>
+      <div class="map-coverage" aria-label="How to read the map">
+        <p id="map-extent-note">Orange dashed outline: analysis extent — not the country boundary.</p>
+        <ul class="map-coverage-key">
+          <li><span class="coverage-swatch coverage-quiet" aria-hidden="true"></span>Faint outlined cell: included in the grid; near-zero estimate this month.</li>
+          <li><span class="coverage-swatch coverage-absent" aria-hidden="true"></span>Shaded dashed cell: no qualifying records in this region’s exported grid.</li>
+          <li><span class="coverage-swatch coverage-border" aria-hidden="true"></span>Thin grey line: country borders and coastlines (NASA GIBS), for orientation only. A cell on a border can cover land in two countries; its value counts only the selected region’s fires.</li>
+        </ul>
+        <p>Blank areas may have no qualifying fire records or a near-zero estimate for this month. Blank does not mean confirmed fire-free. Observation completeness is unknown.</p>
+        <p id="map-cell-detail" aria-live="polite">Click the map to inspect a location and its selected-month estimate.</p>
+      </div>
       <div class="playback" id="playback" role="group" aria-label="Play the record">
         <button type="button" class="play" id="play" aria-pressed="false" aria-label="Play 25 years in 25 seconds"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
         <div class="fuse"><canvas id="fuse-strip" aria-hidden="true"></canvas><input type="range" id="scrub" min="0" max="300" value="0" aria-label="Month of the record"></div>
@@ -169,6 +180,7 @@
       <h2 id="season-title">When the fire season runs here</h2>
       <div class="fire-calendar" id="season-dates"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
       <p class="hint" id="season-note">Dates are worked out from the individual records when you open this area.</p>
+      <p class="hint" id="cross-year-season" hidden></p>
       <div class="fingerprint"><svg id="fp-svg" viewBox="0 0 220 220" role="img" aria-labelledby="fp-caption"></svg>
         <div class="fp-side"><p class="eyebrow small">FIRE FINGERPRINT</p><p class="hint" id="fp-caption"></p><button type="button" class="download" id="share-card">Save as image (PNG)</button></div></div>
     </section>

@@ -1,6 +1,14 @@
 # Data contract — the static files the website reads (v2)
 
-Written by `pipeline/export_v2.py` into `web/data/`. The website (`web/app.js`) reads nothing else.
+## Current Tier 1 contract
+
+Four new product regions use audited rectangular boxes and type-0 eligibility. The catalog adds shared notes and optional per-region names/notes without changing version 2. Monthly completeness is unknown: the per-month service evidence ledger remains an analysis artifact, not an exported coverage guarantee. Existing first/last-detection metadata is not proof of complete observation.
+
+The exporter verifies source provenance and stages each region before replacing its directory. Existing Portugal/Lebanon files and catalog entries are preserved. Browser area selection compares sampled grid-footprint shares; the largest share must be positive or the area is rejected as outside coverage. Ties use stable catalog order, never fire totals. A second share above 10% triggers a warning and permits manual selection. Footprints are not country boundaries.
+
+Manual same-area region/unit switches rebase selected months by YYYY-MM when available; examples, initial load and new drawings use the default month; see [implementation status](TIER1_IMPLEMENTATION_STATUS.md). Combined-country aggregation and boundary assets are Deferred. Reconciliation uses the monthly serialization bound `0.005 * cells + 0.00005 * monthly_records + 0.0001` (observed Syria hotspots discrepancy: 0.1235). The exact test bound is given below.
+
+Written by `pipeline/export_v2.py` into `web/data/`. These are the website’s numerical fire-data inputs; scripts, styles, media and external map/drawing assets load separately.
 Rebuild with:
 
 ```bash
@@ -9,6 +17,19 @@ python pipeline/export_v2.py --region lebanon # one region; the others in region
 ```
 
 All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
+
+## Current product records
+
+Both units use the same date span within each region.
+
+| Region | First month | Last month |
+|---|---|---|
+| Portugal | 2000-12 | 2025-12 |
+| Lebanon | 2000-12 | 2025-12 |
+| Cyprus | 2000-12 | 2025-11 |
+| Jordan | 2000-12 | 2025-12 |
+| Syria | 2000-11 | 2025-12 |
+| La Rioja area, Argentina | 2000-11 | 2025-12 |
 
 ## Two units, one record (lead's decision, 2 Nov 2026)
 
@@ -37,18 +58,21 @@ down. The hotspot files are unchanged by the second view (byte-identical on re-e
   (lon_min ≤ lon < lon_max, lat_min ≤ lat < lat_max); `type == 0`; MODIS `confidence >= 30`; VIIRS confidence `n` or `h`.
 - **Grid:** global 0.25° cells, `ix = floor(lon / 0.25)`, `iy = floor(lat / 0.25)`. Cell `(ix, iy)` spans
   lon `ix*0.25 .. (ix+1)*0.25`, lat `iy*0.25 .. (iy+1)*0.25` (row `iy` counts **north**). Only cells with at least
-  one filtered detection (any sensor, any year) are listed; a missing cell means zero, not missing data. The listed
-  cells are also the region's **data footprint**: the website treats any part of a drawn area outside them (or outside
-  the box) as outside the region's FIRMS country file.
-- **Months:** `"YYYY-MM"`, index `j = 0` is `months.first`. The record starts at MODIS's first complete month by the
-  rule below: both regions' files start after 3 November 2000, so the record starts **2000-12**.
-- **Complete months** (lead's ruling): a sensor file's final month counts only if the file has a detection dated in
-  that month's last 3 days; its first month only if it has one in the first 3 days. Every other month inside the
-  file's span counts. The same rule sets the record's first month (MODIS) and its last (VIIRS).
-  The record ends at the last month a VIIRS satellite covers — **2025-12** for both regions; 2026 to the present needs
-  NASA's FIRMS near-real-time API key (pending). Details per sensor in `regions.json` `record_end`.
-- **Which VIIRS satellite covers a month:** it is inside its complete span, and it is not an outage month (zero
-  detections in the region while the other VIIRS satellite has 20 or more; none found so far).
+  one filtered detection (any sensor, any year in the exported record) are listed. A missing cell means no qualifying
+  records in this exported grid, not a confirmed zero-fire observation. The files do not distinguish fire-free observations
+  from missing observations. The listed cells form a historical detection **footprint**, not a country boundary or
+  verified observation-coverage mask. The browser reports a drawn area's share outside this footprint or the box.
+- **Months:** `"YYYY-MM"`, index `j = 0` is `months.first`. Read the region's own first/last keys; ranges differ as listed below.
+- **Legacy month-eligibility heuristic:** a sensor file's final month qualifies only if it has a detection in its last
+  3 days; its first month only if it has one in the first 3 days. Interior months qualify under the span rule.
+  This sets the exported first month (MODIS) and last month (VIIRS), but does **not** establish monthly completeness.
+- **VIIRS inclusion heuristic:** the month must be inside the sensor's eligible span and not flagged by the exporter
+  as an outage (zero regional detections while the other VIIRS satellite has at least 20). The current six-region
+  catalog lists no such heuristic outage months. This does not negate the service-reported missing dates documented
+  in the FIRMS audit; these are different measures.
+- **Live extension:** 2026 ingestion is not implemented. A FIRMS key is already stored in an ignored local `.env` and
+  used for availability/missing-data audits. Legacy catalog `record_end.after` text mentioning a key as pending is
+  historical export wording, retained with the data; it is not the current credential status.
 - **Source policy** (one flag per month, the same for every cell):
 
 | Flag | Months | Harmonized estimate |
@@ -196,9 +220,10 @@ Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
 ## How the website turns these into an area's calendar
 
 - **Whole region:** the sum of its cells (`m`, `naive`, `bg`); the 80% range adds each cell's half-widths in quadrature.
-  This equals the exact sum of every detection's weight, up to the 2-decimal rounding of `m`: within 0.1 per month
-  (measured 2 Nov 2026, largest gap per month: Portugal 0.070 detections / 0.092 burning days, Lebanon 0.029 / 0.035;
-  `tools/probe_site.py` checks every month of both units).
+  The probe compares the whole-region CSV with monthly cell sums to 0.000051, and compares it with serialized record weights plus background using the unchanged monthly bound
+  `0.005 * number_of_cells + 0.00005 * number_of_monthly_records + 0.0001`.
+  This accounts for cell rounding to two decimals, record weights to four decimals and the residual CSV/background allowance.
+  Syria hotspots reached a 0.1235 monthly discrepancy, within the serialization bound above.
 - **Drawn shape or circle (exact):** the website loads every hotspot year (cached, with a progress bar) and adds up
   `w` of the detections inside the shape, month by month, plus `bg` of each touched cell times the share of the cell's
   area inside the shape. That share is exact on lon/lat (the same plane as the inside test): the shape clipped to the
@@ -225,10 +250,16 @@ Sizes (31 Oct 2026): Portugal 1.03 MB (185 cells), Lebanon 0.16 MB (28 cells).
   Portugal 7 of 301 months (all estimated, 2022+), Lebanon 11 of 301 (all estimated); cell-months: Portugal 810,
   Lebanon 154. MODIS can never do this in observed months (a burning day needs a detection).
 - **Display:** a value above 0 and under 0.05 is shown as "<0.1"; a value shown as 1 takes the singular unit.
-- **Shapes:** a shape that reaches both product regions is shown for one, with a note; a shape containing a whole
-  region says so instead of reporting a share "outside".
-- **Outside the data:** the share of a drawn area outside the box or outside the data footprint (cells listed above)
-  is shown as a warning and in the area's name; fires there are not in the country file and are not counted.
+- **Shapes:** select the region with the largest positive sampled footprint share, not the largest fire total. If
+  another region has more than 10% share, name the alternatives and offer the existing picker. The selected region
+  alone supplies calculations; countries are not combined. No positive share means outside coverage.
+- **Outside the exported footprint:** the share outside the box or listed cells is reported in the warning/name.
+  Missing cells do not prove missing satellite observations or fire-free conditions.
+- **Map states:** the orange dashed line marks the analysis extent (or drawn shape), not a national boundary.
+  Listed cells with a selected-month estimate below 0.005 have a faint outline and transparent fill; cells absent
+  from the exported grid are shaded with dashed edges inside the box. These absent-cell features are display-only
+  and are never added to model inputs or sums. Click explanations state inclusion, the selected-month estimate
+  when available and unknown observation completeness. Changing selections clears stale inspection text.
 
 ## `<region>/hotspots/<year>.json` — every filtered detection, columnar
 
@@ -360,8 +391,8 @@ It reads a only from `data/processed/tournament/frozen_round3.json` and stops un
   26,515 (0.15%, no month noted), Lebanon 850 of 4,142 (20.5%, 28 months noted). The weights are D-a's own; the note
   changes no number.
 - **Combination rule:** the hotspot view's, with "ratio above 0" read as "some FRP class has r0_k > 0 in the slot (and
-  s > 0 for NOAA-20)". In both product regions every slot has one, so both satellites always share a month they both
-  cover and no slot note is written (`burning_days.combination`). A class whose r0_k is 0 weighs 0 (Portugal's and
+  s > 0 for NOAA-20)". In the original Portugal/Lebanon exports every slot has one, so both satellites always share a month they both
+  cover and no slot note is written (`burning_days.combination`). For other regions, inspect their own combination metadata and slot notes; do not assume the same pattern. A class whose r0_k is 0 weighs 0 (Portugal's and
   Lebanon's `f0` in every slot, Portugal's `f3` in January nights, and Lebanon's `f1`–`f3` in several slots, mostly
   winter and spring: `burning_days.model_detail.satellites.snpp.prior_ratio_r0`, one list of four classes per slot).
 - **Background, `p10`/`p90`:** as the hotspot view, from D-a's predictive: the class negative binomials summed and
@@ -442,9 +473,10 @@ predicted by D-a from Suomi NPP and NOAA-20 burning days (weights + background),
 - **Burning-day CSV:** every burning day inside the exact area for the chosen years, one row each:
   `latitude, longitude` (the square's centre, 3 decimals), `cell_x, cell_y` (fx, fy), `acq_date, daynight, family,
   detections, max_frp, frp_class, source_flag, w`. For any area, **Σ monthly `harmonized_estimate` = Σ CSV `w` +
-  Σ monthly `background`** up to the 4-decimal rounding of the monthly CSV (the calendar adds the same 4-decimal
-  weights). `tools/probe_site.py` checks this for both regions as a whole, circles from 1 km to 25 km, a rectangle
-  and a polygon, and recomputes the inside set in Python from the files.
+  Σ monthly `background`** within serialization rounding. Drawn areas add the same 4-decimal record weights;
+  whole-region views sum rounded cell values and use the explicit cell/record bound above. The original Portugal/Lebanon
+  checks cover whole regions, circles from 1 km to 25 km, a rectangle and a polygon, recomputing the inside set in Python.
+  Tier 1 checks add whole-region reconciliation for all four new regions in both units.
 - **Monthly CSV in burning days:** the hotspot view's columns, with the unit named in the `#` methods line and in the
   file name (`…_monthly_burning_days.csv`; the hotspot view's is `…_monthly_hotspots.csv`).
 

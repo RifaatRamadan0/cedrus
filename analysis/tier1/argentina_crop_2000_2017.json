@@ -1,0 +1,170 @@
+[
+  {
+    "file": "modis_2000_Argentina.csv",
+    "expected_crop_rows": 82,
+    "actual_crop_rows": 82,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2001_Argentina.csv",
+    "expected_crop_rows": 754,
+    "actual_crop_rows": 754,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2002_Argentina.csv",
+    "expected_crop_rows": 3217,
+    "actual_crop_rows": 3217,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2003_Argentina.csv",
+    "expected_crop_rows": 4562,
+    "actual_crop_rows": 4562,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2004_Argentina.csv",
+    "expected_crop_rows": 2112,
+    "actual_crop_rows": 2112,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2005_Argentina.csv",
+    "expected_crop_rows": 1406,
+    "actual_crop_rows": 1406,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2006_Argentina.csv",
+    "expected_crop_rows": 1438,
+    "actual_crop_rows": 1438,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2007_Argentina.csv",
+    "expected_crop_rows": 1651,
+    "actual_crop_rows": 1651,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2008_Argentina.csv",
+    "expected_crop_rows": 1388,
+    "actual_crop_rows": 1388,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2009_Argentina.csv",
+    "expected_crop_rows": 2553,
+    "actual_crop_rows": 2553,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2010_Argentina.csv",
+    "expected_crop_rows": 1569,
+    "actual_crop_rows": 1569,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2011_Argentina.csv",
+    "expected_crop_rows": 1197,
+    "actual_crop_rows": 1197,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2012_Argentina.csv",
+    "expected_crop_rows": 1044,
+    "actual_crop_rows": 1044,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2013_Argentina.csv",
+    "expected_crop_rows": 1010,
+    "actual_crop_rows": 1010,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2014_Argentina.csv",
+    "expected_crop_rows": 650,
+    "actual_crop_rows": 650,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2015_Argentina.csv",
+    "expected_crop_rows": 760,
+    "actual_crop_rows": 760,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2016_Argentina.csv",
+    "expected_crop_rows": 1374,
+    "actual_crop_rows": 1374,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "modis_2017_Argentina.csv",
+    "expected_crop_rows": 3201,
+    "actual_crop_rows": 3201,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "viirs-snpp_2012_Argentina.csv",
+    "expected_crop_rows": 3393,
+    "actual_crop_rows": 3393,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "viirs-snpp_2013_Argentina.csv",
+    "expected_crop_rows": 3620,
+    "actual_crop_rows": 3620,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "viirs-snpp_2014_Argentina.csv",
+    "expected_crop_rows": 1940,
+    "actual_crop_rows": 1940,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "viirs-snpp_2015_Argentina.csv",
+    "expected_crop_rows": 2747,
+    "actual_crop_rows": 2747,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "viirs-snpp_2016_Argentina.csv",
+    "expected_crop_rows": 4884,
+    "actual_crop_rows": 4884,
+    "missing_rows": 0,
+    "additional_rows": 0
+  },
+  {
+    "file": "viirs-snpp_2017_Argentina.csv",
+    "expected_crop_rows": 13764,
+    "actual_crop_rows": 13764,
+    "missing_rows": 0,
+    "additional_rows": 0
+  }
+]

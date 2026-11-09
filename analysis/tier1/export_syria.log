@@ -1,0 +1,57 @@
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:261: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  "doy": pd.to_datetime(g.acq_date).dt.dayofyear.tolist(), "time": g.acq_time.astype(int).tolist(),
+C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\pipeline\export_v2.py:394: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+  bd["doy"] = pd.to_datetime(bd.acq_date).dt.dayofyear
+syria: 206914 detections, 296 cells, months 2000-11..2025-12, monthly.json 1.65 MB, hotspots 14.17 MB in 26 files; model A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen): background total 396.34, max |model mean - m| 0.0188
+syria: 156356 burning days, monthly_bd.json 1.65 MB, burning 4.58 MB in 26 files; model D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed): background total 378.40, max |model mean - m| 0.0074
+-> C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\web\data\regions.json

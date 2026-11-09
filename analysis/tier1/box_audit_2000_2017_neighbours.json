@@ -1,0 +1,4535 @@
+{
+  "requested_years": [
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017
+  ],
+  "requested_regions": [
+    "syria",
+    "jordan",
+    "cyprus",
+    "palestine",
+    "israel"
+  ],
+  "scope": "Box, checksum and filter audit; not evidence of monthly completeness",
+  "files": [
+    {
+      "region": "syria",
+      "file": "modis_2000_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 16430,
+      "sha256": "f1f1a64bacf9c3ab22930b0595ca79f34c7750a10e56ed38c7e34c2de4d38548",
+      "cached": false,
+      "elapsed_seconds": 1.822,
+      "rows": 210,
+      "type_field_present": true,
+      "box_retained": 210,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 44,
+        "1": 0,
+        "2": 166,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 41,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.822
+    },
+    {
+      "region": "syria",
+      "file": "modis_2001_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 193684,
+      "sha256": "bd3213428471a3f9f7c21db7118c1a406edaf1f827ca4258ae2dcf7fe5c025b5",
+      "cached": false,
+      "elapsed_seconds": 4.502,
+      "rows": 2490,
+      "type_field_present": true,
+      "box_retained": 2490,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1302,
+        "1": 0,
+        "2": 1188,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1282,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 4.502
+    },
+    {
+      "region": "syria",
+      "file": "modis_2002_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 150693,
+      "sha256": "f00f8f2a2b9cdb1399a6e80169b4d3ba835ff7296ee6f5abd2b858b63afe39bc",
+      "cached": false,
+      "elapsed_seconds": 1.841,
+      "rows": 1945,
+      "type_field_present": true,
+      "box_retained": 1945,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1685,
+        "1": 1,
+        "2": 259,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1645,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.841
+    },
+    {
+      "region": "syria",
+      "file": "modis_2003_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 194461,
+      "sha256": "e61e5535ab3ab9bb378da27c466e8a8db5d21806f2d8311651dc9a3c806c59b1",
+      "cached": false,
+      "elapsed_seconds": 2.025,
+      "rows": 2513,
+      "type_field_present": true,
+      "box_retained": 2513,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 2033,
+        "1": 0,
+        "2": 480,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1988,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 2.025
+    },
+    {
+      "region": "syria",
+      "file": "modis_2004_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 99013,
+      "sha256": "e80e012b117edbbd3dfeb590249ba16f6ab63a9393dd9e271fb0458f565b6e1d",
+      "cached": false,
+      "elapsed_seconds": 1.419,
+      "rows": 1279,
+      "type_field_present": true,
+      "box_retained": 1279,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1136,
+        "1": 0,
+        "2": 142,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1100,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.419
+    },
+    {
+      "region": "syria",
+      "file": "modis_2005_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 39356,
+      "sha256": "99cb6185f867230ea205ab06f393c912295c6ca57d9baab784799f874bfed1d9",
+      "cached": false,
+      "elapsed_seconds": 1.179,
+      "rows": 508,
+      "type_field_present": true,
+      "box_retained": 508,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 508,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 498,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.179
+    },
+    {
+      "region": "syria",
+      "file": "modis_2006_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 51181,
+      "sha256": "d050fc0e23be0d83afebc7a36b53a1475fb6b1d7c944153533d82a7945f530e6",
+      "cached": false,
+      "elapsed_seconds": 1.315,
+      "rows": 662,
+      "type_field_present": true,
+      "box_retained": 662,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 662,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 649,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.315
+    },
+    {
+      "region": "syria",
+      "file": "modis_2007_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 58638,
+      "sha256": "e131dff4d73989e59e789efcfe04cba7493df8deda8359460139d4f81ab18ef6",
+      "cached": false,
+      "elapsed_seconds": 1.537,
+      "rows": 756,
+      "type_field_present": true,
+      "box_retained": 756,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 756,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 733,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.537
+    },
+    {
+      "region": "syria",
+      "file": "modis_2008_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 11999,
+      "sha256": "e14fbeab7b003179d9c989f54601d11371255fafda0ba994d0d3986e75b510e1",
+      "cached": false,
+      "elapsed_seconds": 1.086,
+      "rows": 154,
+      "type_field_present": true,
+      "box_retained": 154,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 154,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 145,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.086
+    },
+    {
+      "region": "syria",
+      "file": "modis_2009_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 75561,
+      "sha256": "669f8fe496cc76fa9330dfc03d08aca39c702d995fff4c18b3a806ee8f52a0d1",
+      "cached": false,
+      "elapsed_seconds": 2.063,
+      "rows": 976,
+      "type_field_present": true,
+      "box_retained": 976,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 976,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 951,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 2.063
+    },
+    {
+      "region": "syria",
+      "file": "modis_2010_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 101383,
+      "sha256": "49afbe9dfee6bfad035931c15f7d18b43a63966ceba95b9d1344cedf2186593c",
+      "cached": false,
+      "elapsed_seconds": 2.392,
+      "rows": 1311,
+      "type_field_present": true,
+      "box_retained": 1311,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1311,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1288,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 2.392
+    },
+    {
+      "region": "syria",
+      "file": "modis_2011_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 58293,
+      "sha256": "aa0d2aeee27aa8327d6e8e5f54c86a0fa7c4bfe52fda5e315d286b4875b06f77",
+      "cached": false,
+      "elapsed_seconds": 1.129,
+      "rows": 752,
+      "type_field_present": true,
+      "box_retained": 752,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 752,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 726,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.129
+    },
+    {
+      "region": "syria",
+      "file": "modis_2012_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 95487,
+      "sha256": "97700216e9f447bb8cb1a0b2ad9c888c0c1903cf67b02f3820a4724853cefba2",
+      "cached": false,
+      "elapsed_seconds": 1.437,
+      "rows": 1235,
+      "type_field_present": true,
+      "box_retained": 1235,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1234,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1187,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.437
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2012_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 817379,
+      "sha256": "f106cc4295bd0e013dcedac898afa8cf85bbd21fd1cf95ed6655e7257c32160b",
+      "cached": false,
+      "elapsed_seconds": 5.438,
+      "rows": 10446,
+      "type_field_present": true,
+      "box_retained": 10446,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 7780,
+        "1": 0,
+        "2": 2647,
+        "3": 19,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 7017,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 5.438
+    },
+    {
+      "region": "syria",
+      "file": "modis_2013_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 210285,
+      "sha256": "afe8e09cabf6ac09d88d9c94a5019f93b0efb4e1ad256beeb248c809cf8b118c",
+      "cached": false,
+      "elapsed_seconds": 3.355,
+      "rows": 2716,
+      "type_field_present": true,
+      "box_retained": 2716,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 2320,
+        "1": 0,
+        "2": 396,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 2263,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 3.355
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2013_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 1135797,
+      "sha256": "d31e9b30f103d02f774264e3aeff4d81672f40f5e540718b7966a5c62fb8e18d",
+      "cached": false,
+      "elapsed_seconds": 7.755,
+      "rows": 14527,
+      "type_field_present": true,
+      "box_retained": 14527,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 11847,
+        "1": 0,
+        "2": 2656,
+        "3": 24,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 10196,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 7.755
+    },
+    {
+      "region": "syria",
+      "file": "modis_2014_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 60154,
+      "sha256": "67a5f34ce2f6f7df05500e60eed97a2c27563f5d189bbe77ddd34c951f33e002",
+      "cached": false,
+      "elapsed_seconds": 1.385,
+      "rows": 777,
+      "type_field_present": true,
+      "box_retained": 777,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 777,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 756,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.385
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2014_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 562068,
+      "sha256": "209d35551f747eb2d50a229d945b7a4e7f4cd45f745c3d196889bc6aa6d75d35",
+      "cached": false,
+      "elapsed_seconds": 4.476,
+      "rows": 7186,
+      "type_field_present": true,
+      "box_retained": 7186,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 5156,
+        "1": 0,
+        "2": 2014,
+        "3": 16,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 4522,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 4.476
+    },
+    {
+      "region": "syria",
+      "file": "modis_2015_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 161353,
+      "sha256": "f4316126e6fa1ff2f36405e59b70415e1305988756f784297ea730fe94147045",
+      "cached": false,
+      "elapsed_seconds": 1.849,
+      "rows": 2082,
+      "type_field_present": true,
+      "box_retained": 2082,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 2082,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 2029,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.849
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2015_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 983629,
+      "sha256": "cba85faaaf7e05e125903608d1aa454ec03d546691b70e2225dfcb8eaadf6d92",
+      "cached": false,
+      "elapsed_seconds": 6.515,
+      "rows": 12577,
+      "type_field_present": true,
+      "box_retained": 12577,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 10990,
+        "1": 0,
+        "2": 1579,
+        "3": 8,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 9201,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 6.515
+    },
+    {
+      "region": "syria",
+      "file": "modis_2016_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 118288,
+      "sha256": "b86f59e31b7414b79f4cf0bb9a19db2a6aaeb5c940097804ce30938583d60a59",
+      "cached": false,
+      "elapsed_seconds": 1.716,
+      "rows": 1527,
+      "type_field_present": true,
+      "box_retained": 1527,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1527,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1492,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.716
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2016_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 752567,
+      "sha256": "e3728b129ac8a7d633ba3d61fad1b158c36628106d3e3950c8857e78bb4dd350",
+      "cached": false,
+      "elapsed_seconds": 5.287,
+      "rows": 9622,
+      "type_field_present": true,
+      "box_retained": 9622,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 7952,
+        "1": 0,
+        "2": 1658,
+        "3": 12,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 7074,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 5.287
+    },
+    {
+      "region": "syria",
+      "file": "modis_2017_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 174951,
+      "sha256": "c42a3876afd66dabb8965f8bcedd82f4691a221d41d3287235b6f97cd0545b08",
+      "cached": false,
+      "elapsed_seconds": 1.758,
+      "rows": 2251,
+      "type_field_present": true,
+      "box_retained": 2251,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1507,
+        "1": 0,
+        "2": 744,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1429,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.758
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2017_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 1011369,
+      "sha256": "c7f0aa1f00f0cfc60f3bca0a7bd9e91e9d4a4f0f1f6da653aa9bd136572989ec",
+      "cached": false,
+      "elapsed_seconds": 8.403,
+      "rows": 12927,
+      "type_field_present": true,
+      "box_retained": 12927,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 10139,
+        "1": 0,
+        "2": 2785,
+        "3": 3,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 9278,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 8.403
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2000_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 288,
+      "sha256": "ba6a30dfd403351bbbcbba4d7682b417a1730946429633f30f294f5f38a898a6",
+      "cached": false,
+      "elapsed_seconds": 1.039,
+      "rows": 2,
+      "type_field_present": true,
+      "box_retained": 2,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 2,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 2,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.039
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2001_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 440,
+      "sha256": "0f93726b23a2ab9e32ae5e6e45396580f090c67d9b816bc8480acdcf21b6bd8b",
+      "cached": false,
+      "elapsed_seconds": 1.059,
+      "rows": 4,
+      "type_field_present": true,
+      "box_retained": 4,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 4,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 4,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.059
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2002_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1051,
+      "sha256": "6cb77d0981800457445e711dffaf84cf6d938aa0cf70718cc73c063c68645682",
+      "cached": false,
+      "elapsed_seconds": 1.009,
+      "rows": 12,
+      "type_field_present": true,
+      "box_retained": 12,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 12,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 12,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.009
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2003_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1289,
+      "sha256": "165162d5e3a299205538679a305eb59ea10abb53bd91a59fa3c9ce7d2b197d52",
+      "cached": false,
+      "elapsed_seconds": 0.985,
+      "rows": 15,
+      "type_field_present": true,
+      "box_retained": 15,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 15,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 15,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.985
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2004_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1202,
+      "sha256": "ad1f205dcb89c6abd36de5ebe073f775e6a49108c96a87a0842635bc81abe931",
+      "cached": false,
+      "elapsed_seconds": 0.937,
+      "rows": 14,
+      "type_field_present": true,
+      "box_retained": 14,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 14,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 14,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.937
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2005_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1133,
+      "sha256": "236ff61ac2dac2da0eacff844513eabc2a869d5a5f6355e3e8abf2ae3b206f0a",
+      "cached": false,
+      "elapsed_seconds": 0.96,
+      "rows": 13,
+      "type_field_present": true,
+      "box_retained": 13,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 13,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 13,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.96
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2006_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 2215,
+      "sha256": "4b123a44accb8c7125fb018e649c8e7714e2703d76a8ad99d03c0b483b6338a1",
+      "cached": false,
+      "elapsed_seconds": 1.002,
+      "rows": 27,
+      "type_field_present": true,
+      "box_retained": 27,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 27,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 24,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.002
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2007_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1730,
+      "sha256": "9bbd76d81450ba1f1af8507fd56e21acce66f3f9bbc70f1cbfa2b317c51a55e8",
+      "cached": false,
+      "elapsed_seconds": 0.91,
+      "rows": 21,
+      "type_field_present": true,
+      "box_retained": 21,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 21,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 19,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.91
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2008_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 2578,
+      "sha256": "c7c586462b4374b9616332be4e8cb36f331cc4eb763b1291ba0d87ea11b972d5",
+      "cached": false,
+      "elapsed_seconds": 0.949,
+      "rows": 32,
+      "type_field_present": true,
+      "box_retained": 32,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 32,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 31,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.949
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2009_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1737,
+      "sha256": "0bfdafedacf56fe88b3418349830ee48997234db799f3ab0baf18563f17b08a6",
+      "cached": false,
+      "elapsed_seconds": 0.896,
+      "rows": 21,
+      "type_field_present": true,
+      "box_retained": 21,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 21,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 21,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.896
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2010_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1463,
+      "sha256": "b87451b77195037f2208ce7aacf8b7de32df64f5867b4beddd995d7a28db2766",
+      "cached": false,
+      "elapsed_seconds": 1.102,
+      "rows": 17,
+      "type_field_present": true,
+      "box_retained": 17,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 17,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 17,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.102
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2011_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 3355,
+      "sha256": "bee3b2c83d6ab7c7ed2eb1fe0a8e34fc258cf6ef7b1f302dd57e626f10665d77",
+      "cached": false,
+      "elapsed_seconds": 0.879,
+      "rows": 42,
+      "type_field_present": true,
+      "box_retained": 42,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 42,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 42,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.879
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2012_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1053,
+      "sha256": "ade576175403bf1a7b13774b12dd0b01011f19e74042fac79be297dbeab14f84",
+      "cached": false,
+      "elapsed_seconds": 1.132,
+      "rows": 12,
+      "type_field_present": true,
+      "box_retained": 12,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 12,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 12,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.132
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2012_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 40578,
+      "sha256": "75de395fc849a69c692f61212728a41c9181f6c4e5fdca7fe29b7e8b89be9029",
+      "cached": false,
+      "elapsed_seconds": 1.184,
+      "rows": 518,
+      "type_field_present": true,
+      "box_retained": 518,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 284,
+        "1": 0,
+        "2": 234,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 262,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.184
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2013_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 1587,
+      "sha256": "c093fe5be6e68ed41e90e8ba3fc1d51c25375929b60e079866ca8ed42d50fbfd",
+      "cached": false,
+      "elapsed_seconds": 0.889,
+      "rows": 19,
+      "type_field_present": true,
+      "box_retained": 19,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 19,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 19,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.889
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2013_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 44409,
+      "sha256": "32b8f7c41f4e344dc74dd514f21faa6dad0b35b135f28295f676f74aebc72920",
+      "cached": false,
+      "elapsed_seconds": 1.541,
+      "rows": 566,
+      "type_field_present": true,
+      "box_retained": 566,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 329,
+        "1": 0,
+        "2": 237,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 299,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.541
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2014_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 2636,
+      "sha256": "975740601fafc05501da344c612e394c59814d446da93f28c7eb2a5f1d85e74c",
+      "cached": false,
+      "elapsed_seconds": 0.812,
+      "rows": 33,
+      "type_field_present": true,
+      "box_retained": 33,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 33,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 29,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.812
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2014_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 45246,
+      "sha256": "d15356067ea3fd48f200727227d460d8dc798db43e61b6c512f86a499ebb7686",
+      "cached": false,
+      "elapsed_seconds": 1.545,
+      "rows": 577,
+      "type_field_present": true,
+      "box_retained": 577,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 276,
+        "1": 0,
+        "2": 300,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 248,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.545
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2015_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 6291,
+      "sha256": "e6c546d496de90bf92b250e218159577ba20ef844c16a8c7d939b231feede963",
+      "cached": false,
+      "elapsed_seconds": 0.739,
+      "rows": 80,
+      "type_field_present": true,
+      "box_retained": 80,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 80,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 78,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.739
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2015_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 57838,
+      "sha256": "0c542b5bc295b17563a81043add4d3decf50ce7473f6cd02437d20eb783c6ba6",
+      "cached": false,
+      "elapsed_seconds": 1.412,
+      "rows": 738,
+      "type_field_present": true,
+      "box_retained": 738,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 432,
+        "1": 0,
+        "2": 306,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 392,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.412
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2016_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 3410,
+      "sha256": "9d2727e6fe7abdea4519da0a7949ec556a465c2501210c38a0152fd43083ecd5",
+      "cached": false,
+      "elapsed_seconds": 2.15,
+      "rows": 43,
+      "type_field_present": true,
+      "box_retained": 43,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 43,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 39,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 2.15
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2016_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 56116,
+      "sha256": "f46a239a9fc43c6b597edcb8210979f1e9b5553fc3f8dff9752e679e93fdca9f",
+      "cached": false,
+      "elapsed_seconds": 1.65,
+      "rows": 716,
+      "type_field_present": true,
+      "box_retained": 716,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 357,
+        "1": 0,
+        "2": 359,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 314,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.65
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2017_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 3868,
+      "sha256": "5093a9fd73738f8ec18cb3622c59f94ba33ee111b6bb8a99b5472e4c7f1109dd",
+      "cached": false,
+      "elapsed_seconds": 0.956,
+      "rows": 49,
+      "type_field_present": true,
+      "box_retained": 49,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 49,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 47,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.956
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2017_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 44996,
+      "sha256": "40f0f1b550421210a0d28749559b81a50560d5f1be5e57c5b3316f1d5f403ad6",
+      "cached": false,
+      "elapsed_seconds": 1.802,
+      "rows": 574,
+      "type_field_present": true,
+      "box_retained": 574,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 299,
+        "1": 0,
+        "2": 275,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 259,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.802
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2000_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 585,
+      "sha256": "29850c4fb26fd26e727deb628add1b12aa7f84b96ae7f023e85d5988c235f968",
+      "cached": false,
+      "elapsed_seconds": 0.732,
+      "rows": 6,
+      "type_field_present": true,
+      "box_retained": 6,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 6,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 6,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.732
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2001_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 2742,
+      "sha256": "39f04075b87ce5e2954f79fe479ec4c089ba521293a92ff407b6b5498599b3be",
+      "cached": false,
+      "elapsed_seconds": 0.867,
+      "rows": 34,
+      "type_field_present": true,
+      "box_retained": 34,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 34,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 30,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.867
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2002_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 3295,
+      "sha256": "67fb7366cf9bfc31477d7daf220c68fa81426648cc772cf230384212fa632e2a",
+      "cached": false,
+      "elapsed_seconds": 0.881,
+      "rows": 41,
+      "type_field_present": true,
+      "box_retained": 41,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 41,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 41,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.881
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2003_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 7041,
+      "sha256": "a29c481e47224ded91b32c498e893b2ecba71207522933d742cd562d8c017418",
+      "cached": false,
+      "elapsed_seconds": 0.998,
+      "rows": 90,
+      "type_field_present": true,
+      "box_retained": 90,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 89,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 87,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.998
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2004_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 4214,
+      "sha256": "627770ca8cee448cafbe0bec0d96811f3ceaccb9ca2e94766076d52a683a39e9",
+      "cached": false,
+      "elapsed_seconds": 0.892,
+      "rows": 53,
+      "type_field_present": true,
+      "box_retained": 53,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 53,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 52,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.892
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2005_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 3733,
+      "sha256": "59a5006619df3619595e10e9b1f77ca71d8d3e3f3b9f8a6bb04453a65be0cce9",
+      "cached": false,
+      "elapsed_seconds": 0.997,
+      "rows": 47,
+      "type_field_present": true,
+      "box_retained": 47,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 47,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 45,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.997
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2006_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 4162,
+      "sha256": "c8afb6f58e3ee3754b40dc009c4da252558aae05ae6e039d8bf219deb2c3f2c3",
+      "cached": false,
+      "elapsed_seconds": 1.04,
+      "rows": 52,
+      "type_field_present": true,
+      "box_retained": 52,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 52,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 50,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.04
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2007_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 6449,
+      "sha256": "6459e850cd098f505351d3d0551099522e4fad0c5c8e4bc9767eb76783419426",
+      "cached": false,
+      "elapsed_seconds": 1.026,
+      "rows": 81,
+      "type_field_present": true,
+      "box_retained": 81,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 81,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 81,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.026
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2008_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 4768,
+      "sha256": "4e74ee89c5a13717523384cf0b1b956dd5b67fc1c0105a98889e846077f154c0",
+      "cached": false,
+      "elapsed_seconds": 0.856,
+      "rows": 60,
+      "type_field_present": true,
+      "box_retained": 60,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 59,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 58,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.856
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2009_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 1993,
+      "sha256": "6f1b67cf51942e86bdb75aa7d82a1c153be5c42d9d458b187b586ca7ce79e6c9",
+      "cached": false,
+      "elapsed_seconds": 0.824,
+      "rows": 24,
+      "type_field_present": true,
+      "box_retained": 24,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 24,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 23,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.824
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2010_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 4196,
+      "sha256": "a9574d73c9ab47b627903d6968e7fe4be9e0a5cdba0313573c9e37b813b7f9e0",
+      "cached": false,
+      "elapsed_seconds": 0.921,
+      "rows": 52,
+      "type_field_present": true,
+      "box_retained": 52,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 52,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 50,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.921
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2011_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 5028,
+      "sha256": "11651a701116b169ffa5752de91e916da70382904b0555ba5c42d89c00185c78",
+      "cached": false,
+      "elapsed_seconds": 1.063,
+      "rows": 63,
+      "type_field_present": true,
+      "box_retained": 63,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 62,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 61,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.063
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2012_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 3562,
+      "sha256": "1e7bf880f5e051e46e9e1b7a2fef8cc970c0a7e8b5e52200dfd3036e23a354ce",
+      "cached": false,
+      "elapsed_seconds": 1.101,
+      "rows": 44,
+      "type_field_present": true,
+      "box_retained": 44,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 44,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 44,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.101
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2012_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 22685,
+      "sha256": "d72ebddbe0fee5e173e632a3f67e9faf0e2d18d872700448e7dace18e614c625",
+      "cached": false,
+      "elapsed_seconds": 1.103,
+      "rows": 288,
+      "type_field_present": true,
+      "box_retained": 288,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 231,
+        "1": 0,
+        "2": 57,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 207,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.103
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2013_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 7235,
+      "sha256": "dad30b61fae5db4f9964036d655291bf0d31a8d2bf470609dc93866e01d894b0",
+      "cached": false,
+      "elapsed_seconds": 1.282,
+      "rows": 92,
+      "type_field_present": true,
+      "box_retained": 92,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 92,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 85,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.282
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2013_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 41842,
+      "sha256": "a3acca0d3d73093f514eea1e06d3cfbf531a30e60e404bf7e782f9c57774c4ce",
+      "cached": false,
+      "elapsed_seconds": 1.279,
+      "rows": 534,
+      "type_field_present": true,
+      "box_retained": 534,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 409,
+        "1": 0,
+        "2": 125,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 382,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.279
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2014_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 3573,
+      "sha256": "8286748cc97ca2424ac51854a39216718edea697e3359ebd0216c2696c5274ba",
+      "cached": false,
+      "elapsed_seconds": 0.948,
+      "rows": 45,
+      "type_field_present": true,
+      "box_retained": 45,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 45,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 45,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.948
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2014_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 32406,
+      "sha256": "9ab4f4805b1cd65f2a3dd4c907ac949d294d44b935d3afb7a4b225d0ecdc83eb",
+      "cached": false,
+      "elapsed_seconds": 1.334,
+      "rows": 413,
+      "type_field_present": true,
+      "box_retained": 413,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 229,
+        "1": 0,
+        "2": 184,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 222,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.334
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2015_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 4185,
+      "sha256": "36eadd22d688516d02ad7aa4429529ef2152fa392b9e98a041437a63b4d1fc7c",
+      "cached": false,
+      "elapsed_seconds": 0.94,
+      "rows": 53,
+      "type_field_present": true,
+      "box_retained": 53,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 53,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 52,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.94
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2015_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 36014,
+      "sha256": "555f94c7d4194411fd0309600c9144b45df5aaf84cf66dc2e913c8836074b1ea",
+      "cached": false,
+      "elapsed_seconds": 1.239,
+      "rows": 458,
+      "type_field_present": true,
+      "box_retained": 458,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 247,
+        "1": 0,
+        "2": 211,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 228,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.239
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2016_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 4340,
+      "sha256": "9b5aa85410b9df06423b01deb980c7db82f0e4640df8cc0b6e739f85635b861d",
+      "cached": false,
+      "elapsed_seconds": 1.022,
+      "rows": 54,
+      "type_field_present": true,
+      "box_retained": 54,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 54,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 49,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.022
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2016_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 43209,
+      "sha256": "cad81849e6970b8185721865511cbec01ad561880e2ed50a36f93c2df9a1f863",
+      "cached": false,
+      "elapsed_seconds": 1.442,
+      "rows": 551,
+      "type_field_present": true,
+      "box_retained": 551,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 318,
+        "1": 0,
+        "2": 233,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 304,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.442
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2017_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 2203,
+      "sha256": "3cb16f1c2483ce6d483261f4c9953ddfb1f7abfbfd3204daae030f469e140745",
+      "cached": false,
+      "elapsed_seconds": 0.945,
+      "rows": 27,
+      "type_field_present": true,
+      "box_retained": 27,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 25,
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 24,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.945
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2017_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 27330,
+      "sha256": "3b31c8f01ffa6a5cc754398731e6f8af5c90f657f9db4a52dba3eaffeac9328f",
+      "cached": false,
+      "elapsed_seconds": 1.466,
+      "rows": 348,
+      "type_field_present": true,
+      "box_retained": 348,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 142,
+        "1": 0,
+        "2": 205,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 134,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.466
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2000_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 206,
+      "sha256": "180ffa1b8e18065b80ad35f656e30f80cf7461201224c9c74665c89a86632703",
+      "cached": false,
+      "elapsed_seconds": 0.933,
+      "rows": 1,
+      "type_field_present": true,
+      "box_retained": 1,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.933
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2001_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 1050,
+      "sha256": "1a77e765061acef7d885501fce36943a9c65e6af7d09541034d1405e6f8638c2",
+      "cached": false,
+      "elapsed_seconds": 0.921,
+      "rows": 12,
+      "type_field_present": true,
+      "box_retained": 12,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 12,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 12,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.921
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2002_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 3340,
+      "sha256": "c38a43945153ff801b983ed80351acf1ad618820472d731b3689bdd128761145",
+      "cached": false,
+      "elapsed_seconds": 1.058,
+      "rows": 41,
+      "type_field_present": true,
+      "box_retained": 41,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 41,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 39,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.058
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2003_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 2657,
+      "sha256": "2806d7647626af23569006c18c917d046e8129dbfcea4e87c89e623a0b948aa1",
+      "cached": false,
+      "elapsed_seconds": 1.028,
+      "rows": 33,
+      "type_field_present": true,
+      "box_retained": 33,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 33,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 31,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.028
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2004_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 1340,
+      "sha256": "d5bf58746e9bd057c828720bb8df1bef5102ede6a1d75bd6381d09f853bbbafe",
+      "cached": false,
+      "elapsed_seconds": 0.962,
+      "rows": 16,
+      "type_field_present": true,
+      "box_retained": 16,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 16,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 16,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.962
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2005_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 1529,
+      "sha256": "d51bdf092ddeac3b2c9adf69a911b99510f9442c63bd93c1d12d53bc8f236beb",
+      "cached": false,
+      "elapsed_seconds": 0.93,
+      "rows": 18,
+      "type_field_present": true,
+      "box_retained": 18,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 18,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 16,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.93
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2006_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 1820,
+      "sha256": "8564da34fe5911b34e2b6e6e13998e44b9840fdd274860e1cac3d04ab4ea8296",
+      "cached": false,
+      "elapsed_seconds": 1.028,
+      "rows": 22,
+      "type_field_present": true,
+      "box_retained": 22,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 22,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 20,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.028
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2007_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 2628,
+      "sha256": "ea0b5044dffea29aeb0d7cfc6d098f400ebdda2c5e36ff3f4ce8a7fef315db78",
+      "cached": false,
+      "elapsed_seconds": 0.972,
+      "rows": 33,
+      "type_field_present": true,
+      "box_retained": 33,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 33,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 29,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.972
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2008_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 2272,
+      "sha256": "bdf7b0c0ff04a953c44bcde59d5c8d369756b22803b9ef09945a613f1970ab88",
+      "cached": false,
+      "elapsed_seconds": 0.875,
+      "rows": 28,
+      "type_field_present": true,
+      "box_retained": 28,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 28,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 27,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.875
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2009_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 1133,
+      "sha256": "7bbbab1400a193d8d726d6aa66e7f22aedb0b0dbdff27797951bcaaa7bb551a7",
+      "cached": false,
+      "elapsed_seconds": 0.971,
+      "rows": 13,
+      "type_field_present": true,
+      "box_retained": 13,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 13,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 13,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.971
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2010_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 3471,
+      "sha256": "cd5502beb3d2c2540cd8770d2e05693b1d0de8e3002a773782285259ffa0a6ab",
+      "cached": false,
+      "elapsed_seconds": 1.831,
+      "rows": 43,
+      "type_field_present": true,
+      "box_retained": 43,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 43,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 42,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.831
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2011_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 2125,
+      "sha256": "58b453545fa3d24058b937fa9e1a37112c9ad863843316adf57eefc68f85a4c9",
+      "cached": false,
+      "elapsed_seconds": 0.936,
+      "rows": 26,
+      "type_field_present": true,
+      "box_retained": 26,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 26,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 23,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.936
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2012_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 1583,
+      "sha256": "828373d8b0c878e6c0194b630ed5e2d7bf3bc31abf70f4e73c5b0161fba0c957",
+      "cached": false,
+      "elapsed_seconds": 0.921,
+      "rows": 19,
+      "type_field_present": true,
+      "box_retained": 19,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 19,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 18,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.921
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2012_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 19574,
+      "sha256": "12c2579e84b65e2a0e067967b01f1ec872dbb7048a210fe8daf8375539b88bf6",
+      "cached": false,
+      "elapsed_seconds": 2.021,
+      "rows": 249,
+      "type_field_present": true,
+      "box_retained": 249,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 236,
+        "1": 0,
+        "2": 13,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 214,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 2.021
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2013_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 2593,
+      "sha256": "e68e1448b4423e2f8925fae227686df2bc2fc6cdbac7471ebaf635d94c0a8107",
+      "cached": false,
+      "elapsed_seconds": 0.834,
+      "rows": 32,
+      "type_field_present": true,
+      "box_retained": 32,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 32,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 31,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.834
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2013_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 31962,
+      "sha256": "4dd1e470db579630c48b4fe936edd153d76625033e678c62ca0bcaf43f1bd03c",
+      "cached": false,
+      "elapsed_seconds": 1.159,
+      "rows": 407,
+      "type_field_present": true,
+      "box_retained": 407,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 401,
+        "1": 0,
+        "2": 6,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 361,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.159
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2014_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 2016,
+      "sha256": "5c7af0ebbe2f8ee89a625879c4522847cccfd14c3b64f94c23a7ffa924c2ac2b",
+      "cached": false,
+      "elapsed_seconds": 0.863,
+      "rows": 25,
+      "type_field_present": true,
+      "box_retained": 25,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 25,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 22,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.863
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2014_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 21067,
+      "sha256": "1c2de1c7f3db01d85b8db709fd2effad394aea6e7b83162d5ea0085ff340b2a2",
+      "cached": false,
+      "elapsed_seconds": 1.129,
+      "rows": 268,
+      "type_field_present": true,
+      "box_retained": 268,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 253,
+        "1": 0,
+        "2": 14,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 230,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.129
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2015_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 3467,
+      "sha256": "bfb1b84cabd59a00ab34adb5bc6765d7ae4f3eb2c8bd0136bf846a27fc7ebb92",
+      "cached": false,
+      "elapsed_seconds": 0.87,
+      "rows": 43,
+      "type_field_present": true,
+      "box_retained": 43,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 43,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 41,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.87
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2015_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 27230,
+      "sha256": "c0bb9d0aefcf3018ed524c030194c007b1fb7b5bcf5c35c58898be4a58688181",
+      "cached": false,
+      "elapsed_seconds": 1.106,
+      "rows": 346,
+      "type_field_present": true,
+      "box_retained": 346,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 332,
+        "1": 0,
+        "2": 14,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 288,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.106
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2016_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 6385,
+      "sha256": "97c1eb3756aab53c2384c699faa811bffa5479805debf2ffae8474f0c449a8f2",
+      "cached": false,
+      "elapsed_seconds": 0.932,
+      "rows": 81,
+      "type_field_present": true,
+      "box_retained": 81,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 81,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 80,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.932
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2016_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 43836,
+      "sha256": "8b935144ee9c2e89a6a45927fdaafa932d5c1d9bafd088df2d4d3f63e89b138a",
+      "cached": false,
+      "elapsed_seconds": 1.261,
+      "rows": 559,
+      "type_field_present": true,
+      "box_retained": 559,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 530,
+        "1": 0,
+        "2": 29,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 470,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.261
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2017_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 2384,
+      "sha256": "983ecb4c37a74efd4bbd727e363513c33f86fc82a589e5ce83d8be3bb82da51a",
+      "cached": false,
+      "elapsed_seconds": 0.943,
+      "rows": 29,
+      "type_field_present": true,
+      "box_retained": 29,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 29,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 25,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.943
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2017_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 20557,
+      "sha256": "50cd8118ac8050eff075fbfc6fda997d68580f6d7da8977324d0847aafd1a23d",
+      "cached": false,
+      "elapsed_seconds": 1.213,
+      "rows": 261,
+      "type_field_present": true,
+      "box_retained": 261,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 256,
+        "1": 0,
+        "2": 5,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 229,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.213
+    },
+    {
+      "region": "israel",
+      "file": "modis_2000_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 911,
+      "sha256": "adb2b5a0df447fdc18973b5a520863701aa968ef6bc840afa700a047f701feec",
+      "cached": false,
+      "elapsed_seconds": 0.972,
+      "rows": 10,
+      "type_field_present": true,
+      "box_retained": 10,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 10,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 10,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.972
+    },
+    {
+      "region": "israel",
+      "file": "modis_2001_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 8753,
+      "sha256": "9bac7df1eb7d22e8466d8c28848c4687c85d888f944c84aec3e4cf58e0791bab",
+      "cached": false,
+      "elapsed_seconds": 0.783,
+      "rows": 112,
+      "type_field_present": true,
+      "box_retained": 112,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 112,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 104,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.783
+    },
+    {
+      "region": "israel",
+      "file": "modis_2002_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 10936,
+      "sha256": "ea0af8bc59a85c8d369b623fb42e3ef62bda09b5d91e207ed56dc204ccb8ad0e",
+      "cached": false,
+      "elapsed_seconds": 1.067,
+      "rows": 140,
+      "type_field_present": true,
+      "box_retained": 140,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 140,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 136,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.067
+    },
+    {
+      "region": "israel",
+      "file": "modis_2003_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 16009,
+      "sha256": "4676b6402c781988209274604166be6fe239a95841112c3b44ec5a949998ad17",
+      "cached": false,
+      "elapsed_seconds": 1.162,
+      "rows": 208,
+      "type_field_present": true,
+      "box_retained": 208,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 208,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 192,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.162
+    },
+    {
+      "region": "israel",
+      "file": "modis_2004_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 9905,
+      "sha256": "c414eaad57eb491144a374eaf39d48993d129c0ff97871894a3aea522020340f",
+      "cached": false,
+      "elapsed_seconds": 1.998,
+      "rows": 127,
+      "type_field_present": true,
+      "box_retained": 127,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 127,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 118,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.998
+    },
+    {
+      "region": "israel",
+      "file": "modis_2005_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 18230,
+      "sha256": "b1a6857d4b81ca64872506940e35d9a983d89a68378a4b6b939fe64e54fae1ea",
+      "cached": false,
+      "elapsed_seconds": 1.174,
+      "rows": 234,
+      "type_field_present": true,
+      "box_retained": 234,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 234,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 219,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.174
+    },
+    {
+      "region": "israel",
+      "file": "modis_2006_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 15812,
+      "sha256": "5cbd13e64375d0fcf1ca1f6f50a8d3f42702df4b65974dd079500b5c699cda8c",
+      "cached": false,
+      "elapsed_seconds": 1.269,
+      "rows": 203,
+      "type_field_present": true,
+      "box_retained": 203,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 203,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 198,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.269
+    },
+    {
+      "region": "israel",
+      "file": "modis_2007_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 13475,
+      "sha256": "50bc054c66e62ca1f76e2022834dd32f3899aeb19dfd6e9930fc3504c633e232",
+      "cached": false,
+      "elapsed_seconds": 1.434,
+      "rows": 175,
+      "type_field_present": true,
+      "box_retained": 175,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 175,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 151,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.434
+    },
+    {
+      "region": "israel",
+      "file": "modis_2008_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 8249,
+      "sha256": "285c47cdc6e22b1c8c5ede6b4403c3be4e3b3c4a3fbe68c89d45a2942743d85a",
+      "cached": false,
+      "elapsed_seconds": 1.008,
+      "rows": 105,
+      "type_field_present": true,
+      "box_retained": 105,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 105,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 100,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.008
+    },
+    {
+      "region": "israel",
+      "file": "modis_2009_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 8154,
+      "sha256": "c72fcd7f2dda0316b764445faf0122fead7ec72feeae9a6dd5d31b3acbcff2f0",
+      "cached": false,
+      "elapsed_seconds": 1.131,
+      "rows": 105,
+      "type_field_present": true,
+      "box_retained": 105,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 105,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 104,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.131
+    },
+    {
+      "region": "israel",
+      "file": "modis_2010_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 29878,
+      "sha256": "fbd1e0027c716ed9ebaa10e77b997896e3b2e8c86f5271861ff634d9c12dbd33",
+      "cached": false,
+      "elapsed_seconds": 1.254,
+      "rows": 383,
+      "type_field_present": true,
+      "box_retained": 383,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 383,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 365,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.254
+    },
+    {
+      "region": "israel",
+      "file": "modis_2011_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 9952,
+      "sha256": "ad2b10b428e470ff2b64f7f894a8b3bf832a2187855aef35276ff47f238fc890",
+      "cached": false,
+      "elapsed_seconds": 0.908,
+      "rows": 127,
+      "type_field_present": true,
+      "box_retained": 127,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 127,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 116,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.908
+    },
+    {
+      "region": "israel",
+      "file": "modis_2012_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 7939,
+      "sha256": "fd40f7dc6e6831da442c4d8837cdfc524c4a95f74ee95ef90906b672eb739bd6",
+      "cached": false,
+      "elapsed_seconds": 0.875,
+      "rows": 101,
+      "type_field_present": true,
+      "box_retained": 101,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 101,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 98,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.875
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2012_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 101254,
+      "sha256": "05a2e5e7544d54151e0116a61be2b9e76106dc8ed4b2e2bd97e78484a7623942",
+      "cached": false,
+      "elapsed_seconds": 1.584,
+      "rows": 1292,
+      "type_field_present": true,
+      "box_retained": 1292,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 628,
+        "1": 0,
+        "2": 664,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 550,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.584
+    },
+    {
+      "region": "israel",
+      "file": "modis_2013_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 13139,
+      "sha256": "da5467349ebbe5b23aec91d6f3a3094aa6f4273e8bd9f1246ff959c2ae7d26bc",
+      "cached": false,
+      "elapsed_seconds": 1.067,
+      "rows": 168,
+      "type_field_present": true,
+      "box_retained": 168,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 168,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 159,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.067
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2013_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 156440,
+      "sha256": "fde775db324c69afcce92909458661842f278072fd0d49c8c6ecbeee84bbdeb8",
+      "cached": false,
+      "elapsed_seconds": 4.849,
+      "rows": 1999,
+      "type_field_present": true,
+      "box_retained": 1999,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1134,
+        "1": 0,
+        "2": 861,
+        "3": 4,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 966,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 4.849
+    },
+    {
+      "region": "israel",
+      "file": "modis_2014_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 8378,
+      "sha256": "00d953c394f90a7a2485517f4df21ef16e24a29bb8012f9b7e355d96af742296",
+      "cached": false,
+      "elapsed_seconds": 0.856,
+      "rows": 107,
+      "type_field_present": true,
+      "box_retained": 107,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 107,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 105,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.856
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2014_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 115325,
+      "sha256": "b66b5e45556a847ec9cfb7b12deefe81274662a1a52e240b8006e0200c85e4cc",
+      "cached": false,
+      "elapsed_seconds": 2.117,
+      "rows": 1472,
+      "type_field_present": true,
+      "box_retained": 1472,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 634,
+        "1": 0,
+        "2": 838,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 563,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 2.117
+    },
+    {
+      "region": "israel",
+      "file": "modis_2015_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 8865,
+      "sha256": "b769af3a68a9f09a2c59a4b8bd5dde1feba6bea50b8332cd4ce2f1064e0c6a71",
+      "cached": false,
+      "elapsed_seconds": 0.745,
+      "rows": 113,
+      "type_field_present": true,
+      "box_retained": 113,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 113,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 105,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.745
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2015_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 110304,
+      "sha256": "beaba00253777a37ff5d861c784f93d6df8128ab5da0b6e7fbc9134434e2d461",
+      "cached": false,
+      "elapsed_seconds": 1.6,
+      "rows": 1408,
+      "type_field_present": true,
+      "box_retained": 1408,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 772,
+        "1": 0,
+        "2": 635,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 689,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.6
+    },
+    {
+      "region": "israel",
+      "file": "modis_2016_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 12649,
+      "sha256": "66624ecf1edee5a2bedba991b7c40043be449a016487817c53abec568a95b80b",
+      "cached": false,
+      "elapsed_seconds": 0.874,
+      "rows": 163,
+      "type_field_present": true,
+      "box_retained": 163,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 163,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 155,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.874
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2016_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 126495,
+      "sha256": "d596234ddee04c82ffd8af7443205fa7b6eaf4006cdff6a87d14e6fd4c0c5b1b",
+      "cached": false,
+      "elapsed_seconds": 1.61,
+      "rows": 1616,
+      "type_field_present": true,
+      "box_retained": 1616,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 846,
+        "1": 0,
+        "2": 768,
+        "3": 2,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 754,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.61
+    },
+    {
+      "region": "israel",
+      "file": "modis_2017_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 8212,
+      "sha256": "71e31bb866d87b19350d5584aa8afd14cc79a192d888a16a561aa5b00311f6a2",
+      "cached": false,
+      "elapsed_seconds": 0.997,
+      "rows": 105,
+      "type_field_present": true,
+      "box_retained": 105,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 105,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 102,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 0.997
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2017_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 113934,
+      "sha256": "591729c4b26dc5448ea8ad66b94ec35f2bbd1e60f38a04be6d03a699f7f6a9b2",
+      "cached": false,
+      "elapsed_seconds": 1.823,
+      "rows": 1455,
+      "type_field_present": true,
+      "box_retained": 1455,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 666,
+        "1": 0,
+        "2": 785,
+        "3": 4,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 613,
+      "monthly_completeness": "unknown",
+      "download_and_audit_seconds": 1.823
+    }
+  ],
+  "unavailable": [
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2000_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2000_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2001_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2001_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2002_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2002_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2003_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2003_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2004_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2004_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2005_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2005_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2006_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2006_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2007_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2007_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2008_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2008_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2009_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2009_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2010_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2010_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2011_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2011_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2012_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2013_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2014_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2015_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2016_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2017_Syria.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2000_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2000_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2001_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2001_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2002_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2002_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2003_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2003_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2004_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2004_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2005_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2005_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2006_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2006_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2007_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2007_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2008_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2008_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2009_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2009_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2010_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2010_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2011_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2011_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2012_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2013_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2014_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2015_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2016_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2017_Jordan.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2000_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2000_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2001_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2001_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2002_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2002_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2003_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2003_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2004_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2004_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2005_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2005_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2006_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2006_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2007_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2007_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2008_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2008_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2009_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2009_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2010_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2010_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2011_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2011_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2012_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2013_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2014_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2015_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2016_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2017_Cyprus.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2000_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2000_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2001_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2001_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2002_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2002_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2003_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2003_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2004_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2004_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2005_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2005_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2006_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2006_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2007_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2007_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2008_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2008_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2009_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2009_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2010_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2010_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2011_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2011_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2012_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2013_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2014_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2015_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2016_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2017_Palestine.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2000_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2000_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2001_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2001_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2002_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2002_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2003_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2003_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2004_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2004_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2005_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2005_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2006_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2006_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2007_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2007_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2008_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2008_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2009_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2009_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2010_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2010_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2011_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2012-01-20"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2011_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2012_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2013_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2014_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2015_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2016_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2017_Israel.csv",
+      "reason": "Year precedes FIRMS standard-product date extent",
+      "product_first_date": "2018-04-01"
+    }
+  ],
+  "status": "Selected files pass box gate; full archive audit still required"
+}
