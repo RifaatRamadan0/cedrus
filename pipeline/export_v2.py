@@ -130,7 +130,7 @@ def export(region):
     cfg = REGIONS[region]
     raw = ROOT / "data" / "raw" / region
     box = cfg["box"]
-    manifest = json.loads((raw / "manifest.json").read_text())
+    manifest = json.loads((raw / "manifest.json").read_text(encoding="utf-8"))
     det = detections(region)
     cov = {s: coverage(det[det.sensor == s]) for s in VIIRS}
     cov_modis = coverage(det[det.fam == "modis"])
@@ -669,16 +669,18 @@ def main():
     global OUT
     ap = argparse.ArgumentParser()
     ap.add_argument("--region", choices=regions_with("product"))
+    ap.add_argument("--catalog-only", action="store_true",
+                    help="rewrite regions.json (shared and region notes from regions.py) without exporting any region")
     args = ap.parse_args()
-    wanted = [args.region] if args.region else regions_with("product")
+    wanted = [] if args.catalog_only else [args.region] if args.region else regions_with("product")
     index_path = OUT / "regions.json"
-    existing = json.loads(index_path.read_text()) if index_path.exists() else {"regions": []}
+    existing = json.loads(index_path.read_text(encoding="utf-8")) if index_path.exists() else {"regions": []}
     by_id = {r["id"]: r for r in existing["regions"]}
     for region in wanted:
         if not (ROOT / "data" / "raw" / region / "manifest.json").exists():
             print(f"{region}: no raw files yet, skipped")
             continue
-        manifest = json.loads((ROOT / "data/raw" / region / "manifest.json").read_text())
+        manifest = json.loads((ROOT / "data/raw" / region / "manifest.json").read_text(encoding="utf-8"))
         for name, source in manifest.items():
             if sha256(ROOT / "data/raw" / region / name) != source["sha256"]:
                 raise SystemExit(f"{region}/{name}: source checksum mismatch; refusing export")
@@ -701,14 +703,29 @@ def main():
                     backup.rename(target)
                 raise
             by_id[region] = meta
-    order = list(dict.fromkeys(regions_with("product") + list(by_id)))
+    # Only product regions go in the catalog. An entry copied forward from the old file is dropped once its region
+    # loses the "product" role, so removing a region from regions.py removes it from the app.
+    order = regions_with("product")
+    # Notes are text from regions.py, not model output: refresh them on entries copied from the old catalog too, so a
+    # note can change without re-exporting (and so without regenerating) a region's data. An entry written before
+    # notes existed gets the key only when it has a note, so it stays unchanged otherwise.
+    for r in order:
+        notes = REGIONS[r].get("notes", [])
+        if r in by_id and (notes or "notes" in by_id[r]):
+            by_id[r]["notes"] = notes
+    for dropped in sorted(set(by_id) - set(order)):
+        print(f"{dropped}: no longer a product region, left out of the catalog"
+              + (f" (delete {OUT / dropped} by hand)" if (OUT / dropped).exists() else ""))
     index = {"contract": "docs/DATA_CONTRACT.md", "version": 2,
              "default_unit": "burning_days",  # the calendar opens in burning days; hotspots are one click away
              "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
              "shared_notes": SHARED_NOTES,
              "regions": [by_id[r] for r in order if r in by_id]}
     temporary = index_path.with_suffix(".json.tmp")
-    temporary.write_text(json.dumps(index, indent=1, allow_nan=False), encoding="utf-8")
+    # Same bytes as the committed catalog (indent 2, UTF-8 text, final newline). newline="\n" stops Windows writing
+    # CRLF, which would otherwise make git show every line of the file as changed.
+    temporary.write_text(json.dumps(index, indent=2, ensure_ascii=False, allow_nan=False) + "\n",
+                         encoding="utf-8", newline="\n")
     temporary.replace(index_path)
     print(f"-> {index_path}")
 
