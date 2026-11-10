@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "analysis/tier1"
-NEW = ("syria", "jordan", "cyprus", "la_rioja")
+NEW = ("syria", "la_rioja")  # Jordan and Cyprus were removed from the app on 10 Nov 2026
 
 
 def write_csv(path, rows):
@@ -22,7 +22,7 @@ def main():
                   "decimal_MB": p.stat().st_size/1e6, "over_3_MB": p.stat().st_size > 3000000,
                   "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in files]
     write_csv(OUT / "web_file_inventory.csv", inventory)
-    index = json.loads((ROOT / "web/data/regions.json").read_text())
+    index = json.loads((ROOT / "web/data/regions.json").read_text(encoding="utf-8"))
     meta = {r["id"]: r for r in index["regions"]}
     units = {}
     zero = {}

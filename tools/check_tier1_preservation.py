@@ -18,8 +18,18 @@ def main():
                        if hashlib.sha256((ROOT / f).read_bytes()).hexdigest() != v["sha256"]]
     changed_models = [f for f, expected in baseline["frozen"].items()
                       if hashlib.sha256((ROOT / f).read_bytes()).hexdigest() != expected]
+    # Notes are display text from pipeline/regions.py (Lebanon's limitation notes were added on 10 Nov 2026), so
+    # they are compared with that file instead of the baseline. Every other field must be unchanged.
+    import sys
+    sys.path.insert(0, str(ROOT / "pipeline"))
+    from regions import REGIONS
+
+    def without_notes(entry):
+        return {k: v for k, v in (entry or {}).items() if k != "notes"}
     changed_entries = [r["id"] for r in committed["regions"]
-                       if r["id"] in ("portugal", "lebanon") and current_by_id.get(r["id"]) != r]
+                       if r["id"] in ("portugal", "lebanon")
+                       and (without_notes(current_by_id.get(r["id"])) != without_notes(r)
+                            or current_by_id.get(r["id"], {}).get("notes", []) != REGIONS[r["id"]].get("notes", []))]
     result = {
         "preserved_export_count": len(baseline["preserved_exports"]),
         "all_preserved_exports_unchanged": not changed_exports,

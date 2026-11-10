@@ -11,22 +11,49 @@ SHARED_NOTES = [
     "Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. "
     "Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.",
     "Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.",
+    "Accuracy is checked against MODIS only up to 2021. From 2022 the MODIS satellites drift in orbit, so 2022–2025 values "
+    "are checked only by agreement between two VIIRS satellites, not against an independent record.",
 ]
+
+# Per-region forward tests (fit 2012-2019, score 2020-2021): analysis/tier1/region_evidence/<region>/REPORT.md
+FORWARD = "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): "
 
 REGIONS = {
     # role: "dev" = bake-off development, "product" = shown in the app, "sealed" = never opened before freeze,
     # "confirm" = formerly sealed, opened once for docs/CONFIRMATION_PLAN.md after the model was frozen
-    "portugal": {"country": "Portugal", "box": (-9.6, 36.9, -6.1, 42.2), "roles": {"dev", "product"}},
-    "lebanon": {"country": "Lebanon", "box": (35.10, 33.05, 36.65, 34.70), "roles": {"dev", "product"}},
-    "cyprus": {"country": "Cyprus", "box": (32.1, 34.4, 34.8, 35.8), "roles": {"dev", "product"}},
-    "jordan": {"country": "Jordan", "box": (34.8, 29.0, 39.5, 33.5), "roles": {"dev", "product"}},
+    "portugal": {"country": "Portugal", "box": (-9.6, 36.9, -6.1, 42.2), "roles": {"dev", "product"},
+                 "notes": [FORWARD + "met every pass rule in both units, with regional monthly error 15.3% against 30.8% "
+                           "for a simple conversion and the total 3.8–4.3% too high. This provides evidence for "
+                           "regional-level performance in 2020–2021. It does not show accuracy after 2021 or for single "
+                           "grid cells, where errors are 78–80%."]},
+    "lebanon": {"country": "Lebanon", "box": (35.10, 33.05, 36.65, 34.70), "roles": {"dev", "product"},
+                "notes": [FORWARD + "failed the check that the total is within 10%, underestimating by 16% in burning days "
+                          "and 21% in hotspots. It still beat a simple conversion by a wide margin (regional monthly error "
+                          "28.3% against 58.0%). Lebanon has few fires (245 MODIS burning days in the two years), so one "
+                          "large fire moves the total; grid-cell errors are 78–82%.",
+                          "11 of Lebanon's 28 grid cells lie on the border and also cover land in Syria; they hold 23% of "
+                          "Lebanon's estimated values. Each cell counts only Lebanon's records; Syria's fires in the same "
+                          "cell are in the Syria view."]},
+    # Cyprus and Jordan were removed from the app on 10 Nov 2026 (no "product" role): their forward tests had too few
+    # fires to measure (139 and 81 MODIS burning days in 2020-2021) and grid-cell errors of about 100% and 163%.
+    # Results and rule: analysis/tier1/region_evidence/README.md.
+    "cyprus": {"country": "Cyprus", "box": (32.1, 34.4, 34.8, 35.8), "roles": {"dev"}},
+    "jordan": {"country": "Jordan", "box": (34.8, 29.0, 39.5, 33.5), "roles": {"dev"}},
     "israel": {"country": "Israel", "box": (34.2, 29.4, 35.95, 33.4), "roles": {"dev"}},
     "palestine": {"country": "Palestine", "box": (34.1, 31.1, 35.7, 32.7), "roles": {"dev"}},
     "greece": {"country": "Greece", "box": None, "roles": {"dev"}},
-    "syria": {"country": "Syria", "box": (35.5, 32.2, 42.5, 37.5), "roles": {"dev", "product"}},
+    "syria": {"country": "Syria", "box": (35.5, 32.2, 42.5, 37.5), "roles": {"dev", "product"},
+              "notes": [FORWARD + "burning days passed every check, with regional monthly error 19.5% against 27.0% for a "
+                        "simple conversion. Hotspots failed one check: regional monthly error 27.5%, slightly worse than the "
+                        "simple conversion's 24.4%. 2021 was overestimated (662 predicted against 490 observed burning days). "
+                        "Local grid-cell errors are 69–77%. August and September 2020 were left out of the test by the "
+                        "sensor-outage rule.",
+                        "Cells on Syria's borders also cover land in neighbouring countries, but count only Syria's records. "
+                        "11 of them are shared with Lebanon, whose fires are in the Lebanon view; fires in Turkey, Iraq and "
+                        "Jordan are not shown anywhere."]},
     "la_rioja": {"country": "Argentina", "name": "La Rioja area, Argentina",
                  "box": (-69.7, -32.8, -65.4, -27.7), "roles": {"product"},
-                 "notes": ["Regional monthly summaries were tested against MODIS in 2020–2021. Local grid-cell errors remain substantial, around 60%. Accuracy for 2022–2025 has not been directly established. This region is outside the climates used in the earlier Mediterranean validation.",
+                 "notes": ["Regional monthly summaries were tested against MODIS in 2020–2021. Local grid-cell errors remain substantial, around 60%. This region is outside the climates used in the earlier Mediterranean validation.",
                            "Annual totals in the 2020-2021 test were above the 80% range.",
                            "This is a rectangular area including neighboring provincial land, not the exact La Rioja province."]},
     "turkey": {"country": "Turkey", "box": None, "roles": {"dev"}},
