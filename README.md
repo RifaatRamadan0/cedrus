@@ -24,11 +24,11 @@ exact sum within rounding (bound: 0.005 × cells + 0.00005 × monthly records + 
 
 ## Current regions and map coverage
 
-The product includes Portugal, Lebanon, Syria, Jordan, Cyprus and the La Rioja area in Argentina. Israel and Palestine are Deferred. Exported records start in November or December 2000 and end in November or December 2025, depending on the region; exact ranges are in [the data contract](docs/DATA_CONTRACT.md#current-product-records).
+The product includes Portugal, Lebanon, Syria and the La Rioja area in Argentina. Israel and Palestine are Deferred. Jordan and Cyprus were tested and removed from the app: too few fires to measure accuracy (81 and 139 MODIS burning days in the 2020–2021 test) and grid-cell errors of about 163% and 100%. Their results stay in [the forward tests](analysis/tier1/region_evidence/README.md). Exported records start in November or December 2000 and end in November or December 2025, depending on the region; exact ranges are in [the data contract](docs/DATA_CONTRACT.md#current-product-records).
 
 The orange dashed outline is an analysis extent, not a country boundary. Faint outlined cells are included in the exported grid with a near-zero estimate for the selected month; shaded dashed cells have no qualifying records in that region's exported grid. Neither state establishes complete observations or confirms that a location was fire-free. Click the map for details. Monthly observation completeness remains unknown.
 
-Latest full browser/data probe: **468/468 passed**, including both units, all six regions and the final console-error check. See [implementation status](docs/TIER1_IMPLEMENTATION_STATUS.md) and [the completed Tier 1 plan](docs/TIER1_PLAN.md). Live 2026 ingestion is not implemented; the local ignored FIRMS key has been used for availability/gap audits.
+Latest full browser/data probe: **408/408 passed**, including both units, all four regions and the final console-error check. See [implementation status](docs/TIER1_IMPLEMENTATION_STATUS.md) and [the completed Tier 1 plan](docs/TIER1_PLAN.md). Live 2026 ingestion is not implemented; the local ignored FIRMS key has been used for availability/gap audits.
 
 ## How we know it works: pre-registered tests, one of them failed
 

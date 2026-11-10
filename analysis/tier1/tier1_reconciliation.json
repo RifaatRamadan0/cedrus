@@ -14,34 +14,6 @@
     "max_rounding_bound": 2.0755500000000002
   },
   {
-    "region": "jordan",
-    "unit": "bd",
-    "months": 301,
-    "max_gap": 0.030899999999999483,
-    "max_rounding_bound": 0.4285
-  },
-  {
-    "region": "jordan",
-    "unit": "hot",
-    "months": 301,
-    "max_gap": 0.03770000000000001,
-    "max_rounding_bound": 0.43124999999999997
-  },
-  {
-    "region": "cyprus",
-    "unit": "bd",
-    "months": 300,
-    "max_gap": 0.015800000000046666,
-    "max_rounding_bound": 0.11855
-  },
-  {
-    "region": "cyprus",
-    "unit": "hot",
-    "months": 300,
-    "max_gap": 0.016000000000001346,
-    "max_rounding_bound": 0.13069999999999998
-  },
-  {
     "region": "la_rioja",
     "unit": "bd",
     "months": 302,

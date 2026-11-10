@@ -1,3 +1,39 @@
+# Per-region accuracy evidence and Jordan/Cyprus removal — 10 November 2026 (uncommitted)
+
+Only La Rioja had a 2020–2021 test on its own data, and only La Rioja said that 2022–2025 is not checked against
+MODIS, although that limit applies to every region. Changes:
+
+- **Forward tests** for Portugal, Lebanon, Syria, Jordan and Cyprus with the frozen models and La Rioja's
+  protocol and pass rules, nothing tuned: [summary](../analysis/tier1/region_evidence/README.md). Portugal and
+  Syria (burning days) pass. Lebanon, Jordan and Cyprus fail the ±10% total rule while beating the simple
+  conversion; Syria hotspots fail the region-month rule.
+- **Notes**: a shared note on every region about the 2022–2025 limit; a result note for Syria; the
+  now-duplicated sentence was removed from La Rioja's note.
+- **Lebanon and Syria limitations** (user request): Lebanon now shows its forward-test result, and both show the
+  shared border cells (11 of Lebanon's 28, holding 23% of its estimated values). Syria's note also names the
+  excluded outage months. New `export_v2.py --catalog-only` rewrites `regions.json` notes without exporting any
+  region, so Lebanon's data was not regenerated. **Changed check:** `check_tier1_preservation.py` now ignores
+  `notes` when comparing the Portugal/Lebanon entries and instead requires them to equal `regions.py`; a test
+  edit of Lebanon's `name` was still caught.
+- **Jordan and Cyprus removed from the app** (user decision): too few fires to measure and grid-cell errors of
+  about 163% and 100%. The rule was chosen after the results and is stated as such in the
+  [summary](../analysis/tier1/region_evidence/README.md#jordan-and-cyprus-removed-from-the-app). They keep the
+  `dev` role, raw files, audits and reports; `web/data/cyprus/` and `web/data/jordan/` were deleted. The exporter
+  now leaves non-product regions out of the catalog instead of copying old entries forward.
+- **Portugal's result** is shown with its limits: it met every pass rule, which is evidence for regional-level
+  performance in 2020–2021, not for years after 2021 or single cells (78–80% error). A Spain border-cell note was
+  left out because it could not be verified without country outlines.
+- **Exporter fix** (`pipeline/export_v2.py`): the catalog and manifests were read without an encoding, so
+  Windows used cp1256 and corrupted the "·" in the Portugal and Lebanon badges when they were copied across.
+  Reads are now UTF-8, and the catalog is written in the committed format (indent 2, UTF-8 text, LF).
+- Re-exported Syria and La Rioja (and, before the removal, Cyprus and Jordan): every data file is byte-identical; `regions.json` changes
+  only in notes and timestamps. Preservation check passed.
+- Probe: one new check per region and unit that the accuracy notes are shown. Full probe passed 476/476 with six
+  regions ([log](../analysis/tier1/probe_accuracy_notes.log)). After the removal: the catalog check expects the
+  four regions by ID; Amman and Nicosia became outside-coverage checks; a western-Iraq circle inside Syria's box
+  now tests the "No fire records from Syria" refusal. Full probe passed 402/402 in 337 s
+  ([log](../analysis/tier1/probe_region_removal.log)). After the Lebanon and Syria notes: 406/406 in 350 s ([log](../analysis/tier1/probe_lebanon_syria_notes.log)). After Portugal's note: **408/408 in 313 s** ([log](../analysis/tier1/probe_portugal_note.log)). Preservation check passed.
+
 # Map clarity follow-up — 7 November 2026 (committed)
 
 Implemented user-approved clarification across all six product regions and both units:

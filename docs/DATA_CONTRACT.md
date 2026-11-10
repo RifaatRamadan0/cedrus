@@ -26,8 +26,6 @@ Both units use the same date span within each region.
 |---|---|---|
 | Portugal | 2000-12 | 2025-12 |
 | Lebanon | 2000-12 | 2025-12 |
-| Cyprus | 2000-12 | 2025-11 |
-| Jordan | 2000-12 | 2025-12 |
 | Syria | 2000-11 | 2025-12 |
 | La Rioja area, Argentina | 2000-11 | 2025-12 |
 
@@ -67,7 +65,7 @@ down. The hotspot files are unchanged by the second view (byte-identical on re-e
   3 days; its first month only if it has one in the first 3 days. Interior months qualify under the span rule.
   This sets the exported first month (MODIS) and last month (VIIRS), but does **not** establish monthly completeness.
 - **VIIRS inclusion heuristic:** the month must be inside the sensor's eligible span and not flagged by the exporter
-  as an outage (zero regional detections while the other VIIRS satellite has at least 20). The current six-region
+  as an outage (zero regional detections while the other VIIRS satellite has at least 20). The current four-region
   catalog lists no such heuristic outage months. This does not negate the service-reported missing dates documented
   in the FIRMS audit; these are different measures.
 - **Live extension:** 2026 ingestion is not implemented. A FIRMS key is already stored in an ignored local `.env` and
