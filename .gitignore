@@ -218,3 +218,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# CEDRUS downloaded data and generated working files
+/data/raw/
+/data/processed/
+/tools/shots/
+/.pydeps/
+node_modules/
+.DS_Store
+
+# Local credentials and assistant settings
+.env.*
+!.env.example
+/.claude/
+
+# Preserve versioned research and validation logs
+!/analysis/**/*.log
+!/docs/research/**/*.log
