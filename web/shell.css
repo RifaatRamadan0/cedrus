@@ -59,7 +59,7 @@ html.past-deck .topbar{background:rgba(4,8,10,.9);backdrop-filter:blur(12px);-we
 .topbar .lang button{min-height:28px;min-width:34px;padding:0 8px;border-radius:999px;background:rgba(8,14,18,.6);border:1px solid var(--glass-b);color:var(--muted-y);font:500 11px/1 var(--f-mono);letter-spacing:.06em}
 .topbar .lang button[aria-pressed=true]{background:rgba(127,211,166,.16);border-color:var(--cedar);color:var(--fg)}
 .lang-note{position:fixed;z-index:49;top:64px;right:calc(var(--gut) + var(--pad));margin:0;max-width:340px;font-size:11.5px;color:var(--muted-y);background:rgba(4,8,10,.85);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
-.tb-cta{display:none}
+.topbar .tb-cta{display:none}
 .tb-btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 18px;border:1px solid var(--line-strong);color:var(--fg);
   background:rgba(10,19,21,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer;text-decoration:none;
   font:500 11.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;transition:background .3s,border-color .3s,transform .3s var(--ease)}
@@ -288,7 +288,9 @@ dialog .eyebrow{color:var(--cedar);font-family:var(--f-mono)}
 .toast{left:50%;background:#123326;border-color:rgba(127,211,166,.5)}
 
 /* ---------- responsive ---------- */
-@media (max-width:1300px){.tb-badge{display:none}.tb-nav a{padding:10px 10px}}
+@media (max-width:1500px){.tb-badge{display:none}}
+@media (max-width:1300px){.tb-nav a{padding:10px 10px}}
+@media (max-width:1180px){.tb-nav a{padding:9px 8px;font-size:10.5px;letter-spacing:.04em}}
 @media (max-width:1180px){
   .tb-brand small{display:none}
   .workspace{grid-template-columns:minmax(230px,270px) minmax(0,1fr)}
@@ -302,13 +304,14 @@ dialog .eyebrow{color:var(--cedar);font-family:var(--f-mono)}
   .dash-cards{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .dash-cards .dcard:first-child{grid-column:1 / -1}
 }
-@media (max-width:980px){.tb-nav{display:none}.tb-cta{display:inline-flex;margin-left:auto;padding:10px 14px}}
+@media (max-width:980px){.tb-nav{display:none}.topbar .tb-cta{display:inline-flex;margin-left:auto;padding:10px 14px}}
 @media (max-width:860px){
   .steps,.about-grid,.specs,.dash-cards{grid-template-columns:minmax(0,1fr)}
   .dash-cards .dcard:first-child{grid-column:auto}
   .specs div{border-left:0;border-top:1px solid var(--glass-b)}.specs div:first-child{border-top:0}
   #scrim{background:linear-gradient(180deg,rgba(4,8,10,.25) 0,rgba(4,8,10,.78) 45%,rgba(4,8,10,.78) 75%,rgba(4,8,10,.4) 100%)}
 }
+@media (max-width:860px){#satLabels{display:none}}
 @media (max-width:760px){
   .workspace,.insights{grid-template-columns:minmax(0,1fr)}
   .workspace .history,.insights .drift-panel{grid-column:auto}
