@@ -13,6 +13,9 @@ disk, round 3's rows for one development region reproduce the tournament's rows 
 import shutil
 import subprocess
 import sys
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -22,12 +25,13 @@ from pipeline.round2.models import fit_s, rng_for, totals
 from pipeline.tournament.candidates import predict_class_a2
 from pipeline.tournament.test_tournament import toy
 
-from . import data
+from . import data, confirm
 from .confirm import f0_tail, swap_metrics, swap_table
 from .model import class_means, fit_frozen, forecast, js_parts, parts
 
 FZ = {"champion_json": {"burning_days_model": {"frozen_setting": 10}}}
-SCRATCH = r2.ROOT.parent / "cedrus_scratch" / "round3"
+_scratch = tempfile.TemporaryDirectory(prefix="cedrus-round3-test-")
+SCRATCH = Path(_scratch.name)
 
 
 def fit_mask(T):
@@ -69,14 +73,28 @@ def run_cli(*args):
 
 
 def test_refusals():
-    """Both refusals are raised before the frozen file, any manifest or any detection file is read."""
-    for args, want in ((["--regions", "northern_algeria"], "refused: northern_algeria sealed"),
-                       (["--regions", "portugal", "n_california"], "refused: n_california sealed"),
-                       (["--i-am-the-lead-running-it-once", "--regions", "portugal"], "runs exactly the four sealed"),
-                       (["--i-am-the-lead-running-it-once", "--regions", "northern_algeria"], "runs exactly the four sealed")):
-        p = run_cli(*args)
-        assert p.returncode != 0 and want in p.stderr, (args, p.returncode, p.stderr[-500:])
-        print(f"{' '.join(args)}: {p.stderr.strip().splitlines()[-1]}")
+    """Historical sealed-role fixture: current product regions may already be spent.
+
+    Assert refusals before any frozen model or raw input can be read.
+    """
+    sealed = {"northern_algeria", "southern_france", "south_australia", "n_california"}
+    fixture = {r: dict(v, roles={"sealed"} if r in sealed else {"dev"})
+               for r, v in confirm.REGIONS.items()}
+    cases = ((["--regions", "northern_algeria"], "refused: northern_algeria sealed"),
+             (["--regions", "portugal", "n_california"], "refused: n_california sealed"),
+             (["--i-am-the-lead-running-it-once", "--regions", "portugal"], "runs exactly the four sealed"),
+             (["--i-am-the-lead-running-it-once", "--regions", "northern_algeria"], "runs exactly the four sealed"))
+    for args, want in cases:
+        with patch.dict(confirm.REGIONS, fixture, clear=True), \
+             patch.object(sys, "argv", ["confirm", *args]), \
+             patch.object(data, "load_frozen", side_effect=AssertionError("Read model before refusal")):
+            try:
+                confirm.main()
+            except SystemExit as exc:
+                assert want in str(exc), (args, str(exc))
+                print(f"{' '.join(args)}: {exc}")
+            else:
+                raise AssertionError(f"Expected refusal: {args}")
 
 
 def test_class_terms():

@@ -1,0 +1,5 @@
+# Preserve exact bytes used by scientific hashes and historical comparisons.
+/data/** -text
+/pipeline/** -text
+/web/data/** -text
+/analysis/** -text
