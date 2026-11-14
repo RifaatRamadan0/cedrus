@@ -695,7 +695,11 @@ def run(url, shots):
         check("hero video as served: preload=none and no autoplay attribute", 'preload="none"' in tag and "autoplay" not in tag, tag[:120])
         page.wait_for_timeout(2500)
         play_at = page.evaluate("window.__playAt || null")
-        check("hero video starts only after the calendar rendered", play_at is not None and play_at >= page.evaluate("window.__calendarAt"),
+        # Where WebGL runs, the 3D story stage replaces the hero video (it then never plays); elsewhere the video plays
+        # after the calendar. Either way it never starts before the calendar.
+        gl = page.evaluate("document.documentElement.classList.contains('gl-ok')")
+        check("hero video never starts before the calendar rendered (with WebGL the 3D story replaces it)",
+              (play_at is None and gl) or (play_at is not None and play_at >= page.evaluate("window.__calendarAt")),
               f"calendar {t:.2f} s, video play {'never' if play_at is None else f'{play_at / 1000:.2f} s'}")
         ctx.close()
 

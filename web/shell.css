@@ -204,7 +204,9 @@ html.deck-mode .dash-wrap{display:flex;flex-direction:column}
 .worst .bar{height:3px;border-radius:3px;background:rgba(143,201,255,.14);position:relative;overflow:hidden}
 .worst .bar i{position:absolute;inset:0;transform-origin:left;background:linear-gradient(90deg,#b3a25b,#ffe24a);box-shadow:0 0 10px rgba(255,220,80,.6)}
 .worst li b{text-align:right;font-weight:600}
-@media (max-height:860px){html.deck-mode .sc-note{display:none}html.deck-mode .ydots{height:56px}html.deck-mode .worst li:nth-child(n+5){display:none}html.deck-mode .launches div{padding:4px 9px}}
+.deck h1:lang(es),.deck h1:lang(ar){font-size:clamp(2.1rem,3.7vw,3.7rem)}
+@media (max-height:940px){html.deck-mode .sc-note{display:none}}
+@media (max-height:860px){html.deck-mode .ydots{height:56px}html.deck-mode .worst li:nth-child(n+5){display:none}html.deck-mode .launches div{padding:4px 9px}}
 @media (max-height:740px){html.deck-mode .dash-cards{display:none}}
 
 /* ---------- pages after the story (normal scrolling) ---------- */
