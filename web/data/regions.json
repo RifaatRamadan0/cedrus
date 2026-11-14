@@ -1,0 +1,5181 @@
+{
+  "contract": "docs/DATA_CONTRACT.md",
+  "version": 2,
+  "default_unit": "burning_days",
+  "generated_at": "2026-11-13T10:04:35+00:00",
+  "shared_notes": [
+    "Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.",
+    "Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.",
+    "Accuracy is checked against MODIS only up to 2021. From 2022 the MODIS satellites drift in orbit, so 2022–2025 values are checked only by agreement between two VIIRS satellites, not against an independent record.",
+    "2026 (January–July) comes from FIRMS standard data, assigned to each country with Natural Earth outlines; in a test this matched FIRMS's own 2025 country files exactly. Lebanon uses the outline as it was on 30 August 2021, which matched every FIRMS Lebanon assignment in 2000–2025; the current outline differs by about 1 km on the southern border. Later months are added when FIRMS releases standard data; near-real-time data is not used.",
+    "The 80% ranges are too narrow: in a test on 2020–2021 they held the observed MODIS value about half the time. Read the trust check and the chance figure as optimistic."
+  ],
+  "regions": [
+    {
+      "id": "portugal",
+      "name": "Portugal",
+      "notes": [
+        "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): met every pass rule in both units, with regional monthly error 15.3% against 30.8% for a simple conversion and the total 3.8–4.3% too high. This provides evidence for regional-level performance in 2020–2021. It does not show accuracy after 2021 or for single grid cells, where errors are 78–80%."
+      ],
+      "bbox": [
+        -9.6,
+        36.9,
+        -6.1,
+        42.2
+      ],
+      "months": {
+        "first": "2000-12",
+        "last": "2026-07"
+      },
+      "record_end": {
+        "suomi_npp": {
+          "first": "2012-02",
+          "last": "2026-07",
+          "first_detection": "2012-01-20",
+          "last_detection": "2026-07-31"
+        },
+        "noaa20": {
+          "first": "2018-04",
+          "last": "2026-07",
+          "first_detection": "2018-04-03",
+          "last_detection": "2026-07-31"
+        },
+        "modis": {
+          "first": "2000-12",
+          "last": "2026-07",
+          "first_detection": "2000-11-06",
+          "last_detection": "2026-07-31"
+        },
+        "detections_outside_record_dropped": 3,
+        "detections_outside_grid": {},
+        "viirs_outage_months": [],
+        "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
+        "after": "2026 comes from FIRMS standard data through the area API, assigned to the country with the Natural Earth outline (matched the 2025 FIRMS country file exactly in the test). Later months are added when FIRMS publishes standard data; near-real-time data is not used."
+      },
+      "default_view": {
+        "bounds": [
+          [
+            -9.6,
+            36.9
+          ],
+          [
+            -6.1,
+            42.2
+          ]
+        ]
+      },
+      "model": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+      "model_detail": {
+        "name": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+        "badge": "MODEL A2 · ROUND 2, FROZEN",
+        "a": 30,
+        "frozen": {
+          "file": "data/processed/round2/frozen.json",
+          "sha256": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686",
+          "commit": "617daff",
+          "selection": "docs/ROUND2_SELECTION.md"
+        },
+        "satellites": {
+          "snpp": {
+            "train": [
+              "2012-02",
+              "2019-12"
+            ],
+            "method": "A2",
+            "prior_ratio_r0": {
+              "01D": 0.2893,
+              "01N": 0.0931,
+              "02D": 0.4608,
+              "02N": 0.155,
+              "03D": 0.5508,
+              "03N": 0.1498,
+              "04D": 0.3855,
+              "04N": 0.1412,
+              "05D": 0.3523,
+              "05N": 0.1284,
+              "06D": 0.3243,
+              "06N": 0.1541,
+              "07D": 0.4113,
+              "07N": 0.3027,
+              "08D": 0.4974,
+              "08N": 0.3343,
+              "09D": 0.4915,
+              "09N": 0.2713,
+              "10D": 0.3948,
+              "10N": 0.3168,
+              "11D": 0.2953,
+              "11N": 0.0684,
+              "12D": 0.2785,
+              "12N": 0.0746
+            },
+            "background_b": {
+              "01D": 0.0269,
+              "01N": 0.0008,
+              "02D": 0.0501,
+              "02N": 0.0052,
+              "03D": 0.0613,
+              "03N": 0.0079,
+              "04D": 0.0431,
+              "04N": 0.0082,
+              "05D": 0.0557,
+              "05N": 0.006,
+              "06D": 0.0752,
+              "06N": 0.0129,
+              "07D": 0.0938,
+              "07N": 0.0417,
+              "08D": 0.0913,
+              "08N": 0.066,
+              "09D": 0.0572,
+              "09N": 0.0563,
+              "10D": 0.0914,
+              "10N": 0.0588,
+              "11D": 0.061,
+              "11N": 0.0007,
+              "12D": 0.0343,
+              "12N": 0.0007
+            },
+            "train_detections": {
+              "modis": 23158,
+              "snpp": 62152
+            }
+          },
+          "noaa20": {
+            "train": [
+              "2018-04",
+              "2019-12"
+            ],
+            "method": "J-S: x s (NOAA-20 to Suomi NPP), then A2",
+            "s": {
+              "D": 0.9993,
+              "N": 0.9417
+            },
+            "s_sd": {
+              "D": 0.0556,
+              "N": 0.1338
+            },
+            "prior_ratio_r0": {
+              "01D": 0.2891,
+              "01N": 0.0877,
+              "02D": 0.4605,
+              "02N": 0.146,
+              "03D": 0.5504,
+              "03N": 0.1411,
+              "04D": 0.3852,
+              "04N": 0.1329,
+              "05D": 0.3521,
+              "05N": 0.1209,
+              "06D": 0.324,
+              "06N": 0.1451,
+              "07D": 0.411,
+              "07N": 0.2851,
+              "08D": 0.4971,
+              "08N": 0.3148,
+              "09D": 0.4912,
+              "09N": 0.2555,
+              "10D": 0.3945,
+              "10N": 0.2983,
+              "11D": 0.2951,
+              "11N": 0.0644,
+              "12D": 0.2783,
+              "12N": 0.0703
+            },
+            "train_detections": {
+              "snpp": 6070,
+              "noaa20": 6274
+            }
+          }
+        },
+        "fit_cells": 183,
+        "cells_outside_fit_region_level": 2,
+        "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
+        "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+        "evidence": [
+          "docs/ROUND2_SELECTION.md",
+          "docs/CONFIRMATION_RESULTS.md"
+        ],
+        "check": {
+          "max_gap_between_model_predictive_mean_and_m": 0.0824,
+          "background_total": 717.66
+        }
+      },
+      "combination": {
+        "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window. Model A itself is unchanged.",
+        "slots_when_both_cover": {
+          "01D": [
+            "snpp",
+            "noaa20"
+          ],
+          "01N": [
+            "snpp",
+            "noaa20"
+          ],
+          "02D": [
+            "snpp",
+            "noaa20"
+          ],
+          "02N": [
+            "snpp",
+            "noaa20"
+          ],
+          "03D": [
+            "snpp",
+            "noaa20"
+          ],
+          "03N": [
+            "snpp",
+            "noaa20"
+          ],
+          "04D": [
+            "snpp",
+            "noaa20"
+          ],
+          "04N": [
+            "snpp",
+            "noaa20"
+          ],
+          "05D": [
+            "snpp",
+            "noaa20"
+          ],
+          "05N": [
+            "snpp",
+            "noaa20"
+          ],
+          "06D": [
+            "snpp",
+            "noaa20"
+          ],
+          "06N": [
+            "snpp",
+            "noaa20"
+          ],
+          "07D": [
+            "snpp",
+            "noaa20"
+          ],
+          "07N": [
+            "snpp",
+            "noaa20"
+          ],
+          "08D": [
+            "snpp",
+            "noaa20"
+          ],
+          "08N": [
+            "snpp",
+            "noaa20"
+          ],
+          "09D": [
+            "snpp",
+            "noaa20"
+          ],
+          "09N": [
+            "snpp",
+            "noaa20"
+          ],
+          "10D": [
+            "snpp",
+            "noaa20"
+          ],
+          "10N": [
+            "snpp",
+            "noaa20"
+          ],
+          "11D": [
+            "snpp",
+            "noaa20"
+          ],
+          "11N": [
+            "snpp",
+            "noaa20"
+          ],
+          "12D": [
+            "snpp",
+            "noaa20"
+          ],
+          "12N": [
+            "snpp",
+            "noaa20"
+          ]
+        }
+      },
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.4084,
+          "02": 0.3986,
+          "03": 0.463,
+          "04": 0.4259,
+          "05": 0.4732,
+          "06": 0.4098,
+          "07": 0.4366,
+          "08": 0.4711,
+          "09": 0.4382,
+          "10": 0.4349,
+          "11": 0.4506,
+          "12": 0.4001
+        },
+        "pooled": 0.4512,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(89 Terra + 20 x 0.4512) / (220 MODIS + 20)",
+          "02": "(374 Terra + 20 x 0.4512) / (941 MODIS + 20)",
+          "03": "(830 Terra + 20 x 0.4512) / (1792 MODIS + 20)",
+          "04": "(307 Terra + 20 x 0.4512) / (722 MODIS + 20)",
+          "05": "(158 Terra + 20 x 0.4512) / (333 MODIS + 20)",
+          "06": "(452 Terra + 20 x 0.4512) / (1105 MODIS + 20)",
+          "07": "(2194 Terra + 20 x 0.4512) / (5026 MODIS + 20)",
+          "08": "(6754 Terra + 20 x 0.4512) / (14335 MODIS + 20)",
+          "09": "(1493 Terra + 20 x 0.4512) / (3408 MODIS + 20)",
+          "10": "(1523 Terra + 20 x 0.4512) / (3503 MODIS + 20)",
+          "11": "(543 Terra + 20 x 0.4512) / (1205 MODIS + 20)",
+          "12": "(85 Terra + 20 x 0.4512) / (215 MODIS + 20)"
+        }
+      },
+      "policy": {
+        "bridged": [
+          "2000-12",
+          "2002-06"
+        ],
+        "observed": [
+          "2002-07",
+          "2021-12"
+        ],
+        "estimated": [
+          "2022-01",
+          "2026-07"
+        ],
+        "naive_switch": "2012-01"
+      },
+      "cells": 185,
+      "hotspot_years": [
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "sensors": {
+        "T": "Terra MODIS",
+        "A": "Aqua MODIS",
+        "N": "Suomi NPP VIIRS",
+        "J1": "NOAA-20 VIIRS"
+      },
+      "satellite_field": {
+        "A": "Aqua",
+        "J1": "N20",
+        "N": "N",
+        "T": "Terra"
+      },
+      "instrument_field": {
+        "A": "MODIS",
+        "J1": "VIIRS",
+        "N": "VIIRS",
+        "T": "MODIS"
+      },
+      "versions": [
+        "2",
+        "6.03",
+        "6.2",
+        "61.03"
+      ],
+      "detections": {
+        "N": 101872,
+        "J1": 46792,
+        "A": 38116,
+        "T": 35859
+      },
+      "provenance": {
+        "source": "NASA FIRMS country archive (standard products); after 2025: FIRMS area API standard products, clipped to the Natural Earth 1:10m country outline",
+        "filters": "box lon -9.6..-6.1, lat 36.9..42.2; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
+        "unit": "fire detections (satellite pixels flagged as burning), not burned area",
+        "files": [
+          {
+            "name": "modis_2000_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 3,
+            "sha256": "7bee34981b54a126b550e1d876c94115126f5ac69d0dea9c9f6c8b747f841a9b",
+            "retrieved": "2026-11-06T14:13:45+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1600,
+            "sha256": "8e9fce662ce0439f6d235c54a414a2af7b61e795daabe2e8b8f2a67d0d2f1298",
+            "retrieved": "2026-11-06T14:13:47+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2645,
+            "sha256": "696faf6b2b3d5a489db9c1dddf96d58543e4e5a42bbc74dc80c90cf221061057",
+            "retrieved": "2026-11-06T14:13:49+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 6246,
+            "sha256": "1cc329472d8c53d91c10862c90ae7b961c33bd3a2a72041e33e647bb5d771e83",
+            "retrieved": "2026-11-06T14:13:52+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 3042,
+            "sha256": "6c9895b10da725202cc94ed9df722c8db7132b15f06b2e75bca5549e5998a5f5",
+            "retrieved": "2026-11-06T14:13:55+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 9264,
+            "sha256": "846f52e9711c2e4d31e62616fe96c6fb925f213e1fa33f971ba30eb30d5cba35",
+            "retrieved": "2026-11-06T14:14:00+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2652,
+            "sha256": "7e1ae79efe56b373ee36a3bb2df7b70ad32b73ebe108026ca947160a7a1836db",
+            "retrieved": "2026-11-06T14:14:02+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1585,
+            "sha256": "06d9d762826986889e5548d11cc806925d4c274f30491daf3c2629dfd5fd3b62",
+            "retrieved": "2026-11-06T14:14:03+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 999,
+            "sha256": "3e21bbe48399c7e2972a7f652406ebe29b553feb7c468afd168bd38368ee4a3f",
+            "retrieved": "2026-11-06T14:14:05+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 3466,
+            "sha256": "b43f3796a5af68ca50890ed60b0966900fa5aece84fd5680d01fb31942e118a8",
+            "retrieved": "2026-11-06T14:14:07+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 4216,
+            "sha256": "76cc945bfdfa4bea816d64a641933416b7597e059e5808c520f30a0bdda8315e",
+            "retrieved": "2026-11-06T14:14:19+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 3033,
+            "sha256": "6d5a74f2b405deb221d830945510b938672daeddb91850cfcdce2d01e1ddfb07",
+            "retrieved": "2026-11-06T14:14:22+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2012_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 3552,
+            "sha256": "0683942f248162441e71f4a369f9461fedefb447b96586e3a695b7961abd6dd7",
+            "retrieved": "2026-11-06T14:14:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2013_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 4438,
+            "sha256": "3302c8792616f4b4528738eaaa20240aae2e3c04a99753dbe4d6016bde906e04",
+            "retrieved": "2026-11-06T14:14:28+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2014_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 614,
+            "sha256": "c8a808b7c968896d571a92bc58789d0d40915c18e2dcb59ba2feade366730e73",
+            "retrieved": "2026-11-06T14:14:31+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2015_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2058,
+            "sha256": "822886a003c01e4f28b01bb4956aa67d75a471eef177f8781e588fb8da37c21e",
+            "retrieved": "2026-11-06T14:14:33+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2016_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 4801,
+            "sha256": "ab0763a311af365e3293127f45c70d226c0c04d3108c13a2c9432039f55fb3c9",
+            "retrieved": "2026-11-06T14:14:36+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2017_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 6645,
+            "sha256": "ec879bb494c173f252e66269a2613d16106962fe760001e87dcbc8ee2b25d7ef",
+            "retrieved": "2026-11-06T14:14:41+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2018_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2018/modis_2018_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1310,
+            "sha256": "320e89ce1d21ecd56b4fde4bb32d76953f86ea902876ae1bcee59df4f5671d34",
+            "retrieved": "2026-11-06T14:14:42+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2019_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2019/modis_2019_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1269,
+            "sha256": "75c05687f29938bc26c5ffbf6c23d7492798a090ddb239290a62fd9c88212ac4",
+            "retrieved": "2026-11-06T14:14:44+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2020_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2020/modis_2020_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1349,
+            "sha256": "05733eaeabcd7be8571f9a5e010a1fc6109dc2771538d1f2cf8527e3337c57fd",
+            "retrieved": "2026-11-06T14:14:46+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2021_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2021/modis_2021_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 950,
+            "sha256": "c801bee9cd6fe681734c618caf180d130adcdfa0489aff3f9401465c1b6e4f74",
+            "retrieved": "2026-11-06T14:14:48+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2022_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2022/modis_2022_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2273,
+            "sha256": "5660c6bef3bb901c03f0ef1fbf3f6b9c4265b29fe633e584106eeacabda3887e",
+            "retrieved": "2026-11-06T14:14:49+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2023_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2023/modis_2023_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1062,
+            "sha256": "ec571c1ad891a2394efe2ba68ea5d1cd19b9fecce03655bcf271caaf2f8b4522",
+            "retrieved": "2026-11-06T14:14:51+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2024_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2024/modis_2024_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 3151,
+            "sha256": "95a510eed0b7cec71bf0cda1adafc3c54618fed61f96cd8119d09a39d683c2b7",
+            "retrieved": "2026-11-06T14:14:53+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2025_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Portugal.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 4867,
+            "sha256": "5fe8915feff1be2784912bc86a836f5ea4f276445afb38138f3c29be0a9db8d1",
+            "retrieved": "2026-11-06T14:14:56+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2026_Portugal.csv",
+            "url": "derived: FIRMS area API MODIS_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/portugal)",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1243,
+            "sha256": "5b368c00cef5c01a1ae98c9187166a596fb0fc8748013372ac11979f58484c07",
+            "retrieved": "2026-11-11T11:14:04+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2018_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2018/viirs-jpss1_2018_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 3672,
+            "sha256": "6f38e5bda394d16196bc828bc106248cbc9b60cb9c8acdf7d75830dc613a48dc",
+            "retrieved": "2026-11-06T14:16:56+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2019_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2019/viirs-jpss1_2019_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 3596,
+            "sha256": "0b692c2a7602e0db78cefdf3c30638d32a50487a6cad972c8acf588b003f048d",
+            "retrieved": "2026-11-06T14:16:58+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2020_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2020/viirs-jpss1_2020_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 3988,
+            "sha256": "915748d97cd8367cc48cd8ab59fa7892fced5c288e320275a59862e1e65dfc71",
+            "retrieved": "2026-11-06T14:17:01+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2021_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2021/viirs-jpss1_2021_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 2501,
+            "sha256": "13be9621acd55e33a293ad65e93e10a921de0afbcb89c91fded8c13811969679",
+            "retrieved": "2026-11-06T14:17:03+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2022_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2022/viirs-jpss1_2022_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 5860,
+            "sha256": "746eacbf638a9ce3194cf828ecaff27e3e019a29569a8f1177ba8587cbb671ae",
+            "retrieved": "2026-11-06T14:17:06+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2023_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2023/viirs-jpss1_2023_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 3384,
+            "sha256": "79ae1fa715e5594b4a27c7f35d573ba630dcd87da3c68af84c5d84cbe310e574",
+            "retrieved": "2026-11-06T14:17:09+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2024_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2024/viirs-jpss1_2024_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 12010,
+            "sha256": "03d4d578a1d955255c13975af563c5d2364c2bf0105d94c320d8d17ae628482f",
+            "retrieved": "2026-11-06T14:17:14+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2025_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Portugal.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 13862,
+            "sha256": "fd8de11d7232e23eeafdf1bd33e8d7ce0f03fc51b40e8c505352a378f8c033b8",
+            "retrieved": "2026-11-06T14:17:19+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2026_Portugal.csv",
+            "url": "derived: FIRMS area API VIIRS_NOAA20_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/portugal)",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 3574,
+            "sha256": "b3d8636df165292ca4eeabe5d52ad6d49725937cea3401d988a408815c711761",
+            "retrieved": "2026-11-11T11:14:04+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2012_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 9473,
+            "sha256": "b9572217ccdcbe2abdfb94d22fd2d929d2b12b5b735b17a2e38bd6a61978249f",
+            "retrieved": "2026-11-06T14:15:10+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2013_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 12102,
+            "sha256": "f1cbd794b2525e49f453029d2d9e2dbea4b2098f39c8d21c7f520857a5499bea",
+            "retrieved": "2026-11-06T14:15:16+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2014_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 2341,
+            "sha256": "f56b3a2a70ab0c2a0fe9490c14f7515b84d973826392457d5d49ecc3108ceb2e",
+            "retrieved": "2026-11-06T14:15:18+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2015_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 5875,
+            "sha256": "f77b2a72e78a307fcff1e80a2048462ad0b42c69308fd0aa37fb2051ab1806a0",
+            "retrieved": "2026-11-06T14:15:21+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2016_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 13930,
+            "sha256": "51968fba030d9a386a292184c5d74283630a1e4b987bfde67d723517c968e9f9",
+            "retrieved": "2026-11-06T14:15:27+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2017_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 19184,
+            "sha256": "d05e7bf3f202a75e1ea88a77cc8c8f8e81b911d0308c778d0ec479d41293625b",
+            "retrieved": "2026-11-06T14:15:52+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2018_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2018/viirs-snpp_2018_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 3827,
+            "sha256": "8cb80293d22bf0c697e856d8756ca443bdeed0706776d49f39c5928f9a567a3d",
+            "retrieved": "2026-11-06T14:16:04+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2019_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2019/viirs-snpp_2019_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 3794,
+            "sha256": "79cab83d9a05741935c7f24b680613b7794987e2bc1d0dab7ac02031f8fb909a",
+            "retrieved": "2026-11-06T14:16:06+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2020_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2020/viirs-snpp_2020_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 3769,
+            "sha256": "b7161890d33f3aa3ecb0670bb5282fb3d6a25ca1a7f2c693210e2a9dffe04c80",
+            "retrieved": "2026-11-06T14:16:09+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2021_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2021/viirs-snpp_2021_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 2591,
+            "sha256": "fca5d2baf848553b38c7d97749c95e2d8ecda567b168cd1bb20157c4d25e86b8",
+            "retrieved": "2026-11-06T14:16:12+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2022_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2022/viirs-snpp_2022_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 5079,
+            "sha256": "0ad346b221ee68d53d817186b7bfafa2ed981635f7cc5c2a0920597a5c32d3e2",
+            "retrieved": "2026-11-06T14:16:17+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2023_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2023/viirs-snpp_2023_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 2953,
+            "sha256": "9814ab8bbd6466a529ade2357fa26eae6c900510c674f1d365ba3777db120500",
+            "retrieved": "2026-11-06T14:16:20+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2024_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2024/viirs-snpp_2024_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 12078,
+            "sha256": "1f1524c8f621c234ab216098988a6f2bbfbef62aa482be27684e74fa0103e0a5",
+            "retrieved": "2026-11-06T14:16:29+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2025_Portugal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Portugal.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 13600,
+            "sha256": "2a7bc6273ae4cf7c3c3d6d78465a85ce9e5cedc29959b7ea146a8b5f9b69fa6f",
+            "retrieved": "2026-11-06T14:16:38+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2026_Portugal.csv",
+            "url": "derived: FIRMS area API VIIRS_SNPP_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/portugal)",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 3762,
+            "sha256": "aa8fe4f3d3c4306f7ab60c7cd1248d1a49a577d1651ea0d99605b1b41c673dde",
+            "retrieved": "2026-11-11T11:14:04+00:00",
+            "sha256_ok": true
+          }
+        ]
+      },
+      "burning_days": {
+        "unit": "MODIS-equivalent burning days: how many days each 0.01 degree cell (about 1 km) had a fire detected",
+        "definition": "a 0.01 degree cell (floor(lon / 0.01), floor(lat / 0.01)) counts once per date and day/night if it has any detection of the family (MODIS = Terra + Aqua; Suomi NPP; NOAA-20); it takes the FRP class of its largest-FRP detection (f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW)",
+        "files": {
+          "monthly": "monthly_bd.json",
+          "drift": "drift_bd.json",
+          "records": "burning/<year>.json"
+        },
+        "fine_cell_deg": 0.01,
+        "origin": {
+          "x0": -950,
+          "y0": 3702
+        },
+        "model": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+        "model_detail": {
+          "name": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+          "badge": "D-a · ROUND 3 CONFIRMED",
+          "a": 10,
+          "unit": "burning days",
+          "frozen": {
+            "file": "data/processed/tournament/frozen_round3.json",
+            "sha256": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
+            "commit": "80e297f",
+            "confirmation": "docs/ROUND3_CONFIRMATION.md"
+          },
+          "classes": "f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW",
+          "satellites": {
+            "snpp": {
+              "train": [
+                "2012-02",
+                "2019-12"
+              ],
+              "method": "D-a (C3 in burning days): one A2-style ratio per FRP class",
+              "prior_ratio_r0": {
+                "01D": [
+                  0.0,
+                  0.1774,
+                  0.4969,
+                  0.3978
+                ],
+                "01N": [
+                  0.0,
+                  0.1119,
+                  0.2833,
+                  0.0
+                ],
+                "02D": [
+                  0.0,
+                  0.3405,
+                  0.7316,
+                  0.9293
+                ],
+                "02N": [
+                  0.0,
+                  0.1208,
+                  0.44,
+                  3.6594
+                ],
+                "03D": [
+                  0.0,
+                  0.2483,
+                  1.0396,
+                  1.2766
+                ],
+                "03N": [
+                  0.0,
+                  0.1896,
+                  0.3784,
+                  0.7262
+                ],
+                "04D": [
+                  0.0,
+                  0.1848,
+                  0.7286,
+                  1.1436
+                ],
+                "04N": [
+                  0.0,
+                  0.1689,
+                  0.5173,
+                  0.6013
+                ],
+                "05D": [
+                  0.0,
+                  0.2489,
+                  0.5662,
+                  0.8409
+                ],
+                "05N": [
+                  0.0,
+                  0.0597,
+                  1.2778,
+                  8.9189
+                ],
+                "06D": [
+                  0.0,
+                  0.1636,
+                  0.4206,
+                  0.7947
+                ],
+                "06N": [
+                  0.0,
+                  0.1939,
+                  0.4434,
+                  0.7672
+                ],
+                "07D": [
+                  0.0,
+                  0.2056,
+                  0.5105,
+                  0.8878
+                ],
+                "07N": [
+                  0.0,
+                  0.2755,
+                  1.5573,
+                  0.9459
+                ],
+                "08D": [
+                  0.0,
+                  0.295,
+                  0.7406,
+                  1.1535
+                ],
+                "08N": [
+                  0.0,
+                  0.4511,
+                  1.265,
+                  0.8482
+                ],
+                "09D": [
+                  0.0,
+                  0.2855,
+                  0.7108,
+                  1.0732
+                ],
+                "09N": [
+                  0.0,
+                  0.3117,
+                  1.0742,
+                  0.9311
+                ],
+                "10D": [
+                  0.0,
+                  0.3654,
+                  0.7461,
+                  0.6438
+                ],
+                "10N": [
+                  0.0,
+                  0.4576,
+                  0.9805,
+                  0.7649
+                ],
+                "11D": [
+                  0.0,
+                  0.2055,
+                  0.5508,
+                  0.8733
+                ],
+                "11N": [
+                  0.0,
+                  0.0095,
+                  0.2819,
+                  1.0426
+                ],
+                "12D": [
+                  0.0,
+                  0.2455,
+                  0.4459,
+                  0.8817
+                ],
+                "12N": [
+                  0.0,
+                  0.0594,
+                  0.4218,
+                  0.8626
+                ]
+              },
+              "background_b": {
+                "01D": 0.0269,
+                "01N": 0.0008,
+                "02D": 0.0483,
+                "02N": 0.0052,
+                "03D": 0.0602,
+                "03N": 0.0079,
+                "04D": 0.0431,
+                "04N": 0.0075,
+                "05D": 0.0549,
+                "05N": 0.006,
+                "06D": 0.0736,
+                "06N": 0.0129,
+                "07D": 0.0921,
+                "07N": 0.0417,
+                "08D": 0.0874,
+                "08N": 0.0641,
+                "09D": 0.0537,
+                "09N": 0.0518,
+                "10D": 0.0903,
+                "10N": 0.0565,
+                "11D": 0.0585,
+                "11N": 0.0007,
+                "12D": 0.0343,
+                "12N": 0.0007
+              },
+              "train_burning_days": {
+                "modis": 21147,
+                "snpp": 32170
+              }
+            },
+            "noaa20": {
+              "train": [
+                "2018-04",
+                "2019-12"
+              ],
+              "method": "J-S: x s (NOAA-20 to Suomi NPP, in burning days), then D-a",
+              "s": {
+                "D": 0.9653,
+                "N": 0.9373
+              },
+              "s_sd": {
+                "D": 0.0376,
+                "N": 0.044
+              },
+              "train_burning_days": {
+                "snpp": 3426,
+                "noaa20": 3595
+              }
+            }
+          },
+          "fit_cells": 183,
+          "cells_outside_fit_region_level": 2,
+          "em": {
+            "iterations": 73,
+            "delta": 1.8885117202535892e-08,
+            "converged": true
+          },
+          "method": "D-a: per 0.25 deg cell x calendar month x day/night x FRP class, posterior MODIS burning days per Suomi NPP burning day (a + sum MODIS_k) / (a / r0_k + sum VIIRS_k) over rows with Suomi NPP > 0, MODIS split over classes at the fitted fixed point; b = mean MODIS burning days where Suomi NPP saw nothing. NOAA-20: x s, then D-a (pipeline/round3/model.py, pipeline/tournament/candidates.py)",
+          "interval": "D-a's predictive per cell-month (class negative binomials summed and moment-matched for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+          "evidence": [
+            "docs/ROUND3_CONFIRMATION.md",
+            "docs/TOURNAMENT_RESULTS.md"
+          ],
+          "check": {
+            "max_gap_between_model_predictive_mean_and_m": 0.0126,
+            "background_total": 697.78,
+            "fit_table_burning_days_matched": 56912
+          }
+        },
+        "combination": {
+          "rule": "as the hotspot view: a satellite enters a slot's average only if some FRP class has a prior ratio r0_k > 0 there (and s > 0 for NOAA-20); one qualifying satellite carries the slot alone; none qualifying keeps D-a's literal behaviour (weight 0, background as fitted)",
+          "slots_when_both_cover": {
+            "01D": [
+              "snpp",
+              "noaa20"
+            ],
+            "01N": [
+              "snpp",
+              "noaa20"
+            ],
+            "02D": [
+              "snpp",
+              "noaa20"
+            ],
+            "02N": [
+              "snpp",
+              "noaa20"
+            ],
+            "03D": [
+              "snpp",
+              "noaa20"
+            ],
+            "03N": [
+              "snpp",
+              "noaa20"
+            ],
+            "04D": [
+              "snpp",
+              "noaa20"
+            ],
+            "04N": [
+              "snpp",
+              "noaa20"
+            ],
+            "05D": [
+              "snpp",
+              "noaa20"
+            ],
+            "05N": [
+              "snpp",
+              "noaa20"
+            ],
+            "06D": [
+              "snpp",
+              "noaa20"
+            ],
+            "06N": [
+              "snpp",
+              "noaa20"
+            ],
+            "07D": [
+              "snpp",
+              "noaa20"
+            ],
+            "07N": [
+              "snpp",
+              "noaa20"
+            ],
+            "08D": [
+              "snpp",
+              "noaa20"
+            ],
+            "08N": [
+              "snpp",
+              "noaa20"
+            ],
+            "09D": [
+              "snpp",
+              "noaa20"
+            ],
+            "09N": [
+              "snpp",
+              "noaa20"
+            ],
+            "10D": [
+              "snpp",
+              "noaa20"
+            ],
+            "10N": [
+              "snpp",
+              "noaa20"
+            ],
+            "11D": [
+              "snpp",
+              "noaa20"
+            ],
+            "11N": [
+              "snpp",
+              "noaa20"
+            ],
+            "12D": [
+              "snpp",
+              "noaa20"
+            ],
+            "12N": [
+              "snpp",
+              "noaa20"
+            ]
+          }
+        },
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.4175,
+            "02": 0.4108,
+            "03": 0.4822,
+            "04": 0.4327,
+            "05": 0.4895,
+            "06": 0.4245,
+            "07": 0.4549,
+            "08": 0.4993,
+            "09": 0.4578,
+            "10": 0.4475,
+            "11": 0.4678,
+            "12": 0.4046
+          },
+          "pooled": 0.4722,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(87 Terra burning days + 20 x 0.4722) / (211 MODIS burning days + 20)",
+            "02": "(364 Terra burning days + 20 x 0.4722) / (889 MODIS burning days + 20)",
+            "03": "(807 Terra burning days + 20 x 0.4722) / (1673 MODIS burning days + 20)",
+            "04": "(293 Terra burning days + 20 x 0.4722) / (679 MODIS burning days + 20)",
+            "05": "(156 Terra burning days + 20 x 0.4722) / (318 MODIS burning days + 20)",
+            "06": "(432 Terra burning days + 20 x 0.4722) / (1020 MODIS burning days + 20)",
+            "07": "(2084 Terra burning days + 20 x 0.4722) / (4582 MODIS burning days + 20)",
+            "08": "(6434 Terra burning days + 20 x 0.4722) / (12886 MODIS burning days + 20)",
+            "09": "(1424 Terra burning days + 20 x 0.4722) / (3111 MODIS burning days + 20)",
+            "10": "(1454 Terra burning days + 20 x 0.4722) / (3250 MODIS burning days + 20)",
+            "11": "(529 Terra burning days + 20 x 0.4722) / (1131 MODIS burning days + 20)",
+            "12": "(82 Terra burning days + 20 x 0.4722) / (206 MODIS burning days + 20)"
+          }
+        },
+        "years": [
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
+        "records": {
+          "modis": 67719,
+          "snpp": 50231,
+          "noaa20": 22039
+        },
+        "zero_weight": {
+          "from": "2022-01",
+          "viirs_burning_days": 29828,
+          "weight_zero": 41,
+          "share": 0.0014,
+          "months_noted": 0,
+          "note_threshold": 0.1
+        }
+      },
+      "generated_at": "2026-11-11T11:26:46+00:00"
+    },
+    {
+      "id": "lebanon",
+      "name": "Lebanon",
+      "notes": [
+        "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): failed the check that the total is within 10%, underestimating by 16% in burning days and 21% in hotspots. It still beat a simple conversion by a wide margin (regional monthly error 28.3% against 58.0%). Lebanon has few fires (245 MODIS burning days in the two years), so one large fire moves the total; grid-cell errors are 78–82%.",
+        "11 of Lebanon's 28 grid cells lie on the border and also cover land in Syria; they hold 23% of Lebanon's estimated values. Each cell counts only Lebanon's records; Syria's fires in the same cell are in the Syria view.",
+        "One 2026 Suomi NPP detection (24 June, 0.1 km inside the eastern border) fell in a grid cell with no earlier Lebanon fires and is left out, so the 2000–2025 grid and its values stay exactly as published."
+      ],
+      "bbox": [
+        35.1,
+        33.05,
+        36.65,
+        34.7
+      ],
+      "months": {
+        "first": "2000-12",
+        "last": "2026-07"
+      },
+      "record_end": {
+        "suomi_npp": {
+          "first": "2012-02",
+          "last": "2026-07",
+          "first_detection": "2012-01-25",
+          "last_detection": "2026-07-31"
+        },
+        "noaa20": {
+          "first": "2018-04",
+          "last": "2026-07",
+          "first_detection": "2018-04-01",
+          "last_detection": "2026-07-31"
+        },
+        "modis": {
+          "first": "2000-12",
+          "last": "2026-07",
+          "first_detection": "2000-11-13",
+          "last_detection": "2026-07-31"
+        },
+        "detections_outside_record_dropped": 2,
+        "detections_outside_grid": {
+          "N": 1
+        },
+        "viirs_outage_months": [],
+        "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
+        "after": "2026 comes from FIRMS standard data through the area API, assigned to Lebanon with the Natural Earth 1:10m outline as of 30 August 2021 (commit be165336bb), which matched every FIRMS Lebanon assignment in 2000-2025; the current outline differs by about 1 km on the southern border. Later months are added when FIRMS publishes standard data; near-real-time data is not used."
+      },
+      "default_view": {
+        "bounds": [
+          [
+            35.1,
+            33.05
+          ],
+          [
+            36.65,
+            34.7
+          ]
+        ]
+      },
+      "model": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+      "model_detail": {
+        "name": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+        "badge": "MODEL A2 · ROUND 2, FROZEN",
+        "a": 30,
+        "frozen": {
+          "file": "data/processed/round2/frozen.json",
+          "sha256": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686",
+          "commit": "617daff",
+          "selection": "docs/ROUND2_SELECTION.md"
+        },
+        "satellites": {
+          "snpp": {
+            "train": [
+              "2012-02",
+              "2019-12"
+            ],
+            "method": "A2",
+            "prior_ratio_r0": {
+              "01D": 0.0,
+              "01N": 0.0,
+              "02D": 0.037,
+              "02N": 0.0,
+              "03D": 0.0,
+              "03N": 0.0,
+              "04D": 0.0606,
+              "04N": 0.0,
+              "05D": 0.0405,
+              "05N": 0.0,
+              "06D": 0.1214,
+              "06N": 0.0,
+              "07D": 0.125,
+              "07N": 0.0339,
+              "08D": 0.1232,
+              "08N": 0.0472,
+              "09D": 0.2121,
+              "09N": 0.0667,
+              "10D": 0.2674,
+              "10N": 0.0828,
+              "11D": 0.3971,
+              "11N": 0.0261,
+              "12D": 0.2439,
+              "12N": 0.0571
+            },
+            "background_b": {
+              "01D": 0.016,
+              "01N": 0.0,
+              "02D": 0.0049,
+              "02N": 0.0,
+              "03D": 0.0146,
+              "03N": 0.0,
+              "04D": 0.0101,
+              "04N": 0.0,
+              "05D": 0.0,
+              "05N": 0.0054,
+              "06D": 0.0139,
+              "06N": 0.0,
+              "07D": 0.0377,
+              "07N": 0.0,
+              "08D": 0.0254,
+              "08N": 0.0062,
+              "09D": 0.0357,
+              "09N": 0.0063,
+              "10D": 0.049,
+              "10N": 0.0,
+              "11D": 0.0523,
+              "11N": 0.0,
+              "12D": 0.0101,
+              "12N": 0.0
+            },
+            "train_detections": {
+              "modis": 512,
+              "snpp": 3721
+            }
+          },
+          "noaa20": {
+            "train": [
+              "2018-04",
+              "2019-12"
+            ],
+            "method": "J-S: x s (NOAA-20 to Suomi NPP), then A2",
+            "s": {
+              "D": 1.0478,
+              "N": 0.8017
+            },
+            "s_sd": {
+              "D": 0.1118,
+              "N": 0.0644
+            },
+            "prior_ratio_r0": {
+              "01D": 0.0,
+              "01N": 0.0,
+              "02D": 0.0388,
+              "02N": 0.0,
+              "03D": 0.0,
+              "03N": 0.0,
+              "04D": 0.0635,
+              "04N": 0.0,
+              "05D": 0.0425,
+              "05N": 0.0,
+              "06D": 0.1272,
+              "06N": 0.0,
+              "07D": 0.131,
+              "07N": 0.0272,
+              "08D": 0.1291,
+              "08N": 0.0379,
+              "09D": 0.2223,
+              "09N": 0.0534,
+              "10D": 0.2802,
+              "10N": 0.0664,
+              "11D": 0.416,
+              "11N": 0.0209,
+              "12D": 0.2556,
+              "12N": 0.0458
+            },
+            "train_detections": {
+              "snpp": 817,
+              "noaa20": 865
+            }
+          }
+        },
+        "fit_cells": 28,
+        "cells_outside_fit_region_level": 0,
+        "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
+        "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+        "evidence": [
+          "docs/ROUND2_SELECTION.md",
+          "docs/CONFIRMATION_RESULTS.md"
+        ],
+        "check": {
+          "max_gap_between_model_predictive_mean_and_m": 0.0064,
+          "background_total": 22.98
+        }
+      },
+      "combination": {
+        "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window. Model A itself is unchanged.",
+        "slots_when_both_cover": {
+          "01D": [],
+          "01N": [],
+          "02D": [
+            "snpp",
+            "noaa20"
+          ],
+          "02N": [],
+          "03D": [],
+          "03N": [],
+          "04D": [
+            "snpp",
+            "noaa20"
+          ],
+          "04N": [],
+          "05D": [
+            "snpp",
+            "noaa20"
+          ],
+          "05N": [],
+          "06D": [
+            "snpp",
+            "noaa20"
+          ],
+          "06N": [],
+          "07D": [
+            "snpp",
+            "noaa20"
+          ],
+          "07N": [
+            "snpp",
+            "noaa20"
+          ],
+          "08D": [
+            "snpp",
+            "noaa20"
+          ],
+          "08N": [
+            "snpp",
+            "noaa20"
+          ],
+          "09D": [
+            "snpp",
+            "noaa20"
+          ],
+          "09N": [
+            "snpp",
+            "noaa20"
+          ],
+          "10D": [
+            "snpp",
+            "noaa20"
+          ],
+          "10N": [
+            "snpp",
+            "noaa20"
+          ],
+          "11D": [
+            "snpp",
+            "noaa20"
+          ],
+          "11N": [
+            "snpp",
+            "noaa20"
+          ],
+          "12D": [
+            "snpp",
+            "noaa20"
+          ],
+          "12N": [
+            "snpp",
+            "noaa20"
+          ]
+        }
+      },
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.4394,
+          "02": 0.4394,
+          "03": 0.4491,
+          "04": 0.487,
+          "05": 0.4491,
+          "06": 0.3976,
+          "07": 0.4656,
+          "08": 0.4649,
+          "09": 0.429,
+          "10": 0.531,
+          "11": 0.4558,
+          "12": 0.3433
+        },
+        "pooled": 0.4614,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(0 Terra + 20 x 0.4614) / (1 MODIS + 20)",
+          "02": "(0 Terra + 20 x 0.4614) / (1 MODIS + 20)",
+          "03": "(2 Terra + 20 x 0.4614) / (5 MODIS + 20)",
+          "04": "(1 Terra + 20 x 0.4614) / (1 MODIS + 20)",
+          "05": "(2 Terra + 20 x 0.4614) / (5 MODIS + 20)",
+          "06": "(19 Terra + 20 x 0.4614) / (51 MODIS + 20)",
+          "07": "(69 Terra + 20 x 0.4614) / (148 MODIS + 20)",
+          "08": "(54 Terra + 20 x 0.4614) / (116 MODIS + 20)",
+          "09": "(68 Terra + 20 x 0.4614) / (160 MODIS + 20)",
+          "10": "(123 Terra + 20 x 0.4614) / (229 MODIS + 20)",
+          "11": "(40 Terra + 20 x 0.4614) / (88 MODIS + 20)",
+          "12": "(10 Terra + 20 x 0.4614) / (36 MODIS + 20)"
+        }
+      },
+      "policy": {
+        "bridged": [
+          "2000-12",
+          "2002-06"
+        ],
+        "observed": [
+          "2002-07",
+          "2021-12"
+        ],
+        "estimated": [
+          "2022-01",
+          "2026-07"
+        ],
+        "naive_switch": "2012-01"
+      },
+      "cells": 28,
+      "hotspot_years": [
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "sensors": {
+        "T": "Terra MODIS",
+        "A": "Aqua MODIS",
+        "N": "Suomi NPP VIIRS",
+        "J1": "NOAA-20 VIIRS"
+      },
+      "satellite_field": {
+        "A": "Aqua",
+        "J1": "N20",
+        "N": "N",
+        "T": "Terra"
+      },
+      "instrument_field": {
+        "A": "MODIS",
+        "J1": "VIIRS",
+        "N": "VIIRS",
+        "T": "MODIS"
+      },
+      "versions": [
+        "2",
+        "6.03",
+        "6.2",
+        "61.03"
+      ],
+      "detections": {
+        "N": 8035,
+        "J1": 5257,
+        "A": 1233,
+        "T": 895
+      },
+      "provenance": {
+        "source": "NASA FIRMS country archive (standard products); after 2025: FIRMS area API standard products, clipped to the Natural Earth 1:10m country outline as of 30 August 2021 (commit be165336bb)",
+        "filters": "box lon 35.1..36.65, lat 33.05..34.7; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
+        "unit": "fire detections (satellite pixels flagged as burning), not burned area",
+        "files": [
+          {
+            "name": "modis_2000_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2,
+            "sha256": "9974a8fa3b4a0f37d9b16af7d6db94243587aaa24ef0163ebf5dba09beb0ac86",
+            "retrieved": "2026-11-06T14:13:35+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 13,
+            "sha256": "c7e936a1725caaadbe6095e7e52835e07bc4d9bafeb7bea5cd9261c1c09542c3",
+            "retrieved": "2026-11-06T14:13:36+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 103,
+            "sha256": "1d2c65f7a09ef2ee79497549b2eee671d56c26d3ff31745dfb9a54bdc7574497",
+            "retrieved": "2026-11-06T14:13:37+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 52,
+            "sha256": "4fc6435eeb3dc827bbc1dc3e2af5c40bd547fa2f3ec8e7c7a1b176f5262a4a90",
+            "retrieved": "2026-11-06T14:13:38+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 79,
+            "sha256": "fbbe5517a0965173a460239b0d891d632431fff4c8b3bbd9f8cbf3f56e84fc74",
+            "retrieved": "2026-11-06T14:13:40+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 39,
+            "sha256": "8033cd4318e8df5003a241092eb75f93db6d19c9f5160272de1593675d68f2bc",
+            "retrieved": "2026-11-06T14:13:41+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 193,
+            "sha256": "e246fddab34a3fb0f4a22c55479886aa483794985f06642fa3fd763f55faeb8e",
+            "retrieved": "2026-11-06T14:13:42+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 195,
+            "sha256": "00ca6b29da8f9c0b2313b972fd943db60d4ae16f64acf813be357c37d2ba9859",
+            "retrieved": "2026-11-06T14:13:44+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 42,
+            "sha256": "1e5305c5b72690c5b1a3c7ddb309a0c5fbdc9e112a344f6232cad26489d05ed1",
+            "retrieved": "2026-11-06T14:13:45+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 70,
+            "sha256": "f5b884cc11865ed5a331faeccac7c5dcbf20a14dc56230691e26d8f0002133ef",
+            "retrieved": "2026-11-06T14:13:46+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 160,
+            "sha256": "c4a6269c7acdd45919fe2373175189593d5b7b1034e30c4c7daad45569a56a20",
+            "retrieved": "2026-11-06T14:13:47+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 39,
+            "sha256": "12086f0436fbc1114887d70572e714129c50ec955fa833ab6ec50c8c91ae8f84",
+            "retrieved": "2026-11-06T14:13:48+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2012_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 56,
+            "sha256": "6f50e8a62a15476d35225609f0aa7426b96c97fabc2ad8f5f5f4e1877f89a044",
+            "retrieved": "2026-11-06T14:13:49+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2013_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 132,
+            "sha256": "f6509cd7a5b48bb389cebe9cb9b36f6c626a00b16d2f7a82346bd1e3390f9ca6",
+            "retrieved": "2026-11-06T14:13:50+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2014_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 39,
+            "sha256": "b9a3e66ac6c2cd3f94c5c91d1986a4ab1f2911f937ba9377f8785f65be0a96d1",
+            "retrieved": "2026-11-06T14:13:52+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2015_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 58,
+            "sha256": "c93a1bda27eed39fcf3d3aecda2e23814dbea7244cde4a844da961cbc4fe5238",
+            "retrieved": "2026-11-06T14:13:53+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2016_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 105,
+            "sha256": "e3c82bccd4226ecf1cd63e544a9c882946395f8c574b0b6a392ecf19f68fd404",
+            "retrieved": "2026-11-06T14:13:56+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2017_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 42,
+            "sha256": "d1f8768a0b4c5c99ce786aa0399b47501ef250c625a6f4a6200c952283bca6a5",
+            "retrieved": "2026-11-06T14:13:57+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2018_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2018/modis_2018_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 38,
+            "sha256": "362b9d81ad16090c5512267114129401dd2429c90c4662689a879d849c7a19b5",
+            "retrieved": "2026-11-06T14:13:59+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2019_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2019/modis_2019_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 74,
+            "sha256": "67e17739f37e94f85c9c12ccfc04fec7b8225324b16193bab6b79402faf41fec",
+            "retrieved": "2026-11-06T14:14:00+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2020_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2020/modis_2020_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 142,
+            "sha256": "ce12267ef193a5c91026d57fb0d309d672cf93da19eaa6d13eaf1bd7ebdb495d",
+            "retrieved": "2026-11-06T14:14:01+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2021_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2021/modis_2021_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 134,
+            "sha256": "c1049310ee89c44c57f40b12137b535687f1e0438b1bf188c144b298dbd8b908",
+            "retrieved": "2026-11-06T14:14:02+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2022_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2022/modis_2022_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 29,
+            "sha256": "06acdc83746c947d05be01df8f201d3103493d17101dfadaf19565849aeb68ef",
+            "retrieved": "2026-11-06T14:14:03+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2023_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2023/modis_2023_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 78,
+            "sha256": "700e16bdaa70e9a73aefe365377590b2dcf50544358c3e0e768d18c6bc2a9ce5",
+            "retrieved": "2026-11-06T14:14:04+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2024_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2024/modis_2024_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 229,
+            "sha256": "6991a28db3c8c94d90c8f5b086b493e48dacdd37aaf0ab37257ffa7d79eaffb2",
+            "retrieved": "2026-11-06T14:14:06+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2025_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Lebanon.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 91,
+            "sha256": "24a13a2913892dee7df05649d7ef0b5db1651d354de9f100c73cf30685c6ad75",
+            "retrieved": "2026-11-06T14:14:07+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2026_Lebanon.csv",
+            "url": "derived: FIRMS area API MODIS_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/lebanon)",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 21,
+            "sha256": "9615a78b3e9036d8dd78f1e03c91d7b1f5f3d8cf1377f1e92ddaee95bafa8a58",
+            "retrieved": "2026-11-12T11:34:48+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2018_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2018/viirs-jpss1_2018_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 511,
+            "sha256": "ae3fe2f0ad57713768428b7ffd337da48d29a81346ee73460acc79204bdebe29",
+            "retrieved": "2026-11-06T14:15:05+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2019_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2019/viirs-jpss1_2019_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 638,
+            "sha256": "17eeab67dfe8a3fd4329bf7b1af125bd77755a71997eeb9b5b66a9251076b73b",
+            "retrieved": "2026-11-06T14:15:06+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2020_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2020/viirs-jpss1_2020_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 849,
+            "sha256": "358c603863e1cc9c55b1a4a7adface8664ed0b0ae4de13eff0da131dc1a49c7d",
+            "retrieved": "2026-11-06T14:15:09+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2021_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2021/viirs-jpss1_2021_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 901,
+            "sha256": "1156113631962a66dbaa0243bef78aa88ae1d4443dda32619db55bf3d914d645",
+            "retrieved": "2026-11-06T14:15:10+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2022_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2022/viirs-jpss1_2022_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 422,
+            "sha256": "fc5b182bc1a4293815390b8f5297fd7cb21bfeec99561b3d253ea77e961ee9a7",
+            "retrieved": "2026-11-06T14:15:12+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2023_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2023/viirs-jpss1_2023_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 628,
+            "sha256": "edf2d21cffc629aab80124d3c7ed6fd26f75f892f64d1f88a98ef7fd78723610",
+            "retrieved": "2026-11-06T14:15:15+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2024_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2024/viirs-jpss1_2024_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 1223,
+            "sha256": "2e689bb93a4482968764816234f19f634889a4580e6e59fbc3263bcaf7af65d6",
+            "retrieved": "2026-11-06T14:15:17+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2025_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Lebanon.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 614,
+            "sha256": "a23c088b4df5eb2bf8dc7edc10d5aa19c2edbc65d6b40d01df4e5cae4f44a6ed",
+            "retrieved": "2026-11-06T14:15:18+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2026_Lebanon.csv",
+            "url": "derived: FIRMS area API VIIRS_NOAA20_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/lebanon)",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 227,
+            "sha256": "fe3aec7ce3935861cf943988d1a98d87839e8602a95ef4909db3ce9c43755b76",
+            "retrieved": "2026-11-12T11:34:48+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2012_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 637,
+            "sha256": "a81a459a70143ed15b5e0ff2d66d6d335ee75abcb5de5094992f711f11d0367a",
+            "retrieved": "2026-11-06T14:14:23+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2013_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 946,
+            "sha256": "941082f4690ab5ce97a9f7459c4e1163f538af44a0939f63e685c0a93aa78087",
+            "retrieved": "2026-11-06T14:14:25+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2014_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 595,
+            "sha256": "bcebf023816cef34cc5c5a8d68052607b89200d5fb771870619f8ec9df9edf17",
+            "retrieved": "2026-11-06T14:14:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2015_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 677,
+            "sha256": "d859d8163c529def0ff9309821995fdf46f99f7f6187e94f69552a0c32e2f4cc",
+            "retrieved": "2026-11-06T14:14:29+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2016_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 880,
+            "sha256": "1903ca6385ba05a5b2c40de44d8f831df2ca349688b95c409cd113746587083a",
+            "retrieved": "2026-11-06T14:14:31+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2017_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 553,
+            "sha256": "ad8c5af2e98243e69ceb595237ebd88304337b094ba7c404379f1c182d13360d",
+            "retrieved": "2026-11-06T14:14:32+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2018_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2018/viirs-snpp_2018_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 511,
+            "sha256": "1529e603a76cad59a4327ed29c09d01052fcbb400ad18e52d3059f417f8a08f7",
+            "retrieved": "2026-11-06T14:14:34+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2019_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2019/viirs-snpp_2019_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 590,
+            "sha256": "e5af64c1dfc39e5b10d3e76ae7d41589ea93780832670fe22b657717c010e9b1",
+            "retrieved": "2026-11-06T14:14:36+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2020_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2020/viirs-snpp_2020_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 701,
+            "sha256": "30635e3b8a91a99e739722e824ed16ea74586e9f6631dff7174008c261077733",
+            "retrieved": "2026-11-06T14:14:39+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2021_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2021/viirs-snpp_2021_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 891,
+            "sha256": "e6fa95dad482c245cd92a00c6fe7b5fa12bb3489bf312c940602a4208cf5f404",
+            "retrieved": "2026-11-06T14:14:41+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2022_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2022/viirs-snpp_2022_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 447,
+            "sha256": "deb8cd62868f89619d3435140e10a471435a8f73e14a41c68b160b98316dc2f5",
+            "retrieved": "2026-11-06T14:14:43+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2023_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2023/viirs-snpp_2023_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 657,
+            "sha256": "686c8ef72c04f8be2e6daa4b3c20d282a1f5cd7d0be68c68d3032f74186285ef",
+            "retrieved": "2026-11-06T14:14:44+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2024_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2024/viirs-snpp_2024_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 1257,
+            "sha256": "1997ad36a7731bbc08ae2d231aede3b6ab881f57fe1d321dd24f2801390db0b5",
+            "retrieved": "2026-11-06T14:14:46+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2025_Lebanon.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Lebanon.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 584,
+            "sha256": "b9e2c7b90729e63edc4b2b022b304cdd8b5bac58dcc712708ac386662c04be57",
+            "retrieved": "2026-11-06T14:14:47+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2026_Lebanon.csv",
+            "url": "derived: FIRMS area API VIIRS_SNPP_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/lebanon)",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 270,
+            "sha256": "0ee35f2f31eab390dc9f1c68e705fbb7ca7d4985a8ddde8e2c3d18a068c1d59e",
+            "retrieved": "2026-11-12T11:34:48+00:00",
+            "sha256_ok": true
+          }
+        ]
+      },
+      "burning_days": {
+        "unit": "MODIS-equivalent burning days: how many days each 0.01 degree cell (about 1 km) had a fire detected",
+        "definition": "a 0.01 degree cell (floor(lon / 0.01), floor(lat / 0.01)) counts once per date and day/night if it has any detection of the family (MODIS = Terra + Aqua; Suomi NPP; NOAA-20); it takes the FRP class of its largest-FRP detection (f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW)",
+        "files": {
+          "monthly": "monthly_bd.json",
+          "drift": "drift_bd.json",
+          "records": "burning/<year>.json"
+        },
+        "fine_cell_deg": 0.01,
+        "origin": {
+          "x0": 3510,
+          "y0": 3305
+        },
+        "model": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+        "model_detail": {
+          "name": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+          "badge": "D-a · ROUND 3 CONFIRMED",
+          "a": 10,
+          "unit": "burning days",
+          "frozen": {
+            "file": "data/processed/tournament/frozen_round3.json",
+            "sha256": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
+            "commit": "80e297f",
+            "confirmation": "docs/ROUND3_CONFIRMATION.md"
+          },
+          "classes": "f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW",
+          "satellites": {
+            "snpp": {
+              "train": [
+                "2012-02",
+                "2019-12"
+              ],
+              "method": "D-a (C3 in burning days): one A2-style ratio per FRP class",
+              "prior_ratio_r0": {
+                "01D": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.7712
+                ],
+                "01N": [
+                  0.0,
+                  0.0,
+                  0.3689,
+                  1.4694
+                ],
+                "02D": [
+                  0.0,
+                  0.0588,
+                  0.0,
+                  0.0
+                ],
+                "02N": [
+                  0.0,
+                  0.0,
+                  0.3689,
+                  1.4694
+                ],
+                "03D": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.7712
+                ],
+                "03N": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.4694
+                ],
+                "04D": [
+                  0.0,
+                  0.0,
+                  0.2,
+                  0.7712
+                ],
+                "04N": [
+                  0.0,
+                  0.0,
+                  0.3689,
+                  1.4694
+                ],
+                "05D": [
+                  0.0,
+                  0.0811,
+                  0.0,
+                  0.0
+                ],
+                "05N": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.4694
+                ],
+                "06D": [
+                  0.0,
+                  0.1102,
+                  0.1686,
+                  0.2827
+                ],
+                "06N": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.4694
+                ],
+                "07D": [
+                  0.0,
+                  0.1377,
+                  0.0986,
+                  0.7369
+                ],
+                "07N": [
+                  0.0,
+                  0.0143,
+                  0.0,
+                  1.9388
+                ],
+                "08D": [
+                  0.0,
+                  0.1039,
+                  0.1197,
+                  0.7132
+                ],
+                "08N": [
+                  0.0,
+                  0.0307,
+                  0.8845,
+                  1.4694
+                ],
+                "09D": [
+                  0.0,
+                  0.2432,
+                  0.2091,
+                  0.7046
+                ],
+                "09N": [
+                  0.0,
+                  0.0725,
+                  0.2157,
+                  1.4694
+                ],
+                "10D": [
+                  0.0,
+                  0.0689,
+                  0.4535,
+                  1.0485
+                ],
+                "10N": [
+                  0.0,
+                  0.0364,
+                  0.5373,
+                  1.4694
+                ],
+                "11D": [
+                  0.0,
+                  0.4646,
+                  0.2677,
+                  2.258
+                ],
+                "11N": [
+                  0.0,
+                  0.0113,
+                  0.6354,
+                  1.4694
+                ],
+                "12D": [
+                  0.0,
+                  0.2249,
+                  0.6958,
+                  0.7712
+                ],
+                "12N": [
+                  0.0,
+                  0.0,
+                  0.3689,
+                  1.0
+                ]
+              },
+              "background_b": {
+                "01D": 0.016,
+                "01N": 0.0,
+                "02D": 0.0049,
+                "02N": 0.0,
+                "03D": 0.0146,
+                "03N": 0.0,
+                "04D": 0.0101,
+                "04N": 0.0,
+                "05D": 0.0,
+                "05N": 0.0054,
+                "06D": 0.0139,
+                "06N": 0.0,
+                "07D": 0.0377,
+                "07N": 0.0,
+                "08D": 0.0254,
+                "08N": 0.0062,
+                "09D": 0.0357,
+                "09N": 0.0063,
+                "10D": 0.049,
+                "10N": 0.0,
+                "11D": 0.0523,
+                "11N": 0.0,
+                "12D": 0.0101,
+                "12N": 0.0
+              },
+              "train_burning_days": {
+                "modis": 499,
+                "snpp": 3015
+              }
+            },
+            "noaa20": {
+              "train": [
+                "2018-04",
+                "2019-12"
+              ],
+              "method": "J-S: x s (NOAA-20 to Suomi NPP, in burning days), then D-a",
+              "s": {
+                "D": 0.9667,
+                "N": 0.8924
+              },
+              "s_sd": {
+                "D": 0.0992,
+                "N": 0.0871
+              },
+              "train_burning_days": {
+                "snpp": 664,
+                "noaa20": 709
+              }
+            }
+          },
+          "fit_cells": 28,
+          "cells_outside_fit_region_level": 0,
+          "em": {
+            "iterations": 28,
+            "delta": 6.691104249547247e-08,
+            "converged": true
+          },
+          "method": "D-a: per 0.25 deg cell x calendar month x day/night x FRP class, posterior MODIS burning days per Suomi NPP burning day (a + sum MODIS_k) / (a / r0_k + sum VIIRS_k) over rows with Suomi NPP > 0, MODIS split over classes at the fitted fixed point; b = mean MODIS burning days where Suomi NPP saw nothing. NOAA-20: x s, then D-a (pipeline/round3/model.py, pipeline/tournament/candidates.py)",
+          "interval": "D-a's predictive per cell-month (class negative binomials summed and moment-matched for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+          "evidence": [
+            "docs/ROUND3_CONFIRMATION.md",
+            "docs/TOURNAMENT_RESULTS.md"
+          ],
+          "check": {
+            "max_gap_between_model_predictive_mean_and_m": 0.005,
+            "background_total": 22.98,
+            "fit_table_burning_days_matched": 4223
+          }
+        },
+        "combination": {
+          "rule": "as the hotspot view: a satellite enters a slot's average only if some FRP class has a prior ratio r0_k > 0 there (and s > 0 for NOAA-20); one qualifying satellite carries the slot alone; none qualifying keeps D-a's literal behaviour (weight 0, background as fitted)",
+          "slots_when_both_cover": {
+            "01D": [
+              "snpp",
+              "noaa20"
+            ],
+            "01N": [
+              "snpp",
+              "noaa20"
+            ],
+            "02D": [
+              "snpp",
+              "noaa20"
+            ],
+            "02N": [
+              "snpp",
+              "noaa20"
+            ],
+            "03D": [
+              "snpp",
+              "noaa20"
+            ],
+            "03N": [
+              "snpp",
+              "noaa20"
+            ],
+            "04D": [
+              "snpp",
+              "noaa20"
+            ],
+            "04N": [
+              "snpp",
+              "noaa20"
+            ],
+            "05D": [
+              "snpp",
+              "noaa20"
+            ],
+            "05N": [
+              "snpp",
+              "noaa20"
+            ],
+            "06D": [
+              "snpp",
+              "noaa20"
+            ],
+            "06N": [
+              "snpp",
+              "noaa20"
+            ],
+            "07D": [
+              "snpp",
+              "noaa20"
+            ],
+            "07N": [
+              "snpp",
+              "noaa20"
+            ],
+            "08D": [
+              "snpp",
+              "noaa20"
+            ],
+            "08N": [
+              "snpp",
+              "noaa20"
+            ],
+            "09D": [
+              "snpp",
+              "noaa20"
+            ],
+            "09N": [
+              "snpp",
+              "noaa20"
+            ],
+            "10D": [
+              "snpp",
+              "noaa20"
+            ],
+            "10N": [
+              "snpp",
+              "noaa20"
+            ],
+            "11D": [
+              "snpp",
+              "noaa20"
+            ],
+            "11N": [
+              "snpp",
+              "noaa20"
+            ],
+            "12D": [
+              "snpp",
+              "noaa20"
+            ],
+            "12N": [
+              "snpp",
+              "noaa20"
+            ]
+          }
+        },
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.4446,
+            "02": 0.4446,
+            "03": 0.4535,
+            "04": 0.4922,
+            "05": 0.4535,
+            "06": 0.4048,
+            "07": 0.4691,
+            "08": 0.4612,
+            "09": 0.4496,
+            "10": 0.537,
+            "11": 0.456,
+            "12": 0.3396
+          },
+          "pooled": 0.4668,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(0 Terra burning days + 20 x 0.4668) / (1 MODIS burning days + 20)",
+            "02": "(0 Terra burning days + 20 x 0.4668) / (1 MODIS burning days + 20)",
+            "03": "(2 Terra burning days + 20 x 0.4668) / (5 MODIS burning days + 20)",
+            "04": "(1 Terra burning days + 20 x 0.4668) / (1 MODIS burning days + 20)",
+            "05": "(2 Terra burning days + 20 x 0.4668) / (5 MODIS burning days + 20)",
+            "06": "(19 Terra burning days + 20 x 0.4668) / (50 MODIS burning days + 20)",
+            "07": "(69 Terra burning days + 20 x 0.4668) / (147 MODIS burning days + 20)",
+            "08": "(52 Terra burning days + 20 x 0.4668) / (113 MODIS burning days + 20)",
+            "09": "(68 Terra burning days + 20 x 0.4668) / (152 MODIS burning days + 20)",
+            "10": "(119 Terra burning days + 20 x 0.4668) / (219 MODIS burning days + 20)",
+            "11": "(39 Terra burning days + 20 x 0.4668) / (86 MODIS burning days + 20)",
+            "12": "(9 Terra burning days + 20 x 0.4668) / (34 MODIS burning days + 20)"
+          }
+        },
+        "years": [
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
+        "records": {
+          "modis": 2063,
+          "snpp": 6373,
+          "noaa20": 4223
+        },
+        "zero_weight": {
+          "from": "2022-01",
+          "viirs_burning_days": 4496,
+          "weight_zero": 950,
+          "share": 0.2113,
+          "months_noted": 34,
+          "note_threshold": 0.1
+        }
+      },
+      "generated_at": "2026-11-12T11:36:51+00:00"
+    },
+    {
+      "id": "syria",
+      "name": "Syria",
+      "notes": [
+        "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): burning days passed every check, with regional monthly error 19.5% against 27.0% for a simple conversion. Hotspots failed one check: regional monthly error 27.5%, slightly worse than the simple conversion's 24.4%. 2021 was overestimated (662 predicted against 490 observed burning days). Local grid-cell errors are 69–77%. August and September 2020 were left out of the test by the sensor-outage rule.",
+        "Cells on Syria's borders also cover land in neighbouring countries, but count only Syria's records. 11 of them are shared with Lebanon, whose fires are in the Lebanon view; fires in Turkey, Iraq and Jordan are not shown anywhere."
+      ],
+      "bbox": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "months": {
+        "first": "2000-11",
+        "last": "2026-07"
+      },
+      "record_end": {
+        "suomi_npp": {
+          "first": "2012-02",
+          "last": "2026-07",
+          "first_detection": "2012-01-20",
+          "last_detection": "2026-07-31"
+        },
+        "noaa20": {
+          "first": "2018-04",
+          "last": "2026-07",
+          "first_detection": "2018-04-01",
+          "last_detection": "2026-07-31"
+        },
+        "modis": {
+          "first": "2000-11",
+          "last": "2026-07",
+          "first_detection": "2000-11-01",
+          "last_detection": "2026-07-31"
+        },
+        "detections_outside_record_dropped": 0,
+        "detections_outside_grid": {},
+        "viirs_outage_months": [],
+        "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
+        "after": "2026 comes from FIRMS standard data through the area API, assigned to the country with the Natural Earth outline (matched the 2025 FIRMS country file exactly in the test). Later months are added when FIRMS publishes standard data; near-real-time data is not used."
+      },
+      "default_view": {
+        "bounds": [
+          [
+            35.5,
+            32.2
+          ],
+          [
+            42.5,
+            37.5
+          ]
+        ]
+      },
+      "model": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+      "model_detail": {
+        "name": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+        "badge": "MODEL A2 · ROUND 2, FROZEN",
+        "a": 30,
+        "frozen": {
+          "file": "data/processed/round2/frozen.json",
+          "sha256": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686",
+          "commit": "617daff",
+          "selection": "docs/ROUND2_SELECTION.md"
+        },
+        "satellites": {
+          "snpp": {
+            "train": [
+              "2012-02",
+              "2019-12"
+            ],
+            "method": "A2",
+            "prior_ratio_r0": {
+              "01D": 0.3043,
+              "01N": 0.0643,
+              "02D": 0.2843,
+              "02N": 0.1247,
+              "03D": 0.2165,
+              "03N": 0.1514,
+              "04D": 0.1354,
+              "04N": 0.098,
+              "05D": 0.2318,
+              "05N": 0.0788,
+              "06D": 0.315,
+              "06N": 0.132,
+              "07D": 0.3064,
+              "07N": 0.1235,
+              "08D": 0.2665,
+              "08N": 0.107,
+              "09D": 0.2738,
+              "09N": 0.0914,
+              "10D": 0.2374,
+              "10N": 0.0796,
+              "11D": 0.3322,
+              "11N": 0.0533,
+              "12D": 0.3081,
+              "12N": 0.0461
+            },
+            "background_b": {
+              "01D": 0.0203,
+              "01N": 0.0,
+              "02D": 0.0143,
+              "02N": 0.0005,
+              "03D": 0.0151,
+              "03N": 0.0014,
+              "04D": 0.0062,
+              "04N": 0.0,
+              "05D": 0.0347,
+              "05N": 0.0086,
+              "06D": 0.0388,
+              "06N": 0.0225,
+              "07D": 0.0497,
+              "07N": 0.0132,
+              "08D": 0.0378,
+              "08N": 0.0084,
+              "09D": 0.0125,
+              "09N": 0.0072,
+              "10D": 0.0376,
+              "10N": 0.0074,
+              "11D": 0.0343,
+              "11N": 0.0025,
+              "12D": 0.0185,
+              "12N": 0.0047
+            },
+            "train_detections": {
+              "modis": 15165,
+              "snpp": 76546
+            }
+          },
+          "noaa20": {
+            "train": [
+              "2018-04",
+              "2019-12"
+            ],
+            "method": "J-S: x s (NOAA-20 to Suomi NPP), then A2",
+            "s": {
+              "D": 1.0743,
+              "N": 1.4552
+            },
+            "s_sd": {
+              "D": 0.0468,
+              "N": 0.1416
+            },
+            "prior_ratio_r0": {
+              "01D": 0.327,
+              "01N": 0.0935,
+              "02D": 0.3055,
+              "02N": 0.1815,
+              "03D": 0.2325,
+              "03N": 0.2203,
+              "04D": 0.1454,
+              "04N": 0.1426,
+              "05D": 0.249,
+              "05N": 0.1146,
+              "06D": 0.3384,
+              "06N": 0.1921,
+              "07D": 0.3292,
+              "07N": 0.1797,
+              "08D": 0.2863,
+              "08N": 0.1557,
+              "09D": 0.2942,
+              "09N": 0.133,
+              "10D": 0.255,
+              "10N": 0.1158,
+              "11D": 0.3569,
+              "11N": 0.0776,
+              "12D": 0.331,
+              "12N": 0.0671
+            },
+            "train_detections": {
+              "snpp": 28862,
+              "noaa20": 23865
+            }
+          }
+        },
+        "fit_cells": 282,
+        "cells_outside_fit_region_level": 14,
+        "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
+        "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+        "evidence": [
+          "docs/ROUND2_SELECTION.md",
+          "docs/CONFIRMATION_RESULTS.md"
+        ],
+        "check": {
+          "max_gap_between_model_predictive_mean_and_m": 0.0188,
+          "background_total": 450.56
+        }
+      },
+      "combination": {
+        "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window. Model A itself is unchanged.",
+        "slots_when_both_cover": {
+          "01D": [
+            "snpp",
+            "noaa20"
+          ],
+          "01N": [
+            "snpp",
+            "noaa20"
+          ],
+          "02D": [
+            "snpp",
+            "noaa20"
+          ],
+          "02N": [
+            "snpp",
+            "noaa20"
+          ],
+          "03D": [
+            "snpp",
+            "noaa20"
+          ],
+          "03N": [
+            "snpp",
+            "noaa20"
+          ],
+          "04D": [
+            "snpp",
+            "noaa20"
+          ],
+          "04N": [
+            "snpp",
+            "noaa20"
+          ],
+          "05D": [
+            "snpp",
+            "noaa20"
+          ],
+          "05N": [
+            "snpp",
+            "noaa20"
+          ],
+          "06D": [
+            "snpp",
+            "noaa20"
+          ],
+          "06N": [
+            "snpp",
+            "noaa20"
+          ],
+          "07D": [
+            "snpp",
+            "noaa20"
+          ],
+          "07N": [
+            "snpp",
+            "noaa20"
+          ],
+          "08D": [
+            "snpp",
+            "noaa20"
+          ],
+          "08N": [
+            "snpp",
+            "noaa20"
+          ],
+          "09D": [
+            "snpp",
+            "noaa20"
+          ],
+          "09N": [
+            "snpp",
+            "noaa20"
+          ],
+          "10D": [
+            "snpp",
+            "noaa20"
+          ],
+          "10N": [
+            "snpp",
+            "noaa20"
+          ],
+          "11D": [
+            "snpp",
+            "noaa20"
+          ],
+          "11N": [
+            "snpp",
+            "noaa20"
+          ],
+          "12D": [
+            "snpp",
+            "noaa20"
+          ],
+          "12N": [
+            "snpp",
+            "noaa20"
+          ]
+        }
+      },
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.4273,
+          "02": 0.3443,
+          "03": 0.5129,
+          "04": 0.6525,
+          "05": 0.5864,
+          "06": 0.682,
+          "07": 0.6168,
+          "08": 0.6192,
+          "09": 0.5796,
+          "10": 0.5405,
+          "11": 0.5736,
+          "12": 0.4487
+        },
+        "pooled": 0.6188,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(53 Terra + 20 x 0.6188) / (133 MODIS + 20)",
+          "02": "(52 Terra + 20 x 0.6188) / (167 MODIS + 20)",
+          "03": "(82 Terra + 20 x 0.6188) / (164 MODIS + 20)",
+          "04": "(47 Terra + 20 x 0.6188) / (71 MODIS + 20)",
+          "05": "(75 Terra + 20 x 0.6188) / (129 MODIS + 20)",
+          "06": "(2059 Terra + 20 x 0.6188) / (3017 MODIS + 20)",
+          "07": "(1561 Terra + 20 x 0.6188) / (2531 MODIS + 20)",
+          "08": "(439 Terra + 20 x 0.6188) / (709 MODIS + 20)",
+          "09": "(307 Terra + 20 x 0.6188) / (531 MODIS + 20)",
+          "10": "(173 Terra + 20 x 0.6188) / (323 MODIS + 20)",
+          "11": "(88 Terra + 20 x 0.6188) / (155 MODIS + 20)",
+          "12": "(63 Terra + 20 x 0.6188) / (148 MODIS + 20)"
+        }
+      },
+      "policy": {
+        "bridged": [
+          "2000-11",
+          "2002-06"
+        ],
+        "observed": [
+          "2002-07",
+          "2021-12"
+        ],
+        "estimated": [
+          "2022-01",
+          "2026-07"
+        ],
+        "naive_switch": "2012-01"
+      },
+      "cells": 296,
+      "hotspot_years": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "sensors": {
+        "T": "Terra MODIS",
+        "A": "Aqua MODIS",
+        "N": "Suomi NPP VIIRS",
+        "J1": "NOAA-20 VIIRS"
+      },
+      "satellite_field": {
+        "A": "Aqua",
+        "J1": "N20",
+        "N": "N",
+        "T": "Terra"
+      },
+      "instrument_field": {
+        "A": "MODIS",
+        "J1": "VIIRS",
+        "N": "VIIRS",
+        "T": "MODIS"
+      },
+      "versions": [
+        "2",
+        "6.03",
+        "6.2",
+        "61.03"
+      ],
+      "detections": {
+        "N": 114586,
+        "J1": 62659,
+        "T": 19598,
+        "A": 15512
+      },
+      "provenance": {
+        "source": "NASA FIRMS country archive (standard products); after 2025: FIRMS area API standard products, clipped to the Natural Earth 1:10m country outline",
+        "filters": "box lon 35.5..42.5, lat 32.2..37.5; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
+        "unit": "fire detections (satellite pixels flagged as burning), not burned area",
+        "files": [
+          {
+            "name": "modis_2000_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 210,
+            "sha256": "f1f1a64bacf9c3ab22930b0595ca79f34c7750a10e56ed38c7e34c2de4d38548",
+            "retrieved": "2026-11-06T14:30:32.242513+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2490,
+            "sha256": "bd3213428471a3f9f7c21db7118c1a406edaf1f827ca4258ae2dcf7fe5c025b5",
+            "retrieved": "2026-11-06T14:30:36.751467+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1945,
+            "sha256": "f00f8f2a2b9cdb1399a6e80169b4d3ba835ff7296ee6f5abd2b858b63afe39bc",
+            "retrieved": "2026-11-06T14:30:38.602307+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2513,
+            "sha256": "e61e5535ab3ab9bb378da27c466e8a8db5d21806f2d8311651dc9a3c806c59b1",
+            "retrieved": "2026-11-06T14:30:40.634236+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1279,
+            "sha256": "e80e012b117edbbd3dfeb590249ba16f6ab63a9393dd9e271fb0458f565b6e1d",
+            "retrieved": "2026-11-06T14:30:42.058698+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 508,
+            "sha256": "99cb6185f867230ea205ab06f393c912295c6ca57d9baab784799f874bfed1d9",
+            "retrieved": "2026-11-06T14:30:43.241756+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 662,
+            "sha256": "d050fc0e23be0d83afebc7a36b53a1475fb6b1d7c944153533d82a7945f530e6",
+            "retrieved": "2026-11-06T14:30:44.563124+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 756,
+            "sha256": "e131dff4d73989e59e789efcfe04cba7493df8deda8359460139d4f81ab18ef6",
+            "retrieved": "2026-11-06T14:30:46.112017+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 154,
+            "sha256": "e14fbeab7b003179d9c989f54601d11371255fafda0ba994d0d3986e75b510e1",
+            "retrieved": "2026-11-06T14:30:47.210836+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 976,
+            "sha256": "669f8fe496cc76fa9330dfc03d08aca39c702d995fff4c18b3a806ee8f52a0d1",
+            "retrieved": "2026-11-06T14:30:49.290140+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1311,
+            "sha256": "49afbe9dfee6bfad035931c15f7d18b43a63966ceba95b9d1344cedf2186593c",
+            "retrieved": "2026-11-06T14:30:51.687497+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 752,
+            "sha256": "aa0d2aeee27aa8327d6e8e5f54c86a0fa7c4bfe52fda5e315d286b4875b06f77",
+            "retrieved": "2026-11-06T14:30:52.822464+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2012_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1235,
+            "sha256": "97700216e9f447bb8cb1a0b2ad9c888c0c1903cf67b02f3820a4724853cefba2",
+            "retrieved": "2026-11-06T14:30:54.264769+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2013_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2716,
+            "sha256": "afe8e09cabf6ac09d88d9c94a5019f93b0efb4e1ad256beeb248c809cf8b118c",
+            "retrieved": "2026-11-06T14:31:03.071471+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2014_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 777,
+            "sha256": "67a5f34ce2f6f7df05500e60eed97a2c27563f5d189bbe77ddd34c951f33e002",
+            "retrieved": "2026-11-06T14:31:12.223060+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2015_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2082,
+            "sha256": "f4316126e6fa1ff2f36405e59b70415e1305988756f784297ea730fe94147045",
+            "retrieved": "2026-11-06T14:31:18.557362+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2016_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1527,
+            "sha256": "b86f59e31b7414b79f4cf0bb9a19db2a6aaeb5c940097804ce30938583d60a59",
+            "retrieved": "2026-11-06T14:31:26.800203+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2017_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 2251,
+            "sha256": "c42a3876afd66dabb8965f8bcedd82f4691a221d41d3287235b6f97cd0545b08",
+            "retrieved": "2026-11-06T14:31:33.857031+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2018_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2018/modis_2018_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 520,
+            "sha256": "5b28a0a2c52e53fecbc6016799820014919e396b7ae7e2332bd41531cdfff430",
+            "retrieved": "2026-11-06T13:55:10.946745+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2019_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2019/modis_2019_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 5872,
+            "sha256": "cf85327c1b13854b22d69c3102aecec07e642956dafb632bf089fb3c186ce7cd",
+            "retrieved": "2026-11-06T13:53:01.573639+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2020_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2020/modis_2020_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 3394,
+            "sha256": "80f3db2d65155d25d8abad37b14104614d6343fbd196e13377caf190bac9d426",
+            "retrieved": "2026-11-06T13:52:06.468623+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2021_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2021/modis_2021_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 609,
+            "sha256": "655e70025e13509edd5651966529fedc9cea83f43c0c2c3fbfb4fa7b0bca44cc",
+            "retrieved": "2026-11-06T13:51:35.906222+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2022_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2022/modis_2022_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 335,
+            "sha256": "d53be9d26dc50589397d9a44c9c607ca4fced624d390624582318096981f836d",
+            "retrieved": "2026-11-06T13:51:17.039119+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2023_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2023/modis_2023_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1486,
+            "sha256": "8bd2f1bdda70973b6841bf443df292a56676a708ff23d624c4134a7ce1ddddd0",
+            "retrieved": "2026-11-06T13:51:03.540780+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2024_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2024/modis_2024_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1977,
+            "sha256": "5a9dd9130c5478ad8fe530596dad26cb97b17cd20dd2d6c2ea0f647177e9a236",
+            "retrieved": "2026-11-06T13:50:44.636309+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2025_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Syria.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 1158,
+            "sha256": "43292251a7bb5058ea3f05d7913416701a76dcc053b8aacc5541d82546613370",
+            "retrieved": "2026-11-06T13:48:25.881999+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2026_Syria.csv",
+            "url": "derived: FIRMS area API MODIS_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/syria)",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 804,
+            "sha256": "da081b85568d3e640e9b9a2ea48333ac83639aa512db2521105ec29c685b3fb4",
+            "retrieved": "2026-11-11T11:14:08+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2018_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2018/viirs-jpss1_2018_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 7153,
+            "sha256": "e8d18576189dd07388b595d2b35cb98524b52305b466081fd4a5fcb54c4eb0df",
+            "retrieved": "2026-11-06T13:55:43.377398+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2019_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2019/viirs-jpss1_2019_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 33664,
+            "sha256": "9313ebd142cca7b4b028af5fe855c5ae608db16e6fab26c670aa6a9b011a7e14",
+            "retrieved": "2026-11-06T13:55:08.958402+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2020_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2020/viirs-jpss1_2020_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 21909,
+            "sha256": "9516dd0e2ee719086a2c0fd8dd25396d1d24c4eac4a5de903740ddec2624c7ee",
+            "retrieved": "2026-11-06T13:52:56.610492+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2021_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2021/viirs-jpss1_2021_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 10974,
+            "sha256": "6639c11b50e56867569fa73eeb3f58444a4538507dd059135460526628b29da6",
+            "retrieved": "2026-11-06T13:52:03.629142+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2022_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2022/viirs-jpss1_2022_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 9047,
+            "sha256": "ad732a74bb663d635e8a110a44191e88bf7e22eb9360d739e9de791ff6bd6e81",
+            "retrieved": "2026-11-06T13:51:34.290691+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2023_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2023/viirs-jpss1_2023_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 13262,
+            "sha256": "4e7dbd9a520fb3dc38ea0a95778b61d910c166390cfadd4ea23a048ac8b014ca",
+            "retrieved": "2026-11-06T13:51:15.587694+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2024_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2024/viirs-jpss1_2024_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 16508,
+            "sha256": "84dcc628ac5fb0a3d4a7f1cabfdbc0f1c9ec20e67d5883e9bc0f8f78dfd56c20",
+            "retrieved": "2026-11-06T13:51:01.308203+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2025_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Syria.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 9429,
+            "sha256": "626577c5fa8516f5aaf70e0b13f5889a1ea330536b7bb0c0499cc91ccedbbd58",
+            "retrieved": "2026-11-06T13:48:32.106463+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2026_Syria.csv",
+            "url": "derived: FIRMS area API VIIRS_NOAA20_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/syria)",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 5628,
+            "sha256": "f0842862bd4a98b53a6819f5aff84f24bf1e3a8935bdfc95bf45df7efa9f8c8e",
+            "retrieved": "2026-11-11T11:14:09+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2012_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 10446,
+            "sha256": "f106cc4295bd0e013dcedac898afa8cf85bbd21fd1cf95ed6655e7257c32160b",
+            "retrieved": "2026-11-06T14:30:59.710478+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2013_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 14527,
+            "sha256": "d31e9b30f103d02f774264e3aeff4d81672f40f5e540718b7966a5c62fb8e18d",
+            "retrieved": "2026-11-06T14:31:10.832649+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2014_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 7186,
+            "sha256": "209d35551f747eb2d50a229d945b7a4e7f4cd45f745c3d196889bc6aa6d75d35",
+            "retrieved": "2026-11-06T14:31:16.703801+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2015_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 12577,
+            "sha256": "cba85faaaf7e05e125903608d1aa454ec03d546691b70e2225dfcb8eaadf6d92",
+            "retrieved": "2026-11-06T14:31:25.079201+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2016_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 9622,
+            "sha256": "e3728b129ac8a7d633ba3d61fad1b158c36628106d3e3950c8857e78bb4dd350",
+            "retrieved": "2026-11-06T14:31:32.093616+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2017_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 12927,
+            "sha256": "c7f0aa1f00f0cfc60f3bca0a7bd9e91e9d4a4f0f1f6da653aa9bd136572989ec",
+            "retrieved": "2026-11-06T14:31:42.266226+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2018_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2018/viirs-snpp_2018_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 8296,
+            "sha256": "6f9f4541969b5c53fe7bd6736a536af34d05d27393bdb1030ea8b5fbb70070f7",
+            "retrieved": "2026-11-06T13:55:38.705336+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2019_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2019/viirs-snpp_2019_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 34478,
+            "sha256": "637538df1305a7e35e37082e8b74b5ddfc2575c4aa443a6626097141d6242731",
+            "retrieved": "2026-11-06T13:54:13.806954+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2020_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2020/viirs-snpp_2020_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 23070,
+            "sha256": "a001ef0b394366526caa24b59680e07d44102c56d76e1de140fbb07193531319",
+            "retrieved": "2026-11-06T13:52:34.269210+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2021_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2021/viirs-snpp_2021_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 11030,
+            "sha256": "869574ed6719ccacdfb2a51a2c92c3275a0f4d8d9cc4065f3ef76d0535e89270",
+            "retrieved": "2026-11-06T13:51:49.043814+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2022_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2022/viirs-snpp_2022_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 8913,
+            "sha256": "9b23efc63b7d6e37a1f9d6056586e13d4655226a98f710a678c8c5f02e1a96b2",
+            "retrieved": "2026-11-06T13:51:27.372731+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2023_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2023/viirs-snpp_2023_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 12989,
+            "sha256": "b64bbe29d02582c678b782232ca0d1dcbd323d438ef868a2a59d6abcda774a8e",
+            "retrieved": "2026-11-06T13:51:09.807052+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2024_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2024/viirs-snpp_2024_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 15526,
+            "sha256": "f96060947404bdb1927bf4c241910b82fd50c1614597822e9bf9976ff1d9bdbe",
+            "retrieved": "2026-11-06T13:50:52.577627+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2025_Syria.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Syria.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 8959,
+            "sha256": "228c9d9d114f0f54f5bbbaa1e8838e8c37a15d670a07c2e886de755b9c0ef881",
+            "retrieved": "2026-11-06T13:48:28.749432+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2026_Syria.csv",
+            "url": "derived: FIRMS area API VIIRS_SNPP_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/syria)",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 5102,
+            "sha256": "c35baa3d630a56a4b65fb1e2fdcf36f183de83590b972405b5b70aed89d0d310",
+            "retrieved": "2026-11-11T11:14:09+00:00",
+            "sha256_ok": true
+          }
+        ]
+      },
+      "burning_days": {
+        "unit": "MODIS-equivalent burning days: how many days each 0.01 degree cell (about 1 km) had a fire detected",
+        "definition": "a 0.01 degree cell (floor(lon / 0.01), floor(lat / 0.01)) counts once per date and day/night if it has any detection of the family (MODIS = Terra + Aqua; Suomi NPP; NOAA-20); it takes the FRP class of its largest-FRP detection (f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW)",
+        "files": {
+          "monthly": "monthly_bd.json",
+          "drift": "drift_bd.json",
+          "records": "burning/<year>.json"
+        },
+        "fine_cell_deg": 0.01,
+        "origin": {
+          "x0": 3573,
+          "y0": 3231
+        },
+        "model": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+        "model_detail": {
+          "name": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+          "badge": "D-a · ROUND 3 CONFIRMED",
+          "a": 10,
+          "unit": "burning days",
+          "frozen": {
+            "file": "data/processed/tournament/frozen_round3.json",
+            "sha256": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
+            "commit": "80e297f",
+            "confirmation": "docs/ROUND3_CONFIRMATION.md"
+          },
+          "classes": "f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW",
+          "satellites": {
+            "snpp": {
+              "train": [
+                "2012-02",
+                "2019-12"
+              ],
+              "method": "D-a (C3 in burning days): one A2-style ratio per FRP class",
+              "prior_ratio_r0": {
+                "01D": [
+                  0.0,
+                  0.1716,
+                  0.5854,
+                  0.7414
+                ],
+                "01N": [
+                  0.0,
+                  0.0064,
+                  0.3628,
+                  0.8058
+                ],
+                "02D": [
+                  0.0,
+                  0.2247,
+                  0.3915,
+                  0.7075
+                ],
+                "02N": [
+                  0.0,
+                  0.0057,
+                  0.1864,
+                  2.5998
+                ],
+                "03D": [
+                  0.0,
+                  0.1666,
+                  0.2979,
+                  0.4109
+                ],
+                "03N": [
+                  0.0,
+                  0.0134,
+                  0.2738,
+                  2.0062
+                ],
+                "04D": [
+                  0.0,
+                  0.0498,
+                  0.1828,
+                  0.6005
+                ],
+                "04N": [
+                  0.0,
+                  0.0034,
+                  0.9322,
+                  0.0464
+                ],
+                "05D": [
+                  0.0,
+                  0.0487,
+                  0.3532,
+                  0.6703
+                ],
+                "05N": [
+                  0.0,
+                  0.07,
+                  0.3733,
+                  0.7681
+                ],
+                "06D": [
+                  0.0,
+                  0.2166,
+                  0.4062,
+                  0.7879
+                ],
+                "06N": [
+                  0.0,
+                  0.1421,
+                  0.4924,
+                  0.2836
+                ],
+                "07D": [
+                  0.0,
+                  0.1827,
+                  0.3642,
+                  0.8496
+                ],
+                "07N": [
+                  0.0,
+                  0.0981,
+                  0.5652,
+                  0.6905
+                ],
+                "08D": [
+                  0.0,
+                  0.0946,
+                  0.393,
+                  0.6519
+                ],
+                "08N": [
+                  0.0,
+                  0.0895,
+                  0.4736,
+                  0.8028
+                ],
+                "09D": [
+                  0.0,
+                  0.1406,
+                  0.3449,
+                  1.0545
+                ],
+                "09N": [
+                  0.0,
+                  0.0829,
+                  0.6701,
+                  1.5875
+                ],
+                "10D": [
+                  0.0,
+                  0.1442,
+                  0.3884,
+                  0.7849
+                ],
+                "10N": [
+                  0.0,
+                  0.0347,
+                  0.4991,
+                  1.3633
+                ],
+                "11D": [
+                  0.0,
+                  0.2449,
+                  0.5718,
+                  0.6151
+                ],
+                "11N": [
+                  0.0,
+                  0.012,
+                  0.3762,
+                  1.4562
+                ],
+                "12D": [
+                  0.0,
+                  0.133,
+                  0.5403,
+                  2.0626
+                ],
+                "12N": [
+                  0.0,
+                  0.0036,
+                  0.5417,
+                  0.412
+                ]
+              },
+              "background_b": {
+                "01D": 0.0186,
+                "01N": 0.0,
+                "02D": 0.0143,
+                "02N": 0.0005,
+                "03D": 0.0141,
+                "03N": 0.0014,
+                "04D": 0.0062,
+                "04N": 0.0,
+                "05D": 0.0336,
+                "05N": 0.008,
+                "06D": 0.0382,
+                "06N": 0.0225,
+                "07D": 0.0479,
+                "07N": 0.0114,
+                "08D": 0.036,
+                "08N": 0.0084,
+                "09D": 0.0125,
+                "09N": 0.0072,
+                "10D": 0.0353,
+                "10N": 0.0074,
+                "11D": 0.0343,
+                "11N": 0.0025,
+                "12D": 0.0185,
+                "12N": 0.0047
+              },
+              "train_burning_days": {
+                "modis": 14364,
+                "snpp": 54246
+              }
+            },
+            "noaa20": {
+              "train": [
+                "2018-04",
+                "2019-12"
+              ],
+              "method": "J-S: x s (NOAA-20 to Suomi NPP, in burning days), then D-a",
+              "s": {
+                "D": 1.0551,
+                "N": 1.4572
+              },
+              "s_sd": {
+                "D": 0.0458,
+                "N": 0.1346
+              },
+              "train_burning_days": {
+                "snpp": 20454,
+                "noaa20": 17099
+              }
+            }
+          },
+          "fit_cells": 282,
+          "cells_outside_fit_region_level": 14,
+          "em": {
+            "iterations": 100,
+            "delta": 8.106862694073946e-08,
+            "converged": true
+          },
+          "method": "D-a: per 0.25 deg cell x calendar month x day/night x FRP class, posterior MODIS burning days per Suomi NPP burning day (a + sum MODIS_k) / (a / r0_k + sum VIIRS_k) over rows with Suomi NPP > 0, MODIS split over classes at the fitted fixed point; b = mean MODIS burning days where Suomi NPP saw nothing. NOAA-20: x s, then D-a (pipeline/round3/model.py, pipeline/tournament/candidates.py)",
+          "interval": "D-a's predictive per cell-month (class negative binomials summed and moment-matched for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+          "evidence": [
+            "docs/ROUND3_CONFIRMATION.md",
+            "docs/TOURNAMENT_RESULTS.md"
+          ],
+          "check": {
+            "max_gap_between_model_predictive_mean_and_m": 0.0074,
+            "background_total": 432.41,
+            "fit_table_burning_days_matched": 85709
+          }
+        },
+        "combination": {
+          "rule": "as the hotspot view: a satellite enters a slot's average only if some FRP class has a prior ratio r0_k > 0 there (and s > 0 for NOAA-20); one qualifying satellite carries the slot alone; none qualifying keeps D-a's literal behaviour (weight 0, background as fitted)",
+          "slots_when_both_cover": {
+            "01D": [
+              "snpp",
+              "noaa20"
+            ],
+            "01N": [
+              "snpp",
+              "noaa20"
+            ],
+            "02D": [
+              "snpp",
+              "noaa20"
+            ],
+            "02N": [
+              "snpp",
+              "noaa20"
+            ],
+            "03D": [
+              "snpp",
+              "noaa20"
+            ],
+            "03N": [
+              "snpp",
+              "noaa20"
+            ],
+            "04D": [
+              "snpp",
+              "noaa20"
+            ],
+            "04N": [
+              "snpp",
+              "noaa20"
+            ],
+            "05D": [
+              "snpp",
+              "noaa20"
+            ],
+            "05N": [
+              "snpp",
+              "noaa20"
+            ],
+            "06D": [
+              "snpp",
+              "noaa20"
+            ],
+            "06N": [
+              "snpp",
+              "noaa20"
+            ],
+            "07D": [
+              "snpp",
+              "noaa20"
+            ],
+            "07N": [
+              "snpp",
+              "noaa20"
+            ],
+            "08D": [
+              "snpp",
+              "noaa20"
+            ],
+            "08N": [
+              "snpp",
+              "noaa20"
+            ],
+            "09D": [
+              "snpp",
+              "noaa20"
+            ],
+            "09N": [
+              "snpp",
+              "noaa20"
+            ],
+            "10D": [
+              "snpp",
+              "noaa20"
+            ],
+            "10N": [
+              "snpp",
+              "noaa20"
+            ],
+            "11D": [
+              "snpp",
+              "noaa20"
+            ],
+            "11N": [
+              "snpp",
+              "noaa20"
+            ],
+            "12D": [
+              "snpp",
+              "noaa20"
+            ],
+            "12N": [
+              "snpp",
+              "noaa20"
+            ]
+          }
+        },
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.4286,
+            "02": 0.3483,
+            "03": 0.508,
+            "04": 0.6532,
+            "05": 0.588,
+            "06": 0.6854,
+            "07": 0.6189,
+            "08": 0.6253,
+            "09": 0.5857,
+            "10": 0.543,
+            "11": 0.5815,
+            "12": 0.4511
+          },
+          "pooled": 0.6219,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(51 Terra burning days + 20 x 0.6219) / (128 MODIS burning days + 20)",
+            "02": "(52 Terra burning days + 20 x 0.6219) / (165 MODIS burning days + 20)",
+            "03": "(79 Terra burning days + 20 x 0.6219) / (160 MODIS burning days + 20)",
+            "04": "(47 Terra burning days + 20 x 0.6219) / (71 MODIS burning days + 20)",
+            "05": "(74 Terra burning days + 20 x 0.6219) / (127 MODIS burning days + 20)",
+            "06": "(2013 Terra burning days + 20 x 0.6219) / (2935 MODIS burning days + 20)",
+            "07": "(1515 Terra burning days + 20 x 0.6219) / (2448 MODIS burning days + 20)",
+            "08": "(424 Terra burning days + 20 x 0.6219) / (678 MODIS burning days + 20)",
+            "09": "(298 Terra burning days + 20 x 0.6219) / (510 MODIS burning days + 20)",
+            "10": "(170 Terra burning days + 20 x 0.6219) / (316 MODIS burning days + 20)",
+            "11": "(87 Terra burning days + 20 x 0.6219) / (151 MODIS burning days + 20)",
+            "12": "(62 Terra burning days + 20 x 0.6219) / (145 MODIS burning days + 20)"
+          }
+        },
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
+        "records": {
+          "modis": 33545,
+          "snpp": 81626,
+          "noaa20": 45485
+        },
+        "zero_weight": {
+          "from": "2022-01",
+          "viirs_burning_days": 32721,
+          "weight_zero": 1,
+          "share": 0.0,
+          "months_noted": 0,
+          "note_threshold": 0.1
+        }
+      },
+      "generated_at": "2026-11-11T11:27:19+00:00"
+    },
+    {
+      "id": "la_rioja",
+      "name": "La Rioja area, Argentina",
+      "notes": [
+        "Regional monthly summaries were tested against MODIS in 2020–2021. Local grid-cell errors remain substantial, around 60%. This region is outside the climates used in the earlier Mediterranean validation.",
+        "Annual totals in the 2020-2021 test were above the 80% range.",
+        "This is a rectangular area including neighboring provincial land, not the exact La Rioja province.",
+        "One 2026 NOAA-20 detection fell in a grid cell with no earlier fires and is left out, so the 2000–2025 grid and its values stay exactly as published."
+      ],
+      "bbox": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "months": {
+        "first": "2000-11",
+        "last": "2026-07"
+      },
+      "record_end": {
+        "suomi_npp": {
+          "first": "2012-02",
+          "last": "2026-07",
+          "first_detection": "2012-01-21",
+          "last_detection": "2026-07-31"
+        },
+        "noaa20": {
+          "first": "2018-04",
+          "last": "2026-07",
+          "first_detection": "2018-04-01",
+          "last_detection": "2026-07-31"
+        },
+        "modis": {
+          "first": "2000-11",
+          "last": "2026-07",
+          "first_detection": "2000-11-03",
+          "last_detection": "2026-07-31"
+        },
+        "detections_outside_record_dropped": 0,
+        "detections_outside_grid": {
+          "J1": 1
+        },
+        "viirs_outage_months": [],
+        "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
+        "after": "2026 comes from FIRMS standard data through the area API, assigned to the country with the Natural Earth outline (matched the 2025 FIRMS country file exactly in the test). Later months are added when FIRMS publishes standard data; near-real-time data is not used."
+      },
+      "default_view": {
+        "bounds": [
+          [
+            -69.7,
+            -32.8
+          ],
+          [
+            -65.4,
+            -27.7
+          ]
+        ]
+      },
+      "model": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+      "model_detail": {
+        "name": "A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)",
+        "badge": "MODEL A2 · ROUND 2, FROZEN",
+        "a": 30,
+        "frozen": {
+          "file": "data/processed/round2/frozen.json",
+          "sha256": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686",
+          "commit": "617daff",
+          "selection": "docs/ROUND2_SELECTION.md"
+        },
+        "satellites": {
+          "snpp": {
+            "train": [
+              "2012-02",
+              "2019-12"
+            ],
+            "method": "A2",
+            "prior_ratio_r0": {
+              "01D": 0.2463,
+              "01N": 0.1602,
+              "02D": 0.1733,
+              "02N": 0.0284,
+              "03D": 0.3409,
+              "03N": 0.0289,
+              "04D": 0.2417,
+              "04N": 0.0404,
+              "05D": 0.3865,
+              "05N": 0.0484,
+              "06D": 0.367,
+              "06N": 0.1306,
+              "07D": 0.3903,
+              "07N": 0.0773,
+              "08D": 0.3981,
+              "08N": 0.1317,
+              "09D": 0.3364,
+              "09N": 0.1039,
+              "10D": 0.3044,
+              "10N": 0.1139,
+              "11D": 0.3071,
+              "11N": 0.1228,
+              "12D": 0.2842,
+              "12N": 0.1222
+            },
+            "background_b": {
+              "01D": 0.0158,
+              "01N": 0.0012,
+              "02D": 0.0187,
+              "02N": 0.0003,
+              "03D": 0.0136,
+              "03N": 0.0003,
+              "04D": 0.0104,
+              "04N": 0.0,
+              "05D": 0.0162,
+              "05N": 0.0,
+              "06D": 0.0268,
+              "06N": 0.0004,
+              "07D": 0.0282,
+              "07N": 0.0007,
+              "08D": 0.0561,
+              "08N": 0.0029,
+              "09D": 0.0415,
+              "09N": 0.0018,
+              "10D": 0.0414,
+              "10N": 0.0014,
+              "11D": 0.0247,
+              "11N": 0.0039,
+              "12D": 0.0289,
+              "12N": 0.0029
+            },
+            "train_detections": {
+              "modis": 9977,
+              "snpp": 35256
+            }
+          },
+          "noaa20": {
+            "train": [
+              "2018-04",
+              "2019-12"
+            ],
+            "method": "J-S: x s (NOAA-20 to Suomi NPP), then A2",
+            "s": {
+              "D": 1.0895,
+              "N": 1.0742
+            },
+            "s_sd": {
+              "D": 0.0472,
+              "N": 0.0427
+            },
+            "prior_ratio_r0": {
+              "01D": 0.2684,
+              "01N": 0.1721,
+              "02D": 0.1888,
+              "02N": 0.0305,
+              "03D": 0.3714,
+              "03N": 0.031,
+              "04D": 0.2633,
+              "04N": 0.0434,
+              "05D": 0.421,
+              "05N": 0.052,
+              "06D": 0.3998,
+              "06N": 0.1403,
+              "07D": 0.4253,
+              "07N": 0.0831,
+              "08D": 0.4338,
+              "08N": 0.1415,
+              "09D": 0.3665,
+              "09N": 0.1116,
+              "10D": 0.3317,
+              "10N": 0.1224,
+              "11D": 0.3346,
+              "11N": 0.1319,
+              "12D": 0.3097,
+              "12N": 0.1312
+            },
+            "train_detections": {
+              "snpp": 7371,
+              "noaa20": 6793
+            }
+          }
+        },
+        "fit_cells": 371,
+        "cells_outside_fit_region_level": 12,
+        "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
+        "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+        "evidence": [
+          "docs/ROUND2_SELECTION.md",
+          "docs/CONFIRMATION_RESULTS.md"
+        ],
+        "check": {
+          "max_gap_between_model_predictive_mean_and_m": 0.0248,
+          "background_total": 502.59
+        }
+      },
+      "combination": {
+        "rule": "in each region x calendar month x day/night slot, a satellite enters the average only if model A's prior ratio r0 > 0 there; one qualifying satellite carries the slot alone; none qualifying keeps A's literal behaviour (weight 0, background as fitted). Decided 31 Oct 2026 after observing NOAA-20's short 21-month fit window. Model A itself is unchanged.",
+        "slots_when_both_cover": {
+          "01D": [
+            "snpp",
+            "noaa20"
+          ],
+          "01N": [
+            "snpp",
+            "noaa20"
+          ],
+          "02D": [
+            "snpp",
+            "noaa20"
+          ],
+          "02N": [
+            "snpp",
+            "noaa20"
+          ],
+          "03D": [
+            "snpp",
+            "noaa20"
+          ],
+          "03N": [
+            "snpp",
+            "noaa20"
+          ],
+          "04D": [
+            "snpp",
+            "noaa20"
+          ],
+          "04N": [
+            "snpp",
+            "noaa20"
+          ],
+          "05D": [
+            "snpp",
+            "noaa20"
+          ],
+          "05N": [
+            "snpp",
+            "noaa20"
+          ],
+          "06D": [
+            "snpp",
+            "noaa20"
+          ],
+          "06N": [
+            "snpp",
+            "noaa20"
+          ],
+          "07D": [
+            "snpp",
+            "noaa20"
+          ],
+          "07N": [
+            "snpp",
+            "noaa20"
+          ],
+          "08D": [
+            "snpp",
+            "noaa20"
+          ],
+          "08N": [
+            "snpp",
+            "noaa20"
+          ],
+          "09D": [
+            "snpp",
+            "noaa20"
+          ],
+          "09N": [
+            "snpp",
+            "noaa20"
+          ],
+          "10D": [
+            "snpp",
+            "noaa20"
+          ],
+          "10N": [
+            "snpp",
+            "noaa20"
+          ],
+          "11D": [
+            "snpp",
+            "noaa20"
+          ],
+          "11N": [
+            "snpp",
+            "noaa20"
+          ],
+          "12D": [
+            "snpp",
+            "noaa20"
+          ],
+          "12N": [
+            "snpp",
+            "noaa20"
+          ]
+        }
+      },
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.4964,
+          "02": 0.5416,
+          "03": 0.4906,
+          "04": 0.4639,
+          "05": 0.3849,
+          "06": 0.2576,
+          "07": 0.3297,
+          "08": 0.4146,
+          "09": 0.3706,
+          "10": 0.4063,
+          "11": 0.4272,
+          "12": 0.4851
+        },
+        "pooled": 0.3971,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(274 Terra + 20 x 0.3971) / (548 MODIS + 20)",
+          "02": "(193 Terra + 20 x 0.3971) / (351 MODIS + 20)",
+          "03": "(126 Terra + 20 x 0.3971) / (253 MODIS + 20)",
+          "04": "(160 Terra + 20 x 0.3971) / (342 MODIS + 20)",
+          "05": "(203 Terra + 20 x 0.3971) / (528 MODIS + 20)",
+          "06": "(253 Terra + 20 x 0.3971) / (993 MODIS + 20)",
+          "07": "(719 Terra + 20 x 0.3971) / (2185 MODIS + 20)",
+          "08": "(1288 Terra + 20 x 0.3971) / (3106 MODIS + 20)",
+          "09": "(1083 Terra + 20 x 0.3971) / (2924 MODIS + 20)",
+          "10": "(1231 Terra + 20 x 0.3971) / (3029 MODIS + 20)",
+          "11": "(913 Terra + 20 x 0.3971) / (2136 MODIS + 20)",
+          "12": "(368 Terra + 20 x 0.3971) / (755 MODIS + 20)"
+        }
+      },
+      "policy": {
+        "bridged": [
+          "2000-11",
+          "2002-06"
+        ],
+        "observed": [
+          "2002-07",
+          "2021-12"
+        ],
+        "estimated": [
+          "2022-01",
+          "2026-07"
+        ],
+        "naive_switch": "2012-01"
+      },
+      "cells": 383,
+      "hotspot_years": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "sensors": {
+        "T": "Terra MODIS",
+        "A": "Aqua MODIS",
+        "N": "Suomi NPP VIIRS",
+        "J1": "NOAA-20 VIIRS"
+      },
+      "satellite_field": {
+        "A": "Aqua",
+        "J1": "N20",
+        "N": "N",
+        "T": "Terra"
+      },
+      "instrument_field": {
+        "A": "MODIS",
+        "J1": "VIIRS",
+        "N": "VIIRS",
+        "T": "MODIS"
+      },
+      "versions": [
+        "2",
+        "6.03",
+        "6.2",
+        "61.03"
+      ],
+      "detections": {
+        "N": 68483,
+        "J1": 40648,
+        "A": 22772,
+        "T": 17502
+      },
+      "provenance": {
+        "source": "NASA FIRMS country archive (standard products); after 2025: FIRMS area API standard products, clipped to the Natural Earth 1:10m country outline",
+        "filters": "box lon -69.7..-65.4, lat -32.8..-27.7; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
+        "unit": "fire detections (satellite pixels flagged as burning), not burned area",
+        "files": [
+          {
+            "name": "modis_2000_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2000/modis_2000_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 7247,
+            "sha256": "46e8a305afc510c74ba061c283db731bbfa0cb2d5cb169035618c290e4cd3718",
+            "retrieved": "2026-11-06T11:47:01+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2001/modis_2001_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 31835,
+            "sha256": "2047af87f695fed3c318e9155a0755aa2fe443357dca4e47940a779d6912fa77",
+            "retrieved": "2026-11-06T11:47:09+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2002/modis_2002_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 60361,
+            "sha256": "d5369096f3dc0f3114dfa251a0690db3104244b30e5def56db44becda68e4b23",
+            "retrieved": "2026-11-06T11:47:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2003/modis_2003_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 117090,
+            "sha256": "98ef63553ccbab41cfd093654267dd66a00345c18a497c8c5ec0f8394fa361f1",
+            "retrieved": "2026-11-06T11:47:53+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2004/modis_2004_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 99956,
+            "sha256": "aca0e9343579ccb152dbb9bd01625ec6414324f8c78bddeec0508067ac565862",
+            "retrieved": "2026-11-06T11:48:24+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2005/modis_2005_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 71179,
+            "sha256": "2805b62fad32df221877704098633863c6e82a28830adaa279352ed91c4f1bf8",
+            "retrieved": "2026-11-06T11:48:44+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2006/modis_2006_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 84646,
+            "sha256": "eca42247cd7ef2d0fde65605693e378722dac8274d46bf70c01e9bffccc13218",
+            "retrieved": "2026-11-06T11:49:01+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2007/modis_2007_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 78065,
+            "sha256": "abdeb916b85147e82148ea8e3db76546c61e6d28f29079f0725f15bd850f8c88",
+            "retrieved": "2026-11-06T11:49:29+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2008/modis_2008_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 104699,
+            "sha256": "a8ab1f53ddebafe7b792da3411ff0ebf29abbb9bf7946927c5f1dfccab358051",
+            "retrieved": "2026-11-06T11:50:01+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2009/modis_2009_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 82012,
+            "sha256": "e1ecc9e75a1b110923eac84a3c7b454a1c4213cf5e840cf0d657b45057190819",
+            "retrieved": "2026-11-06T11:50:24+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2010/modis_2010_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 62709,
+            "sha256": "57dcc45ca47f899d1773ad1b89a49effddb4da08de0811e043202ac720f3423b",
+            "retrieved": "2026-11-06T11:50:40+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2011/modis_2011_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 76429,
+            "sha256": "f900a5efefd2b1ea9680cc2eb4fdcf728ff841ceedae2308a832f0960bbe83d8",
+            "retrieved": "2026-11-06T11:50:59+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2012_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2012/modis_2012_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 61883,
+            "sha256": "d2d0c9a8af8aedebfc6dddbd813072be81e879291ba70990d931e91c1195a5f3",
+            "retrieved": "2026-11-06T11:51:18+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2013_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2013/modis_2013_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 66549,
+            "sha256": "ce5650fc3939a750ea5c4ce1a00a0b8f76878743bc0fe6818154a3805b90df0c",
+            "retrieved": "2026-11-06T11:51:38+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2014_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2014/modis_2014_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 36816,
+            "sha256": "2ae44f8ccee2d7206a32b4088d4fc5b799c7896b30226939d8405e64655d16cf",
+            "retrieved": "2026-11-06T11:51:54+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2015_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2015/modis_2015_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 45133,
+            "sha256": "cc3f70d1834553afa533ada41dbda6b5c94c2827fd00b78b150c52140171f320",
+            "retrieved": "2026-11-06T11:52:04+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2016_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2016/modis_2016_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 55402,
+            "sha256": "3fffbd2eeb8a1888d8770ea6fac05a608bb3a51cf128126659797d256cf9a580",
+            "retrieved": "2026-11-06T11:52:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2017_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2017/modis_2017_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 60280,
+            "sha256": "5240365806bb8161b9afa5421c5020f492c8602973ff1db3d84726f8341375d0",
+            "retrieved": "2026-11-06T11:52:40+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2018_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2018/modis_2018_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 55399,
+            "sha256": "d0dd7be6b8b323854d7540499c6089937d086e113d98407b4901967a52ab45ff",
+            "retrieved": "2026-11-06T11:52:53+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2019_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2019/modis_2019_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 50370,
+            "sha256": "bcb2bf07943e312f6d61ccd69008a40a09e22216ede34867d59ce88dc56d11d2",
+            "retrieved": "2026-11-06T11:53:10+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2020_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2020/modis_2020_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 124094,
+            "sha256": "59d485a2c6a4acc088d90c481d71d34901d1e2b3a5a16d57689865c76aa3a1cf",
+            "retrieved": "2026-11-06T11:53:41+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2021_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2021/modis_2021_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 56867,
+            "sha256": "04cc5b10dfacea4775c1b8bc0a9d1fa7721a21a84c3d396dfca0ac0608d1d857",
+            "retrieved": "2026-11-06T11:53:58+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2022_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2022/modis_2022_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 77521,
+            "sha256": "6c5ad252fda14943060fd37f04358bd482b6f107940981cdb1d6bd9be63c4627",
+            "retrieved": "2026-11-06T11:54:17+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2023_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2023/modis_2023_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 47910,
+            "sha256": "45152ac1c0569bfd4e0d77127b4a489ea96c1f49a2137536992118dc4440f47f",
+            "retrieved": "2026-11-06T11:54:27+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2024_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2024/modis_2024_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 49843,
+            "sha256": "3bdedb8b223b7e3cf472108101ab64e4cefd4a2e41d11d9895d237c1c330c360",
+            "retrieved": "2026-11-06T11:54:38+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2025_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Argentina.csv",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 48121,
+            "sha256": "edece169ce64789efba831e1c8b535536e974f8fd775e309f40b1a53eac25439",
+            "retrieved": "2026-11-06T11:54:52+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2026_Argentina.csv",
+            "url": "derived: FIRMS area API MODIS_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/la_rioja)",
+            "sensor": "MODIS C6.1 (Terra + Aqua), 1 km",
+            "rows": 232,
+            "sha256": "91aed4cc312c61810ca424e8277255b41a58cbdfd044917fa1b877cd619d3b95",
+            "retrieved": "2026-11-11T11:14:15+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2018_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2018/viirs-jpss1_2018_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 130089,
+            "sha256": "57a59b01925e7354fa657e752b4cae8102d21e73dedd282b330599d5d1a4ed3f",
+            "retrieved": "2026-11-06T12:09:04+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2019_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2019/viirs-jpss1_2019_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 160664,
+            "sha256": "9e5781a47a8b532084d57febdf803b33dca0f5db0b0a23a03a644c80910e44fb",
+            "retrieved": "2026-11-06T12:10:09+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2020_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2020/viirs-jpss1_2020_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 434775,
+            "sha256": "e7eed9444abba6dfe8aa9452f3e9a56967215014e3235ba53dce896d3ca663cc",
+            "retrieved": "2026-11-06T12:12:05+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2021_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2021/viirs-jpss1_2021_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 198976,
+            "sha256": "8a2960d54581dce5927709c30db248eb31c30e712ec6e961455859336ada800b",
+            "retrieved": "2026-11-06T12:12:53+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2022_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2022/viirs-jpss1_2022_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 312448,
+            "sha256": "6bcc3e3be9461ecc92d8a2bb87950d97ef7620e7c2ec68f317692ea1a3d35e98",
+            "retrieved": "2026-11-06T12:14:18+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2023_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2023/viirs-jpss1_2023_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 163741,
+            "sha256": "4dde502dc54871c40d3517ce59da9aa566b85582348c7d13c1dd91e655f1e84f",
+            "retrieved": "2026-11-06T12:15:04+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2024_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2024/viirs-jpss1_2024_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 157781,
+            "sha256": "f5d22dd92fedb44d7077e1296e8f0d29196a7fdd0ca078c9e1ed27f776fc6a26",
+            "retrieved": "2026-11-06T12:15:39+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2025_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Argentina.csv",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 170323,
+            "sha256": "900032595f151b69b796535967dc814b84e65179802d0877c84905c3f46725f7",
+            "retrieved": "2026-11-06T12:16:29+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-jpss1_2026_Argentina.csv",
+            "url": "derived: FIRMS area API VIIRS_NOAA20_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/la_rioja)",
+            "sensor": "VIIRS 375 m, NOAA-20",
+            "rows": 1307,
+            "sha256": "3f1d86761b10f23b11445f6eec531a205b48ae0db019fd82393ab271aa4b4baa",
+            "retrieved": "2026-11-11T11:14:16+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2012_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2012/viirs-snpp_2012_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 189787,
+            "sha256": "d685afc4b16b4fd654d504c1ce103be4494e64a07e522ca0d0ece68671e0707d",
+            "retrieved": "2026-11-06T11:55:49+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2013_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2013/viirs-snpp_2013_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 237553,
+            "sha256": "a45be3200412b4bbd7e6f78db57a1f4c2f81b7c55a2d0db1aeefd797a93dad68",
+            "retrieved": "2026-11-06T11:56:41+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2014_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2014/viirs-snpp_2014_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 126346,
+            "sha256": "9caaa6cf0e690cad118511dfef83b50e2c73ddeeb1c3294960968f14488fdba3",
+            "retrieved": "2026-11-06T11:57:10+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2015_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2015/viirs-snpp_2015_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 151071,
+            "sha256": "ba4514b7188785c6fb805a3263115ae6e704a0edaaa2f7960c2427dd94902a68",
+            "retrieved": "2026-11-06T11:57:45+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2016_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2016/viirs-snpp_2016_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 181421,
+            "sha256": "85c3d5f233762ba3f6b26d956d3b48590292e619fe0bce57cc514ff62a417515",
+            "retrieved": "2026-11-06T11:58:35+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2017_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2017/viirs-snpp_2017_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 201664,
+            "sha256": "192ce79b159d9c0110ea97916ea339571301b3f12108ec7784ff70a599b03cfc",
+            "retrieved": "2026-11-06T11:59:32+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2018_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2018/viirs-snpp_2018_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 184924,
+            "sha256": "9c236f96a58d65f11c7364d89e3c705a6812649aaf9f73080078ab0b76294e9e",
+            "retrieved": "2026-11-06T12:00:36+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2019_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2019/viirs-snpp_2019_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 161688,
+            "sha256": "b32417ae0437c0de9d5cca73c1214921fcd03e0575869bea6466d8056de9b26a",
+            "retrieved": "2026-11-06T12:01:21+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2020_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2020/viirs-snpp_2020_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 448313,
+            "sha256": "48ca3db0721d41aa6f0457fc649ef5bf69141b13da964dac73ee1b708cf466f4",
+            "retrieved": "2026-11-06T12:03:27+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2021_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2021/viirs-snpp_2021_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 198060,
+            "sha256": "915bcb6794ab0c11663d9a3c71f4d9ff53bd5700d00ed4deda05ee101938a37c",
+            "retrieved": "2026-11-06T12:04:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2022_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2022/viirs-snpp_2022_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 312925,
+            "sha256": "c441a07213b84debd04623dde97cc38ac7ebc7286c864f236a0140a6ede7911c",
+            "retrieved": "2026-11-06T12:05:54+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2023_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2023/viirs-snpp_2023_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 171695,
+            "sha256": "ca895e71b8e5d878e0c971e643dacb8a018893c237d0ff567c41c921081c1eac",
+            "retrieved": "2026-11-06T12:06:39+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2024_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2024/viirs-snpp_2024_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 152971,
+            "sha256": "27d3c8e6d27b448e101b127decd4c721a20f664298a9475d1698104aa3dd8683",
+            "retrieved": "2026-11-06T12:07:22+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2025_Argentina.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Argentina.csv",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 170674,
+            "sha256": "a6709295263f33166546c7029e823e4ad4716571ca1738a0ebc931d34c373f26",
+            "retrieved": "2026-11-06T12:08:19+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "viirs-snpp_2026_Argentina.csv",
+            "url": "derived: FIRMS area API VIIRS_SNPP_SP, 2026-01..2026-07 (monthly files in data/raw/area_api/la_rioja)",
+            "sensor": "VIIRS 375 m, Suomi NPP",
+            "rows": 1166,
+            "sha256": "91afec0e734f1df4b0a43ceab5c0a82abf99f4d22ea1eaa9750c96ec11412d3f",
+            "retrieved": "2026-11-11T11:14:15+00:00",
+            "sha256_ok": true
+          }
+        ]
+      },
+      "burning_days": {
+        "unit": "MODIS-equivalent burning days: how many days each 0.01 degree cell (about 1 km) had a fire detected",
+        "definition": "a 0.01 degree cell (floor(lon / 0.01), floor(lat / 0.01)) counts once per date and day/night if it has any detection of the family (MODIS = Terra + Aqua; Suomi NPP; NOAA-20); it takes the FRP class of its largest-FRP detection (f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW)",
+        "files": {
+          "monthly": "monthly_bd.json",
+          "drift": "drift_bd.json",
+          "records": "burning/<year>.json"
+        },
+        "fine_cell_deg": 0.01,
+        "origin": {
+          "x0": -6970,
+          "y0": -3280
+        },
+        "model": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+        "model_detail": {
+          "name": "D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)",
+          "badge": "D-a · ROUND 3 CONFIRMED",
+          "a": 10,
+          "unit": "burning days",
+          "frozen": {
+            "file": "data/processed/tournament/frozen_round3.json",
+            "sha256": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
+            "commit": "80e297f",
+            "confirmation": "docs/ROUND3_CONFIRMATION.md"
+          },
+          "classes": "f0 FRP <= 0, f1 0 < FRP < 5, f2 5 <= FRP < 20, f3 FRP >= 20 MW",
+          "satellites": {
+            "snpp": {
+              "train": [
+                "2012-02",
+                "2019-12"
+              ],
+              "method": "D-a (C3 in burning days): one A2-style ratio per FRP class",
+              "prior_ratio_r0": {
+                "01D": [
+                  0.0,
+                  0.1795,
+                  0.3318,
+                  0.8328
+                ],
+                "01N": [
+                  0.0,
+                  0.2279,
+                  0.5422,
+                  3.0
+                ],
+                "02D": [
+                  0.0,
+                  0.2655,
+                  0.1615,
+                  0.2905
+                ],
+                "02N": [
+                  0.0,
+                  0.0472,
+                  0.0,
+                  1.0146
+                ],
+                "03D": [
+                  0.0,
+                  0.0319,
+                  0.6816,
+                  1.0657
+                ],
+                "03N": [
+                  0.0,
+                  0.0286,
+                  0.5,
+                  1.0146
+                ],
+                "04D": [
+                  0.0,
+                  0.1049,
+                  0.5734,
+                  0.5555
+                ],
+                "04N": [
+                  0.0,
+                  0.0541,
+                  0.5649,
+                  1.0146
+                ],
+                "05D": [
+                  0.0,
+                  0.3354,
+                  0.623,
+                  0.8991
+                ],
+                "05N": [
+                  0.0,
+                  0.0337,
+                  0.6369,
+                  1.0146
+                ],
+                "06D": [
+                  0.0,
+                  0.229,
+                  0.7008,
+                  1.0822
+                ],
+                "06N": [
+                  0.0,
+                  0.0137,
+                  0.7032,
+                  2.0814
+                ],
+                "07D": [
+                  0.0,
+                  0.3291,
+                  0.5979,
+                  0.9978
+                ],
+                "07N": [
+                  0.0,
+                  0.0448,
+                  0.5179,
+                  0.0
+                ],
+                "08D": [
+                  0.0,
+                  0.333,
+                  0.654,
+                  0.7464
+                ],
+                "08N": [
+                  0.0,
+                  0.0898,
+                  0.6397,
+                  1.4935
+                ],
+                "09D": [
+                  0.0,
+                  0.2951,
+                  0.4953,
+                  0.9022
+                ],
+                "09N": [
+                  0.0,
+                  0.1024,
+                  0.3842,
+                  1.4642
+                ],
+                "10D": [
+                  0.0,
+                  0.2202,
+                  0.4606,
+                  0.9774
+                ],
+                "10N": [
+                  0.0,
+                  0.09,
+                  0.6131,
+                  0.8351
+                ],
+                "11D": [
+                  0.0,
+                  0.2011,
+                  0.4177,
+                  1.2423
+                ],
+                "11N": [
+                  0.0,
+                  0.109,
+                  0.6943,
+                  0.7452
+                ],
+                "12D": [
+                  0.0,
+                  0.1629,
+                  0.4084,
+                  0.8717
+                ],
+                "12N": [
+                  0.0,
+                  0.146,
+                  0.3923,
+                  0.8827
+                ]
+              },
+              "background_b": {
+                "01D": 0.0158,
+                "01N": 0.0012,
+                "02D": 0.0187,
+                "02N": 0.0003,
+                "03D": 0.0136,
+                "03N": 0.0003,
+                "04D": 0.0104,
+                "04N": 0.0,
+                "05D": 0.0159,
+                "05N": 0.0,
+                "06D": 0.0264,
+                "06N": 0.0004,
+                "07D": 0.0274,
+                "07N": 0.0007,
+                "08D": 0.0539,
+                "08N": 0.0029,
+                "09D": 0.0403,
+                "09N": 0.0018,
+                "10D": 0.0406,
+                "10N": 0.0014,
+                "11D": 0.0244,
+                "11N": 0.0039,
+                "12D": 0.0285,
+                "12N": 0.0029
+              },
+              "train_burning_days": {
+                "modis": 9390,
+                "snpp": 21075
+              }
+            },
+            "noaa20": {
+              "train": [
+                "2018-04",
+                "2019-12"
+              ],
+              "method": "J-S: x s (NOAA-20 to Suomi NPP, in burning days), then D-a",
+              "s": {
+                "D": 1.0261,
+                "N": 0.9896
+              },
+              "s_sd": {
+                "D": 0.0276,
+                "N": 0.0342
+              },
+              "train_burning_days": {
+                "snpp": 4715,
+                "noaa20": 4636
+              }
+            }
+          },
+          "fit_cells": 371,
+          "cells_outside_fit_region_level": 12,
+          "em": {
+            "iterations": 70,
+            "delta": 1.7850484053856992e-09,
+            "converged": true
+          },
+          "method": "D-a: per 0.25 deg cell x calendar month x day/night x FRP class, posterior MODIS burning days per Suomi NPP burning day (a + sum MODIS_k) / (a / r0_k + sum VIIRS_k) over rows with Suomi NPP > 0, MODIS split over classes at the fitted fixed point; b = mean MODIS burning days where Suomi NPP saw nothing. NOAA-20: x s, then D-a (pipeline/round3/model.py, pipeline/tournament/candidates.py)",
+          "interval": "D-a's predictive per cell-month (class negative binomials summed and moment-matched for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
+          "evidence": [
+            "docs/ROUND3_CONFIRMATION.md",
+            "docs/TOURNAMENT_RESULTS.md"
+          ],
+          "check": {
+            "max_gap_between_model_predictive_mean_and_m": 0.016,
+            "background_total": 502.5,
+            "fit_table_burning_days_matched": 35101
+          }
+        },
+        "combination": {
+          "rule": "as the hotspot view: a satellite enters a slot's average only if some FRP class has a prior ratio r0_k > 0 there (and s > 0 for NOAA-20); one qualifying satellite carries the slot alone; none qualifying keeps D-a's literal behaviour (weight 0, background as fitted)",
+          "slots_when_both_cover": {
+            "01D": [
+              "snpp",
+              "noaa20"
+            ],
+            "01N": [
+              "snpp",
+              "noaa20"
+            ],
+            "02D": [
+              "snpp",
+              "noaa20"
+            ],
+            "02N": [
+              "snpp",
+              "noaa20"
+            ],
+            "03D": [
+              "snpp",
+              "noaa20"
+            ],
+            "03N": [
+              "snpp",
+              "noaa20"
+            ],
+            "04D": [
+              "snpp",
+              "noaa20"
+            ],
+            "04N": [
+              "snpp",
+              "noaa20"
+            ],
+            "05D": [
+              "snpp",
+              "noaa20"
+            ],
+            "05N": [
+              "snpp",
+              "noaa20"
+            ],
+            "06D": [
+              "snpp",
+              "noaa20"
+            ],
+            "06N": [
+              "snpp",
+              "noaa20"
+            ],
+            "07D": [
+              "snpp",
+              "noaa20"
+            ],
+            "07N": [
+              "snpp",
+              "noaa20"
+            ],
+            "08D": [
+              "snpp",
+              "noaa20"
+            ],
+            "08N": [
+              "snpp",
+              "noaa20"
+            ],
+            "09D": [
+              "snpp",
+              "noaa20"
+            ],
+            "09N": [
+              "snpp",
+              "noaa20"
+            ],
+            "10D": [
+              "snpp",
+              "noaa20"
+            ],
+            "10N": [
+              "snpp",
+              "noaa20"
+            ],
+            "11D": [
+              "snpp",
+              "noaa20"
+            ],
+            "11N": [
+              "snpp",
+              "noaa20"
+            ],
+            "12D": [
+              "snpp",
+              "noaa20"
+            ],
+            "12N": [
+              "snpp",
+              "noaa20"
+            ]
+          }
+        },
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.5144,
+            "02": 0.5531,
+            "03": 0.5028,
+            "04": 0.4859,
+            "05": 0.3883,
+            "06": 0.2633,
+            "07": 0.3439,
+            "08": 0.4295,
+            "09": 0.3801,
+            "10": 0.4246,
+            "11": 0.4468,
+            "12": 0.5059
+          },
+          "pooled": 0.4113,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(267 Terra burning days + 20 x 0.4113) / (515 MODIS burning days + 20)",
+            "02": "(187 Terra burning days + 20 x 0.4113) / (333 MODIS burning days + 20)",
+            "03": "(124 Terra burning days + 20 x 0.4113) / (243 MODIS burning days + 20)",
+            "04": "(156 Terra burning days + 20 x 0.4113) / (318 MODIS burning days + 20)",
+            "05": "(196 Terra burning days + 20 x 0.4113) / (506 MODIS burning days + 20)",
+            "06": "(249 Terra burning days + 20 x 0.4113) / (957 MODIS burning days + 20)",
+            "07": "(703 Terra burning days + 20 x 0.4113) / (2048 MODIS burning days + 20)",
+            "08": "(1246 Terra burning days + 20 x 0.4113) / (2900 MODIS burning days + 20)",
+            "09": "(1043 Terra burning days + 20 x 0.4113) / (2746 MODIS burning days + 20)",
+            "10": "(1179 Terra burning days + 20 x 0.4113) / (2776 MODIS burning days + 20)",
+            "11": "(884 Terra burning days + 20 x 0.4113) / (1977 MODIS burning days + 20)",
+            "12": "(352 Terra burning days + 20 x 0.4113) / (692 MODIS burning days + 20)"
+          }
+        },
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
+        "records": {
+          "modis": 37594,
+          "snpp": 40088,
+          "noaa20": 24077
+        },
+        "zero_weight": {
+          "from": "2022-01",
+          "viirs_burning_days": 24014,
+          "weight_zero": 58,
+          "share": 0.0024,
+          "months_noted": 0,
+          "note_threshold": 0.1
+        }
+      },
+      "generated_at": "2026-11-11T11:28:04+00:00"
+    }
+  ]
+}
