@@ -1,0 +1,14 @@
+{"event": "start", "at": "2026-11-01T10:59:24+00:00", "regions": ["portugal", "lebanon", "morocco", "tunisia", "central_chile", "western_cape"], "confirmation": false, "commit": "3cfb1ff968eea0cc8ea6f1c3f9009e87682e53ff"}
+{"event": "finish", "at": "2026-11-01T10:59:40+00:00", "regions": ["portugal", "lebanon", "morocco", "tunisia", "central_chile", "western_cape"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-01T11:02:58+00:00", "regions": ["portugal", "lebanon", "morocco", "tunisia", "central_chile", "western_cape"], "confirmation": false, "commit": "3cfb1ff968eea0cc8ea6f1c3f9009e87682e53ff"}
+{"event": "finish", "at": "2026-11-01T11:03:06+00:00", "regions": ["portugal", "lebanon", "morocco", "tunisia", "central_chile", "western_cape"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-01T11:03:19+00:00", "regions": ["portugal", "lebanon"], "confirmation": false, "commit": "3cfb1ff968eea0cc8ea6f1c3f9009e87682e53ff"}
+{"event": "finish", "at": "2026-11-01T11:03:21+00:00", "regions": ["portugal", "lebanon"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-01T11:03:24+00:00", "regions": ["portugal", "lebanon"], "confirmation": false, "commit": "3cfb1ff968eea0cc8ea6f1c3f9009e87682e53ff"}
+{"event": "finish", "at": "2026-11-01T11:03:25+00:00", "regions": ["portugal", "lebanon"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-01T11:03:29+00:00", "regions": ["portugal", "lebanon"], "confirmation": false, "commit": "3cfb1ff968eea0cc8ea6f1c3f9009e87682e53ff"}
+{"event": "finish", "at": "2026-11-01T11:03:30+00:00", "regions": ["portugal", "lebanon"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-01T11:03:39+00:00", "regions": ["portugal", "lebanon", "morocco", "tunisia", "central_chile", "western_cape"], "confirmation": false, "commit": "3cfb1ff968eea0cc8ea6f1c3f9009e87682e53ff"}
+{"event": "finish", "at": "2026-11-01T11:03:47+00:00", "regions": ["portugal", "lebanon", "morocco", "tunisia", "central_chile", "western_cape"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-01T13:10:01+00:00", "regions": ["central_spain", "southern_italy", "sw_australia", "s_california"], "confirmation": true, "commit": "fa2c956ec655ca382dd1c43f23362ccf23ee99ec"}
+{"event": "finish", "at": "2026-11-01T13:10:17+00:00", "regions": ["central_spain", "southern_italy", "sw_australia", "s_california"], "confirmation": true, "overall": "CONFIRMED"}
