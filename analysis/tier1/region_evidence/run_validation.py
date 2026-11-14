@@ -92,10 +92,12 @@ def run(region):
     bad2 = sorted({day[:7] for label in ["snpp_vs_noaa20", "noaa20"] for day in outages[label]})
 
     result = {
-        "kind": "Per-region forward test of the frozen models (development region), not a sealed confirmation",
+        "kind": "Per-region forward test of the frozen models (" + ("development region" if "dev" in REGIONS[region]["roles"]
+                 else "former sealed-exam region, never used for development") + "), not a sealed confirmation",
         "region": region, "country_file": REGIONS[region]["country"],
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "box": list(REGIONS[region]["box"]),
+        # None = the whole FIRMS country file (Morocco, Tunisia), read unclipped as in development.
+        "box": list(REGIONS[region]["box"]) if REGIONS[region]["box"] else None,
         "fit": ["2012-02", "2019-12"], "accuracy_test": ["2020-01", "2021-12"],
         "satellite_swap_test": ["2020-01", "2025-12"],
         "versions": {"python": platform.python_version(), "numpy": np.__version__, "pandas": pd.__version__,
@@ -158,8 +160,11 @@ def run(region):
     lines.append("| Satellite interval agreement | " + " | ".join(pct(U[u]["swap"]["share"]) for u in U) + " |")
     lines.append("| All existing checks | " + " | ".join("PASS" if U[u]["all_checks_pass"] else "FAIL" for u in U) + " |")
     lines += ["", "## Interpretation limits", "",
-              "- This was a development region: its 2012–2019 data helped choose the model. Its 2020–2021 MODIS was not used, so this is a forward test in time, not a test on an unseen region.",
-              "- The analysis box is a rectangle, not the country boundary.",
+              ("- This was a development region: its 2012–2019 data helped choose the model. Its 2020–2021 MODIS was not used, so this is a forward test in time, not a test on an unseen region."
+               if "dev" in REGIONS[region]["roles"] else
+               "- This region was not used for development: it was a sealed exam region, opened once for its confirmation after the model was frozen. This rerun uses the same frozen models on its own 2012–2019 data."),
+              ("- The analysis box is a rectangle, not the country boundary." if REGIONS[region]["box"] else
+               "- The analysis area is the whole FIRMS country file, not a rectangle."),
               "- Accuracy is scored only in cells seen during the training period, as in the existing runner.",
               "- MODIS after 2021 is not treated as reliable ground truth (Aqua orbital drift from 2022). The 2022–2025 comparison checks agreement between VIIRS satellites, not true fire counts.",
               f"- Months excluded from the accuracy window by the existing outage rule: {[m for m in bad1 if '2020-01' <= m <= '2021-12']}.",

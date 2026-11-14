@@ -62,7 +62,8 @@ AFTER_2025 = {"lebanon": "2026 comes from FIRMS standard data through the area A
                          "Earth 1:10m outline as of 30 August 2021 (commit be165336bb), which matched every FIRMS Lebanon "
                          "assignment in 2000-2025; the current outline differs by about 1 km on the southern border. Later "
                          "months are added when FIRMS publishes standard data; near-real-time data is not used."}
-ZERO_NOTE = 0.10           # burning days: a month is noted when this share of its contributing VIIRS burning days weighs 0
+AFTER_NONE = "The record ends in 2025: no 2026 data has been added for this region."
+ZERO_NOTE = 0.10          # burning days: a month is noted when this share of its contributing VIIRS burning days weighs 0
 DRIFT_FROM = model_impl.TRAIN["snpp"][0]
 FLAG_CODES = {"B": "bridged", "O": "observed", "E": "estimated (S-NPP+NOAA-20)", "N": "estimated (S-NPP only)",
               "J": "estimated (NOAA-20 only)", "X": "no data"}
@@ -119,13 +120,27 @@ def coverage(rows):
     return {"first": first, "last": last, "first_detection": first_date, "last_detection": last_date}
 
 
+def raw_dir(region):
+    """data/raw/<region> when it exists (Portugal, Lebanon, Syria, La Rioja), else the FIRMS-country folder the
+    development code reads (pipeline/round2/data.py folder(): data/raw/spain for central_spain)."""
+    own = ROOT / "data" / "raw" / region
+    return own if own.exists() else ROOT / "data" / "raw" / REGIONS[region]["country"].lower()
+
+
+def export_box(region):
+    """The analysis box. A region whose development box is None (the whole FIRMS country file) has an export_box
+    that encloses every detection in that file, so the export keeps the same rows."""
+    box = REGIONS[region].get("export_box") or REGIONS[region]["box"]
+    if box is None:
+        raise SystemExit(f"{region}: product regions need a box")
+    return box
+
+
 def detections(region):
     """Every filtered detection of a product region, with the columns the export and the model read."""
     assert_not_sealed(region)
-    box = REGIONS[region]["box"]
-    if box is None:
-        raise SystemExit(f"{region}: product regions need a box")
-    raw = ROOT / "data" / "raw" / region
+    box = export_box(region)
+    raw = raw_dir(region)
     parts = [load(p, box, require_type=region not in ("portugal", "lebanon")) for p in sorted(raw.glob("*.csv"))]
     det = pd.concat([p for p in parts if not p.empty], ignore_index=True)
     det["acq_time"] = det.acq_time.str.zfill(4)
@@ -141,8 +156,8 @@ def detections(region):
 
 def export(region):
     cfg = REGIONS[region]
-    raw = ROOT / "data" / "raw" / region
-    box = cfg["box"]
+    raw = raw_dir(region)
+    box = export_box(region)
     manifest = json.loads((raw / "manifest.json").read_text(encoding="utf-8"))
     det = detections(region)
     hist = det[det.month <= HISTORY_END]
@@ -203,11 +218,13 @@ def export(region):
     slot_share = slot_share_rule(covering, positive)
     share_rows = det[(det.year >= SHARE_YEARS[0]) & (det.year <= SHARE_YEARS[1]) & (det.fam == "modis")]
     st = share_rows.groupby(["moy", "sensor"]).size().unstack(fill_value=0)
-    pooled_share = float(st["T"].sum() / (st["T"].sum() + st["A"].sum()))
+    bridged = first <= BRIDGE_END
+    # A record that starts after the bridged era (no 2000-2011 MODIS files on disk) needs no Terra share.
+    pooled_share = float(st["T"].sum() / (st["T"].sum() + st["A"].sum())) if bridged else None
     # Lead's ruling: every calendar month's share is shrunk toward the pooled share, so a month with
     # few (or no) Terra detections in 2003-2011 cannot produce a share of 0 or 1.
     terra_share, share_basis = {}, {}
-    for m in range(1, 13):
+    for m in (range(1, 13) if bridged else []):
         t_, a_ = (int(st.loc[m, s]) if m in st.index else 0 for s in ("T", "A"))
         terra_share[m] = (t_ + SHARE_PRIOR * pooled_share) / (t_ + a_ + SHARE_PRIOR)
         share_basis[m] = f"({t_} Terra + {SHARE_PRIOR} x {pooled_share:.4f}) / ({t_ + a_} MODIS + {SHARE_PRIOR})"
@@ -293,7 +310,9 @@ def export(region):
 
     # ---- drift: observed MODIS vs MODIS predicted from VIIRS by model A (weights + background, averaged over the
     # satellites that cover the month, as in the estimated record), region total
-    d_months = month_index(DRIFT_FROM, modis_end)
+    # Inside the record: a record that starts or ends at a sparse edge month (2012 starts, 2025 ends) can begin
+    # after the fitting start or end before MODIS does. For records from 2000 into 2026 this is the old range.
+    d_months = month_index(max(DRIFT_FROM, months[0]), min(modis_end, months[-1]))
     viirs = det[det.sensor.isin(list(VIIRS))]
     full = pd.Series(model_impl.hotspot_weights(model, viirs), index=viirs.index).groupby([viirs.month, viirs.sensor, viirs.dn]).sum()
     d_idx = [months.index(m) for m in d_months]
@@ -346,7 +365,7 @@ def export(region):
                        "rule": f"a file's final month counts if it has a detection in that month's last {EDGE_DAYS} days; "
                                f"a VIIRS satellite with 0 detections in a month while the other has >= {OUTAGE_OTHER} "
                                "does not cover that month",
-                       "after": AFTER_2025.get(region, AFTER_DEFAULT)},
+                       "after": AFTER_2025.get(region, AFTER_DEFAULT) if months[-1] > HISTORY_END else AFTER_NONE},
         "default_view": {"bounds": [[lon0, lat0], [lon1, lat1]]},
         "model": model_impl.NAME,
         "model_detail": model_impl.describe(model),
@@ -360,8 +379,9 @@ def export(region):
         },
         "terra_share": {"years": list(SHARE_YEARS), "by_month": {f"{m:02d}": round(v, 4) for m, v in terra_share.items()},
                         "pooled": round(pooled_share, 4), "prior_detections": SHARE_PRIOR,
-                        "basis": {f"{m:02d}": b for m, b in share_basis.items()}},
-        "policy": {"bridged": [first, BRIDGE_END], "observed": [month_after(BRIDGE_END), OBSERVED_END],
+                        "basis": {f"{m:02d}": b for m, b in share_basis.items()}} if bridged else None,
+        "policy": {"bridged": [first, BRIDGE_END] if bridged else None,
+                   "observed": [month_after(BRIDGE_END) if bridged else first, OBSERVED_END],
                    "estimated": [month_after(OBSERVED_END), months[-1]], "naive_switch": NAIVE_SWITCH},
         "cells": len(cells),
         "hotspot_years": hot_years,
@@ -371,7 +391,9 @@ def export(region):
         "versions": versions,
         "detections": {s: int(n) for s, n in det.sensor.value_counts().items()},
         "provenance": {
-            "source": "NASA FIRMS country archive (standard products)" + (
+            "source": ("NASA FIRMS area API (standard products: MODIS_SP, VIIRS_SNPP_SP, VIIRS_NOAA20_SP) for the analysis box"
+                       if all("/api/area/" in m.get("url", "") for m in manifest.values())
+                       else "NASA FIRMS country archive (standard products)") + (
                 "; after 2025: FIRMS area API standard products, clipped to the Natural Earth 1:10m country outline"
                 + (" as of 30 August 2021 (commit be165336bb)" if region == "lebanon" else "")
                 if any(m.get("url", "").startswith("derived:") for m in manifest.values()) else ""),
@@ -458,9 +480,10 @@ def export_burning_days(det, region, months, flags, covering, cells, out, cov_mo
     tfx, tfy = weights_bd.fine_cells(terra)
     t_m = terra.assign(fx=tfx, fy=tfy).drop_duplicates(["ix", "iy", "fx", "fy", "acq_date", "dn"]).groupby("moy").size()
     n_m = bd[(bd.year >= SHARE_YEARS[0]) & (bd.year <= SHARE_YEARS[1]) & (bd.fam == "modis")].groupby("moy").size()
-    pooled_share = float(t_m.sum() / n_m.sum())
+    bridged = months[0] <= BRIDGE_END  # no Terra share when the record starts after the bridged era
+    pooled_share = float(t_m.sum() / n_m.sum()) if bridged else None
     terra_share, share_basis = {}, {}
-    for m in range(1, 13):
+    for m in (range(1, 13) if bridged else []):
         t_, n_ = int(t_m.get(m, 0)), int(n_m.get(m, 0))
         terra_share[m] = (t_ + SHARE_PRIOR * pooled_share) / (n_ + SHARE_PRIOR)
         share_basis[m] = (f"({t_} Terra burning days + {SHARE_PRIOR} x {pooled_share:.4f}) / "
@@ -558,7 +581,7 @@ def export_burning_days(det, region, months, flags, covering, cells, out, cov_mo
 
     # ---- drift in burning days: observed MODIS burning days vs MODIS burning days predicted from VIIRS by D-a
     modis_end = cov_modis["last"]
-    d_months = month_index(weights_bd.TRAIN["snpp"][0], modis_end)
+    d_months = month_index(max(weights_bd.TRAIN["snpp"][0], months[0]), min(modis_end, months[-1]))  # inside the record
     full = pd.Series(weights_bd.burning_day_weights(model, v), index=v.index).groupby([v.month, v.sensor, v.dn]).sum()
     d_idx = [months.index(m) for m in d_months]
     bg_sat = {}
@@ -616,7 +639,7 @@ def export_burning_days(det, region, months, flags, covering, cells, out, cov_mo
         },
         "terra_share": {"years": list(SHARE_YEARS), "by_month": {f"{m:02d}": round(v, 4) for m, v in terra_share.items()},
                         "pooled": round(pooled_share, 4), "prior_burning_days": SHARE_PRIOR,
-                        "basis": {f"{m:02d}": b for m, b in share_basis.items()}},
+                        "basis": {f"{m:02d}": b for m, b in share_basis.items()}} if bridged else None,
         "years": years,
         "records": {f: int((bd.fam == f).sum()) for f in FAM_CODE},
         "zero_weight": zero_weight,
@@ -706,12 +729,12 @@ def main():
     existing = json.loads(index_path.read_text(encoding="utf-8")) if index_path.exists() else {"regions": []}
     by_id = {r["id"]: r for r in existing["regions"]}
     for region in wanted:
-        if not (ROOT / "data" / "raw" / region / "manifest.json").exists():
+        if not (raw_dir(region) / "manifest.json").exists():
             print(f"{region}: no raw files yet, skipped")
             continue
-        manifest = json.loads((ROOT / "data/raw" / region / "manifest.json").read_text(encoding="utf-8"))
+        manifest = json.loads((raw_dir(region) / "manifest.json").read_text(encoding="utf-8"))
         for name, source in manifest.items():
-            if sha256(ROOT / "data/raw" / region / name) != source["sha256"]:
+            if sha256(raw_dir(region) / name) != source["sha256"]:
                 raise SystemExit(f"{region}/{name}: source checksum mismatch; refusing export")
         # Build privately: model or serialization failures cannot expose half a dataset.
         public = OUT
