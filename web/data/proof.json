@@ -1,0 +1,55 @@
+{
+  "about": "The three sealed exams, as run. Each plan was written down and dated before its sealed regions were downloaded; each region was used once. Numbers are copied from the generated result files named in 'source' (do not edit by hand there either).",
+  "exams": [
+    {
+      "id": "exam1", "title": "Exam 1", "verdict": "failed",
+      "model": "Model A: a shrinkage ratio per 0.25° cell (hotspots)",
+      "planned": "2026-10-31", "run": "2026-11-01",
+      "plan": "CONFIRMATION_PLAN.md", "source": "CONFIRMATION_RESULTS.md",
+      "regions": [["Morocco", "Africa"], ["Tunisia", "Africa"], ["Central Chile", "South America"], ["Western Cape", "Africa"]],
+      "lesson": "On regions it had never seen, one simple ratio per region beat it, and the NOAA-20 handover agreed only 69%. We published the failure, found the two causes (a double count, and NOAA-20 not calibrated to Suomi NPP) and fixed them for exam 2.",
+      "tests": [
+        {"key": "cell", "got": 67.4, "need": "< 60.1", "max": 60.1, "pass": false, "unit": "%"},
+        {"key": "coverage", "got": 85.0, "need": "70–90", "lo": 70, "hi": 90, "pass": true, "unit": "%"},
+        {"key": "swap", "got": 69.2, "need": "≥ 80", "min": 80, "pass": false, "unit": "%"}
+      ]
+    },
+    {
+      "id": "exam2", "title": "Exam 2", "verdict": "confirmed",
+      "model": "Model A2 with NOAA-20 calibrated to Suomi NPP (hotspots view)",
+      "planned": "2026-11-01", "run": "2026-11-01",
+      "plan": "ROUND2_PLAN.md", "source": "ROUND2_CONFIRMATION.md",
+      "regions": [["Central Spain", "Europe"], ["Southern Italy", "Europe"], ["SW Australia", "Oceania"], ["Southern California", "North America"]],
+      "lesson": "All five tests passed on four new regions on three continents. This model runs the hotspots view.",
+      "tests": [
+        {"key": "cell", "got": 55.8, "need": "≤ 61.9", "max": 61.9, "pass": true, "unit": "%"},
+        {"key": "coverage", "got": 82.9, "need": "70–90", "lo": 70, "hi": 90, "pass": true, "unit": "%"},
+        {"key": "total", "got": 1.037, "need": "0.90–1.10", "lo": 0.9, "hi": 1.1, "pass": true, "unit": "×"},
+        {"key": "national", "got": 19.2, "need": "≤ 26.2", "max": 26.2, "pass": true, "unit": "%"},
+        {"key": "swap", "got": 92.1, "need": "≥ 80", "min": 80, "pass": true, "unit": "%"}
+      ]
+    },
+    {
+      "id": "exam3", "title": "Exam 3", "verdict": "confirmed",
+      "model": "Model D-a: fire-power-class ratios in burning days (the default view)",
+      "planned": "2026-11-01", "run": "2026-11-02",
+      "plan": "TOURNAMENT_PLAN.md", "source": "ROUND3_CONFIRMATION.md",
+      "regions": [["Northern Algeria", "Africa"], ["Southern France", "Europe"], ["South Australia", "Oceania"], ["Northern California", "North America"]],
+      "lesson": "The tournament winner, out of nine candidates, sat the third exam once, on four more unseen regions, and passed all five tests. This model runs the default burning-days view.",
+      "tests": [
+        {"key": "cell", "got": 29.7, "need": "≤ 37.2", "max": 37.2, "pass": true, "unit": "%"},
+        {"key": "coverage", "got": 83.8, "need": "70–90", "lo": 70, "hi": 90, "pass": true, "unit": "%"},
+        {"key": "total", "got": 1.069, "need": "0.90–1.10", "lo": 0.9, "hi": 1.1, "pass": true, "unit": "×"},
+        {"key": "national", "got": 11.6, "need": "≤ 21.3", "max": 21.3, "pass": true, "unit": "%"},
+        {"key": "swap", "got": 97.3, "need": "≥ 80", "min": 80, "pass": true, "unit": "%"}
+      ]
+    }
+  ],
+  "tests": {
+    "cell": {"name": "Accuracy, square by square", "plain": "Error for each 0.25° square and month, against real MODIS counts in 2020–2021. Lower is better. Exam 1 required beating one simple ratio per region; exams 2 and 3 allowed at most 1 point worse than it."},
+    "coverage": {"name": "Honest ranges", "plain": "How often the real value falls inside our 80% range. About 80% means the ranges are neither too narrow nor too wide."},
+    "total": {"name": "No inflation", "plain": "Predicted total ÷ real total over all regions. 1.00 is perfect."},
+    "national": {"name": "Accuracy for the whole region", "plain": "Error of each region's monthly total (lower is better)."},
+    "swap": {"name": "Satellite handover", "plain": "When Suomi NPP is swapped for NOAA-20, how often the two estimates agree within their ranges."}
+  }
+}
