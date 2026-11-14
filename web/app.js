@@ -1284,6 +1284,7 @@ const video = $('.hero-video'); const videoToggle = $('.video-toggle');
 function syncVideo() { videoToggle.textContent = video.paused ? '▶' : 'Ⅱ'; const l = video.paused ? 'Play background video' : 'Pause background video'; videoToggle.setAttribute('aria-label', l); videoToggle.title = l; }
 function startVideo() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData) return;
+  if (document.documentElement.classList.contains('gl-ok')) return; // the 3D story stage stands in for the video (shell.js plays it if the stage fails)
   video.preload = 'auto';
   video.play().catch(syncVideo);
 }
