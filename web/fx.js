@@ -570,7 +570,7 @@ export function createFx(api) {
   function pause() {
     if (!playing) return;
     playing = false; clearTimeout(playTimer); quiet();
-    $('#play').setAttribute('aria-pressed', 'false'); $('#play').setAttribute('aria-label', 'Play 25 years in 25 seconds'); $('#play').classList.remove('on');
+    $('#play').setAttribute('aria-pressed', 'false'); $('#play').setAttribute('aria-label', 'Play every year of the record'); $('#play').classList.remove('on');
     api.selectMonth(state.sel);
   }
   function bindPlayback() {
@@ -628,7 +628,7 @@ export function createFx(api) {
       $('#story-step').textContent = 'Your turn';
       $('#story-title').textContent = 'Explore it yourself';
       $('#story-num').textContent = '';
-      $('#story-text').textContent = 'Pick any month in the calendar, draw your own area on the map, or press play to watch all 25 years.';
+      $('#story-text').textContent = 'Pick any month in the calendar, draw your own area on the map, or press play to watch every year of the record.';
       $('#story-next').textContent = 'Explore';
       $('#story-next').focus(); return;
     }
@@ -772,6 +772,6 @@ export function createFx(api) {
     $('#share-card').addEventListener('click', () => burn($('#share-card'), shareCard));
   }
 
-  function stop() { if (!playing) return; playing = false; clearTimeout(playTimer); quiet(); $('#play').setAttribute('aria-pressed', 'false'); $('#play').setAttribute('aria-label', 'Play 25 years in 25 seconds'); $('#play').classList.remove('on'); }
+  function stop() { if (!playing) return; playing = false; clearTimeout(playTimer); quiet(); $('#play').setAttribute('aria-pressed', 'false'); $('#play').setAttribute('aria-label', 'Play every year of the record'); $('#play').classList.remove('on'); }
   return { init, stop, motion, afterCalendar, renderRings, mapReady, mapMonth, areaChanged, drawing, ghostFlame, smokeClass, burn, seriesChanged, syncScrub, renderFingerprint, isPlaying: () => playing, pause };
 }

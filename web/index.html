@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08121c">
-  <meta name="description" content="CEDRUS — a month-by-month fire calendar for any area, from one consistent 25-year record of NASA MODIS and VIIRS fire detections.">
+  <meta name="description" content="CEDRUS — a month-by-month fire calendar for any area, from one consistent record of up to 25 years of NASA MODIS and VIIRS fire detections.">
   <title>CEDRUS — A clearer picture of wildfires</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <link rel="icon" href="assets/cedar.svg" type="image/svg+xml">
@@ -61,7 +61,7 @@
   <header class="hero">
     <video class="hero-video" muted loop playsinline preload="none" poster="assets/wildfire-poster.jpg" aria-label="Wildfire moving through a forest"><source src="assets/wildfire.mp4" type="video/mp4"></video>
     <div class="hero-shade"></div>
-    <div class="hero-badge"><svg class="icon"><use href="#satellite"/></svg><span>Satellite data</span><i>•</i><span>25 years</span><i>•</i><span>NASA FIRMS</span><b id="data-badge">LOADING</b></div>
+    <div class="hero-badge"><svg class="icon"><use href="#satellite"/></svg><span>Satellite data</span><i>•</i><span>Up to 25 years</span><i>•</i><span>NASA FIRMS</span><b id="data-badge">LOADING</b></div>
     <div class="hero-copy"><p class="eyebrow">MODIS – VIIRS FIRE CALENDAR</p><h1 data-i18n="hero-h1">A clearer picture<br>of wildfires.</h1><p class="hero-description" data-i18n="hero-desc">By combining MODIS and VIIRS satellite data, we correct<br class="desktop-break"> the false increase in fire detections and provide a consistent<br class="desktop-break"> 25-year fire history — for better decisions, safer communities,<br class="desktop-break"> and a healthier planet.</p></div>
     <button class="video-toggle" aria-label="Pause background video" title="Pause background video">Ⅱ</button>
   </header>
@@ -70,7 +70,7 @@
   <section class="workspace" id="fire-history" aria-label="Fire calendar for an area">
     <form class="controls panel" id="area-form" novalidate>
       <h2>Explore the Fire Calendar</h2>
-      <p class="intro">Pick a region or draw an area. You get every month since December 2000, on one consistent scale.</p>
+      <p class="intro">Pick a region or draw an area. You get every month of its record (from December 2000, or from 2012 where older files are not loaded yet), on one consistent scale.</p>
       <div class="field-group unit-group"><span class="field-label" id="unit-label">Count fires as</span>
         <div class="unit-row" role="group" aria-labelledby="unit-label">
           <button type="button" class="unit" id="unit-bd" aria-pressed="true">Burning days</button>
@@ -157,7 +157,7 @@
         <p id="map-cell-detail" aria-live="polite">Click the map to inspect a location and its selected-month estimate.</p>
       </div>
       <div class="playback" id="playback" role="group" aria-label="Play the record">
-        <button type="button" class="play" id="play" aria-pressed="false" aria-label="Play 25 years in 25 seconds"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+        <button type="button" class="play" id="play" aria-pressed="false" aria-label="Play every year of the record"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
         <div class="fuse"><canvas id="fuse-strip" aria-hidden="true"></canvas><input type="range" id="scrub" min="0" max="300" value="0" aria-label="Month of the record"></div>
         <button type="button" class="story-go" id="story-go">Story mode</button>
         <p class="play-label" id="play-label" aria-live="off"></p>
@@ -215,7 +215,7 @@
     <h2 id="eyes-title">Why raw satellite counts jump in 2012, and how the record fixes it</h2>
     <div class="eyes-grid">
       <div><div class="eyes-pixels" id="eyes-pixels"></div>
-        <p class="hint" data-i18n="eyes-text">The same fire, seen by two satellite eyes. MODIS sees in pixels about 1 km wide; VIIRS (from 2012) in pixels 375 m wide, so about seven of its pixels fit in one of MODIS’s, and it also catches smaller, cooler fires. Counted raw, the sharper eye makes fire look as if it jumped overnight. The record translates every count into MODIS-equivalent terms, so 25 years sit on one scale.</p></div>
+        <p class="hint" data-i18n="eyes-text">The same fire, seen by two satellite eyes. MODIS sees in pixels about 1 km wide; VIIRS (from 2012) in pixels 375 m wide, so about seven of its pixels fit in one of MODIS’s, and it also catches smaller, cooler fires. Counted raw, the sharper eye makes fire look as if it jumped overnight. The record translates every count into MODIS-equivalent terms, so the whole record sits on one scale.</p></div>
       <div><svg id="eyes-chart" viewBox="0 0 520 210" role="img" aria-labelledby="eyes-caption"></svg>
         <div class="eyes-controls"><button type="button" class="match" id="translate" role="switch" aria-checked="true"><span class="stick" aria-hidden="true"></span>Translate</button>
           <span class="eyes-key"><i class="k-raw"></i>raw counts <i class="k-harm"></i>translated</span></div>
@@ -231,7 +231,7 @@
     <div id="proof-body"><p class="hint">Loading the exam results…</p></div>
   </section>
 
-  <footer class="benefits"><div class="benefit"><svg class="icon"><use href="#satellite"/></svg><div><h3>Two Satellites.<br>One Clearer Record.</h3><p>MODIS (2000–) + VIIRS (2012–)<br>= one consistent 25-year history.</p></div></div><div class="benefit"><svg class="icon"><use href="#chart"/></svg><div><h3>Corrected Data.<br>Real Trends.</h3><p>We remove the artificial jump and reveal<br>the true patterns of wildfire activity.</p></div></div><div class="benefit"><svg class="icon"><use href="#globe"/></svg><div><h3>Better Insights.<br>Greater Impact.</h3><p>Supporting governments, researchers<br>and communities with reliable data.</p></div></div><div class="benefit"><svg class="icon"><use href="#leaf"/></svg><div><h3>A Healthier Planet.<br>A Safer Future.</h3><p>Because every fire tells a story —<br>and now we can see the real one.</p></div></div></footer>
+  <footer class="benefits"><div class="benefit"><svg class="icon"><use href="#satellite"/></svg><div><h3>Two Satellites.<br>One Clearer Record.</h3><p>MODIS (2000–) + VIIRS (2012–)<br>= one consistent history of up to 25 years.</p></div></div><div class="benefit"><svg class="icon"><use href="#chart"/></svg><div><h3>Corrected Data.<br>Real Trends.</h3><p>We remove the artificial jump and reveal<br>the true patterns of wildfire activity.</p></div></div><div class="benefit"><svg class="icon"><use href="#globe"/></svg><div><h3>Better Insights.<br>Greater Impact.</h3><p>Supporting governments, researchers<br>and communities with reliable data.</p></div></div><div class="benefit"><svg class="icon"><use href="#leaf"/></svg><div><h3>A Healthier Planet.<br>A Safer Future.</h3><p>Because every fire tells a story —<br>and now we can see the real one.</p></div></div></footer>
 </main>
 
 <dialog id="detail-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><p class="eyebrow">CEDRUS · NASA SPACE APPS 2026</p><h2 id="dialog-title"></h2><div id="dialog-body"></div><button class="dialog-done">Got it</button></dialog>

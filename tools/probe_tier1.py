@@ -58,7 +58,8 @@ def run_checks(browser, url, shots, check, watch):
     ctx = browser.new_context(viewport={"width": 1440, "height": 1000}, accept_downloads=True)
     page = ctx.new_page(); watch(page, "tier1 ")
     page.goto(url, wait_until="commit"); page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
-    check("Tier 1: full four-region catalog loads", [r["id"] for r in page.evaluate("window.cedrus.state.index.regions")] == ["portugal", "lebanon", "syria", "la_rioja"])
+    # Every product region in regions.json, in catalog order (was a fixed list of the four regions of 12 Nov 2026).
+    check("Tier 1: full catalog loads (every product region in regions.json)", [r["id"] for r in page.evaluate("window.cedrus.state.index.regions")] == [r["id"] for r in catalog])
     out = ROOT / "analysis/tier1"; reconciliations = []; cities = []
     downloads = shots / "downloads"
     for rid in NEW:
@@ -220,7 +221,11 @@ def run_checks(browser, url, shots, check, watch):
                 const ring=features[0].geometry.coordinates[0];
                 return {lon:(ring[0][0]+ring[2][0])/2,lat:(ring[0][1]+ring[2][1])/2};
             }""")
-            check(prefix+": absent-cell fixture exists", absent is not None)
+            # A region whose grid fills its whole box has no absent cell to click (central Spain: 160 of 160 cells).
+            lon0, lat0, lon1, lat1 = meta["bbox"]
+            box_cells = (math.ceil(lon1 / 0.25 - 1e-9) - math.floor(lon0 / 0.25)) * (math.ceil(lat1 / 0.25 - 1e-9) - math.floor(lat0 / 0.25))
+            check(prefix+": absent-cell fixture exists, or the grid fills the whole box", absent is not None or meta["cells"] == box_cells,
+                  f"no absent cell; {meta['cells']} of {box_cells} box cells in the grid" if absent is None else "")
             if absent is not None:
                 page.evaluate("p => window.cedrus.state.map.fire('click', {lngLat:{lng:p.lon,lat:p.lat}})", absent)
                 detail = page.inner_text("#map-cell-detail")
