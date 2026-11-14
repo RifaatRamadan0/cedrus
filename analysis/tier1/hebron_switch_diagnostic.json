@@ -1,0 +1,40 @@
+{
+  "purpose": "Read-only reproduction of probe timeout; no application or expectation changes",
+  "steps": [
+    {
+      "city": "Ramallah",
+      "target": "israel",
+      "before": {
+        "region": "palestine",
+        "picker": "palestine",
+        "series": true
+      },
+      "after": {
+        "region": "israel",
+        "picker": "israel",
+        "series": true,
+        "summary": "5 km around 31.904, 35.203, 3% outside Israel\u2019s data\nNo burning days here:\nno ~1 km square with a fire detection has its centre inside this shape between 2000-11 and 2025-12.\n3% of this area is outside Israel\u2019s data (FIRMS country file) \u2014 fires there are not counted.\nThis drawing overlaps the historical grid footprints of Israel and Palestine. Showing Israel only. Use the region picker to switch the same drawing. Footprints are approximate, not country boundaries.",
+        "season": "Too few fires here to date a season: a typical year in 2003\u20132024 has 0 burning days in this area, and dating needs at least 20."
+      }
+    },
+    {
+      "city": "Hebron",
+      "target": "palestine",
+      "before": {
+        "region": "israel",
+        "picker": "israel",
+        "series": true
+      },
+      "after": {
+        "region": "palestine",
+        "picker": "palestine",
+        "series": false,
+        "summary": "5 km around 31.533, 35.100 in Palestine\nReading the burning days inside this shape\u2026",
+        "season": "Reading the burning days inside this shape\u2026"
+      }
+    }
+  ],
+  "errors": [
+    "TypeError: Cannot read properties of undefined (reading 'slice')\n    at http://127.0.0.1:8765/app.js:89:46\n    at Array.map (<anonymous>)\n    at mix (http://127.0.0.1:8765/app.js:89:24)\n    at ramp (http://127.0.0.1:8765/app.js:96:10)\n    at mapColor (http://127.0.0.1:8765/app.js:104:37)\n    at http://127.0.0.1:8765/app.js:643:154\n    at Array.map (<anonymous>)\n    at cellFeatures (http://127.0.0.1:8765/app.js:640:52)\n    at renderMapValues (http://127.0.0.1:8765/app.js:654:65)\n    at setArea (http://127.0.0.1:8765/app.js:901:5)"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "argentina": {
+    "files": 48,
+    "mismatches": [],
+    "manifest_sha256": "18f1bcc1d421d5d6399afda9ba56259a955c7d5b30048b99c6a257777b2f7933"
+  },
+  "la_rioja": {
+    "files": 48,
+    "mismatches": [],
+    "manifest_sha256": "f519a8b5e16ffe63ee63d2f5aa944ced71dfe0740454566a56e00bcaf48781ad"
+  },
+  "model_source_mismatches": [],
+  "evaluation_manifest_matches": true,
+  "box_matches": true,
+  "evidence_path": "C:\\Users\\rifaa\\OneDrive\\Documents\\ChatGPT\\Nasa space apps challenge\\la_rioja_validation",
+  "evaluation_rerun": false
+}

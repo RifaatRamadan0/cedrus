@@ -1,0 +1,106 @@
+[
+  {
+    "region": "syria",
+    "place": "Latakia July 2025 fires (4\u201311 July check window)",
+    "start": "2025-07-04",
+    "end": "2025-07-11",
+    "box": [
+      35.7,
+      35.5,
+      36.4,
+      36.1
+    ],
+    "source_url": "https://www.gdacs.org/report.aspx?eventid=1024189&eventtype=WF",
+    "notes": "Date range and 3149 ha refer to GDACS WF1024189, not all Latakia fires. UN independently confirms northern rural Latakia fires on 6 July. Box is an analyst-selected regional window, not the official perimeter.",
+    "units": {
+      "hotspots": {
+        "records": 990,
+        "weight_sum": 82.4222999999995,
+        "dates": [
+          "2025-07-04",
+          "2025-07-05",
+          "2025-07-06",
+          "2025-07-07",
+          "2025-07-08",
+          "2025-07-09",
+          "2025-07-10",
+          "2025-07-11"
+        ],
+        "by_sensor": {
+          "Suomi NPP": 254,
+          "Aqua": 130,
+          "Terra": 112,
+          "NOAA-20": 494
+        },
+        "capture": true
+      },
+      "burning_days": {
+        "records": 584,
+        "weight_sum": 81.09309999999981,
+        "dates": [
+          "2025-07-04",
+          "2025-07-05",
+          "2025-07-06",
+          "2025-07-07",
+          "2025-07-08",
+          "2025-07-09",
+          "2025-07-10",
+          "2025-07-11"
+        ],
+        "by_sensor": {
+          "MODIS": 210,
+          "Suomi NPP": 129,
+          "NOAA-20": 245
+        },
+        "capture": true
+      }
+    }
+  },
+  {
+    "region": "cyprus",
+    "place": "Limassol / Malia wildfire",
+    "start": "2025-07-23",
+    "end": "2025-07-25",
+    "box": [
+      32.7,
+      34.7,
+      33.0,
+      34.95
+    ],
+    "source_url": "https://www.dom.org.cy/CLIMATOLOGY/English/Monthly%20Weather%20Bulletin/2025/07_Monthly%20Weather%20Report_Jul2025_ENG.pdf",
+    "notes": "Official report dated 5 August gives 23\u201325 July and 124 square km based on 28 July mapping. Box is an analyst-selected window around the named Malia/Arsos/Agios Therapon area, not the official perimeter.",
+    "units": {
+      "hotspots": {
+        "records": 464,
+        "weight_sum": 10.626799999999987,
+        "dates": [
+          "2025-07-23",
+          "2025-07-24",
+          "2025-07-25"
+        ],
+        "by_sensor": {
+          "Suomi NPP": 172,
+          "NOAA-20": 211,
+          "Aqua": 39,
+          "Terra": 42
+        },
+        "capture": true
+      },
+      "burning_days": {
+        "records": 234,
+        "weight_sum": 23.41560000000003,
+        "dates": [
+          "2025-07-23",
+          "2025-07-24",
+          "2025-07-25"
+        ],
+        "by_sensor": {
+          "MODIS": 75,
+          "Suomi NPP": 74,
+          "NOAA-20": 85
+        },
+        "capture": true
+      }
+    }
+  }
+]

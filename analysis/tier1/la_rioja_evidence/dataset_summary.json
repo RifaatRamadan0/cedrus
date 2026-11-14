@@ -1,0 +1,28 @@
+{
+  "region": "La Rioja area, Argentina",
+  "box": [
+    -69.7,
+    -32.8,
+    -65.4,
+    -27.7
+  ],
+  "note": "Rectangular area, not an exact provincial boundary. Spatial subset only, not model-filtered. No model validation performed.",
+  "verified_original_files": 48,
+  "original_bytes": 510628826,
+  "missing_expected_files": [],
+  "subset": {
+    "modis": {
+      "files": 26,
+      "rows": 42693
+    },
+    "viirs-snpp": {
+      "files": 14,
+      "rows": 75537
+    },
+    "viirs-jpss1": {
+      "files": 8,
+      "rows": 45059
+    }
+  },
+  "created_at": "2026-11-06T12:17:40.407999+00:00"
+}

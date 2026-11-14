@@ -1,0 +1,327 @@
+{
+  "kind": "Exploratory La Rioja diagnostic, not a sealed confirmation",
+  "generated_at": "2026-11-06T12:30:01.703086+00:00",
+  "box": [
+    -69.7,
+    -32.8,
+    -65.4,
+    -27.7
+  ],
+  "fit": [
+    "2012-02",
+    "2019-12"
+  ],
+  "accuracy_test": [
+    "2020-01",
+    "2021-12"
+  ],
+  "satellite_swap_test": [
+    "2020-01",
+    "2025-12"
+  ],
+  "versions": {
+    "python": "3.14.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1"
+  },
+  "frozen_sha256": {
+    "burning_days": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
+    "hotspots": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686"
+  },
+  "source_manifest_sha256": "f519a8b5e16ffe63ee63d2f5aa944ced71dfe0740454566a56e00bcaf48781ad",
+  "source_code_sha256": {
+    "pipeline\\01b_download_area.py": "291afbc67c562f60aee879dabdd058b8e2cf7f373a9b77a36f61f9cd238a96bf",
+    "pipeline\\01_download.py": "4653f3df550e99c0379089ffa06e3a9b9868faf61abca00ab4637b3325e612b8",
+    "pipeline\\02_aggregate.py": "c855ce80003f5c83e2a395ca77c63b0ffc039820f68ea4341a2fa7e43b03bfa3",
+    "pipeline\\03_harmonize.py": "775ac4ba3da827d120a9a76c492a35e65b2224220dc0e78711a02ddb64121205",
+    "pipeline\\04_export_web.py": "9fe453b393c4e19017452e04a2a00404259982396aaeb9befa94944d404c43de",
+    "pipeline\\common.py": "6b97dd4a2949f4b3b9970b8f9144c0810f76f5329e3132eafbaca8fbe6ebbe0a",
+    "pipeline\\export_v2.py": "d80778c24a0ecf83ae2c2d1cb39e21cb6727670ebf6cc0413b62df3298ada96a",
+    "pipeline\\regions.py": "c0ca860caa0f765dd457bd7cae4aac7c39812f51476c085603f3847aaae66d7b",
+    "pipeline\\weights_a.py": "ad55734ed4aaf0bd902dd3de4197cc0864cdb609733948495fd28fa38b9c5ec4",
+    "pipeline\\weights_bd.py": "3ecef9858a1ea4a3f72a60950fd95970ccbc009c5ec0c8005f1f1cc4713f4499",
+    "pipeline\\weights_interim.py": "2561f60a05b9d16d02b5a41f4e23b7dfd221cded8a91afc8a541c51cf2edd4e7",
+    "pipeline\\weights_r2.py": "fe1bbd7bcac1a731378ecce22852f6ef906ab66b7015c091be6716da8649fe46",
+    "pipeline\\bakeoff\\data.py": "1e69990fabf28ee14f3aa7f5c8f682c9a017da1957dab28bbcc5537c4c829062",
+    "pipeline\\bakeoff\\models.py": "7eb5b3d5ee1b2738c93646394918e63ed93e7d385466b92705c184b6d67a477a",
+    "pipeline\\bakeoff\\nb.py": "5577de93879125bc2226a2587c26948a5992f04a2c0dcea8fef9487c8b9a7670",
+    "pipeline\\bakeoff\\report.py": "69def565a37ec7f4e296d53b6fb489b94d44ca55f2c35f943ec6c561627340ba",
+    "pipeline\\bakeoff\\run.py": "ba252a6e37df5d5603e4251a22f07e4d6352905b4339401b29c329a962ef64b0",
+    "pipeline\\bakeoff\\scores.py": "70638ec762b8928b0e6402f67e4e9a7d8a9e7a408aa34fbb5647e50044b15520",
+    "pipeline\\bakeoff\\test_crps.py": "5d1460ce12b0886a9aaf91a7f9472bc94ec77813ae7a8b048d100052e4218d53",
+    "pipeline\\bakeoff\\test_nb.py": "63dc68afb159dfdd5ba7df0b6cb2bcebacadbd334dca6d03bbf233dee4efb4a3",
+    "pipeline\\bakeoff\\units.py": "751db5e54d02b6f91b26cb59cf7c9e265ce0154f0ef2fdafbc8057e9e219b63f",
+    "pipeline\\bakeoff\\validate.py": "900e04483a506eeaf4682b9f9997fd8bc96847dc8629b522c604054aab4415e0",
+    "pipeline\\bakeoff\\__init__.py": "24522b09952b174b85a4dc5e2814636ebe4984fedfaf4fb49e7043e478f0a442",
+    "pipeline\\confirm\\data.py": "018ac234c823ca0280de9c728213d87355287c80bda77ed55337c3cee8506fd9",
+    "pipeline\\confirm\\report.py": "35e3e1ad62a0374f4298f677f369ebe28cc9a2ec6043970ac4d512f8338eee56",
+    "pipeline\\confirm\\run.py": "bbd557de79c0c75783bcd0ab45d6a5969e14af8464254d11aa3166817f0ba6ec",
+    "pipeline\\confirm\\tests.py": "5cedabc2bd7b8df6efc312acc4998ce32fdcd9b7e2c9ba41befc25ebdfd9c290",
+    "pipeline\\confirm\\__init__.py": "bd4b5bbec9838657f8f4877a2ec9a4f386b2fb9711197f9a22c09a0b2280b3c4",
+    "pipeline\\round2\\confirm.py": "ffd4d1ca912f597f2da40bba5c84f4fb2d34aa4751c8992b6afe2d423649a877",
+    "pipeline\\round2\\data.py": "4c248413e03ef2d2ed2f0b34c544db09964474bfec9ed886b167cf90d78910ae",
+    "pipeline\\round2\\models.py": "2f436a1c321dfb2eb1d7538d306b8a9eabc55dc33d37f9b94eb3dcf5d74513a8",
+    "pipeline\\round2\\report.py": "04d428a43cb1ca2441c1e39d65c9a2bcb3a33a506c28b53bd9e750d5ecf4c574",
+    "pipeline\\round2\\select.py": "4f48b256a5f84df93c3aa96bd92cd09439a84b7ddfb2fb14edca55e888ce8e8c",
+    "pipeline\\round2\\test_round2.py": "75560efc2b685f1c824376e61537da81b096358b8f8b6191eecbf557db68f0c2",
+    "pipeline\\round2\\validate.py": "7cd2469e9155ef05659cfd7ea2b147354c88e99937bd18caffccfb57d99c6781",
+    "pipeline\\round2\\__init__.py": "6c2a5ea2f2011c9f535dc864646a080530528bc55307a64b9f623dfb6a98f621",
+    "pipeline\\round3\\confirm.py": "e25f0ea48bc09f9e3e1031947b7f1e49c92b7309eba33e8740972f24c6dc184b",
+    "pipeline\\round3\\data.py": "d470046cdf0b04d180aeebd98cf720e98bdb3fb229b2e68e2ad62d7fde87959e",
+    "pipeline\\round3\\model.py": "d73c84ac571cbec1e8a31c7c44d7c0ec26d9b342bd4093242ef6ce08fb881fd7",
+    "pipeline\\round3\\report.py": "8aa3ddb4135efdd1d5c98745d7a090f37ba2f7abb07bca89ae5ff5735986d714",
+    "pipeline\\round3\\test_round3.py": "d8c6aec135e5dddb00c4174fcb09715dd379306d3a13f4a9ead75c7c5fb4fd3e",
+    "pipeline\\round3\\__init__.py": "0fbd76e6a44b360351b9d8e006263343a2de1807ae9ddeeff6f044a8a3ab9188",
+    "pipeline\\tournament\\candidates.py": "902fb1e43a1925dd217e54cb4097e6999a505f6525db3241c5a36d254ca8ac81",
+    "pipeline\\tournament\\data.py": "2355ecf96bea2acac78bdef5665ad304a086d619a53106f331b7d239f67b5ff7",
+    "pipeline\\tournament\\nbreg.py": "50158358fb6347a60bc2a5c3d6ec87cb27c08379e55247abf4fb9a36615fe67c",
+    "pipeline\\tournament\\report.py": "c8229218ccb38a796304003f6935a085ba591c48d41f86a5767d30c2fd30a6f2",
+    "pipeline\\tournament\\run.py": "ff47c9dda2060cc7fb82e2823d3b00e53120cba0c28438680208b1c271bbe15b",
+    "pipeline\\tournament\\test_tournament.py": "751b7e8155c46e9472d5d54d09b79e48275be79cfe9c25ebf0e1225f42e7c9ce",
+    "pipeline\\tournament\\validate.py": "294bd19e4b8a2ff9394f57cc297713e933a6ffaa95ffbf485896a4aa95469806",
+    "pipeline\\tournament\\__init__.py": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  "training_footprint": {
+    "cells": 371,
+    "inside": {
+      "aqua": 5073,
+      "noaa20": 32691,
+      "snpp": 32168,
+      "terra": 4049
+    },
+    "outside": {
+      "noaa20": 9,
+      "snpp": 14,
+      "terra": 1
+    }
+  },
+  "outage_days": {
+    "modis": [],
+    "snpp": [],
+    "snpp_vs_noaa20": [],
+    "noaa20": []
+  },
+  "accuracy_excluded_months": [],
+  "swap_excluded_months": [],
+  "units": {
+    "burning_days": {
+      "accuracy": {
+        "rows": 17808,
+        "active_rows": 1823,
+        "Y": 3320,
+        "V": 7034,
+        "wcrps_M": 0.10752418737619167,
+        "cov_active_M": 0.8123971475589687,
+        "cov_all_M": 0.9807951482479784,
+        "active_vpos": 1664,
+        "active_vzero": 159,
+        "cov_vpos_M": 0.8900240384615384,
+        "cov_vzero_M": 0.0,
+        "wape_cm_M": 0.5988074009833162,
+        "wape_nm_M": 0.11047917810999737,
+        "total_M": 3172.4003943075963,
+        "wape_cm_F0": 1.3289156626506025,
+        "wape_nm_F0": 1.1186746987951808,
+        "total_F0": 7034.0,
+        "wape_cm_F1": 0.6907357867003685,
+        "wape_nm_F1": 0.19914434741336529,
+        "total_F1": 3006.425144452225,
+        "total_ratio_M": 0.9555422874420471,
+        "f0_M": 0.0
+      },
+      "accuracy_verdict": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "d": true,
+        "pass": true,
+        "by_construction": false
+      },
+      "swap": {
+        "region_months": 72,
+        "counted": 72,
+        "agree": 67,
+        "share": 0.9305555555555556
+      },
+      "swap_pass": true,
+      "all_checks_pass": true,
+      "fit_info": {
+        "a": 10,
+        "em_iterations": 70,
+        "em_delta": 1.7850484053856992e-09,
+        "em_converged": true,
+        "r0_groups_on_fallback": 29,
+        "F1_r": {
+          "D": 0.4914073071718539,
+          "N": 0.20381254964257348
+        },
+        "F1_b": {
+          "D": 0.025728436354280567,
+          "N": 0.0013066072754268744
+        }
+      },
+      "swap_fit_info": {
+        "s": {
+          "D": 1.0261344055140724,
+          "N": 0.9896013864818024
+        },
+        "sd_s": {
+          "D": 0.0279892719370204,
+          "N": 0.03513115837012256
+        }
+      },
+      "accuracy_months_scored": [
+        "2020-01",
+        "2020-02",
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12"
+      ],
+      "by_year": [
+        {
+          "region": "la_rioja",
+          "year": 2020,
+          "Y": 1776,
+          "pred": 1703.3452897299237,
+          "sd": 51.625762594202456,
+          "lo": 1637.1842128548897,
+          "hi": 1769.5063666049577
+        },
+        {
+          "region": "la_rioja",
+          "year": 2021,
+          "Y": 1544,
+          "pred": 1469.0551045776072,
+          "sd": 54.971414374100405,
+          "lo": 1398.6064024262778,
+          "hi": 1539.5038067289365
+        }
+      ]
+    },
+    "hotspots": {
+      "accuracy": {
+        "rows": 17808,
+        "active_rows": 1823,
+        "Y": 3566,
+        "V": 12227,
+        "wcrps_M": 0.1236328568296798,
+        "cov_active_M": 0.7964893033461328,
+        "cov_all_M": 0.9791666666666666,
+        "wape_cm_M": 0.6284455817898348,
+        "wape_nm_M": 0.13368539783399652,
+        "total_M": 3394.874961850933,
+        "wape_cm_F0": 2.5987100392596747,
+        "wape_nm_F0": 2.428771733034212,
+        "total_F0": 12227.0,
+        "wape_cm_F1": 0.6194498529539745,
+        "wape_nm_F1": 0.13668914426679193,
+        "total_F1": 3306.8117823125076,
+        "total_ratio_M": 0.9520120476306598
+      },
+      "accuracy_verdict": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "d": true,
+        "pass": true,
+        "by_construction": false
+      },
+      "swap": {
+        "region_months": 72,
+        "counted": 72,
+        "agree": 67,
+        "share": 0.9305555555555556
+      },
+      "swap_pass": true,
+      "all_checks_pass": true,
+      "fit_info": {
+        "F1_r": {
+          "D": 0.3374420840982603,
+          "N": 0.11286152851833899
+        },
+        "F1_b": {
+          "D": 0.02624300508136618,
+          "N": 0.0013066072754268744
+        },
+        "a": 30
+      },
+      "swap_fit_info": {
+        "s": {
+          "D": 1.0895151263986738,
+          "N": 1.074224707676665
+        },
+        "sd_s": {
+          "D": 0.04338666634875293,
+          "N": 0.04352803502181581
+        }
+      },
+      "accuracy_months_scored": [
+        "2020-01",
+        "2020-02",
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12"
+      ],
+      "by_year": [
+        {
+          "region": "la_rioja",
+          "year": 2020,
+          "Y": 1924,
+          "pred": 1777.7099612344207,
+          "sd": 50.32405503637447,
+          "lo": 1713.2170897180024,
+          "hi": 1842.202832750839
+        },
+        {
+          "region": "la_rioja",
+          "year": 2021,
+          "Y": 1642,
+          "pred": 1617.1650006164373,
+          "sd": 55.15685749984534,
+          "lo": 1546.4786435369901,
+          "hi": 1687.8513576958844
+        }
+      ]
+    }
+  },
+  "repository_model_source_unchanged": true
+}

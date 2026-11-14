@@ -1,0 +1,690 @@
+{
+  "generated_at": "2026-11-13T12:57:57+00:00",
+  "test": {
+    "observed_era_ends": "2019-12",
+    "window": [
+      "2020-01",
+      "2021-12"
+    ],
+    "pre_registered": false,
+    "circles_per_region": 120,
+    "seed": 20261113,
+    "regions": [
+      "portugal",
+      "lebanon",
+      "syria",
+      "la_rioja"
+    ]
+  },
+  "scratch_equals_published_outside_window": {
+    "portugal/burning": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    },
+    "portugal/hotspots": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    },
+    "lebanon/burning": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    },
+    "lebanon/hotspots": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    },
+    "syria/burning": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    },
+    "syria/hotspots": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    },
+    "la_rioja/burning": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    },
+    "la_rioja/hotspots": {
+      "identical": true,
+      "flags_in_window": [
+        "E"
+      ]
+    }
+  },
+  "whole_region": {
+    "burning": {
+      "portugal": [
+        10,
+        23
+      ],
+      "lebanon": [
+        6,
+        8
+      ],
+      "syria": [
+        2,
+        22
+      ],
+      "la_rioja": [
+        13,
+        24
+      ],
+      "pooled": [
+        31,
+        77
+      ]
+    },
+    "hotspots": {
+      "portugal": [
+        9,
+        24
+      ],
+      "lebanon": [
+        5,
+        8
+      ],
+      "syria": [
+        1,
+        24
+      ],
+      "la_rioja": [
+        12,
+        24
+      ],
+      "pooled": [
+        27,
+        80
+      ]
+    }
+  },
+  "areas": {
+    "burning": {
+      "1": {
+        "0.5-3": [
+          1465,
+          1646
+        ],
+        "3-10": [
+          311,
+          421
+        ],
+        "10-30": [
+          71,
+          115
+        ],
+        "30+": [
+          15,
+          31
+        ]
+      },
+      "2": {
+        "0.5-3": [
+          503,
+          1341
+        ],
+        "3-10": [
+          200,
+          335
+        ],
+        "10-30": [
+          79,
+          127
+        ],
+        "30+": [
+          29,
+          51
+        ]
+      },
+      "4": {
+        "0.5-3": [
+          220,
+          703
+        ],
+        "3-10": [
+          156,
+          290
+        ],
+        "10-30": [
+          72,
+          114
+        ],
+        "30+": [
+          38,
+          65
+        ]
+      },
+      "8": {
+        "0.5-3": [
+          105,
+          270
+        ],
+        "3-10": [
+          70,
+          180
+        ],
+        "10-30": [
+          56,
+          108
+        ],
+        "30+": [
+          38,
+          67
+        ]
+      },
+      "region": {
+        "0.5-3": [
+          2,
+          5
+        ],
+        "3-10": [
+          3,
+          7
+        ],
+        "10-30": [
+          14,
+          29
+        ],
+        "30+": [
+          17,
+          48
+        ]
+      },
+      "5 km": {
+        "0.5-3": [
+          335,
+          934
+        ],
+        "3-10": [
+          63,
+          150
+        ],
+        "10-30": [
+          7,
+          18
+        ],
+        "30+": [
+          3,
+          3
+        ]
+      },
+      "10 km": {
+        "0.5-3": [
+          686,
+          1789
+        ],
+        "3-10": [
+          302,
+          604
+        ],
+        "10-30": [
+          59,
+          126
+        ],
+        "30+": [
+          12,
+          20
+        ]
+      },
+      "25 km": {
+        "0.5-3": [
+          1402,
+          3297
+        ],
+        "3-10": [
+          847,
+          1477
+        ],
+        "10-30": [
+          434,
+          699
+        ],
+        "30+": [
+          135,
+          238
+        ]
+      },
+      "50 km": {
+        "0.5-3": [
+          1375,
+          3942
+        ],
+        "3-10": [
+          1587,
+          2797
+        ],
+        "10-30": [
+          775,
+          1362
+        ],
+        "30+": [
+          445,
+          763
+        ]
+      },
+      "100 km": {
+        "0.5-3": [
+          842,
+          2321
+        ],
+        "3-10": [
+          1553,
+          3403
+        ],
+        "10-30": [
+          1301,
+          2707
+        ],
+        "30+": [
+          900,
+          1855
+        ]
+      }
+    },
+    "hotspots": {
+      "1": {
+        "0.5-3": [
+          1556,
+          1744
+        ],
+        "3-10": [
+          306,
+          457
+        ],
+        "10-30": [
+          63,
+          118
+        ],
+        "30+": [
+          21,
+          35
+        ]
+      },
+      "2": {
+        "0.5-3": [
+          495,
+          1432
+        ],
+        "3-10": [
+          205,
+          355
+        ],
+        "10-30": [
+          73,
+          140
+        ],
+        "30+": [
+          27,
+          53
+        ]
+      },
+      "4": {
+        "0.5-3": [
+          217,
+          743
+        ],
+        "3-10": [
+          142,
+          307
+        ],
+        "10-30": [
+          63,
+          125
+        ],
+        "30+": [
+          29,
+          67
+        ]
+      },
+      "8": {
+        "0.5-3": [
+          96,
+          264
+        ],
+        "3-10": [
+          68,
+          201
+        ],
+        "10-30": [
+          49,
+          108
+        ],
+        "30+": [
+          32,
+          73
+        ]
+      },
+      "region": {
+        "0.5-3": [
+          3,
+          6
+        ],
+        "3-10": [
+          2,
+          4
+        ],
+        "10-30": [
+          12,
+          31
+        ],
+        "30+": [
+          15,
+          49
+        ]
+      },
+      "5 km": {
+        "0.5-3": [
+          347,
+          895
+        ],
+        "3-10": [
+          68,
+          142
+        ],
+        "10-30": [
+          6,
+          17
+        ],
+        "30+": [
+          1,
+          3
+        ]
+      },
+      "10 km": {
+        "0.5-3": [
+          636,
+          1833
+        ],
+        "3-10": [
+          253,
+          608
+        ],
+        "10-30": [
+          53,
+          107
+        ],
+        "30+": [
+          12,
+          23
+        ]
+      },
+      "25 km": {
+        "0.5-3": [
+          1301,
+          3593
+        ],
+        "3-10": [
+          776,
+          1518
+        ],
+        "10-30": [
+          351,
+          657
+        ],
+        "30+": [
+          109,
+          208
+        ]
+      },
+      "50 km": {
+        "0.5-3": [
+          1207,
+          4183
+        ],
+        "3-10": [
+          1622,
+          2993
+        ],
+        "10-30": [
+          676,
+          1371
+        ],
+        "30+": [
+          383,
+          795
+        ]
+      },
+      "100 km": {
+        "0.5-3": [
+          733,
+          2219
+        ],
+        "3-10": [
+          1523,
+          3635
+        ],
+        "10-30": [
+          1080,
+          2648
+        ],
+        "30+": [
+          772,
+          1922
+        ]
+      }
+    }
+  },
+  "circle_cells_touched": {
+    "burning/5 km": 1,
+    "burning/10 km": 2,
+    "burning/25 km": 7,
+    "burning/50 km": 18,
+    "burning/100 km": 46,
+    "hotspots/5 km": 1,
+    "hotspots/10 km": 2,
+    "hotspots/25 km": 7,
+    "hotspots/50 km": 18,
+    "hotspots/100 km": 47
+  },
+  "summary": {
+    "areas_min_pct": 34,
+    "areas_max_pct": 74,
+    "areas_rule": "single cells, blocks and circles; estimate of 3 or more; at least 20 area-months"
+  },
+  "rows": {
+    "burning": {
+      "active rows": [
+        4719,
+        5748
+      ],
+      "0.5-3": [
+        1666,
+        1856
+      ],
+      "3-10": [
+        332,
+        480
+      ],
+      "10-30": [
+        75,
+        112
+      ],
+      "30+": [
+        12,
+        24
+      ]
+    },
+    "hotspots": {
+      "active rows": [
+        4633,
+        5748
+      ],
+      "0.5-3": [
+        1717,
+        1968
+      ],
+      "3-10": [
+        316,
+        497
+      ],
+      "10-30": [
+        67,
+        116
+      ],
+      "30+": [
+        10,
+        22
+      ]
+    }
+  },
+  "bounds": {
+    "burning": {
+      "cells independent, satellites independent (as published)": {
+        "held": [
+          30,
+          77
+        ],
+        "mean_half_width": 0.16331636272557593
+      },
+      "cells independent, satellites fully dependent": {
+        "held": [
+          34,
+          77
+        ],
+        "mean_half_width": 0.17043876934628316
+      },
+      "cells fully dependent, satellites independent": {
+        "held": [
+          77,
+          77
+        ],
+        "mean_half_width": 0.8988946871096624
+      },
+      "cells fully dependent, satellites fully dependent": {
+        "held": [
+          77,
+          77
+        ],
+        "mean_half_width": 0.9209006790620823
+      }
+    },
+    "hotspots": {
+      "cells independent, satellites independent (as published)": {
+        "held": [
+          26,
+          79
+        ],
+        "mean_half_width": 0.1632383653931294
+      },
+      "cells independent, satellites fully dependent": {
+        "held": [
+          27,
+          79
+        ],
+        "mean_half_width": 0.16771094854033106
+      },
+      "cells fully dependent, satellites independent": {
+        "held": [
+          79,
+          79
+        ],
+        "mean_half_width": 0.9380077340205837
+      },
+      "cells fully dependent, satellites fully dependent": {
+        "held": [
+          79,
+          79
+        ],
+        "mean_half_width": 0.9508148112439773
+      }
+    }
+  },
+  "variance_ratio": {
+    "burning": {
+      "row, Suomi NPP alone (active rows)": 2.0944003906413804,
+      "cell-month, satellites independent (as published)": 3.2686630559428336,
+      "cell-month, satellites fully dependent": 1.7002678924507826,
+      "region-month, cells and satellites independent (as published)": 8.235886659827528,
+      "region-month, cells independent, satellites fully dependent": 4.2840798864566025
+    },
+    "hotspots": {
+      "row, Suomi NPP alone (active rows)": 3.1263873054123694,
+      "cell-month, satellites independent (as published)": 5.603782203875128,
+      "cell-month, satellites fully dependent": 2.931487134532594,
+      "region-month, cells and satellites independent (as published)": 16.61147884051599,
+      "region-month, cells independent, satellites fully dependent": 8.689905270204568
+    }
+  },
+  "satellite_error_correlation": {
+    "burning": {
+      "portugal": {
+        "cell_months": 0.8087258732512762,
+        "n_cell_months": 103,
+        "region_months": 0.9252278016715209,
+        "n_region_months": 23
+      },
+      "lebanon": {
+        "cell_months": 0.7151658142980694,
+        "n_cell_months": 9,
+        "region_months": 0.8940414478969256,
+        "n_region_months": 8
+      },
+      "syria": {
+        "cell_months": 0.5671980301581565,
+        "n_cell_months": 254,
+        "region_months": 0.8431742281738538,
+        "n_region_months": 22
+      },
+      "la_rioja": {
+        "cell_months": 0.7904517967691558,
+        "n_cell_months": 201,
+        "region_months": 0.682570087339077,
+        "n_region_months": 24
+      }
+    },
+    "hotspots": {
+      "portugal": {
+        "cell_months": 0.6319048861908622,
+        "n_cell_months": 115,
+        "region_months": 0.7521193037448078,
+        "n_region_months": 23
+      },
+      "lebanon": {
+        "cell_months": 0.730227144230852,
+        "n_cell_months": 11,
+        "region_months": 0.8842068121653428,
+        "n_region_months": 8
+      },
+      "syria": {
+        "cell_months": 0.7115473581867608,
+        "n_cell_months": 279,
+        "region_months": 0.8782706762003898,
+        "n_region_months": 24
+      },
+      "la_rioja": {
+        "cell_months": 0.7342992033231164,
+        "n_cell_months": 203,
+        "region_months": 0.6604433265847348,
+        "n_region_months": 24
+      }
+    }
+  },
+  "cross_cell": {
+    "burning": {
+      "adjacent cells": 0.12925500715994961,
+      "2-3 cells apart": 0.03473867931654147,
+      "4 or more cells apart": 0.036781313472142384,
+      "same cell": 1.7897200887008926
+    },
+    "hotspots": {
+      "adjacent cells": 0.48776578904292556,
+      "2-3 cells apart": 0.165880619709973,
+      "4 or more cells apart": 0.05007510716947462,
+      "same cell": 2.3197067530125723
+    }
+  }
+}
