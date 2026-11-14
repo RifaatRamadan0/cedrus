@@ -1,0 +1,44 @@
+{
+  "ref": "4e33960",
+  "history_end": "2025-12",
+  "regions": {
+    "portugal": {
+      "problems": [],
+      "months": {
+        "before": "2025-12",
+        "after": "2026-07"
+      },
+      "year_files_compared": 50,
+      "pass": true
+    },
+    "lebanon": {
+      "problems": [],
+      "months": {
+        "before": "2025-12",
+        "after": "2026-07"
+      },
+      "year_files_compared": 50,
+      "pass": true
+    },
+    "syria": {
+      "problems": [],
+      "months": {
+        "before": "2025-12",
+        "after": "2026-07"
+      },
+      "year_files_compared": 52,
+      "pass": true
+    },
+    "la_rioja": {
+      "problems": [],
+      "months": {
+        "before": "2025-12",
+        "after": "2026-07"
+      },
+      "year_files_compared": 52,
+      "pass": true
+    }
+  },
+  "frozen_models_unchanged": true,
+  "pass": true
+}

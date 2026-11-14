@@ -1,0 +1,1853 @@
+{
+  "plan": "docs/OBS2026_VALIDATION_PLAN.md",
+  "thresholds": {
+    "C1": 0.02,
+    "C2": 0.05,
+    "C3": 0.01,
+    "M1": 0.95,
+    "M2": 0.01,
+    "M3": 0.05
+  },
+  "clipping": {
+    "portugal": {
+      "modis": {
+        "country_file": 4637,
+        "api_in_box": 6708,
+        "api_kept": 4637,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 8,
+        "monthly": {
+          "2025-01": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2025-02": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-03": {
+            "country_file": 105,
+            "clipped_api": 105
+          },
+          "2025-04": {
+            "country_file": 29,
+            "clipped_api": 29
+          },
+          "2025-05": {
+            "country_file": 23,
+            "clipped_api": 23
+          },
+          "2025-06": {
+            "country_file": 18,
+            "clipped_api": 18
+          },
+          "2025-07": {
+            "country_file": 675,
+            "clipped_api": 675
+          },
+          "2025-08": {
+            "country_file": 3464,
+            "clipped_api": 3464
+          },
+          "2025-09": {
+            "country_file": 174,
+            "clipped_api": 174
+          },
+          "2025-10": {
+            "country_file": 85,
+            "clipped_api": 85
+          },
+          "2025-11": {
+            "country_file": 38,
+            "clipped_api": 38
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 12577,
+        "api_in_box": 18272,
+        "api_kept": 12577,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 10,
+        "monthly": {
+          "2025-01": {
+            "country_file": 66,
+            "clipped_api": 66
+          },
+          "2025-02": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2025-03": {
+            "country_file": 212,
+            "clipped_api": 212
+          },
+          "2025-04": {
+            "country_file": 178,
+            "clipped_api": 178
+          },
+          "2025-05": {
+            "country_file": 52,
+            "clipped_api": 52
+          },
+          "2025-06": {
+            "country_file": 102,
+            "clipped_api": 102
+          },
+          "2025-07": {
+            "country_file": 1813,
+            "clipped_api": 1813
+          },
+          "2025-08": {
+            "country_file": 9487,
+            "clipped_api": 9487
+          },
+          "2025-09": {
+            "country_file": 424,
+            "clipped_api": 424
+          },
+          "2025-10": {
+            "country_file": 141,
+            "clipped_api": 141
+          },
+          "2025-11": {
+            "country_file": 73,
+            "clipped_api": 73
+          },
+          "2025-12": {
+            "country_file": 12,
+            "clipped_api": 12
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "noaa20": {
+        "country_file": 12721,
+        "api_in_box": 18381,
+        "api_kept": 12721,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 10,
+        "monthly": {
+          "2025-01": {
+            "country_file": 79,
+            "clipped_api": 79
+          },
+          "2025-02": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-03": {
+            "country_file": 184,
+            "clipped_api": 184
+          },
+          "2025-04": {
+            "country_file": 202,
+            "clipped_api": 202
+          },
+          "2025-05": {
+            "country_file": 73,
+            "clipped_api": 73
+          },
+          "2025-06": {
+            "country_file": 61,
+            "clipped_api": 61
+          },
+          "2025-07": {
+            "country_file": 1937,
+            "clipped_api": 1937
+          },
+          "2025-08": {
+            "country_file": 9404,
+            "clipped_api": 9404
+          },
+          "2025-09": {
+            "country_file": 527,
+            "clipped_api": 527
+          },
+          "2025-10": {
+            "country_file": 155,
+            "clipped_api": 155
+          },
+          "2025-11": {
+            "country_file": 71,
+            "clipped_api": 71
+          },
+          "2025-12": {
+            "country_file": 17,
+            "clipped_api": 17
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      }
+    },
+    "lebanon": {
+      "modis": {
+        "country_file": 87,
+        "api_in_box": 142,
+        "api_kept": 87,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 1,
+        "monthly": {
+          "2025-02": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-03": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-04": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-05": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-06": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2025-07": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-08": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2025-09": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-10": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-11": {
+            "country_file": 33,
+            "clipped_api": 33
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 514,
+        "api_in_box": 726,
+        "api_kept": 519,
+        "false_inclusions": 5,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.009727626459143969,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.09615384615384616,
+        "c2_months_scored": 8,
+        "monthly": {
+          "2025-01": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-02": {
+            "country_file": 2,
+            "clipped_api": 2
+          },
+          "2025-03": {
+            "country_file": 20,
+            "clipped_api": 20
+          },
+          "2025-04": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2025-05": {
+            "country_file": 37,
+            "clipped_api": 37
+          },
+          "2025-06": {
+            "country_file": 57,
+            "clipped_api": 57
+          },
+          "2025-07": {
+            "country_file": 71,
+            "clipped_api": 71
+          },
+          "2025-08": {
+            "country_file": 84,
+            "clipped_api": 84
+          },
+          "2025-09": {
+            "country_file": 44,
+            "clipped_api": 44
+          },
+          "2025-10": {
+            "country_file": 52,
+            "clipped_api": 57
+          },
+          "2025-11": {
+            "country_file": 106,
+            "clipped_api": 106
+          },
+          "2025-12": {
+            "country_file": 13,
+            "clipped_api": 13
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": false,
+        "c3_pass": true,
+        "false_inclusions_in": {
+          "Lebanon": 5
+        },
+        "false_inclusion_km": [
+          0.57,
+          0.92,
+          0.95
+        ],
+        "mismatch_cells_top": {
+          "142_133": 5
+        },
+        "mismatch_cells": 1
+      },
+      "noaa20": {
+        "country_file": 545,
+        "api_in_box": 767,
+        "api_kept": 546,
+        "false_inclusions": 1,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.001834862385321101,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.009345794392523364,
+        "c2_months_scored": 7,
+        "monthly": {
+          "2025-01": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2025-02": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-03": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-04": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2025-05": {
+            "country_file": 34,
+            "clipped_api": 34
+          },
+          "2025-06": {
+            "country_file": 70,
+            "clipped_api": 70
+          },
+          "2025-07": {
+            "country_file": 94,
+            "clipped_api": 94
+          },
+          "2025-08": {
+            "country_file": 92,
+            "clipped_api": 92
+          },
+          "2025-09": {
+            "country_file": 59,
+            "clipped_api": 59
+          },
+          "2025-10": {
+            "country_file": 40,
+            "clipped_api": 40
+          },
+          "2025-11": {
+            "country_file": 107,
+            "clipped_api": 108
+          },
+          "2025-12": {
+            "country_file": 13,
+            "clipped_api": 13
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true,
+        "false_inclusions_in": {
+          "Lebanon": 1
+        },
+        "false_inclusion_km": [
+          1.23,
+          1.23,
+          1.23
+        ],
+        "mismatch_cells_top": {
+          "142_133": 1
+        },
+        "mismatch_cells": 1
+      }
+    },
+    "syria": {
+      "modis": {
+        "country_file": 1078,
+        "api_in_box": 3606,
+        "api_kept": 1078,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 9,
+        "monthly": {
+          "2025-01": {
+            "country_file": 117,
+            "clipped_api": 117
+          },
+          "2025-02": {
+            "country_file": 42,
+            "clipped_api": 42
+          },
+          "2025-03": {
+            "country_file": 51,
+            "clipped_api": 51
+          },
+          "2025-04": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2025-05": {
+            "country_file": 23,
+            "clipped_api": 23
+          },
+          "2025-06": {
+            "country_file": 72,
+            "clipped_api": 72
+          },
+          "2025-07": {
+            "country_file": 295,
+            "clipped_api": 295
+          },
+          "2025-08": {
+            "country_file": 259,
+            "clipped_api": 259
+          },
+          "2025-09": {
+            "country_file": 143,
+            "clipped_api": 143
+          },
+          "2025-10": {
+            "country_file": 18,
+            "clipped_api": 18
+          },
+          "2025-11": {
+            "country_file": 42,
+            "clipped_api": 42
+          },
+          "2025-12": {
+            "country_file": 7,
+            "clipped_api": 7
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 3317,
+        "api_in_box": 12072,
+        "api_kept": 3317,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 12,
+        "monthly": {
+          "2025-01": {
+            "country_file": 251,
+            "clipped_api": 251
+          },
+          "2025-02": {
+            "country_file": 136,
+            "clipped_api": 136
+          },
+          "2025-03": {
+            "country_file": 307,
+            "clipped_api": 307
+          },
+          "2025-04": {
+            "country_file": 89,
+            "clipped_api": 89
+          },
+          "2025-05": {
+            "country_file": 113,
+            "clipped_api": 113
+          },
+          "2025-06": {
+            "country_file": 271,
+            "clipped_api": 271
+          },
+          "2025-07": {
+            "country_file": 460,
+            "clipped_api": 460
+          },
+          "2025-08": {
+            "country_file": 686,
+            "clipped_api": 686
+          },
+          "2025-09": {
+            "country_file": 536,
+            "clipped_api": 536
+          },
+          "2025-10": {
+            "country_file": 264,
+            "clipped_api": 264
+          },
+          "2025-11": {
+            "country_file": 169,
+            "clipped_api": 169
+          },
+          "2025-12": {
+            "country_file": 35,
+            "clipped_api": 35
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "noaa20": {
+        "country_file": 3726,
+        "api_in_box": 12368,
+        "api_kept": 3726,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 12,
+        "monthly": {
+          "2025-01": {
+            "country_file": 289,
+            "clipped_api": 289
+          },
+          "2025-02": {
+            "country_file": 117,
+            "clipped_api": 117
+          },
+          "2025-03": {
+            "country_file": 333,
+            "clipped_api": 333
+          },
+          "2025-04": {
+            "country_file": 89,
+            "clipped_api": 89
+          },
+          "2025-05": {
+            "country_file": 139,
+            "clipped_api": 139
+          },
+          "2025-06": {
+            "country_file": 238,
+            "clipped_api": 238
+          },
+          "2025-07": {
+            "country_file": 789,
+            "clipped_api": 789
+          },
+          "2025-08": {
+            "country_file": 757,
+            "clipped_api": 757
+          },
+          "2025-09": {
+            "country_file": 508,
+            "clipped_api": 508
+          },
+          "2025-10": {
+            "country_file": 225,
+            "clipped_api": 225
+          },
+          "2025-11": {
+            "country_file": 187,
+            "clipped_api": 187
+          },
+          "2025-12": {
+            "country_file": 55,
+            "clipped_api": 55
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      }
+    },
+    "la_rioja": {
+      "modis": {
+        "country_file": 784,
+        "api_in_box": 784,
+        "api_kept": 784,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 12,
+        "monthly": {
+          "2025-01": {
+            "country_file": 36,
+            "clipped_api": 36
+          },
+          "2025-02": {
+            "country_file": 42,
+            "clipped_api": 42
+          },
+          "2025-03": {
+            "country_file": 21,
+            "clipped_api": 21
+          },
+          "2025-04": {
+            "country_file": 26,
+            "clipped_api": 26
+          },
+          "2025-05": {
+            "country_file": 24,
+            "clipped_api": 24
+          },
+          "2025-06": {
+            "country_file": 25,
+            "clipped_api": 25
+          },
+          "2025-07": {
+            "country_file": 61,
+            "clipped_api": 61
+          },
+          "2025-08": {
+            "country_file": 118,
+            "clipped_api": 118
+          },
+          "2025-09": {
+            "country_file": 61,
+            "clipped_api": 61
+          },
+          "2025-10": {
+            "country_file": 110,
+            "clipped_api": 110
+          },
+          "2025-11": {
+            "country_file": 236,
+            "clipped_api": 236
+          },
+          "2025-12": {
+            "country_file": 24,
+            "clipped_api": 24
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 3326,
+        "api_in_box": 3326,
+        "api_kept": 3326,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 12,
+        "monthly": {
+          "2025-01": {
+            "country_file": 266,
+            "clipped_api": 266
+          },
+          "2025-02": {
+            "country_file": 130,
+            "clipped_api": 130
+          },
+          "2025-03": {
+            "country_file": 44,
+            "clipped_api": 44
+          },
+          "2025-04": {
+            "country_file": 60,
+            "clipped_api": 60
+          },
+          "2025-05": {
+            "country_file": 71,
+            "clipped_api": 71
+          },
+          "2025-06": {
+            "country_file": 94,
+            "clipped_api": 94
+          },
+          "2025-07": {
+            "country_file": 276,
+            "clipped_api": 276
+          },
+          "2025-08": {
+            "country_file": 355,
+            "clipped_api": 355
+          },
+          "2025-09": {
+            "country_file": 251,
+            "clipped_api": 251
+          },
+          "2025-10": {
+            "country_file": 493,
+            "clipped_api": 493
+          },
+          "2025-11": {
+            "country_file": 1157,
+            "clipped_api": 1157
+          },
+          "2025-12": {
+            "country_file": 129,
+            "clipped_api": 129
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "noaa20": {
+        "country_file": 3320,
+        "api_in_box": 3320,
+        "api_kept": 3320,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 12,
+        "monthly": {
+          "2025-01": {
+            "country_file": 218,
+            "clipped_api": 218
+          },
+          "2025-02": {
+            "country_file": 149,
+            "clipped_api": 149
+          },
+          "2025-03": {
+            "country_file": 48,
+            "clipped_api": 48
+          },
+          "2025-04": {
+            "country_file": 68,
+            "clipped_api": 68
+          },
+          "2025-05": {
+            "country_file": 85,
+            "clipped_api": 85
+          },
+          "2025-06": {
+            "country_file": 117,
+            "clipped_api": 117
+          },
+          "2025-07": {
+            "country_file": 317,
+            "clipped_api": 317
+          },
+          "2025-08": {
+            "country_file": 331,
+            "clipped_api": 331
+          },
+          "2025-09": {
+            "country_file": 290,
+            "clipped_api": 290
+          },
+          "2025-10": {
+            "country_file": 436,
+            "clipped_api": 436
+          },
+          "2025-11": {
+            "country_file": 1133,
+            "clipped_api": 1133
+          },
+          "2025-12": {
+            "country_file": 128,
+            "clipped_api": 128
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      }
+    }
+  },
+  "mask": {
+    "portugal": {
+      "mask_squares": 208,
+      "modis": {
+        "detections": 1190,
+        "type_1_3": 9,
+        "type_0": 1181,
+        "primary_3x3": {
+          "recall": 0.3333333333333333,
+          "false_removal": 0.017781541066892465,
+          "m3_worst_month": 0.23809523809523808,
+          "m3_months_scored": 6,
+          "static_left_in": 6,
+          "type0_removed": 21,
+          "monthly": {
+            "2026-02": {
+              "type0": 25,
+              "masked_count": 25
+            },
+            "2026-03": {
+              "type0": 288,
+              "masked_count": 286
+            },
+            "2026-04": {
+              "type0": 191,
+              "masked_count": 192
+            },
+            "2026-05": {
+              "type0": 42,
+              "masked_count": 32
+            },
+            "2026-06": {
+              "type0": 52,
+              "masked_count": 52
+            },
+            "2026-07": {
+              "type0": 583,
+              "masked_count": 579
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.0,
+          "false_removal": 0.005080440304826418,
+          "m3_worst_month": 0.11904761904761904,
+          "m3_months_scored": 6,
+          "static_left_in": 9,
+          "type0_removed": 6,
+          "monthly": {
+            "2026-02": {
+              "type0": 25,
+              "masked_count": 25
+            },
+            "2026-03": {
+              "type0": 288,
+              "masked_count": 292
+            },
+            "2026-04": {
+              "type0": 191,
+              "masked_count": 192
+            },
+            "2026-05": {
+              "type0": 42,
+              "masked_count": 37
+            },
+            "2026-06": {
+              "type0": 52,
+              "masked_count": 52
+            },
+            "2026-07": {
+              "type0": 583,
+              "masked_count": 586
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": true,
+          "m3_pass": false
+        }
+      },
+      "snpp": {
+        "detections": 3571,
+        "type_1_3": 97,
+        "type_0": 3474,
+        "primary_3x3": {
+          "recall": 1.0,
+          "false_removal": 0.024179620034542316,
+          "m3_worst_month": 0.2736842105263158,
+          "m3_months_scored": 6,
+          "static_left_in": 0,
+          "type0_removed": 84,
+          "monthly": {
+            "2026-01": {
+              "type0": 19,
+              "masked_count": 19
+            },
+            "2026-02": {
+              "type0": 33,
+              "masked_count": 32
+            },
+            "2026-03": {
+              "type0": 666,
+              "masked_count": 652
+            },
+            "2026-04": {
+              "type0": 606,
+              "masked_count": 603
+            },
+            "2026-05": {
+              "type0": 95,
+              "masked_count": 69
+            },
+            "2026-06": {
+              "type0": 151,
+              "masked_count": 142
+            },
+            "2026-07": {
+              "type0": 1904,
+              "masked_count": 1873
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 1.0,
+          "false_removal": 0.010362694300518135,
+          "m3_worst_month": 0.22105263157894736,
+          "m3_months_scored": 6,
+          "static_left_in": 0,
+          "type0_removed": 36,
+          "monthly": {
+            "2026-01": {
+              "type0": 19,
+              "masked_count": 19
+            },
+            "2026-02": {
+              "type0": 33,
+              "masked_count": 32
+            },
+            "2026-03": {
+              "type0": 666,
+              "masked_count": 663
+            },
+            "2026-04": {
+              "type0": 606,
+              "masked_count": 603
+            },
+            "2026-05": {
+              "type0": 95,
+              "masked_count": 74
+            },
+            "2026-06": {
+              "type0": 151,
+              "masked_count": 145
+            },
+            "2026-07": {
+              "type0": 1904,
+              "masked_count": 1902
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      },
+      "noaa20": {
+        "detections": 3387,
+        "type_1_3": 115,
+        "type_0": 3272,
+        "primary_3x3": {
+          "recall": 0.9826086956521739,
+          "false_removal": 0.029951100244498777,
+          "m3_worst_month": 0.28431372549019607,
+          "m3_months_scored": 6,
+          "static_left_in": 2,
+          "type0_removed": 98,
+          "monthly": {
+            "2026-01": {
+              "type0": 19,
+              "masked_count": 18
+            },
+            "2026-02": {
+              "type0": 33,
+              "masked_count": 33
+            },
+            "2026-03": {
+              "type0": 700,
+              "masked_count": 684
+            },
+            "2026-04": {
+              "type0": 536,
+              "masked_count": 531
+            },
+            "2026-05": {
+              "type0": 102,
+              "masked_count": 73
+            },
+            "2026-06": {
+              "type0": 134,
+              "masked_count": 125
+            },
+            "2026-07": {
+              "type0": 1748,
+              "masked_count": 1712
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.9826086956521739,
+          "false_removal": 0.013447432762836185,
+          "m3_worst_month": 0.2647058823529412,
+          "m3_months_scored": 6,
+          "static_left_in": 2,
+          "type0_removed": 44,
+          "monthly": {
+            "2026-01": {
+              "type0": 19,
+              "masked_count": 18
+            },
+            "2026-02": {
+              "type0": 33,
+              "masked_count": 33
+            },
+            "2026-03": {
+              "type0": 700,
+              "masked_count": 693
+            },
+            "2026-04": {
+              "type0": 536,
+              "masked_count": 535
+            },
+            "2026-05": {
+              "type0": 102,
+              "masked_count": 75
+            },
+            "2026-06": {
+              "type0": 134,
+              "masked_count": 131
+            },
+            "2026-07": {
+              "type0": 1748,
+              "masked_count": 1745
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      }
+    },
+    "lebanon": {
+      "mask_squares": 90,
+      "modis": {
+        "detections": 22,
+        "type_1_3": 1,
+        "type_0": 21,
+        "primary_3x3": {
+          "recall": 1.0,
+          "false_removal": 0.047619047619047616,
+          "m3_worst_month": 0.0,
+          "m3_months_scored": 0,
+          "static_left_in": 0,
+          "type0_removed": 1,
+          "monthly": {
+            "2026-01": {
+              "type0": 1,
+              "masked_count": 1
+            },
+            "2026-04": {
+              "type0": 3,
+              "masked_count": 3
+            },
+            "2026-06": {
+              "type0": 4,
+              "masked_count": 4
+            },
+            "2026-07": {
+              "type0": 13,
+              "masked_count": 12
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": true
+        },
+        "sensitivity_1x1": {
+          "recall": 0.0,
+          "false_removal": 0.0,
+          "m3_worst_month": 0.0,
+          "m3_months_scored": 0,
+          "static_left_in": 1,
+          "type0_removed": 0,
+          "monthly": {
+            "2026-01": {
+              "type0": 1,
+              "masked_count": 1
+            },
+            "2026-04": {
+              "type0": 3,
+              "masked_count": 3
+            },
+            "2026-06": {
+              "type0": 4,
+              "masked_count": 4
+            },
+            "2026-07": {
+              "type0": 13,
+              "masked_count": 14
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": true,
+          "m3_pass": true
+        }
+      },
+      "snpp": {
+        "detections": 228,
+        "type_1_3": 5,
+        "type_0": 223,
+        "primary_3x3": {
+          "recall": 0.8,
+          "false_removal": 0.13452914798206278,
+          "m3_worst_month": 0.1791044776119403,
+          "m3_months_scored": 2,
+          "static_left_in": 1,
+          "type0_removed": 30,
+          "monthly": {
+            "2026-01": {
+              "type0": 8,
+              "masked_count": 5
+            },
+            "2026-02": {
+              "type0": 1,
+              "masked_count": 0
+            },
+            "2026-03": {
+              "type0": 5,
+              "masked_count": 5
+            },
+            "2026-04": {
+              "type0": 5,
+              "masked_count": 5
+            },
+            "2026-05": {
+              "type0": 17,
+              "masked_count": 15
+            },
+            "2026-06": {
+              "type0": 67,
+              "masked_count": 55
+            },
+            "2026-07": {
+              "type0": 120,
+              "masked_count": 109
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.6,
+          "false_removal": 0.08071748878923767,
+          "m3_worst_month": 0.07462686567164178,
+          "m3_months_scored": 2,
+          "static_left_in": 2,
+          "type0_removed": 18,
+          "monthly": {
+            "2026-01": {
+              "type0": 8,
+              "masked_count": 5
+            },
+            "2026-02": {
+              "type0": 1,
+              "masked_count": 0
+            },
+            "2026-03": {
+              "type0": 5,
+              "masked_count": 5
+            },
+            "2026-04": {
+              "type0": 5,
+              "masked_count": 7
+            },
+            "2026-05": {
+              "type0": 17,
+              "masked_count": 16
+            },
+            "2026-06": {
+              "type0": 67,
+              "masked_count": 62
+            },
+            "2026-07": {
+              "type0": 120,
+              "masked_count": 112
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      },
+      "noaa20": {
+        "detections": 203,
+        "type_1_3": 0,
+        "type_0": 203,
+        "primary_3x3": {
+          "recall": 1.0,
+          "false_removal": 0.20689655172413793,
+          "m3_worst_month": 0.20754716981132076,
+          "m3_months_scored": 2,
+          "static_left_in": 0,
+          "type0_removed": 42,
+          "monthly": {
+            "2026-01": {
+              "type0": 5,
+              "masked_count": 3
+            },
+            "2026-02": {
+              "type0": 2,
+              "masked_count": 1
+            },
+            "2026-03": {
+              "type0": 6,
+              "masked_count": 2
+            },
+            "2026-04": {
+              "type0": 7,
+              "masked_count": 6
+            },
+            "2026-05": {
+              "type0": 16,
+              "masked_count": 13
+            },
+            "2026-06": {
+              "type0": 53,
+              "masked_count": 42
+            },
+            "2026-07": {
+              "type0": 114,
+              "masked_count": 94
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 1.0,
+          "false_removal": 0.13793103448275862,
+          "m3_worst_month": 0.1509433962264151,
+          "m3_months_scored": 2,
+          "static_left_in": 0,
+          "type0_removed": 28,
+          "monthly": {
+            "2026-01": {
+              "type0": 5,
+              "masked_count": 3
+            },
+            "2026-02": {
+              "type0": 2,
+              "masked_count": 1
+            },
+            "2026-03": {
+              "type0": 6,
+              "masked_count": 3
+            },
+            "2026-04": {
+              "type0": 7,
+              "masked_count": 6
+            },
+            "2026-05": {
+              "type0": 16,
+              "masked_count": 14
+            },
+            "2026-06": {
+              "type0": 53,
+              "masked_count": 45
+            },
+            "2026-07": {
+              "type0": 114,
+              "masked_count": 103
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      }
+    },
+    "syria": {
+      "mask_squares": 996,
+      "modis": {
+        "detections": 787,
+        "type_1_3": 49,
+        "type_0": 738,
+        "primary_3x3": {
+          "recall": 0.5918367346938775,
+          "false_removal": 0.16124661246612465,
+          "m3_worst_month": 0.17391304347826086,
+          "m3_months_scored": 3,
+          "static_left_in": 20,
+          "type0_removed": 119,
+          "monthly": {
+            "2026-01": {
+              "type0": 6,
+              "masked_count": 4
+            },
+            "2026-02": {
+              "type0": 23,
+              "masked_count": 19
+            },
+            "2026-03": {
+              "type0": 9,
+              "masked_count": 8
+            },
+            "2026-04": {
+              "type0": 8,
+              "masked_count": 4
+            },
+            "2026-05": {
+              "type0": 8,
+              "masked_count": 3
+            },
+            "2026-06": {
+              "type0": 211,
+              "masked_count": 182
+            },
+            "2026-07": {
+              "type0": 473,
+              "masked_count": 419
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.30612244897959184,
+          "false_removal": 0.036585365853658534,
+          "m3_worst_month": 0.08695652173913043,
+          "m3_months_scored": 3,
+          "static_left_in": 34,
+          "type0_removed": 27,
+          "monthly": {
+            "2026-01": {
+              "type0": 6,
+              "masked_count": 4
+            },
+            "2026-02": {
+              "type0": 23,
+              "masked_count": 21
+            },
+            "2026-03": {
+              "type0": 9,
+              "masked_count": 9
+            },
+            "2026-04": {
+              "type0": 8,
+              "masked_count": 6
+            },
+            "2026-05": {
+              "type0": 8,
+              "masked_count": 3
+            },
+            "2026-06": {
+              "type0": 211,
+              "masked_count": 217
+            },
+            "2026-07": {
+              "type0": 473,
+              "masked_count": 485
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      },
+      "snpp": {
+        "detections": 4401,
+        "type_1_3": 2102,
+        "type_0": 2299,
+        "primary_3x3": {
+          "recall": 1.0,
+          "false_removal": 0.3083949543279687,
+          "m3_worst_month": 0.8421052631578947,
+          "m3_months_scored": 7,
+          "static_left_in": 0,
+          "type0_removed": 709,
+          "monthly": {
+            "2026-01": {
+              "type0": 49,
+              "masked_count": 21
+            },
+            "2026-02": {
+              "type0": 114,
+              "masked_count": 62
+            },
+            "2026-03": {
+              "type0": 57,
+              "masked_count": 34
+            },
+            "2026-04": {
+              "type0": 38,
+              "masked_count": 6
+            },
+            "2026-05": {
+              "type0": 131,
+              "masked_count": 35
+            },
+            "2026-06": {
+              "type0": 743,
+              "masked_count": 518
+            },
+            "2026-07": {
+              "type0": 1167,
+              "masked_count": 914
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.9933396764985728,
+          "false_removal": 0.18181818181818182,
+          "m3_worst_month": 0.7631578947368421,
+          "m3_months_scored": 7,
+          "static_left_in": 14,
+          "type0_removed": 418,
+          "monthly": {
+            "2026-01": {
+              "type0": 49,
+              "masked_count": 26
+            },
+            "2026-02": {
+              "type0": 114,
+              "masked_count": 71
+            },
+            "2026-03": {
+              "type0": 57,
+              "masked_count": 42
+            },
+            "2026-04": {
+              "type0": 38,
+              "masked_count": 9
+            },
+            "2026-05": {
+              "type0": 131,
+              "masked_count": 48
+            },
+            "2026-06": {
+              "type0": 743,
+              "masked_count": 630
+            },
+            "2026-07": {
+              "type0": 1167,
+              "masked_count": 1069
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      },
+      "noaa20": {
+        "detections": 4845,
+        "type_1_3": 2441,
+        "type_0": 2404,
+        "primary_3x3": {
+          "recall": 0.9995903318312167,
+          "false_removal": 0.28078202995008317,
+          "m3_worst_month": 0.7692307692307693,
+          "m3_months_scored": 7,
+          "static_left_in": 1,
+          "type0_removed": 675,
+          "monthly": {
+            "2026-01": {
+              "type0": 45,
+              "masked_count": 25
+            },
+            "2026-02": {
+              "type0": 112,
+              "masked_count": 60
+            },
+            "2026-03": {
+              "type0": 84,
+              "masked_count": 50
+            },
+            "2026-04": {
+              "type0": 52,
+              "masked_count": 12
+            },
+            "2026-05": {
+              "type0": 121,
+              "masked_count": 41
+            },
+            "2026-06": {
+              "type0": 675,
+              "masked_count": 501
+            },
+            "2026-07": {
+              "type0": 1315,
+              "masked_count": 1041
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.9930356411306841,
+          "false_removal": 0.1651414309484193,
+          "m3_worst_month": 0.6730769230769231,
+          "m3_months_scored": 7,
+          "static_left_in": 17,
+          "type0_removed": 397,
+          "monthly": {
+            "2026-01": {
+              "type0": 45,
+              "masked_count": 26
+            },
+            "2026-02": {
+              "type0": 112,
+              "masked_count": 73
+            },
+            "2026-03": {
+              "type0": 84,
+              "masked_count": 63
+            },
+            "2026-04": {
+              "type0": 52,
+              "masked_count": 17
+            },
+            "2026-05": {
+              "type0": 121,
+              "masked_count": 51
+            },
+            "2026-06": {
+              "type0": 675,
+              "masked_count": 587
+            },
+            "2026-07": {
+              "type0": 1315,
+              "masked_count": 1207
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      }
+    },
+    "la_rioja": {
+      "mask_squares": 391,
+      "modis": {
+        "detections": 221,
+        "type_1_3": 49,
+        "type_0": 172,
+        "primary_3x3": {
+          "recall": 0.9795918367346939,
+          "false_removal": 0.0755813953488372,
+          "m3_worst_month": 0.07407407407407407,
+          "m3_months_scored": 2,
+          "static_left_in": 1,
+          "type0_removed": 13,
+          "monthly": {
+            "2026-01": {
+              "type0": 12,
+              "masked_count": 11
+            },
+            "2026-02": {
+              "type0": 19,
+              "masked_count": 18
+            },
+            "2026-03": {
+              "type0": 17,
+              "masked_count": 16
+            },
+            "2026-04": {
+              "type0": 16,
+              "masked_count": 13
+            },
+            "2026-05": {
+              "type0": 27,
+              "masked_count": 25
+            },
+            "2026-06": {
+              "type0": 13,
+              "masked_count": 11
+            },
+            "2026-07": {
+              "type0": 68,
+              "masked_count": 66
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.8163265306122449,
+          "false_removal": 0.029069767441860465,
+          "m3_worst_month": 0.037037037037037035,
+          "m3_months_scored": 2,
+          "static_left_in": 9,
+          "type0_removed": 5,
+          "monthly": {
+            "2026-01": {
+              "type0": 12,
+              "masked_count": 17
+            },
+            "2026-02": {
+              "type0": 19,
+              "masked_count": 18
+            },
+            "2026-03": {
+              "type0": 17,
+              "masked_count": 17
+            },
+            "2026-04": {
+              "type0": 16,
+              "masked_count": 17
+            },
+            "2026-05": {
+              "type0": 27,
+              "masked_count": 28
+            },
+            "2026-06": {
+              "type0": 13,
+              "masked_count": 11
+            },
+            "2026-07": {
+              "type0": 68,
+              "masked_count": 68
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": true
+        }
+      },
+      "snpp": {
+        "detections": 1049,
+        "type_1_3": 34,
+        "type_0": 1015,
+        "primary_3x3": {
+          "recall": 0.8529411764705882,
+          "false_removal": 0.06896551724137931,
+          "m3_worst_month": 0.10256410256410256,
+          "m3_months_scored": 7,
+          "static_left_in": 5,
+          "type0_removed": 70,
+          "monthly": {
+            "2026-01": {
+              "type0": 160,
+              "masked_count": 150
+            },
+            "2026-02": {
+              "type0": 73,
+              "masked_count": 66
+            },
+            "2026-03": {
+              "type0": 59,
+              "masked_count": 55
+            },
+            "2026-04": {
+              "type0": 39,
+              "masked_count": 35
+            },
+            "2026-05": {
+              "type0": 150,
+              "masked_count": 144
+            },
+            "2026-06": {
+              "type0": 106,
+              "masked_count": 97
+            },
+            "2026-07": {
+              "type0": 428,
+              "masked_count": 403
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 0.8529411764705882,
+          "false_removal": 0.030541871921182268,
+          "m3_worst_month": 0.0660377358490566,
+          "m3_months_scored": 7,
+          "static_left_in": 5,
+          "type0_removed": 31,
+          "monthly": {
+            "2026-01": {
+              "type0": 160,
+              "masked_count": 155
+            },
+            "2026-02": {
+              "type0": 73,
+              "masked_count": 71
+            },
+            "2026-03": {
+              "type0": 59,
+              "masked_count": 57
+            },
+            "2026-04": {
+              "type0": 39,
+              "masked_count": 39
+            },
+            "2026-05": {
+              "type0": 150,
+              "masked_count": 147
+            },
+            "2026-06": {
+              "type0": 106,
+              "masked_count": 99
+            },
+            "2026-07": {
+              "type0": 428,
+              "masked_count": 421
+            }
+          },
+          "m1_pass": false,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      },
+      "noaa20": {
+        "detections": 1191,
+        "type_1_3": 35,
+        "type_0": 1156,
+        "primary_3x3": {
+          "recall": 1.0,
+          "false_removal": 0.07698961937716263,
+          "m3_worst_month": 0.14925373134328357,
+          "m3_months_scored": 7,
+          "static_left_in": 0,
+          "type0_removed": 89,
+          "monthly": {
+            "2026-01": {
+              "type0": 103,
+              "masked_count": 96
+            },
+            "2026-02": {
+              "type0": 72,
+              "masked_count": 63
+            },
+            "2026-03": {
+              "type0": 67,
+              "masked_count": 57
+            },
+            "2026-04": {
+              "type0": 62,
+              "masked_count": 58
+            },
+            "2026-05": {
+              "type0": 140,
+              "masked_count": 122
+            },
+            "2026-06": {
+              "type0": 130,
+              "masked_count": 120
+            },
+            "2026-07": {
+              "type0": 582,
+              "masked_count": 551
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        },
+        "sensitivity_1x1": {
+          "recall": 1.0,
+          "false_removal": 0.0328719723183391,
+          "m3_worst_month": 0.07462686567164178,
+          "m3_months_scored": 7,
+          "static_left_in": 0,
+          "type0_removed": 38,
+          "monthly": {
+            "2026-01": {
+              "type0": 103,
+              "masked_count": 98
+            },
+            "2026-02": {
+              "type0": 72,
+              "masked_count": 68
+            },
+            "2026-03": {
+              "type0": 67,
+              "masked_count": 62
+            },
+            "2026-04": {
+              "type0": 62,
+              "masked_count": 60
+            },
+            "2026-05": {
+              "type0": 140,
+              "masked_count": 133
+            },
+            "2026-06": {
+              "type0": 130,
+              "masked_count": 123
+            },
+            "2026-07": {
+              "type0": 582,
+              "masked_count": 574
+            }
+          },
+          "m1_pass": true,
+          "m2_pass": false,
+          "m3_pass": false
+        }
+      }
+    }
+  },
+  "clipping_pass": false,
+  "mask_pass": false
+}

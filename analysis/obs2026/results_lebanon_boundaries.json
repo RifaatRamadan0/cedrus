@@ -1,0 +1,815 @@
+{
+  "plan": "docs/OBS2026_VALIDATION_PLAN.md (addendum: other boundary datasets for Lebanon)",
+  "selection_years": [
+    2000,
+    2022
+  ],
+  "selection_points": 21725,
+  "lebanon_file_points": 12585,
+  "points_in_two_files": 0,
+  "scores": {
+    "Natural Earth 1:10m": {
+      "mismatches": 12,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 12,
+      "by_file": {
+        "israel": 12
+      },
+      "by_stretch": {
+        "south (incl. Shebaa area)": 12
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        0.17,
+        0.4,
+        0.77
+      ],
+      "parts": 1,
+      "vertices": 312
+    },
+    "Natural Earth 1:50m": {
+      "mismatches": 364,
+      "lebanon_file_outside": 233,
+      "neighbour_file_inside": 131,
+      "by_file": {
+        "lebanon": 233,
+        "syria": 119,
+        "israel": 12
+      },
+      "by_stretch": {
+        "east / north (Syria)": 197,
+        "coast": 86,
+        "south": 63,
+        "south (incl. Shebaa area)": 18
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        0.37,
+        1.41,
+        2.74
+      ],
+      "parts": 1,
+      "vertices": 62
+    },
+    "Natural Earth 1:110m": {
+      "mismatches": 2600,
+      "lebanon_file_outside": 2060,
+      "neighbour_file_inside": 540,
+      "by_file": {
+        "lebanon": 2060,
+        "syria": 418,
+        "israel": 122
+      },
+      "by_stretch": {
+        "east / north (Syria)": 1239,
+        "coast": 1132,
+        "south": 116,
+        "south (incl. Shebaa area)": 113
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        1.28,
+        2.65,
+        7.12
+      ],
+      "parts": 1,
+      "vertices": 11
+    },
+    "GADM 4.1 level 0": {
+      "mismatches": 752,
+      "lebanon_file_outside": 140,
+      "neighbour_file_inside": 612,
+      "by_file": {
+        "syria": 355,
+        "israel": 257,
+        "lebanon": 140
+      },
+      "by_stretch": {
+        "east / north (Syria)": 427,
+        "south": 180,
+        "south (incl. Shebaa area)": 130,
+        "coast": 15
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        0.8,
+        1.79,
+        3.74
+      ],
+      "parts": 1,
+      "vertices": 1034
+    },
+    "geoBoundaries gbOpen ADM0": {
+      "mismatches": 773,
+      "lebanon_file_outside": 181,
+      "neighbour_file_inside": 592,
+      "by_file": {
+        "syria": 366,
+        "israel": 226,
+        "lebanon": 181
+      },
+      "by_stretch": {
+        "east / north (Syria)": 455,
+        "south": 224,
+        "coast": 55,
+        "south (incl. Shebaa area)": 39
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        0.77,
+        1.65,
+        2.75
+      ],
+      "parts": 1,
+      "vertices": 2130
+    },
+    "geoBoundaries gbHumanitarian ADM0": {
+      "mismatches": 699,
+      "lebanon_file_outside": 189,
+      "neighbour_file_inside": 510,
+      "by_file": {
+        "syria": 348,
+        "lebanon": 189,
+        "israel": 162
+      },
+      "by_stretch": {
+        "east / north (Syria)": 462,
+        "south": 183,
+        "south (incl. Shebaa area)": 28,
+        "coast": 26
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        0.77,
+        1.53,
+        2.41
+      ],
+      "parts": 1,
+      "vertices": 16083
+    },
+    "geoBoundaries CGAZ ADM0": {
+      "mismatches": 585,
+      "lebanon_file_outside": 171,
+      "neighbour_file_inside": 414,
+      "by_file": {
+        "syria": 238,
+        "israel": 176,
+        "lebanon": 171
+      },
+      "by_stretch": {
+        "east / north (Syria)": 312,
+        "south": 191,
+        "coast": 47,
+        "south (incl. Shebaa area)": 35
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        0.58,
+        1.49,
+        2.39
+      ],
+      "parts": 1,
+      "vertices": 7800
+    },
+    "FAO GAUL 2024 (level 1 units of Lebanon, merged)": {
+      "mismatches": 583,
+      "lebanon_file_outside": 177,
+      "neighbour_file_inside": 406,
+      "by_file": {
+        "syria": 241,
+        "lebanon": 177,
+        "israel": 165
+      },
+      "by_stretch": {
+        "east / north (Syria)": 339,
+        "south": 183,
+        "south (incl. Shebaa area)": 35,
+        "coast": 26
+      },
+      "km_to_ne10m_edge_p50_p90_max": [
+        0.63,
+        1.47,
+        2.39
+      ],
+      "parts": 8,
+      "vertices": 38752
+    }
+  },
+  "skipped": {
+    "US State Dept LSIB v11.4": "RuntimeError: LSIB v11.4 is lines only (POLYLINE shapefile, no coastline); no Lebanon polygon to test"
+  },
+  "selected": "Natural Earth 1:10m",
+  "test": {
+    "2023": {
+      "modis": {
+        "country_file": 68,
+        "api_in_box": 108,
+        "api_kept": 68,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 1,
+        "monthly": {
+          "2023-01": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2023-03": {
+            "country_file": 2,
+            "clipped_api": 2
+          },
+          "2023-05": {
+            "country_file": 4,
+            "clipped_api": 4
+          },
+          "2023-06": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2023-07": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2023-08": {
+            "country_file": 3,
+            "clipped_api": 3
+          },
+          "2023-09": {
+            "country_file": 30,
+            "clipped_api": 30
+          },
+          "2023-10": {
+            "country_file": 15,
+            "clipped_api": 15
+          },
+          "2023-12": {
+            "country_file": 1,
+            "clipped_api": 1
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 590,
+        "api_in_box": 783,
+        "api_kept": 590,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 7,
+        "monthly": {
+          "2023-01": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2023-02": {
+            "country_file": 16,
+            "clipped_api": 16
+          },
+          "2023-03": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2023-04": {
+            "country_file": 28,
+            "clipped_api": 28
+          },
+          "2023-05": {
+            "country_file": 30,
+            "clipped_api": 30
+          },
+          "2023-06": {
+            "country_file": 45,
+            "clipped_api": 45
+          },
+          "2023-07": {
+            "country_file": 81,
+            "clipped_api": 81
+          },
+          "2023-08": {
+            "country_file": 65,
+            "clipped_api": 65
+          },
+          "2023-09": {
+            "country_file": 145,
+            "clipped_api": 145
+          },
+          "2023-10": {
+            "country_file": 118,
+            "clipped_api": 118
+          },
+          "2023-11": {
+            "country_file": 16,
+            "clipped_api": 16
+          },
+          "2023-12": {
+            "country_file": 10,
+            "clipped_api": 10
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "noaa20": {
+        "country_file": 559,
+        "api_in_box": 738,
+        "api_kept": 559,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 9,
+        "monthly": {
+          "2023-01": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2023-02": {
+            "country_file": 10,
+            "clipped_api": 10
+          },
+          "2023-03": {
+            "country_file": 26,
+            "clipped_api": 26
+          },
+          "2023-04": {
+            "country_file": 25,
+            "clipped_api": 25
+          },
+          "2023-05": {
+            "country_file": 37,
+            "clipped_api": 37
+          },
+          "2023-06": {
+            "country_file": 48,
+            "clipped_api": 48
+          },
+          "2023-07": {
+            "country_file": 78,
+            "clipped_api": 78
+          },
+          "2023-08": {
+            "country_file": 49,
+            "clipped_api": 49
+          },
+          "2023-09": {
+            "country_file": 138,
+            "clipped_api": 138
+          },
+          "2023-10": {
+            "country_file": 87,
+            "clipped_api": 87
+          },
+          "2023-11": {
+            "country_file": 27,
+            "clipped_api": 27
+          },
+          "2023-12": {
+            "country_file": 15,
+            "clipped_api": 15
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      }
+    },
+    "2024": {
+      "modis": {
+        "country_file": 210,
+        "api_in_box": 344,
+        "api_kept": 210,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 2,
+        "monthly": {
+          "2024-03": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2024-05": {
+            "country_file": 2,
+            "clipped_api": 2
+          },
+          "2024-06": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2024-07": {
+            "country_file": 13,
+            "clipped_api": 13
+          },
+          "2024-08": {
+            "country_file": 12,
+            "clipped_api": 12
+          },
+          "2024-09": {
+            "country_file": 41,
+            "clipped_api": 41
+          },
+          "2024-10": {
+            "country_file": 108,
+            "clipped_api": 108
+          },
+          "2024-11": {
+            "country_file": 15,
+            "clipped_api": 15
+          },
+          "2024-12": {
+            "country_file": 1,
+            "clipped_api": 1
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 1162,
+        "api_in_box": 1572,
+        "api_kept": 1167,
+        "false_inclusions": 5,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.004302925989672977,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.041666666666666664,
+        "c2_months_scored": 9,
+        "monthly": {
+          "2024-01": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2024-02": {
+            "country_file": 23,
+            "clipped_api": 23
+          },
+          "2024-03": {
+            "country_file": 14,
+            "clipped_api": 14
+          },
+          "2024-04": {
+            "country_file": 20,
+            "clipped_api": 20
+          },
+          "2024-05": {
+            "country_file": 24,
+            "clipped_api": 25
+          },
+          "2024-06": {
+            "country_file": 128,
+            "clipped_api": 129
+          },
+          "2024-07": {
+            "country_file": 53,
+            "clipped_api": 53
+          },
+          "2024-08": {
+            "country_file": 105,
+            "clipped_api": 106
+          },
+          "2024-09": {
+            "country_file": 221,
+            "clipped_api": 221
+          },
+          "2024-10": {
+            "country_file": 497,
+            "clipped_api": 499
+          },
+          "2024-11": {
+            "country_file": 50,
+            "clipped_api": 50
+          },
+          "2024-12": {
+            "country_file": 18,
+            "clipped_api": 18
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true,
+        "false_inclusions_in": {
+          "Lebanon": 5
+        },
+        "false_inclusion_km": [
+          0.35,
+          1.02,
+          1.37
+        ],
+        "mismatch_cells_top": {
+          "142_133": 5
+        },
+        "mismatch_cells": 1
+      },
+      "noaa20": {
+        "country_file": 1137,
+        "api_in_box": 1669,
+        "api_kept": 1145,
+        "false_inclusions": 8,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.007036059806508356,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.012578616352201259,
+        "c2_months_scored": 6,
+        "monthly": {
+          "2024-01": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2024-02": {
+            "country_file": 15,
+            "clipped_api": 15
+          },
+          "2024-03": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2024-04": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2024-05": {
+            "country_file": 18,
+            "clipped_api": 19
+          },
+          "2024-06": {
+            "country_file": 139,
+            "clipped_api": 140
+          },
+          "2024-07": {
+            "country_file": 96,
+            "clipped_api": 96
+          },
+          "2024-08": {
+            "country_file": 84,
+            "clipped_api": 84
+          },
+          "2024-09": {
+            "country_file": 213,
+            "clipped_api": 213
+          },
+          "2024-10": {
+            "country_file": 477,
+            "clipped_api": 483
+          },
+          "2024-11": {
+            "country_file": 47,
+            "clipped_api": 47
+          },
+          "2024-12": {
+            "country_file": 14,
+            "clipped_api": 14
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true,
+        "false_inclusions_in": {
+          "Lebanon": 8
+        },
+        "false_inclusion_km": [
+          0.26,
+          0.51,
+          0.92
+        ],
+        "mismatch_cells_top": {
+          "142_133": 7,
+          "142_132": 1
+        },
+        "mismatch_cells": 2
+      }
+    },
+    "2025": {
+      "modis": {
+        "country_file": 87,
+        "api_in_box": 142,
+        "api_kept": 87,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 1,
+        "monthly": {
+          "2025-02": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-03": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-04": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-05": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-06": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2025-07": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-08": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2025-09": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-10": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-11": {
+            "country_file": 33,
+            "clipped_api": 33
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 514,
+        "api_in_box": 726,
+        "api_kept": 519,
+        "false_inclusions": 5,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.009727626459143969,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.09615384615384616,
+        "c2_months_scored": 8,
+        "monthly": {
+          "2025-01": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-02": {
+            "country_file": 2,
+            "clipped_api": 2
+          },
+          "2025-03": {
+            "country_file": 20,
+            "clipped_api": 20
+          },
+          "2025-04": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2025-05": {
+            "country_file": 37,
+            "clipped_api": 37
+          },
+          "2025-06": {
+            "country_file": 57,
+            "clipped_api": 57
+          },
+          "2025-07": {
+            "country_file": 71,
+            "clipped_api": 71
+          },
+          "2025-08": {
+            "country_file": 84,
+            "clipped_api": 84
+          },
+          "2025-09": {
+            "country_file": 44,
+            "clipped_api": 44
+          },
+          "2025-10": {
+            "country_file": 52,
+            "clipped_api": 57
+          },
+          "2025-11": {
+            "country_file": 106,
+            "clipped_api": 106
+          },
+          "2025-12": {
+            "country_file": 13,
+            "clipped_api": 13
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": false,
+        "c3_pass": true,
+        "false_inclusions_in": {
+          "Lebanon": 5
+        },
+        "false_inclusion_km": [
+          0.57,
+          0.92,
+          0.95
+        ],
+        "mismatch_cells_top": {
+          "142_133": 5
+        },
+        "mismatch_cells": 1
+      },
+      "noaa20": {
+        "country_file": 545,
+        "api_in_box": 767,
+        "api_kept": 546,
+        "false_inclusions": 1,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.001834862385321101,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.009345794392523364,
+        "c2_months_scored": 7,
+        "monthly": {
+          "2025-01": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2025-02": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-03": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-04": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2025-05": {
+            "country_file": 34,
+            "clipped_api": 34
+          },
+          "2025-06": {
+            "country_file": 70,
+            "clipped_api": 70
+          },
+          "2025-07": {
+            "country_file": 94,
+            "clipped_api": 94
+          },
+          "2025-08": {
+            "country_file": 92,
+            "clipped_api": 92
+          },
+          "2025-09": {
+            "country_file": 59,
+            "clipped_api": 59
+          },
+          "2025-10": {
+            "country_file": 40,
+            "clipped_api": 40
+          },
+          "2025-11": {
+            "country_file": 107,
+            "clipped_api": 108
+          },
+          "2025-12": {
+            "country_file": 13,
+            "clipped_api": 13
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true,
+        "false_inclusions_in": {
+          "Lebanon": 1
+        },
+        "false_inclusion_km": [
+          1.23,
+          1.23,
+          1.23
+        ],
+        "mismatch_cells_top": {
+          "142_133": 1
+        },
+        "mismatch_cells": 1
+      }
+    }
+  },
+  "test_pass": false
+}

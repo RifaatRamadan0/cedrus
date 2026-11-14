@@ -1,0 +1,723 @@
+{
+  "rule": {
+    "edge_km": 3.0,
+    "radius_km": 1.0
+  },
+  "decisive_2024_corrected": {
+    "modis": {
+      "country_file": 210,
+      "api_in_box": 344,
+      "api_kept": 209,
+      "false_inclusions": 4,
+      "false_exclusions": 5,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.04285714285714286,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.024390243902439025,
+      "c2_months_scored": 2,
+      "monthly": {
+        "2024-03": {
+          "country_file": 1,
+          "clipped_api": 1
+        },
+        "2024-05": {
+          "country_file": 2,
+          "clipped_api": 3
+        },
+        "2024-06": {
+          "country_file": 17,
+          "clipped_api": 17
+        },
+        "2024-07": {
+          "country_file": 13,
+          "clipped_api": 13
+        },
+        "2024-08": {
+          "country_file": 12,
+          "clipped_api": 12
+        },
+        "2024-09": {
+          "country_file": 41,
+          "clipped_api": 40
+        },
+        "2024-10": {
+          "country_file": 108,
+          "clipped_api": 107
+        },
+        "2024-11": {
+          "country_file": 15,
+          "clipped_api": 16
+        },
+        "2024-12": {
+          "country_file": 1,
+          "clipped_api": 0
+        }
+      },
+      "c1_pass": false,
+      "c2_pass": true,
+      "c3_pass": true,
+      "false_inclusions_in": {
+        "Israel": 3,
+        "Syria": 1
+      },
+      "false_inclusion_km": [
+        0.21,
+        0.32,
+        0.36
+      ],
+      "false_exclusions_in": {
+        "Lebanon": 5
+      },
+      "false_exclusion_km": [
+        0.24,
+        0.35,
+        0.39
+      ],
+      "mismatch_cells_top": {
+        "140_132": 2,
+        "144_138": 2,
+        "141_132": 2,
+        "142_132": 2,
+        "142_133": 1
+      },
+      "mismatch_cells": 5
+    },
+    "snpp": {
+      "country_file": 1162,
+      "api_in_box": 1572,
+      "api_kept": 1158,
+      "false_inclusions": 12,
+      "false_exclusions": 16,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.024096385542168676,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.08333333333333333,
+      "c2_months_scored": 9,
+      "monthly": {
+        "2024-01": {
+          "country_file": 9,
+          "clipped_api": 9
+        },
+        "2024-02": {
+          "country_file": 23,
+          "clipped_api": 23
+        },
+        "2024-03": {
+          "country_file": 14,
+          "clipped_api": 14
+        },
+        "2024-04": {
+          "country_file": 20,
+          "clipped_api": 20
+        },
+        "2024-05": {
+          "country_file": 24,
+          "clipped_api": 22
+        },
+        "2024-06": {
+          "country_file": 128,
+          "clipped_api": 123
+        },
+        "2024-07": {
+          "country_file": 53,
+          "clipped_api": 55
+        },
+        "2024-08": {
+          "country_file": 105,
+          "clipped_api": 107
+        },
+        "2024-09": {
+          "country_file": 221,
+          "clipped_api": 221
+        },
+        "2024-10": {
+          "country_file": 497,
+          "clipped_api": 496
+        },
+        "2024-11": {
+          "country_file": 50,
+          "clipped_api": 49
+        },
+        "2024-12": {
+          "country_file": 18,
+          "clipped_api": 19
+        }
+      },
+      "c1_pass": false,
+      "c2_pass": false,
+      "c3_pass": true,
+      "false_inclusions_in": {
+        "Israel": 11,
+        "Lebanon": 1
+      },
+      "false_inclusion_km": [
+        0.21,
+        0.46,
+        1.37
+      ],
+      "false_exclusions_in": {
+        "Lebanon": 16
+      },
+      "false_exclusion_km": [
+        0.11,
+        0.52,
+        0.85
+      ],
+      "mismatch_cells_top": {
+        "141_132": 15,
+        "142_133": 7,
+        "142_132": 4,
+        "140_132": 1,
+        "144_138": 1
+      },
+      "mismatch_cells": 5
+    },
+    "noaa20": {
+      "country_file": 1137,
+      "api_in_box": 1669,
+      "api_kept": 1138,
+      "false_inclusions": 12,
+      "false_exclusions": 11,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.020228671943711522,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.02127659574468085,
+      "c2_months_scored": 6,
+      "monthly": {
+        "2024-01": {
+          "country_file": 6,
+          "clipped_api": 6
+        },
+        "2024-02": {
+          "country_file": 15,
+          "clipped_api": 15
+        },
+        "2024-03": {
+          "country_file": 19,
+          "clipped_api": 19
+        },
+        "2024-04": {
+          "country_file": 9,
+          "clipped_api": 9
+        },
+        "2024-05": {
+          "country_file": 18,
+          "clipped_api": 20
+        },
+        "2024-06": {
+          "country_file": 139,
+          "clipped_api": 141
+        },
+        "2024-07": {
+          "country_file": 96,
+          "clipped_api": 95
+        },
+        "2024-08": {
+          "country_file": 84,
+          "clipped_api": 84
+        },
+        "2024-09": {
+          "country_file": 213,
+          "clipped_api": 213
+        },
+        "2024-10": {
+          "country_file": 477,
+          "clipped_api": 475
+        },
+        "2024-11": {
+          "country_file": 47,
+          "clipped_api": 46
+        },
+        "2024-12": {
+          "country_file": 14,
+          "clipped_api": 15
+        }
+      },
+      "c1_pass": false,
+      "c2_pass": true,
+      "c3_pass": true,
+      "false_inclusions_in": {
+        "Israel": 10,
+        "Syria": 2
+      },
+      "false_inclusion_km": [
+        0.05,
+        0.36,
+        0.41
+      ],
+      "false_exclusions_in": {
+        "Lebanon": 11
+      },
+      "false_exclusion_km": [
+        0.4,
+        0.5,
+        0.79
+      ],
+      "mismatch_cells_top": {
+        "142_133": 7,
+        "141_132": 5,
+        "140_132": 4,
+        "142_132": 4,
+        "144_138": 2,
+        "145_138": 1
+      },
+      "mismatch_cells": 6
+    }
+  },
+  "reported_2024_outline_only": {
+    "modis": {
+      "country_file": 210,
+      "api_in_box": 344,
+      "api_kept": 210,
+      "false_inclusions": 0,
+      "false_exclusions": 0,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.0,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.0,
+      "c2_months_scored": 2,
+      "monthly": {
+        "2024-03": {
+          "country_file": 1,
+          "clipped_api": 1
+        },
+        "2024-05": {
+          "country_file": 2,
+          "clipped_api": 2
+        },
+        "2024-06": {
+          "country_file": 17,
+          "clipped_api": 17
+        },
+        "2024-07": {
+          "country_file": 13,
+          "clipped_api": 13
+        },
+        "2024-08": {
+          "country_file": 12,
+          "clipped_api": 12
+        },
+        "2024-09": {
+          "country_file": 41,
+          "clipped_api": 41
+        },
+        "2024-10": {
+          "country_file": 108,
+          "clipped_api": 108
+        },
+        "2024-11": {
+          "country_file": 15,
+          "clipped_api": 15
+        },
+        "2024-12": {
+          "country_file": 1,
+          "clipped_api": 1
+        }
+      },
+      "c1_pass": true,
+      "c2_pass": true,
+      "c3_pass": true
+    },
+    "snpp": {
+      "country_file": 1162,
+      "api_in_box": 1572,
+      "api_kept": 1167,
+      "false_inclusions": 5,
+      "false_exclusions": 0,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.004302925989672977,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.041666666666666664,
+      "c2_months_scored": 9,
+      "monthly": {
+        "2024-01": {
+          "country_file": 9,
+          "clipped_api": 9
+        },
+        "2024-02": {
+          "country_file": 23,
+          "clipped_api": 23
+        },
+        "2024-03": {
+          "country_file": 14,
+          "clipped_api": 14
+        },
+        "2024-04": {
+          "country_file": 20,
+          "clipped_api": 20
+        },
+        "2024-05": {
+          "country_file": 24,
+          "clipped_api": 25
+        },
+        "2024-06": {
+          "country_file": 128,
+          "clipped_api": 129
+        },
+        "2024-07": {
+          "country_file": 53,
+          "clipped_api": 53
+        },
+        "2024-08": {
+          "country_file": 105,
+          "clipped_api": 106
+        },
+        "2024-09": {
+          "country_file": 221,
+          "clipped_api": 221
+        },
+        "2024-10": {
+          "country_file": 497,
+          "clipped_api": 499
+        },
+        "2024-11": {
+          "country_file": 50,
+          "clipped_api": 50
+        },
+        "2024-12": {
+          "country_file": 18,
+          "clipped_api": 18
+        }
+      },
+      "c1_pass": true,
+      "c2_pass": true,
+      "c3_pass": true,
+      "false_inclusions_in": {
+        "Lebanon": 5
+      },
+      "false_inclusion_km": [
+        0.35,
+        1.02,
+        1.37
+      ],
+      "mismatch_cells_top": {
+        "142_133": 5
+      },
+      "mismatch_cells": 1
+    },
+    "noaa20": {
+      "country_file": 1137,
+      "api_in_box": 1669,
+      "api_kept": 1145,
+      "false_inclusions": 8,
+      "false_exclusions": 0,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.007036059806508356,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.012578616352201259,
+      "c2_months_scored": 6,
+      "monthly": {
+        "2024-01": {
+          "country_file": 6,
+          "clipped_api": 6
+        },
+        "2024-02": {
+          "country_file": 15,
+          "clipped_api": 15
+        },
+        "2024-03": {
+          "country_file": 19,
+          "clipped_api": 19
+        },
+        "2024-04": {
+          "country_file": 9,
+          "clipped_api": 9
+        },
+        "2024-05": {
+          "country_file": 18,
+          "clipped_api": 19
+        },
+        "2024-06": {
+          "country_file": 139,
+          "clipped_api": 140
+        },
+        "2024-07": {
+          "country_file": 96,
+          "clipped_api": 96
+        },
+        "2024-08": {
+          "country_file": 84,
+          "clipped_api": 84
+        },
+        "2024-09": {
+          "country_file": 213,
+          "clipped_api": 213
+        },
+        "2024-10": {
+          "country_file": 477,
+          "clipped_api": 483
+        },
+        "2024-11": {
+          "country_file": 47,
+          "clipped_api": 47
+        },
+        "2024-12": {
+          "country_file": 14,
+          "clipped_api": 14
+        }
+      },
+      "c1_pass": true,
+      "c2_pass": true,
+      "c3_pass": true,
+      "false_inclusions_in": {
+        "Lebanon": 8
+      },
+      "false_inclusion_km": [
+        0.26,
+        0.51,
+        0.92
+      ],
+      "mismatch_cells_top": {
+        "142_133": 7,
+        "142_132": 1
+      },
+      "mismatch_cells": 2
+    }
+  },
+  "reported_2025_corrected": {
+    "modis": {
+      "country_file": 87,
+      "api_in_box": 142,
+      "api_kept": 88,
+      "false_inclusions": 1,
+      "false_exclusions": 0,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.011494252873563218,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.0,
+      "c2_months_scored": 1,
+      "monthly": {
+        "2025-02": {
+          "country_file": 1,
+          "clipped_api": 1
+        },
+        "2025-03": {
+          "country_file": 1,
+          "clipped_api": 1
+        },
+        "2025-04": {
+          "country_file": 1,
+          "clipped_api": 1
+        },
+        "2025-05": {
+          "country_file": 1,
+          "clipped_api": 2
+        },
+        "2025-06": {
+          "country_file": 6,
+          "clipped_api": 6
+        },
+        "2025-07": {
+          "country_file": 7,
+          "clipped_api": 7
+        },
+        "2025-08": {
+          "country_file": 19,
+          "clipped_api": 19
+        },
+        "2025-09": {
+          "country_file": 7,
+          "clipped_api": 7
+        },
+        "2025-10": {
+          "country_file": 11,
+          "clipped_api": 11
+        },
+        "2025-11": {
+          "country_file": 33,
+          "clipped_api": 33
+        }
+      },
+      "c1_pass": true,
+      "c2_pass": true,
+      "c3_pass": true,
+      "false_inclusions_in": {
+        "Israel": 1
+      },
+      "false_inclusion_km": [
+        0.02,
+        0.02,
+        0.02
+      ],
+      "mismatch_cells_top": {
+        "140_132": 1
+      },
+      "mismatch_cells": 1
+    },
+    "snpp": {
+      "country_file": 514,
+      "api_in_box": 726,
+      "api_kept": 513,
+      "false_inclusions": 2,
+      "false_exclusions": 3,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.009727626459143969,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.05,
+      "c2_months_scored": 8,
+      "monthly": {
+        "2025-01": {
+          "country_file": 11,
+          "clipped_api": 10
+        },
+        "2025-02": {
+          "country_file": 2,
+          "clipped_api": 2
+        },
+        "2025-03": {
+          "country_file": 20,
+          "clipped_api": 21
+        },
+        "2025-04": {
+          "country_file": 17,
+          "clipped_api": 17
+        },
+        "2025-05": {
+          "country_file": 37,
+          "clipped_api": 38
+        },
+        "2025-06": {
+          "country_file": 57,
+          "clipped_api": 56
+        },
+        "2025-07": {
+          "country_file": 71,
+          "clipped_api": 71
+        },
+        "2025-08": {
+          "country_file": 84,
+          "clipped_api": 84
+        },
+        "2025-09": {
+          "country_file": 44,
+          "clipped_api": 44
+        },
+        "2025-10": {
+          "country_file": 52,
+          "clipped_api": 51
+        },
+        "2025-11": {
+          "country_file": 106,
+          "clipped_api": 106
+        },
+        "2025-12": {
+          "country_file": 13,
+          "clipped_api": 13
+        }
+      },
+      "c1_pass": true,
+      "c2_pass": true,
+      "c3_pass": true,
+      "false_inclusions_in": {
+        "Syria": 1,
+        "Israel": 1
+      },
+      "false_inclusion_km": [
+        0.22,
+        0.35,
+        0.38
+      ],
+      "false_exclusions_in": {
+        "Lebanon": 3
+      },
+      "false_exclusion_km": [
+        0.05,
+        0.35,
+        0.42
+      ],
+      "mismatch_cells_top": {
+        "144_138": 3,
+        "140_132": 1,
+        "142_132": 1
+      },
+      "mismatch_cells": 3
+    },
+    "noaa20": {
+      "country_file": 545,
+      "api_in_box": 767,
+      "api_kept": 544,
+      "false_inclusions": 0,
+      "false_exclusions": 1,
+      "source_missing_from_api": 0,
+      "source_extra_inside": 0,
+      "c1_share": 0.001834862385321101,
+      "c3_share": 0.0,
+      "c2_worst_month": 0.010638297872340425,
+      "c2_months_scored": 7,
+      "monthly": {
+        "2025-01": {
+          "country_file": 9,
+          "clipped_api": 9
+        },
+        "2025-02": {
+          "country_file": 7,
+          "clipped_api": 7
+        },
+        "2025-03": {
+          "country_file": 11,
+          "clipped_api": 11
+        },
+        "2025-04": {
+          "country_file": 9,
+          "clipped_api": 9
+        },
+        "2025-05": {
+          "country_file": 34,
+          "clipped_api": 34
+        },
+        "2025-06": {
+          "country_file": 70,
+          "clipped_api": 70
+        },
+        "2025-07": {
+          "country_file": 94,
+          "clipped_api": 93
+        },
+        "2025-08": {
+          "country_file": 92,
+          "clipped_api": 92
+        },
+        "2025-09": {
+          "country_file": 59,
+          "clipped_api": 59
+        },
+        "2025-10": {
+          "country_file": 40,
+          "clipped_api": 40
+        },
+        "2025-11": {
+          "country_file": 107,
+          "clipped_api": 107
+        },
+        "2025-12": {
+          "country_file": 13,
+          "clipped_api": 13
+        }
+      },
+      "c1_pass": true,
+      "c2_pass": true,
+      "c3_pass": true,
+      "false_exclusions_in": {
+        "Lebanon": 1
+      },
+      "false_exclusion_km": [
+        0.09,
+        0.09,
+        0.09
+      ],
+      "mismatch_cells_top": {
+        "142_132": 1
+      },
+      "mismatch_cells": 1
+    }
+  },
+  "pass": false
+}

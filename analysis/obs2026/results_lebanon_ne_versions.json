@@ -1,0 +1,737 @@
+{
+  "plan": "docs/OBS2026_VALIDATION_PLAN.md (addendum: older Natural Earth 1:10m versions for Lebanon)",
+  "selection_years": [
+    2000,
+    2022
+  ],
+  "selection_points": 21725,
+  "groups": [
+    {
+      "geometry": "cd4bb50c9d9d8ab1f3bcb9bb50a19a7940996ae3d07c609d4e7088a1f7838752",
+      "commits": [
+        "5faefd9a6c (2022-04-22)",
+        "a7c8ff86de (2022-03-17)",
+        "3aa16bdc7a (2021-11-09)",
+        "6bd810ae44 (2021-09-03)"
+      ],
+      "first_commit": "5faefd9a6cd52490b56e04087862326ab21040af",
+      "current": true,
+      "mismatches": 12,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 12,
+      "by_stretch": {
+        "south (incl. Shebaa area)": 12
+      }
+    },
+    {
+      "geometry": "deaf948ea73fb51f81ddec824057cbd2501153322abfc2bf128757a6f92636d4",
+      "commits": [
+        "dfa866485b (2021-12-07)"
+      ],
+      "first_commit": "dfa866485b6eb1bac8dafe088944ac3b4c719d11",
+      "current": false,
+      "mismatches": 12,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 12,
+      "by_stretch": {
+        "south (incl. Shebaa area)": 12
+      }
+    },
+    {
+      "geometry": "2e6f6a557c963b51cb11867f99acfd4b7451b8b18bacf026f649fdd621cef8ac",
+      "commits": [
+        "402b35abd0 (2021-11-14)"
+      ],
+      "first_commit": "402b35abd07ef4edb6b5da1699a63dfbc99effdd",
+      "current": false,
+      "mismatches": 12,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 12,
+      "by_stretch": {
+        "south (incl. Shebaa area)": 12
+      }
+    },
+    {
+      "geometry": "fc650ad77adb60f55c099bc55de6615dfe5b87a74e637ba703e8d456a8b87cfc",
+      "commits": [
+        "be165336bb (2021-08-30)",
+        "de9e8d0741 (2021-08-01)",
+        "0edfe737ff (2021-05-29)",
+        "c034dccd73 (2021-02-14)",
+        "0eca99ed93 (2021-01-20)",
+        "709ffdf7e5 (2021-01-06)"
+      ],
+      "first_commit": "be165336bbc6d3c28fb75348fa223339308b7742",
+      "current": false,
+      "mismatches": 0,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 0,
+      "by_stretch": {}
+    },
+    {
+      "geometry": "86f603486e2c6b84ab677d50a8b67caf38141263e2020592fa462b69d098a349",
+      "commits": [
+        "e5f6e02319 (2020-12-13)"
+      ],
+      "first_commit": "e5f6e02319764c8a4e9f181163c7cd0300e3266b",
+      "current": false,
+      "mismatches": 0,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 0,
+      "by_stretch": {}
+    },
+    {
+      "geometry": "17783d726af7265d2f9886009e4fc8e45956b51209f722782cb3a6f096b49077",
+      "commits": [
+        "a632044a31 (2018-05-15)"
+      ],
+      "first_commit": "a632044a316fff77916ea3822126544a8cf4eedd",
+      "current": false,
+      "mismatches": 0,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 0,
+      "by_stretch": {}
+    },
+    {
+      "geometry": "6757c8e6be224bc5e615d9e6bb12a82e1e002afae41a25f7b609e0faba26bf92",
+      "commits": [
+        "f1cf55a25f (2017-10-05)",
+        "4db6e25860 (2014-12-31)"
+      ],
+      "first_commit": "f1cf55a25f779aadc9b73fef7c725e13cf1fe397",
+      "current": false,
+      "mismatches": 0,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 0,
+      "by_stretch": {}
+    },
+    {
+      "geometry": "cca676979c6a4224b6d41ca5055a57ba3ffc98a2c0f572f5c9187843f2865f6a",
+      "commits": [
+        "8dc5287cad (2017-08-14)",
+        "d19dfc7f9a (2012-11-05)",
+        "58b6cdc00a (2012-11-04)",
+        "04b377f5cc (2012-11-04)"
+      ],
+      "first_commit": "8dc5287cad537edfcd0f3ccc2cab99da8335b87a",
+      "current": false,
+      "mismatches": 0,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 0,
+      "by_stretch": {}
+    },
+    {
+      "geometry": "8c5b9694e839951110d10ceaf0e36738c9686c98e03eba45006285e03ada00ec",
+      "commits": [
+        "68f72292bd (2013-06-02)"
+      ],
+      "first_commit": "68f72292bd4c623a6484e27fdbd964b4580a7ba1",
+      "current": false,
+      "mismatches": 0,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 0,
+      "by_stretch": {}
+    },
+    {
+      "geometry": "e3e08e4b6b9107723a3c62ad175d1f31b3caad72617dcfc1886f3ccff8509b9d",
+      "commits": [
+        "71967a117e (2012-08-19)"
+      ],
+      "first_commit": "71967a117ed15640e5fb90236f49fa2628c558a1",
+      "current": false,
+      "mismatches": 0,
+      "lebanon_file_outside": 0,
+      "neighbour_file_inside": 0,
+      "by_stretch": {}
+    },
+    {
+      "geometry": "f200e021534c83a2db1a6dbfbdf884561babf66595d1216bbe793e17d7f2897d",
+      "commits": [
+        "3564a7c7bb (2012-01-22)"
+      ],
+      "first_commit": "3564a7c7bb38d18d9059f49036f7b5bbc6852380",
+      "current": false,
+      "mismatches": 5,
+      "lebanon_file_outside": 5,
+      "neighbour_file_inside": 0,
+      "by_stretch": {
+        "east / north (Syria)": 3,
+        "coast": 2
+      }
+    }
+  ],
+  "skipped": {},
+  "selected": "be165336bbc6d3c28fb75348fa223339308b7742",
+  "selected_is_current": false,
+  "test": {
+    "2023": {
+      "modis": {
+        "country_file": 68,
+        "api_in_box": 108,
+        "api_kept": 68,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 1,
+        "monthly": {
+          "2023-01": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2023-03": {
+            "country_file": 2,
+            "clipped_api": 2
+          },
+          "2023-05": {
+            "country_file": 4,
+            "clipped_api": 4
+          },
+          "2023-06": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2023-07": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2023-08": {
+            "country_file": 3,
+            "clipped_api": 3
+          },
+          "2023-09": {
+            "country_file": 30,
+            "clipped_api": 30
+          },
+          "2023-10": {
+            "country_file": 15,
+            "clipped_api": 15
+          },
+          "2023-12": {
+            "country_file": 1,
+            "clipped_api": 1
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 590,
+        "api_in_box": 783,
+        "api_kept": 590,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 7,
+        "monthly": {
+          "2023-01": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2023-02": {
+            "country_file": 16,
+            "clipped_api": 16
+          },
+          "2023-03": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2023-04": {
+            "country_file": 28,
+            "clipped_api": 28
+          },
+          "2023-05": {
+            "country_file": 30,
+            "clipped_api": 30
+          },
+          "2023-06": {
+            "country_file": 45,
+            "clipped_api": 45
+          },
+          "2023-07": {
+            "country_file": 81,
+            "clipped_api": 81
+          },
+          "2023-08": {
+            "country_file": 65,
+            "clipped_api": 65
+          },
+          "2023-09": {
+            "country_file": 145,
+            "clipped_api": 145
+          },
+          "2023-10": {
+            "country_file": 118,
+            "clipped_api": 118
+          },
+          "2023-11": {
+            "country_file": 16,
+            "clipped_api": 16
+          },
+          "2023-12": {
+            "country_file": 10,
+            "clipped_api": 10
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "noaa20": {
+        "country_file": 559,
+        "api_in_box": 738,
+        "api_kept": 559,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 9,
+        "monthly": {
+          "2023-01": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2023-02": {
+            "country_file": 10,
+            "clipped_api": 10
+          },
+          "2023-03": {
+            "country_file": 26,
+            "clipped_api": 26
+          },
+          "2023-04": {
+            "country_file": 25,
+            "clipped_api": 25
+          },
+          "2023-05": {
+            "country_file": 37,
+            "clipped_api": 37
+          },
+          "2023-06": {
+            "country_file": 48,
+            "clipped_api": 48
+          },
+          "2023-07": {
+            "country_file": 78,
+            "clipped_api": 78
+          },
+          "2023-08": {
+            "country_file": 49,
+            "clipped_api": 49
+          },
+          "2023-09": {
+            "country_file": 138,
+            "clipped_api": 138
+          },
+          "2023-10": {
+            "country_file": 87,
+            "clipped_api": 87
+          },
+          "2023-11": {
+            "country_file": 27,
+            "clipped_api": 27
+          },
+          "2023-12": {
+            "country_file": 15,
+            "clipped_api": 15
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      }
+    },
+    "2024": {
+      "modis": {
+        "country_file": 210,
+        "api_in_box": 344,
+        "api_kept": 210,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 2,
+        "monthly": {
+          "2024-03": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2024-05": {
+            "country_file": 2,
+            "clipped_api": 2
+          },
+          "2024-06": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2024-07": {
+            "country_file": 13,
+            "clipped_api": 13
+          },
+          "2024-08": {
+            "country_file": 12,
+            "clipped_api": 12
+          },
+          "2024-09": {
+            "country_file": 41,
+            "clipped_api": 41
+          },
+          "2024-10": {
+            "country_file": 108,
+            "clipped_api": 108
+          },
+          "2024-11": {
+            "country_file": 15,
+            "clipped_api": 15
+          },
+          "2024-12": {
+            "country_file": 1,
+            "clipped_api": 1
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 1162,
+        "api_in_box": 1572,
+        "api_kept": 1162,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 9,
+        "monthly": {
+          "2024-01": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2024-02": {
+            "country_file": 23,
+            "clipped_api": 23
+          },
+          "2024-03": {
+            "country_file": 14,
+            "clipped_api": 14
+          },
+          "2024-04": {
+            "country_file": 20,
+            "clipped_api": 20
+          },
+          "2024-05": {
+            "country_file": 24,
+            "clipped_api": 24
+          },
+          "2024-06": {
+            "country_file": 128,
+            "clipped_api": 128
+          },
+          "2024-07": {
+            "country_file": 53,
+            "clipped_api": 53
+          },
+          "2024-08": {
+            "country_file": 105,
+            "clipped_api": 105
+          },
+          "2024-09": {
+            "country_file": 221,
+            "clipped_api": 221
+          },
+          "2024-10": {
+            "country_file": 497,
+            "clipped_api": 497
+          },
+          "2024-11": {
+            "country_file": 50,
+            "clipped_api": 50
+          },
+          "2024-12": {
+            "country_file": 18,
+            "clipped_api": 18
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "noaa20": {
+        "country_file": 1137,
+        "api_in_box": 1669,
+        "api_kept": 1137,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 6,
+        "monthly": {
+          "2024-01": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2024-02": {
+            "country_file": 15,
+            "clipped_api": 15
+          },
+          "2024-03": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2024-04": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2024-05": {
+            "country_file": 18,
+            "clipped_api": 18
+          },
+          "2024-06": {
+            "country_file": 139,
+            "clipped_api": 139
+          },
+          "2024-07": {
+            "country_file": 96,
+            "clipped_api": 96
+          },
+          "2024-08": {
+            "country_file": 84,
+            "clipped_api": 84
+          },
+          "2024-09": {
+            "country_file": 213,
+            "clipped_api": 213
+          },
+          "2024-10": {
+            "country_file": 477,
+            "clipped_api": 477
+          },
+          "2024-11": {
+            "country_file": 47,
+            "clipped_api": 47
+          },
+          "2024-12": {
+            "country_file": 14,
+            "clipped_api": 14
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      }
+    },
+    "2025": {
+      "modis": {
+        "country_file": 87,
+        "api_in_box": 142,
+        "api_kept": 87,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 1,
+        "monthly": {
+          "2025-02": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-03": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-04": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-05": {
+            "country_file": 1,
+            "clipped_api": 1
+          },
+          "2025-06": {
+            "country_file": 6,
+            "clipped_api": 6
+          },
+          "2025-07": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-08": {
+            "country_file": 19,
+            "clipped_api": 19
+          },
+          "2025-09": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-10": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-11": {
+            "country_file": 33,
+            "clipped_api": 33
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "snpp": {
+        "country_file": 514,
+        "api_in_box": 726,
+        "api_kept": 514,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 8,
+        "monthly": {
+          "2025-01": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-02": {
+            "country_file": 2,
+            "clipped_api": 2
+          },
+          "2025-03": {
+            "country_file": 20,
+            "clipped_api": 20
+          },
+          "2025-04": {
+            "country_file": 17,
+            "clipped_api": 17
+          },
+          "2025-05": {
+            "country_file": 37,
+            "clipped_api": 37
+          },
+          "2025-06": {
+            "country_file": 57,
+            "clipped_api": 57
+          },
+          "2025-07": {
+            "country_file": 71,
+            "clipped_api": 71
+          },
+          "2025-08": {
+            "country_file": 84,
+            "clipped_api": 84
+          },
+          "2025-09": {
+            "country_file": 44,
+            "clipped_api": 44
+          },
+          "2025-10": {
+            "country_file": 52,
+            "clipped_api": 52
+          },
+          "2025-11": {
+            "country_file": 106,
+            "clipped_api": 106
+          },
+          "2025-12": {
+            "country_file": 13,
+            "clipped_api": 13
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      },
+      "noaa20": {
+        "country_file": 545,
+        "api_in_box": 767,
+        "api_kept": 545,
+        "false_inclusions": 0,
+        "false_exclusions": 0,
+        "source_missing_from_api": 0,
+        "source_extra_inside": 0,
+        "c1_share": 0.0,
+        "c3_share": 0.0,
+        "c2_worst_month": 0.0,
+        "c2_months_scored": 7,
+        "monthly": {
+          "2025-01": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2025-02": {
+            "country_file": 7,
+            "clipped_api": 7
+          },
+          "2025-03": {
+            "country_file": 11,
+            "clipped_api": 11
+          },
+          "2025-04": {
+            "country_file": 9,
+            "clipped_api": 9
+          },
+          "2025-05": {
+            "country_file": 34,
+            "clipped_api": 34
+          },
+          "2025-06": {
+            "country_file": 70,
+            "clipped_api": 70
+          },
+          "2025-07": {
+            "country_file": 94,
+            "clipped_api": 94
+          },
+          "2025-08": {
+            "country_file": 92,
+            "clipped_api": 92
+          },
+          "2025-09": {
+            "country_file": 59,
+            "clipped_api": 59
+          },
+          "2025-10": {
+            "country_file": 40,
+            "clipped_api": 40
+          },
+          "2025-11": {
+            "country_file": 107,
+            "clipped_api": 107
+          },
+          "2025-12": {
+            "country_file": 13,
+            "clipped_api": 13
+          }
+        },
+        "c1_pass": true,
+        "c2_pass": true,
+        "c3_pass": true
+      }
+    }
+  },
+  "test_pass": true
+}
