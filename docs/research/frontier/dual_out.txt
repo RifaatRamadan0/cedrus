@@ -1,0 +1,6 @@
+D national-month       n=   48 Aqua=2379  WAPE operator 17.8%  ratio 32.6%  | totals op 2568 ratio 2398
+D 0.25deg cell-month   n= 2403 Aqua=2379  WAPE operator 67.0%  ratio 85.2%  | totals op 2568 ratio 2398
+   q=P(S|A) train 0.63, test 0.66; ratio A/S train 0.416, test 0.413
+N national-month       n=   48 Aqua=953  WAPE operator 24.1%  ratio 58.7%  | totals op 941 ratio 714
+N 0.25deg cell-month   n= 1131 Aqua=953  WAPE operator 49.8%  ratio 94.6%  | totals op 941 ratio 714
+   q=P(S|A) train 0.87, test 0.89; ratio A/S train 0.198, test 0.264
