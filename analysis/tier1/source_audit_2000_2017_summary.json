@@ -1,0 +1,169 @@
+{
+  "scope": "2000-2017, six regions, three production archive families",
+  "status": "complete for requested source audit; no boundaries or exports",
+  "expected_available_files": 144,
+  "verified_files": 144,
+  "pre_product_year_slots": 180,
+  "unexpected_missing_files": 0,
+  "unresolved_failed_requests": 0,
+  "regions": {
+    "syria": {
+      "files": 24,
+      "bytes": 7134019,
+      "rows": 91429,
+      "box_retained": 91429,
+      "box_excluded": 0,
+      "eligible_type0_confidence": 67490,
+      "elapsed_file_seconds": 71.684,
+      "mode": "download_and_audit",
+      "missing_type_rows": 0,
+      "unexpected_type_rows": 0
+    },
+    "jordan": {
+      "files": 24,
+      "bytes": 326509,
+      "rows": 4145,
+      "box_retained": 4145,
+      "box_excluded": 0,
+      "eligible_type0_confidence": 2212,
+      "elapsed_file_seconds": 27.539,
+      "mode": "download_and_audit",
+      "missing_type_rows": 0,
+      "unexpected_type_rows": 0
+    },
+    "cyprus": {
+      "files": 24,
+      "bytes": 276790,
+      "rows": 3510,
+      "box_retained": 3510,
+      "box_excluded": 0,
+      "eligible_type0_confidence": 2360,
+      "elapsed_file_seconds": 25.198,
+      "mode": "download_and_audit",
+      "missing_type_rows": 0,
+      "unexpected_type_rows": 0
+    },
+    "palestine": {
+      "files": 24,
+      "bytes": 206225,
+      "rows": 2605,
+      "box_retained": 2605,
+      "box_excluded": 0,
+      "eligible_type0_confidence": 2278,
+      "elapsed_file_seconds": 25.697,
+      "mode": "download_and_audit",
+      "missing_type_rows": 0,
+      "unexpected_type_rows": 0
+    },
+    "israel": {
+      "files": 24,
+      "bytes": 933198,
+      "rows": 11928,
+      "box_retained": 11928,
+      "box_excluded": 0,
+      "eligible_type0_confidence": 6672,
+      "elapsed_file_seconds": 33.157,
+      "mode": "download_and_audit",
+      "missing_type_rows": 0,
+      "unexpected_type_rows": 0
+    },
+    "la_rioja": {
+      "files": 24,
+      "bytes": 182696866,
+      "rows": 2290133,
+      "box_retained": 60316,
+      "box_excluded": 2229817,
+      "eligible_type0_confidence": 56225,
+      "elapsed_file_seconds": 15.529,
+      "mode": "verified_existing_inputs",
+      "missing_type_rows": 0,
+      "unexpected_type_rows": 0
+    }
+  },
+  "files_over_3_decimal_MB": [
+    {
+      "file": "modis_2002_Argentina.csv",
+      "bytes": 4797680
+    },
+    {
+      "file": "modis_2003_Argentina.csv",
+      "bytes": 9275846
+    },
+    {
+      "file": "modis_2004_Argentina.csv",
+      "bytes": 7924650
+    },
+    {
+      "file": "modis_2005_Argentina.csv",
+      "bytes": 5649257
+    },
+    {
+      "file": "modis_2006_Argentina.csv",
+      "bytes": 6705606
+    },
+    {
+      "file": "modis_2007_Argentina.csv",
+      "bytes": 6192110
+    },
+    {
+      "file": "modis_2008_Argentina.csv",
+      "bytes": 8303607
+    },
+    {
+      "file": "modis_2009_Argentina.csv",
+      "bytes": 6514805
+    },
+    {
+      "file": "modis_2010_Argentina.csv",
+      "bytes": 4970212
+    },
+    {
+      "file": "modis_2011_Argentina.csv",
+      "bytes": 6064259
+    },
+    {
+      "file": "modis_2012_Argentina.csv",
+      "bytes": 4903703
+    },
+    {
+      "file": "viirs-snpp_2012_Argentina.csv",
+      "bytes": 15235582
+    },
+    {
+      "file": "modis_2013_Argentina.csv",
+      "bytes": 5280563
+    },
+    {
+      "file": "viirs-snpp_2013_Argentina.csv",
+      "bytes": 19061532
+    },
+    {
+      "file": "viirs-snpp_2014_Argentina.csv",
+      "bytes": 10138373
+    },
+    {
+      "file": "modis_2015_Argentina.csv",
+      "bytes": 3572980
+    },
+    {
+      "file": "viirs-snpp_2015_Argentina.csv",
+      "bytes": 12124867
+    },
+    {
+      "file": "modis_2016_Argentina.csv",
+      "bytes": 4397743
+    },
+    {
+      "file": "viirs-snpp_2016_Argentina.csv",
+      "bytes": 14556663
+    },
+    {
+      "file": "modis_2017_Argentina.csv",
+      "bytes": 4788746
+    },
+    {
+      "file": "viirs-snpp_2017_Argentina.csv",
+      "bytes": 16182697
+    }
+  ]
+}

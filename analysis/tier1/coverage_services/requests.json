@@ -1,0 +1,50 @@
+[
+  {
+    "service": "MODIS_SP",
+    "url_template": "https://firms.modaps.eosdis.nasa.gov/api/data_availability/csv/[REDACTED]/MODIS_SP",
+    "retrieved": "2026-11-06T14:28:49.714285+00:00",
+    "attempts": [
+      "success"
+    ],
+    "http_status": 200,
+    "content_type": "text/plain;charset=UTF-8",
+    "snapshot": "MODIS_SP.txt",
+    "sha256": "f4630af79b52b43cb2ce6f120e8eff2a5fd0432d6970ab71a3dae65e57ee1301"
+  },
+  {
+    "service": "VIIRS_SNPP_SP",
+    "url_template": "https://firms.modaps.eosdis.nasa.gov/api/data_availability/csv/[REDACTED]/VIIRS_SNPP_SP",
+    "retrieved": "2026-11-06T14:28:50.469512+00:00",
+    "attempts": [
+      "success"
+    ],
+    "http_status": 200,
+    "content_type": "text/plain;charset=UTF-8",
+    "snapshot": "VIIRS_SNPP_SP.txt",
+    "sha256": "053df80d6e9483790199b44cc148eb16c27bd8cf14712338897011e7e7520862"
+  },
+  {
+    "service": "VIIRS_NOAA20_SP",
+    "url_template": "https://firms.modaps.eosdis.nasa.gov/api/data_availability/csv/[REDACTED]/VIIRS_NOAA20_SP",
+    "retrieved": "2026-11-06T14:28:51.207983+00:00",
+    "attempts": [
+      "success"
+    ],
+    "http_status": 200,
+    "content_type": "text/plain;charset=UTF-8",
+    "snapshot": "VIIRS_NOAA20_SP.txt",
+    "sha256": "84a7c6d5af16d05765203e9a1b9a6299d4b31622d4aabeae56bfba86cd1ee5a2"
+  },
+  {
+    "service": "missing_data",
+    "url_template": "https://firms.modaps.eosdis.nasa.gov/api/missing_data/?action=fetch_data",
+    "retrieved": "2026-11-06T14:28:51.946271+00:00",
+    "attempts": [
+      "success"
+    ],
+    "http_status": 200,
+    "content_type": "application/json",
+    "snapshot": "missing_data.txt",
+    "sha256": "60ab8a4d35394d116378ba11747f6a4286d7303c9a8a77b8ec7ac01757f1b3e1"
+  }
+]

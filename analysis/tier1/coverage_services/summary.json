@@ -1,0 +1,67 @@
+{
+  "products": {
+    "VIIRS_SNPP_SP": {
+      "data_id": "VIIRS_SNPP_SP",
+      "min_date": "2012-01-20",
+      "max_date": "2026-07-31"
+    },
+    "MODIS_SP": {
+      "data_id": "MODIS_SP",
+      "min_date": "2000-11-01",
+      "max_date": "2026-08-31"
+    },
+    "VIIRS_NOAA20_SP": {
+      "data_id": "VIIRS_NOAA20_SP",
+      "min_date": "2018-04-01",
+      "max_date": "2026-07-31"
+    }
+  },
+  "monthly_rows": 1248,
+  "country_month_completeness": "unknown",
+  "standard_table_rows": 169,
+  "satellites": {
+    "Terra (MODIS)": {
+      "missing_dates_2000_2025": 56,
+      "months": {
+        "2001-06": 15,
+        "2001-07": 2,
+        "2002-03": 8,
+        "2002-04": 1,
+        "2003-12": 7,
+        "2008-12": 2,
+        "2016-02": 9,
+        "2022-10": 12
+      }
+    },
+    "Aqua (MODIS)": {
+      "missing_dates_2000_2025": 26,
+      "months": {
+        "2002-07": 2,
+        "2002-08": 7,
+        "2002-09": 1,
+        "2022-04": 16
+      }
+    },
+    "Suomi NPP (VIIRS)": {
+      "missing_dates_2000_2025": 35,
+      "months": {
+        "2012-03": 1,
+        "2022-07": 5,
+        "2022-08": 10,
+        "2024-05": 2,
+        "2024-06": 3,
+        "2024-07": 10,
+        "2024-09": 1,
+        "2024-11": 3
+      }
+    },
+    "NOAA-20 (VIIRS)": {
+      "missing_dates_2000_2025": 6,
+      "months": {
+        "2023-07": 4,
+        "2023-09": 1,
+        "2024-02": 1
+      }
+    }
+  }
+}

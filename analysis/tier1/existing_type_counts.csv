@@ -1,0 +1,865 @@
+region,file,archive_family,sensor,year,type,raw_rows,after_box,after_box_confidence,in_export_window
+portugal,modis_2000_Portugal.csv,modis,Terra,2000,0,3,3,3,0
+portugal,modis_2000_Portugal.csv,modis,Terra,2000,1,0,0,0,0
+portugal,modis_2000_Portugal.csv,modis,Terra,2000,2,0,0,0,0
+portugal,modis_2000_Portugal.csv,modis,Terra,2000,3,0,0,0,0
+portugal,modis_2000_Portugal.csv,modis,Terra,2000,missing,0,0,0,0
+portugal,modis_2000_Portugal.csv,modis,Terra,2000,unexpected,0,0,0,0
+portugal,modis_2001_Portugal.csv,modis,Terra,2001,0,1599,1594,1529,1529
+portugal,modis_2001_Portugal.csv,modis,Terra,2001,1,0,0,0,0
+portugal,modis_2001_Portugal.csv,modis,Terra,2001,2,0,0,0,0
+portugal,modis_2001_Portugal.csv,modis,Terra,2001,3,1,0,0,0
+portugal,modis_2001_Portugal.csv,modis,Terra,2001,missing,0,0,0,0
+portugal,modis_2001_Portugal.csv,modis,Terra,2001,unexpected,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Terra,2002,0,1383,1377,1309,1309
+portugal,modis_2002_Portugal.csv,modis,Terra,2002,1,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Terra,2002,2,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Terra,2002,3,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Terra,2002,missing,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Terra,2002,unexpected,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Aqua,2002,0,1262,1262,1229,1229
+portugal,modis_2002_Portugal.csv,modis,Aqua,2002,1,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Aqua,2002,2,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Aqua,2002,3,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Aqua,2002,missing,0,0,0,0
+portugal,modis_2002_Portugal.csv,modis,Aqua,2002,unexpected,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Terra,2003,0,2839,2791,2671,2671
+portugal,modis_2003_Portugal.csv,modis,Terra,2003,1,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Terra,2003,2,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Terra,2003,3,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Terra,2003,missing,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Terra,2003,unexpected,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Aqua,2003,0,3407,3357,3264,3264
+portugal,modis_2003_Portugal.csv,modis,Aqua,2003,1,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Aqua,2003,2,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Aqua,2003,3,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Aqua,2003,missing,0,0,0,0
+portugal,modis_2003_Portugal.csv,modis,Aqua,2003,unexpected,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Aqua,2004,0,1716,1702,1634,1634
+portugal,modis_2004_Portugal.csv,modis,Aqua,2004,1,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Aqua,2004,2,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Aqua,2004,3,1,1,1,1
+portugal,modis_2004_Portugal.csv,modis,Aqua,2004,missing,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Aqua,2004,unexpected,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Terra,2004,0,1324,1307,1247,1247
+portugal,modis_2004_Portugal.csv,modis,Terra,2004,1,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Terra,2004,2,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Terra,2004,3,1,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Terra,2004,missing,0,0,0,0
+portugal,modis_2004_Portugal.csv,modis,Terra,2004,unexpected,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Terra,2005,0,4275,4263,4087,4087
+portugal,modis_2005_Portugal.csv,modis,Terra,2005,1,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Terra,2005,2,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Terra,2005,3,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Terra,2005,missing,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Terra,2005,unexpected,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Aqua,2005,0,4988,4976,4781,4781
+portugal,modis_2005_Portugal.csv,modis,Aqua,2005,1,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Aqua,2005,2,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Aqua,2005,3,1,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Aqua,2005,missing,0,0,0,0
+portugal,modis_2005_Portugal.csv,modis,Aqua,2005,unexpected,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Aqua,2006,0,1477,1448,1395,1395
+portugal,modis_2006_Portugal.csv,modis,Aqua,2006,1,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Aqua,2006,2,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Aqua,2006,3,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Aqua,2006,missing,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Aqua,2006,unexpected,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Terra,2006,0,1173,1142,1103,1103
+portugal,modis_2006_Portugal.csv,modis,Terra,2006,1,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Terra,2006,2,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Terra,2006,3,2,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Terra,2006,missing,0,0,0,0
+portugal,modis_2006_Portugal.csv,modis,Terra,2006,unexpected,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Aqua,2007,0,912,897,867,867
+portugal,modis_2007_Portugal.csv,modis,Aqua,2007,1,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Aqua,2007,2,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Aqua,2007,3,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Aqua,2007,missing,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Aqua,2007,unexpected,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Terra,2007,0,673,665,642,642
+portugal,modis_2007_Portugal.csv,modis,Terra,2007,1,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Terra,2007,2,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Terra,2007,3,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Terra,2007,missing,0,0,0,0
+portugal,modis_2007_Portugal.csv,modis,Terra,2007,unexpected,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Aqua,2008,0,612,611,594,594
+portugal,modis_2008_Portugal.csv,modis,Aqua,2008,1,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Aqua,2008,2,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Aqua,2008,3,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Aqua,2008,missing,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Aqua,2008,unexpected,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Terra,2008,0,387,387,366,366
+portugal,modis_2008_Portugal.csv,modis,Terra,2008,1,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Terra,2008,2,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Terra,2008,3,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Terra,2008,missing,0,0,0,0
+portugal,modis_2008_Portugal.csv,modis,Terra,2008,unexpected,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Terra,2009,0,1539,1535,1463,1463
+portugal,modis_2009_Portugal.csv,modis,Terra,2009,1,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Terra,2009,2,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Terra,2009,3,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Terra,2009,missing,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Terra,2009,unexpected,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Aqua,2009,0,1927,1924,1851,1851
+portugal,modis_2009_Portugal.csv,modis,Aqua,2009,1,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Aqua,2009,2,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Aqua,2009,3,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Aqua,2009,missing,0,0,0,0
+portugal,modis_2009_Portugal.csv,modis,Aqua,2009,unexpected,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Terra,2010,0,1986,1928,1860,1860
+portugal,modis_2010_Portugal.csv,modis,Terra,2010,1,5,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Terra,2010,2,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Terra,2010,3,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Terra,2010,missing,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Terra,2010,unexpected,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Aqua,2010,0,2221,2174,2107,2107
+portugal,modis_2010_Portugal.csv,modis,Aqua,2010,1,4,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Aqua,2010,2,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Aqua,2010,3,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Aqua,2010,missing,0,0,0,0
+portugal,modis_2010_Portugal.csv,modis,Aqua,2010,unexpected,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Terra,2011,0,1442,1435,1363,1363
+portugal,modis_2011_Portugal.csv,modis,Terra,2011,1,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Terra,2011,2,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Terra,2011,3,1,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Terra,2011,missing,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Terra,2011,unexpected,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Aqua,2011,0,1590,1579,1510,1510
+portugal,modis_2011_Portugal.csv,modis,Aqua,2011,1,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Aqua,2011,2,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Aqua,2011,3,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Aqua,2011,missing,0,0,0,0
+portugal,modis_2011_Portugal.csv,modis,Aqua,2011,unexpected,0,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Aqua,2012,0,1938,1864,1809,1809
+portugal,modis_2012_Portugal.csv,modis,Aqua,2012,1,0,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Aqua,2012,2,0,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Aqua,2012,3,2,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Aqua,2012,missing,0,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Aqua,2012,unexpected,0,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Terra,2012,0,1606,1518,1454,1454
+portugal,modis_2012_Portugal.csv,modis,Terra,2012,1,1,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Terra,2012,2,0,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Terra,2012,3,5,1,1,1
+portugal,modis_2012_Portugal.csv,modis,Terra,2012,missing,0,0,0,0
+portugal,modis_2012_Portugal.csv,modis,Terra,2012,unexpected,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Terra,2013,0,2036,2011,1937,1937
+portugal,modis_2013_Portugal.csv,modis,Terra,2013,1,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Terra,2013,2,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Terra,2013,3,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Terra,2013,missing,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Terra,2013,unexpected,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Aqua,2013,0,2401,2381,2296,2296
+portugal,modis_2013_Portugal.csv,modis,Aqua,2013,1,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Aqua,2013,2,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Aqua,2013,3,1,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Aqua,2013,missing,0,0,0,0
+portugal,modis_2013_Portugal.csv,modis,Aqua,2013,unexpected,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Aqua,2014,0,339,331,319,319
+portugal,modis_2014_Portugal.csv,modis,Aqua,2014,1,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Aqua,2014,2,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Aqua,2014,3,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Aqua,2014,missing,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Aqua,2014,unexpected,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Terra,2014,0,274,269,257,257
+portugal,modis_2014_Portugal.csv,modis,Terra,2014,1,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Terra,2014,2,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Terra,2014,3,1,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Terra,2014,missing,0,0,0,0
+portugal,modis_2014_Portugal.csv,modis,Terra,2014,unexpected,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Aqua,2015,0,1053,1045,1018,1018
+portugal,modis_2015_Portugal.csv,modis,Aqua,2015,1,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Aqua,2015,2,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Aqua,2015,3,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Aqua,2015,missing,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Aqua,2015,unexpected,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Terra,2015,0,1005,993,959,959
+portugal,modis_2015_Portugal.csv,modis,Terra,2015,1,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Terra,2015,2,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Terra,2015,3,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Terra,2015,missing,0,0,0,0
+portugal,modis_2015_Portugal.csv,modis,Terra,2015,unexpected,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Terra,2016,0,2339,2255,2149,2149
+portugal,modis_2016_Portugal.csv,modis,Terra,2016,1,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Terra,2016,2,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Terra,2016,3,1,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Terra,2016,missing,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Terra,2016,unexpected,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Aqua,2016,0,2461,2416,2312,2312
+portugal,modis_2016_Portugal.csv,modis,Aqua,2016,1,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Aqua,2016,2,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Aqua,2016,3,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Aqua,2016,missing,0,0,0,0
+portugal,modis_2016_Portugal.csv,modis,Aqua,2016,unexpected,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Terra,2017,0,3625,3602,3418,3418
+portugal,modis_2017_Portugal.csv,modis,Terra,2017,1,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Terra,2017,2,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Terra,2017,3,7,6,6,6
+portugal,modis_2017_Portugal.csv,modis,Terra,2017,missing,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Terra,2017,unexpected,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Aqua,2017,0,3013,2990,2872,2872
+portugal,modis_2017_Portugal.csv,modis,Aqua,2017,1,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Aqua,2017,2,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Aqua,2017,3,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Aqua,2017,missing,0,0,0,0
+portugal,modis_2017_Portugal.csv,modis,Aqua,2017,unexpected,0,0,0,0
+portugal,modis_2018_Portugal.csv,modis,Terra,2018,0,598,595,572,572
+portugal,modis_2018_Portugal.csv,modis,Terra,2018,1,0,0,0,0
+portugal,modis_2018_Portugal.csv,modis,Terra,2018,2,15,15,14,14
+portugal,modis_2018_Portugal.csv,modis,Terra,2018,3,0,0,0,0
+portugal,modis_2018_Portugal.csv,modis,Terra,2018,missing,0,0,0,0
+portugal,modis_2018_Portugal.csv,modis,Terra,2018,unexpected,0,0,0,0
+portugal,modis_2018_Portugal.csv,modis,Aqua,2018,0,688,685,659,659
+portugal,modis_2018_Portugal.csv,modis,Aqua,2018,1,0,0,0,0
+portugal,modis_2018_Portugal.csv,modis,Aqua,2018,2,7,7,7,7
+portugal,modis_2018_Portugal.csv,modis,Aqua,2018,3,2,2,2,2
+portugal,modis_2018_Portugal.csv,modis,Aqua,2018,missing,0,0,0,0
+portugal,modis_2018_Portugal.csv,modis,Aqua,2018,unexpected,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Aqua,2019,0,661,658,636,636
+portugal,modis_2019_Portugal.csv,modis,Aqua,2019,1,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Aqua,2019,2,20,20,19,19
+portugal,modis_2019_Portugal.csv,modis,Aqua,2019,3,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Aqua,2019,missing,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Aqua,2019,unexpected,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Terra,2019,0,577,571,542,542
+portugal,modis_2019_Portugal.csv,modis,Terra,2019,1,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Terra,2019,2,11,11,10,10
+portugal,modis_2019_Portugal.csv,modis,Terra,2019,3,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Terra,2019,missing,0,0,0,0
+portugal,modis_2019_Portugal.csv,modis,Terra,2019,unexpected,0,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Terra,2020,0,661,644,612,612
+portugal,modis_2020_Portugal.csv,modis,Terra,2020,1,0,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Terra,2020,2,12,12,11,11
+portugal,modis_2020_Portugal.csv,modis,Terra,2020,3,1,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Terra,2020,missing,0,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Terra,2020,unexpected,0,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Aqua,2020,0,662,652,624,624
+portugal,modis_2020_Portugal.csv,modis,Aqua,2020,1,0,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Aqua,2020,2,13,13,13,13
+portugal,modis_2020_Portugal.csv,modis,Aqua,2020,3,0,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Aqua,2020,missing,0,0,0,0
+portugal,modis_2020_Portugal.csv,modis,Aqua,2020,unexpected,0,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Aqua,2021,0,482,479,468,468
+portugal,modis_2021_Portugal.csv,modis,Aqua,2021,1,0,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Aqua,2021,2,1,1,1,1
+portugal,modis_2021_Portugal.csv,modis,Aqua,2021,3,0,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Aqua,2021,missing,0,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Aqua,2021,unexpected,0,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Terra,2021,0,462,459,435,435
+portugal,modis_2021_Portugal.csv,modis,Terra,2021,1,0,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Terra,2021,2,4,4,4,4
+portugal,modis_2021_Portugal.csv,modis,Terra,2021,3,1,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Terra,2021,missing,0,0,0,0
+portugal,modis_2021_Portugal.csv,modis,Terra,2021,unexpected,0,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Terra,2022,0,1154,1149,1088,1088
+portugal,modis_2022_Portugal.csv,modis,Terra,2022,1,0,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Terra,2022,2,6,6,5,5
+portugal,modis_2022_Portugal.csv,modis,Terra,2022,3,1,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Terra,2022,missing,0,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Terra,2022,unexpected,0,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Aqua,2022,0,1104,1099,1056,1056
+portugal,modis_2022_Portugal.csv,modis,Aqua,2022,1,0,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Aqua,2022,2,8,8,7,7
+portugal,modis_2022_Portugal.csv,modis,Aqua,2022,3,0,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Aqua,2022,missing,0,0,0,0
+portugal,modis_2022_Portugal.csv,modis,Aqua,2022,unexpected,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Terra,2023,0,481,466,450,450
+portugal,modis_2023_Portugal.csv,modis,Terra,2023,1,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Terra,2023,2,5,5,4,4
+portugal,modis_2023_Portugal.csv,modis,Terra,2023,3,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Terra,2023,missing,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Terra,2023,unexpected,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Aqua,2023,0,568,539,521,521
+portugal,modis_2023_Portugal.csv,modis,Aqua,2023,1,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Aqua,2023,2,8,8,8,8
+portugal,modis_2023_Portugal.csv,modis,Aqua,2023,3,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Aqua,2023,missing,0,0,0,0
+portugal,modis_2023_Portugal.csv,modis,Aqua,2023,unexpected,0,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Terra,2024,0,1626,1553,1466,1466
+portugal,modis_2024_Portugal.csv,modis,Terra,2024,1,0,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Terra,2024,2,21,21,21,21
+portugal,modis_2024_Portugal.csv,modis,Terra,2024,3,0,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Terra,2024,missing,0,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Terra,2024,unexpected,0,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Aqua,2024,0,1481,1417,1356,1356
+portugal,modis_2024_Portugal.csv,modis,Aqua,2024,1,0,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Aqua,2024,2,22,22,19,19
+portugal,modis_2024_Portugal.csv,modis,Aqua,2024,3,1,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Aqua,2024,missing,0,0,0,0
+portugal,modis_2024_Portugal.csv,modis,Aqua,2024,unexpected,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Terra,2025,0,2455,2455,2336,2336
+portugal,modis_2025_Portugal.csv,modis,Terra,2025,1,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Terra,2025,2,4,4,4,4
+portugal,modis_2025_Portugal.csv,modis,Terra,2025,3,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Terra,2025,missing,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Terra,2025,unexpected,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Aqua,2025,0,2398,2398,2301,2301
+portugal,modis_2025_Portugal.csv,modis,Aqua,2025,1,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Aqua,2025,2,10,10,10,10
+portugal,modis_2025_Portugal.csv,modis,Aqua,2025,3,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Aqua,2025,missing,0,0,0,0
+portugal,modis_2025_Portugal.csv,modis,Aqua,2025,unexpected,0,0,0,0
+portugal,viirs-jpss1_2018_Portugal.csv,viirs-jpss1,NOAA-20,2018,0,3361,3317,3208,3208
+portugal,viirs-jpss1_2018_Portugal.csv,viirs-jpss1,NOAA-20,2018,1,0,0,0,0
+portugal,viirs-jpss1_2018_Portugal.csv,viirs-jpss1,NOAA-20,2018,2,304,304,299,299
+portugal,viirs-jpss1_2018_Portugal.csv,viirs-jpss1,NOAA-20,2018,3,7,6,6,6
+portugal,viirs-jpss1_2018_Portugal.csv,viirs-jpss1,NOAA-20,2018,missing,0,0,0,0
+portugal,viirs-jpss1_2018_Portugal.csv,viirs-jpss1,NOAA-20,2018,unexpected,0,0,0,0
+portugal,viirs-jpss1_2019_Portugal.csv,viirs-jpss1,NOAA-20,2019,0,3254,3184,3066,3066
+portugal,viirs-jpss1_2019_Portugal.csv,viirs-jpss1,NOAA-20,2019,1,0,0,0,0
+portugal,viirs-jpss1_2019_Portugal.csv,viirs-jpss1,NOAA-20,2019,2,336,336,336,336
+portugal,viirs-jpss1_2019_Portugal.csv,viirs-jpss1,NOAA-20,2019,3,6,5,5,5
+portugal,viirs-jpss1_2019_Portugal.csv,viirs-jpss1,NOAA-20,2019,missing,0,0,0,0
+portugal,viirs-jpss1_2019_Portugal.csv,viirs-jpss1,NOAA-20,2019,unexpected,0,0,0,0
+portugal,viirs-jpss1_2020_Portugal.csv,viirs-jpss1,NOAA-20,2020,0,3677,3562,3399,3399
+portugal,viirs-jpss1_2020_Portugal.csv,viirs-jpss1,NOAA-20,2020,1,0,0,0,0
+portugal,viirs-jpss1_2020_Portugal.csv,viirs-jpss1,NOAA-20,2020,2,311,311,308,308
+portugal,viirs-jpss1_2020_Portugal.csv,viirs-jpss1,NOAA-20,2020,3,0,0,0,0
+portugal,viirs-jpss1_2020_Portugal.csv,viirs-jpss1,NOAA-20,2020,missing,0,0,0,0
+portugal,viirs-jpss1_2020_Portugal.csv,viirs-jpss1,NOAA-20,2020,unexpected,0,0,0,0
+portugal,viirs-jpss1_2021_Portugal.csv,viirs-jpss1,NOAA-20,2021,0,2242,2218,2133,2133
+portugal,viirs-jpss1_2021_Portugal.csv,viirs-jpss1,NOAA-20,2021,1,0,0,0,0
+portugal,viirs-jpss1_2021_Portugal.csv,viirs-jpss1,NOAA-20,2021,2,256,256,256,256
+portugal,viirs-jpss1_2021_Portugal.csv,viirs-jpss1,NOAA-20,2021,3,3,3,3,3
+portugal,viirs-jpss1_2021_Portugal.csv,viirs-jpss1,NOAA-20,2021,missing,0,0,0,0
+portugal,viirs-jpss1_2021_Portugal.csv,viirs-jpss1,NOAA-20,2021,unexpected,0,0,0,0
+portugal,viirs-jpss1_2022_Portugal.csv,viirs-jpss1,NOAA-20,2022,0,5653,5625,5282,5282
+portugal,viirs-jpss1_2022_Portugal.csv,viirs-jpss1,NOAA-20,2022,1,0,0,0,0
+portugal,viirs-jpss1_2022_Portugal.csv,viirs-jpss1,NOAA-20,2022,2,205,205,205,205
+portugal,viirs-jpss1_2022_Portugal.csv,viirs-jpss1,NOAA-20,2022,3,2,2,2,2
+portugal,viirs-jpss1_2022_Portugal.csv,viirs-jpss1,NOAA-20,2022,missing,0,0,0,0
+portugal,viirs-jpss1_2022_Portugal.csv,viirs-jpss1,NOAA-20,2022,unexpected,0,0,0,0
+portugal,viirs-jpss1_2023_Portugal.csv,viirs-jpss1,NOAA-20,2023,0,3105,2864,2726,2726
+portugal,viirs-jpss1_2023_Portugal.csv,viirs-jpss1,NOAA-20,2023,1,0,0,0,0
+portugal,viirs-jpss1_2023_Portugal.csv,viirs-jpss1,NOAA-20,2023,2,277,277,276,276
+portugal,viirs-jpss1_2023_Portugal.csv,viirs-jpss1,NOAA-20,2023,3,2,2,2,2
+portugal,viirs-jpss1_2023_Portugal.csv,viirs-jpss1,NOAA-20,2023,missing,0,0,0,0
+portugal,viirs-jpss1_2023_Portugal.csv,viirs-jpss1,NOAA-20,2023,unexpected,0,0,0,0
+portugal,viirs-jpss1_2024_Portugal.csv,viirs-jpss1,NOAA-20,2024,0,11767,11360,10985,10985
+portugal,viirs-jpss1_2024_Portugal.csv,viirs-jpss1,NOAA-20,2024,1,0,0,0,0
+portugal,viirs-jpss1_2024_Portugal.csv,viirs-jpss1,NOAA-20,2024,2,240,240,240,240
+portugal,viirs-jpss1_2024_Portugal.csv,viirs-jpss1,NOAA-20,2024,3,3,3,3,3
+portugal,viirs-jpss1_2024_Portugal.csv,viirs-jpss1,NOAA-20,2024,missing,0,0,0,0
+portugal,viirs-jpss1_2024_Portugal.csv,viirs-jpss1,NOAA-20,2024,unexpected,0,0,0,0
+portugal,viirs-jpss1_2025_Portugal.csv,viirs-jpss1,NOAA-20,2025,0,13521,13513,12721,12721
+portugal,viirs-jpss1_2025_Portugal.csv,viirs-jpss1,NOAA-20,2025,1,0,0,0,0
+portugal,viirs-jpss1_2025_Portugal.csv,viirs-jpss1,NOAA-20,2025,2,339,339,339,339
+portugal,viirs-jpss1_2025_Portugal.csv,viirs-jpss1,NOAA-20,2025,3,2,2,2,2
+portugal,viirs-jpss1_2025_Portugal.csv,viirs-jpss1,NOAA-20,2025,missing,0,0,0,0
+portugal,viirs-jpss1_2025_Portugal.csv,viirs-jpss1,NOAA-20,2025,unexpected,0,0,0,0
+portugal,viirs-snpp_2012_Portugal.csv,viirs-snpp,Suomi NPP,2012,0,9074,8542,8205,8205
+portugal,viirs-snpp_2012_Portugal.csv,viirs-snpp,Suomi NPP,2012,1,0,0,0,0
+portugal,viirs-snpp_2012_Portugal.csv,viirs-snpp,Suomi NPP,2012,2,390,390,389,389
+portugal,viirs-snpp_2012_Portugal.csv,viirs-snpp,Suomi NPP,2012,3,9,9,9,9
+portugal,viirs-snpp_2012_Portugal.csv,viirs-snpp,Suomi NPP,2012,missing,0,0,0,0
+portugal,viirs-snpp_2012_Portugal.csv,viirs-snpp,Suomi NPP,2012,unexpected,0,0,0,0
+portugal,viirs-snpp_2013_Portugal.csv,viirs-snpp,Suomi NPP,2013,0,11486,11345,10664,10664
+portugal,viirs-snpp_2013_Portugal.csv,viirs-snpp,Suomi NPP,2013,1,0,0,0,0
+portugal,viirs-snpp_2013_Portugal.csv,viirs-snpp,Suomi NPP,2013,2,602,602,602,602
+portugal,viirs-snpp_2013_Portugal.csv,viirs-snpp,Suomi NPP,2013,3,14,14,14,14
+portugal,viirs-snpp_2013_Portugal.csv,viirs-snpp,Suomi NPP,2013,missing,0,0,0,0
+portugal,viirs-snpp_2013_Portugal.csv,viirs-snpp,Suomi NPP,2013,unexpected,0,0,0,0
+portugal,viirs-snpp_2014_Portugal.csv,viirs-snpp,Suomi NPP,2014,0,1816,1749,1659,1659
+portugal,viirs-snpp_2014_Portugal.csv,viirs-snpp,Suomi NPP,2014,1,0,0,0,0
+portugal,viirs-snpp_2014_Portugal.csv,viirs-snpp,Suomi NPP,2014,2,518,518,518,518
+portugal,viirs-snpp_2014_Portugal.csv,viirs-snpp,Suomi NPP,2014,3,7,7,7,7
+portugal,viirs-snpp_2014_Portugal.csv,viirs-snpp,Suomi NPP,2014,missing,0,0,0,0
+portugal,viirs-snpp_2014_Portugal.csv,viirs-snpp,Suomi NPP,2014,unexpected,0,0,0,0
+portugal,viirs-snpp_2015_Portugal.csv,viirs-snpp,Suomi NPP,2015,0,5404,5305,5051,5051
+portugal,viirs-snpp_2015_Portugal.csv,viirs-snpp,Suomi NPP,2015,1,0,0,0,0
+portugal,viirs-snpp_2015_Portugal.csv,viirs-snpp,Suomi NPP,2015,2,467,467,460,460
+portugal,viirs-snpp_2015_Portugal.csv,viirs-snpp,Suomi NPP,2015,3,4,4,4,4
+portugal,viirs-snpp_2015_Portugal.csv,viirs-snpp,Suomi NPP,2015,missing,0,0,0,0
+portugal,viirs-snpp_2015_Portugal.csv,viirs-snpp,Suomi NPP,2015,unexpected,0,0,0,0
+portugal,viirs-snpp_2016_Portugal.csv,viirs-snpp,Suomi NPP,2016,0,13519,13122,12522,12522
+portugal,viirs-snpp_2016_Portugal.csv,viirs-snpp,Suomi NPP,2016,1,0,0,0,0
+portugal,viirs-snpp_2016_Portugal.csv,viirs-snpp,Suomi NPP,2016,2,403,403,401,401
+portugal,viirs-snpp_2016_Portugal.csv,viirs-snpp,Suomi NPP,2016,3,8,8,8,8
+portugal,viirs-snpp_2016_Portugal.csv,viirs-snpp,Suomi NPP,2016,missing,0,0,0,0
+portugal,viirs-snpp_2016_Portugal.csv,viirs-snpp,Suomi NPP,2016,unexpected,0,0,0,0
+portugal,viirs-snpp_2017_Portugal.csv,viirs-snpp,Suomi NPP,2017,0,18779,18578,17628,17628
+portugal,viirs-snpp_2017_Portugal.csv,viirs-snpp,Suomi NPP,2017,1,0,0,0,0
+portugal,viirs-snpp_2017_Portugal.csv,viirs-snpp,Suomi NPP,2017,2,379,379,378,378
+portugal,viirs-snpp_2017_Portugal.csv,viirs-snpp,Suomi NPP,2017,3,26,26,26,26
+portugal,viirs-snpp_2017_Portugal.csv,viirs-snpp,Suomi NPP,2017,missing,0,0,0,0
+portugal,viirs-snpp_2017_Portugal.csv,viirs-snpp,Suomi NPP,2017,unexpected,0,0,0,0
+portugal,viirs-snpp_2018_Portugal.csv,viirs-snpp,Suomi NPP,2018,0,3469,3414,3272,3272
+portugal,viirs-snpp_2018_Portugal.csv,viirs-snpp,Suomi NPP,2018,1,0,0,0,0
+portugal,viirs-snpp_2018_Portugal.csv,viirs-snpp,Suomi NPP,2018,2,352,352,350,350
+portugal,viirs-snpp_2018_Portugal.csv,viirs-snpp,Suomi NPP,2018,3,6,6,6,6
+portugal,viirs-snpp_2018_Portugal.csv,viirs-snpp,Suomi NPP,2018,missing,0,0,0,0
+portugal,viirs-snpp_2018_Portugal.csv,viirs-snpp,Suomi NPP,2018,unexpected,0,0,0,0
+portugal,viirs-snpp_2019_Portugal.csv,viirs-snpp,Suomi NPP,2019,0,3473,3383,3256,3256
+portugal,viirs-snpp_2019_Portugal.csv,viirs-snpp,Suomi NPP,2019,1,0,0,0,0
+portugal,viirs-snpp_2019_Portugal.csv,viirs-snpp,Suomi NPP,2019,2,320,320,319,319
+portugal,viirs-snpp_2019_Portugal.csv,viirs-snpp,Suomi NPP,2019,3,1,1,1,1
+portugal,viirs-snpp_2019_Portugal.csv,viirs-snpp,Suomi NPP,2019,missing,0,0,0,0
+portugal,viirs-snpp_2019_Portugal.csv,viirs-snpp,Suomi NPP,2019,unexpected,0,0,0,0
+portugal,viirs-snpp_2020_Portugal.csv,viirs-snpp,Suomi NPP,2020,0,3474,3362,3193,3193
+portugal,viirs-snpp_2020_Portugal.csv,viirs-snpp,Suomi NPP,2020,1,0,0,0,0
+portugal,viirs-snpp_2020_Portugal.csv,viirs-snpp,Suomi NPP,2020,2,294,294,293,293
+portugal,viirs-snpp_2020_Portugal.csv,viirs-snpp,Suomi NPP,2020,3,1,1,1,1
+portugal,viirs-snpp_2020_Portugal.csv,viirs-snpp,Suomi NPP,2020,missing,0,0,0,0
+portugal,viirs-snpp_2020_Portugal.csv,viirs-snpp,Suomi NPP,2020,unexpected,0,0,0,0
+portugal,viirs-snpp_2021_Portugal.csv,viirs-snpp,Suomi NPP,2021,0,2327,2294,2216,2216
+portugal,viirs-snpp_2021_Portugal.csv,viirs-snpp,Suomi NPP,2021,1,0,0,0,0
+portugal,viirs-snpp_2021_Portugal.csv,viirs-snpp,Suomi NPP,2021,2,260,260,260,260
+portugal,viirs-snpp_2021_Portugal.csv,viirs-snpp,Suomi NPP,2021,3,4,4,4,4
+portugal,viirs-snpp_2021_Portugal.csv,viirs-snpp,Suomi NPP,2021,missing,0,0,0,0
+portugal,viirs-snpp_2021_Portugal.csv,viirs-snpp,Suomi NPP,2021,unexpected,0,0,0,0
+portugal,viirs-snpp_2022_Portugal.csv,viirs-snpp,Suomi NPP,2022,0,4892,4865,4604,4604
+portugal,viirs-snpp_2022_Portugal.csv,viirs-snpp,Suomi NPP,2022,1,0,0,0,0
+portugal,viirs-snpp_2022_Portugal.csv,viirs-snpp,Suomi NPP,2022,2,182,182,181,181
+portugal,viirs-snpp_2022_Portugal.csv,viirs-snpp,Suomi NPP,2022,3,5,5,5,5
+portugal,viirs-snpp_2022_Portugal.csv,viirs-snpp,Suomi NPP,2022,missing,0,0,0,0
+portugal,viirs-snpp_2022_Portugal.csv,viirs-snpp,Suomi NPP,2022,unexpected,0,0,0,0
+portugal,viirs-snpp_2023_Portugal.csv,viirs-snpp,Suomi NPP,2023,0,2695,2601,2445,2445
+portugal,viirs-snpp_2023_Portugal.csv,viirs-snpp,Suomi NPP,2023,1,0,0,0,0
+portugal,viirs-snpp_2023_Portugal.csv,viirs-snpp,Suomi NPP,2023,2,256,256,256,256
+portugal,viirs-snpp_2023_Portugal.csv,viirs-snpp,Suomi NPP,2023,3,2,1,0,0
+portugal,viirs-snpp_2023_Portugal.csv,viirs-snpp,Suomi NPP,2023,missing,0,0,0,0
+portugal,viirs-snpp_2023_Portugal.csv,viirs-snpp,Suomi NPP,2023,unexpected,0,0,0,0
+portugal,viirs-snpp_2024_Portugal.csv,viirs-snpp,Suomi NPP,2024,0,11872,11417,11105,11105
+portugal,viirs-snpp_2024_Portugal.csv,viirs-snpp,Suomi NPP,2024,1,0,0,0,0
+portugal,viirs-snpp_2024_Portugal.csv,viirs-snpp,Suomi NPP,2024,2,202,202,202,202
+portugal,viirs-snpp_2024_Portugal.csv,viirs-snpp,Suomi NPP,2024,3,4,4,4,4
+portugal,viirs-snpp_2024_Portugal.csv,viirs-snpp,Suomi NPP,2024,missing,0,0,0,0
+portugal,viirs-snpp_2024_Portugal.csv,viirs-snpp,Suomi NPP,2024,unexpected,0,0,0,0
+portugal,viirs-snpp_2025_Portugal.csv,viirs-snpp,Suomi NPP,2025,0,13330,13323,12578,12578
+portugal,viirs-snpp_2025_Portugal.csv,viirs-snpp,Suomi NPP,2025,1,0,0,0,0
+portugal,viirs-snpp_2025_Portugal.csv,viirs-snpp,Suomi NPP,2025,2,268,268,268,268
+portugal,viirs-snpp_2025_Portugal.csv,viirs-snpp,Suomi NPP,2025,3,2,2,2,2
+portugal,viirs-snpp_2025_Portugal.csv,viirs-snpp,Suomi NPP,2025,missing,0,0,0,0
+portugal,viirs-snpp_2025_Portugal.csv,viirs-snpp,Suomi NPP,2025,unexpected,0,0,0,0
+lebanon,modis_2000_Lebanon.csv,modis,Terra,2000,0,2,2,2,0
+lebanon,modis_2000_Lebanon.csv,modis,Terra,2000,1,0,0,0,0
+lebanon,modis_2000_Lebanon.csv,modis,Terra,2000,2,0,0,0,0
+lebanon,modis_2000_Lebanon.csv,modis,Terra,2000,3,0,0,0,0
+lebanon,modis_2000_Lebanon.csv,modis,Terra,2000,missing,0,0,0,0
+lebanon,modis_2000_Lebanon.csv,modis,Terra,2000,unexpected,0,0,0,0
+lebanon,modis_2001_Lebanon.csv,modis,Terra,2001,0,13,13,13,13
+lebanon,modis_2001_Lebanon.csv,modis,Terra,2001,1,0,0,0,0
+lebanon,modis_2001_Lebanon.csv,modis,Terra,2001,2,0,0,0,0
+lebanon,modis_2001_Lebanon.csv,modis,Terra,2001,3,0,0,0,0
+lebanon,modis_2001_Lebanon.csv,modis,Terra,2001,missing,0,0,0,0
+lebanon,modis_2001_Lebanon.csv,modis,Terra,2001,unexpected,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Terra,2002,0,58,58,58,58
+lebanon,modis_2002_Lebanon.csv,modis,Terra,2002,1,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Terra,2002,2,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Terra,2002,3,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Terra,2002,missing,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Terra,2002,unexpected,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Aqua,2002,0,45,45,43,43
+lebanon,modis_2002_Lebanon.csv,modis,Aqua,2002,1,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Aqua,2002,2,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Aqua,2002,3,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Aqua,2002,missing,0,0,0,0
+lebanon,modis_2002_Lebanon.csv,modis,Aqua,2002,unexpected,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Terra,2003,0,21,21,19,19
+lebanon,modis_2003_Lebanon.csv,modis,Terra,2003,1,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Terra,2003,2,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Terra,2003,3,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Terra,2003,missing,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Terra,2003,unexpected,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Aqua,2003,0,31,31,29,29
+lebanon,modis_2003_Lebanon.csv,modis,Aqua,2003,1,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Aqua,2003,2,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Aqua,2003,3,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Aqua,2003,missing,0,0,0,0
+lebanon,modis_2003_Lebanon.csv,modis,Aqua,2003,unexpected,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Aqua,2004,0,34,34,31,31
+lebanon,modis_2004_Lebanon.csv,modis,Aqua,2004,1,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Aqua,2004,2,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Aqua,2004,3,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Aqua,2004,missing,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Aqua,2004,unexpected,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Terra,2004,0,45,45,45,45
+lebanon,modis_2004_Lebanon.csv,modis,Terra,2004,1,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Terra,2004,2,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Terra,2004,3,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Terra,2004,missing,0,0,0,0
+lebanon,modis_2004_Lebanon.csv,modis,Terra,2004,unexpected,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Terra,2005,0,17,17,17,17
+lebanon,modis_2005_Lebanon.csv,modis,Terra,2005,1,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Terra,2005,2,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Terra,2005,3,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Terra,2005,missing,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Terra,2005,unexpected,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Aqua,2005,0,22,22,21,21
+lebanon,modis_2005_Lebanon.csv,modis,Aqua,2005,1,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Aqua,2005,2,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Aqua,2005,3,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Aqua,2005,missing,0,0,0,0
+lebanon,modis_2005_Lebanon.csv,modis,Aqua,2005,unexpected,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Aqua,2006,0,107,107,101,101
+lebanon,modis_2006_Lebanon.csv,modis,Aqua,2006,1,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Aqua,2006,2,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Aqua,2006,3,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Aqua,2006,missing,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Aqua,2006,unexpected,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Terra,2006,0,86,86,85,85
+lebanon,modis_2006_Lebanon.csv,modis,Terra,2006,1,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Terra,2006,2,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Terra,2006,3,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Terra,2006,missing,0,0,0,0
+lebanon,modis_2006_Lebanon.csv,modis,Terra,2006,unexpected,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Aqua,2007,0,97,97,95,95
+lebanon,modis_2007_Lebanon.csv,modis,Aqua,2007,1,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Aqua,2007,2,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Aqua,2007,3,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Aqua,2007,missing,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Aqua,2007,unexpected,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Terra,2007,0,98,98,98,98
+lebanon,modis_2007_Lebanon.csv,modis,Terra,2007,1,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Terra,2007,2,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Terra,2007,3,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Terra,2007,missing,0,0,0,0
+lebanon,modis_2007_Lebanon.csv,modis,Terra,2007,unexpected,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Aqua,2008,0,18,18,18,18
+lebanon,modis_2008_Lebanon.csv,modis,Aqua,2008,1,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Aqua,2008,2,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Aqua,2008,3,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Aqua,2008,missing,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Aqua,2008,unexpected,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Terra,2008,0,24,24,22,22
+lebanon,modis_2008_Lebanon.csv,modis,Terra,2008,1,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Terra,2008,2,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Terra,2008,3,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Terra,2008,missing,0,0,0,0
+lebanon,modis_2008_Lebanon.csv,modis,Terra,2008,unexpected,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Aqua,2009,0,40,40,40,40
+lebanon,modis_2009_Lebanon.csv,modis,Aqua,2009,1,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Aqua,2009,2,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Aqua,2009,3,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Aqua,2009,missing,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Aqua,2009,unexpected,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Terra,2009,0,30,30,28,28
+lebanon,modis_2009_Lebanon.csv,modis,Terra,2009,1,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Terra,2009,2,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Terra,2009,3,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Terra,2009,missing,0,0,0,0
+lebanon,modis_2009_Lebanon.csv,modis,Terra,2009,unexpected,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Aqua,2010,0,94,94,93,93
+lebanon,modis_2010_Lebanon.csv,modis,Aqua,2010,1,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Aqua,2010,2,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Aqua,2010,3,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Aqua,2010,missing,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Aqua,2010,unexpected,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Terra,2010,0,66,66,63,63
+lebanon,modis_2010_Lebanon.csv,modis,Terra,2010,1,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Terra,2010,2,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Terra,2010,3,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Terra,2010,missing,0,0,0,0
+lebanon,modis_2010_Lebanon.csv,modis,Terra,2010,unexpected,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Terra,2011,0,12,12,11,11
+lebanon,modis_2011_Lebanon.csv,modis,Terra,2011,1,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Terra,2011,2,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Terra,2011,3,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Terra,2011,missing,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Terra,2011,unexpected,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Aqua,2011,0,27,27,25,25
+lebanon,modis_2011_Lebanon.csv,modis,Aqua,2011,1,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Aqua,2011,2,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Aqua,2011,3,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Aqua,2011,missing,0,0,0,0
+lebanon,modis_2011_Lebanon.csv,modis,Aqua,2011,unexpected,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Terra,2012,0,26,26,24,24
+lebanon,modis_2012_Lebanon.csv,modis,Terra,2012,1,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Terra,2012,2,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Terra,2012,3,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Terra,2012,missing,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Terra,2012,unexpected,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Aqua,2012,0,30,30,26,26
+lebanon,modis_2012_Lebanon.csv,modis,Aqua,2012,1,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Aqua,2012,2,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Aqua,2012,3,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Aqua,2012,missing,0,0,0,0
+lebanon,modis_2012_Lebanon.csv,modis,Aqua,2012,unexpected,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Aqua,2013,0,82,82,81,81
+lebanon,modis_2013_Lebanon.csv,modis,Aqua,2013,1,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Aqua,2013,2,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Aqua,2013,3,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Aqua,2013,missing,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Aqua,2013,unexpected,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Terra,2013,0,50,50,47,47
+lebanon,modis_2013_Lebanon.csv,modis,Terra,2013,1,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Terra,2013,2,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Terra,2013,3,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Terra,2013,missing,0,0,0,0
+lebanon,modis_2013_Lebanon.csv,modis,Terra,2013,unexpected,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Aqua,2014,0,20,20,19,19
+lebanon,modis_2014_Lebanon.csv,modis,Aqua,2014,1,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Aqua,2014,2,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Aqua,2014,3,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Aqua,2014,missing,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Aqua,2014,unexpected,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Terra,2014,0,19,19,16,16
+lebanon,modis_2014_Lebanon.csv,modis,Terra,2014,1,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Terra,2014,2,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Terra,2014,3,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Terra,2014,missing,0,0,0,0
+lebanon,modis_2014_Lebanon.csv,modis,Terra,2014,unexpected,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Aqua,2015,0,32,32,32,32
+lebanon,modis_2015_Lebanon.csv,modis,Aqua,2015,1,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Aqua,2015,2,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Aqua,2015,3,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Aqua,2015,missing,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Aqua,2015,unexpected,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Terra,2015,0,26,26,26,26
+lebanon,modis_2015_Lebanon.csv,modis,Terra,2015,1,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Terra,2015,2,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Terra,2015,3,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Terra,2015,missing,0,0,0,0
+lebanon,modis_2015_Lebanon.csv,modis,Terra,2015,unexpected,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Aqua,2016,0,64,64,58,58
+lebanon,modis_2016_Lebanon.csv,modis,Aqua,2016,1,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Aqua,2016,2,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Aqua,2016,3,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Aqua,2016,missing,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Aqua,2016,unexpected,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Terra,2016,0,41,41,40,40
+lebanon,modis_2016_Lebanon.csv,modis,Terra,2016,1,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Terra,2016,2,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Terra,2016,3,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Terra,2016,missing,0,0,0,0
+lebanon,modis_2016_Lebanon.csv,modis,Terra,2016,unexpected,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Aqua,2017,0,26,26,26,26
+lebanon,modis_2017_Lebanon.csv,modis,Aqua,2017,1,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Aqua,2017,2,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Aqua,2017,3,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Aqua,2017,missing,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Aqua,2017,unexpected,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Terra,2017,0,16,16,15,15
+lebanon,modis_2017_Lebanon.csv,modis,Terra,2017,1,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Terra,2017,2,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Terra,2017,3,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Terra,2017,missing,0,0,0,0
+lebanon,modis_2017_Lebanon.csv,modis,Terra,2017,unexpected,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Aqua,2018,0,28,28,27,27
+lebanon,modis_2018_Lebanon.csv,modis,Aqua,2018,1,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Aqua,2018,2,1,1,1,1
+lebanon,modis_2018_Lebanon.csv,modis,Aqua,2018,3,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Aqua,2018,missing,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Aqua,2018,unexpected,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Terra,2018,0,9,9,9,9
+lebanon,modis_2018_Lebanon.csv,modis,Terra,2018,1,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Terra,2018,2,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Terra,2018,3,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Terra,2018,missing,0,0,0,0
+lebanon,modis_2018_Lebanon.csv,modis,Terra,2018,unexpected,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Aqua,2019,0,50,50,47,47
+lebanon,modis_2019_Lebanon.csv,modis,Aqua,2019,1,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Aqua,2019,2,1,1,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Aqua,2019,3,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Aqua,2019,missing,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Aqua,2019,unexpected,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Terra,2019,0,21,21,19,19
+lebanon,modis_2019_Lebanon.csv,modis,Terra,2019,1,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Terra,2019,2,2,2,2,2
+lebanon,modis_2019_Lebanon.csv,modis,Terra,2019,3,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Terra,2019,missing,0,0,0,0
+lebanon,modis_2019_Lebanon.csv,modis,Terra,2019,unexpected,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Aqua,2020,0,75,75,73,73
+lebanon,modis_2020_Lebanon.csv,modis,Aqua,2020,1,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Aqua,2020,2,4,4,4,4
+lebanon,modis_2020_Lebanon.csv,modis,Aqua,2020,3,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Aqua,2020,missing,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Aqua,2020,unexpected,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Terra,2020,0,60,60,57,57
+lebanon,modis_2020_Lebanon.csv,modis,Terra,2020,1,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Terra,2020,2,3,3,3,3
+lebanon,modis_2020_Lebanon.csv,modis,Terra,2020,3,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Terra,2020,missing,0,0,0,0
+lebanon,modis_2020_Lebanon.csv,modis,Terra,2020,unexpected,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Aqua,2021,0,68,68,66,66
+lebanon,modis_2021_Lebanon.csv,modis,Aqua,2021,1,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Aqua,2021,2,6,6,5,5
+lebanon,modis_2021_Lebanon.csv,modis,Aqua,2021,3,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Aqua,2021,missing,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Aqua,2021,unexpected,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Terra,2021,0,58,58,58,58
+lebanon,modis_2021_Lebanon.csv,modis,Terra,2021,1,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Terra,2021,2,2,2,1,1
+lebanon,modis_2021_Lebanon.csv,modis,Terra,2021,3,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Terra,2021,missing,0,0,0,0
+lebanon,modis_2021_Lebanon.csv,modis,Terra,2021,unexpected,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Terra,2022,0,8,8,8,8
+lebanon,modis_2022_Lebanon.csv,modis,Terra,2022,1,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Terra,2022,2,4,4,4,4
+lebanon,modis_2022_Lebanon.csv,modis,Terra,2022,3,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Terra,2022,missing,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Terra,2022,unexpected,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Aqua,2022,0,17,17,14,14
+lebanon,modis_2022_Lebanon.csv,modis,Aqua,2022,1,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Aqua,2022,2,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Aqua,2022,3,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Aqua,2022,missing,0,0,0,0
+lebanon,modis_2022_Lebanon.csv,modis,Aqua,2022,unexpected,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Aqua,2023,0,55,55,49,49
+lebanon,modis_2023_Lebanon.csv,modis,Aqua,2023,1,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Aqua,2023,2,3,3,3,3
+lebanon,modis_2023_Lebanon.csv,modis,Aqua,2023,3,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Aqua,2023,missing,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Aqua,2023,unexpected,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Terra,2023,0,19,19,19,19
+lebanon,modis_2023_Lebanon.csv,modis,Terra,2023,1,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Terra,2023,2,1,1,1,1
+lebanon,modis_2023_Lebanon.csv,modis,Terra,2023,3,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Terra,2023,missing,0,0,0,0
+lebanon,modis_2023_Lebanon.csv,modis,Terra,2023,unexpected,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Aqua,2024,0,160,160,157,157
+lebanon,modis_2024_Lebanon.csv,modis,Aqua,2024,1,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Aqua,2024,2,10,10,10,10
+lebanon,modis_2024_Lebanon.csv,modis,Aqua,2024,3,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Aqua,2024,missing,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Aqua,2024,unexpected,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Terra,2024,0,55,55,53,53
+lebanon,modis_2024_Lebanon.csv,modis,Terra,2024,1,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Terra,2024,2,4,4,4,4
+lebanon,modis_2024_Lebanon.csv,modis,Terra,2024,3,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Terra,2024,missing,0,0,0,0
+lebanon,modis_2024_Lebanon.csv,modis,Terra,2024,unexpected,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Aqua,2025,0,49,49,49,49
+lebanon,modis_2025_Lebanon.csv,modis,Aqua,2025,1,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Aqua,2025,2,2,2,2,2
+lebanon,modis_2025_Lebanon.csv,modis,Aqua,2025,3,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Aqua,2025,missing,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Aqua,2025,unexpected,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Terra,2025,0,38,38,38,38
+lebanon,modis_2025_Lebanon.csv,modis,Terra,2025,1,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Terra,2025,2,2,2,2,2
+lebanon,modis_2025_Lebanon.csv,modis,Terra,2025,3,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Terra,2025,missing,0,0,0,0
+lebanon,modis_2025_Lebanon.csv,modis,Terra,2025,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2018_Lebanon.csv,viirs-jpss1,NOAA-20,2018,0,389,389,355,355
+lebanon,viirs-jpss1_2018_Lebanon.csv,viirs-jpss1,NOAA-20,2018,1,0,0,0,0
+lebanon,viirs-jpss1_2018_Lebanon.csv,viirs-jpss1,NOAA-20,2018,2,117,117,117,117
+lebanon,viirs-jpss1_2018_Lebanon.csv,viirs-jpss1,NOAA-20,2018,3,5,5,5,5
+lebanon,viirs-jpss1_2018_Lebanon.csv,viirs-jpss1,NOAA-20,2018,missing,0,0,0,0
+lebanon,viirs-jpss1_2018_Lebanon.csv,viirs-jpss1,NOAA-20,2018,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2019_Lebanon.csv,viirs-jpss1,NOAA-20,2019,0,571,571,510,510
+lebanon,viirs-jpss1_2019_Lebanon.csv,viirs-jpss1,NOAA-20,2019,1,0,0,0,0
+lebanon,viirs-jpss1_2019_Lebanon.csv,viirs-jpss1,NOAA-20,2019,2,54,54,54,54
+lebanon,viirs-jpss1_2019_Lebanon.csv,viirs-jpss1,NOAA-20,2019,3,13,13,13,13
+lebanon,viirs-jpss1_2019_Lebanon.csv,viirs-jpss1,NOAA-20,2019,missing,0,0,0,0
+lebanon,viirs-jpss1_2019_Lebanon.csv,viirs-jpss1,NOAA-20,2019,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2020_Lebanon.csv,viirs-jpss1,NOAA-20,2020,0,821,821,749,749
+lebanon,viirs-jpss1_2020_Lebanon.csv,viirs-jpss1,NOAA-20,2020,1,0,0,0,0
+lebanon,viirs-jpss1_2020_Lebanon.csv,viirs-jpss1,NOAA-20,2020,2,25,25,25,25
+lebanon,viirs-jpss1_2020_Lebanon.csv,viirs-jpss1,NOAA-20,2020,3,3,3,3,3
+lebanon,viirs-jpss1_2020_Lebanon.csv,viirs-jpss1,NOAA-20,2020,missing,0,0,0,0
+lebanon,viirs-jpss1_2020_Lebanon.csv,viirs-jpss1,NOAA-20,2020,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2021_Lebanon.csv,viirs-jpss1,NOAA-20,2021,0,893,893,830,830
+lebanon,viirs-jpss1_2021_Lebanon.csv,viirs-jpss1,NOAA-20,2021,1,0,0,0,0
+lebanon,viirs-jpss1_2021_Lebanon.csv,viirs-jpss1,NOAA-20,2021,2,0,0,0,0
+lebanon,viirs-jpss1_2021_Lebanon.csv,viirs-jpss1,NOAA-20,2021,3,8,8,7,7
+lebanon,viirs-jpss1_2021_Lebanon.csv,viirs-jpss1,NOAA-20,2021,missing,0,0,0,0
+lebanon,viirs-jpss1_2021_Lebanon.csv,viirs-jpss1,NOAA-20,2021,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2022_Lebanon.csv,viirs-jpss1,NOAA-20,2022,0,397,397,369,369
+lebanon,viirs-jpss1_2022_Lebanon.csv,viirs-jpss1,NOAA-20,2022,1,0,0,0,0
+lebanon,viirs-jpss1_2022_Lebanon.csv,viirs-jpss1,NOAA-20,2022,2,6,6,6,6
+lebanon,viirs-jpss1_2022_Lebanon.csv,viirs-jpss1,NOAA-20,2022,3,19,19,16,16
+lebanon,viirs-jpss1_2022_Lebanon.csv,viirs-jpss1,NOAA-20,2022,missing,0,0,0,0
+lebanon,viirs-jpss1_2022_Lebanon.csv,viirs-jpss1,NOAA-20,2022,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2023_Lebanon.csv,viirs-jpss1,NOAA-20,2023,0,620,620,559,559
+lebanon,viirs-jpss1_2023_Lebanon.csv,viirs-jpss1,NOAA-20,2023,1,0,0,0,0
+lebanon,viirs-jpss1_2023_Lebanon.csv,viirs-jpss1,NOAA-20,2023,2,5,5,5,5
+lebanon,viirs-jpss1_2023_Lebanon.csv,viirs-jpss1,NOAA-20,2023,3,3,3,3,3
+lebanon,viirs-jpss1_2023_Lebanon.csv,viirs-jpss1,NOAA-20,2023,missing,0,0,0,0
+lebanon,viirs-jpss1_2023_Lebanon.csv,viirs-jpss1,NOAA-20,2023,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2024_Lebanon.csv,viirs-jpss1,NOAA-20,2024,0,1216,1216,1137,1137
+lebanon,viirs-jpss1_2024_Lebanon.csv,viirs-jpss1,NOAA-20,2024,1,0,0,0,0
+lebanon,viirs-jpss1_2024_Lebanon.csv,viirs-jpss1,NOAA-20,2024,2,2,2,2,2
+lebanon,viirs-jpss1_2024_Lebanon.csv,viirs-jpss1,NOAA-20,2024,3,5,5,5,5
+lebanon,viirs-jpss1_2024_Lebanon.csv,viirs-jpss1,NOAA-20,2024,missing,0,0,0,0
+lebanon,viirs-jpss1_2024_Lebanon.csv,viirs-jpss1,NOAA-20,2024,unexpected,0,0,0,0
+lebanon,viirs-jpss1_2025_Lebanon.csv,viirs-jpss1,NOAA-20,2025,0,610,610,545,545
+lebanon,viirs-jpss1_2025_Lebanon.csv,viirs-jpss1,NOAA-20,2025,1,0,0,0,0
+lebanon,viirs-jpss1_2025_Lebanon.csv,viirs-jpss1,NOAA-20,2025,2,0,0,0,0
+lebanon,viirs-jpss1_2025_Lebanon.csv,viirs-jpss1,NOAA-20,2025,3,4,4,3,3
+lebanon,viirs-jpss1_2025_Lebanon.csv,viirs-jpss1,NOAA-20,2025,missing,0,0,0,0
+lebanon,viirs-jpss1_2025_Lebanon.csv,viirs-jpss1,NOAA-20,2025,unexpected,0,0,0,0
+lebanon,viirs-snpp_2012_Lebanon.csv,viirs-snpp,Suomi NPP,2012,0,432,432,391,391
+lebanon,viirs-snpp_2012_Lebanon.csv,viirs-snpp,Suomi NPP,2012,1,0,0,0,0
+lebanon,viirs-snpp_2012_Lebanon.csv,viirs-snpp,Suomi NPP,2012,2,196,196,196,196
+lebanon,viirs-snpp_2012_Lebanon.csv,viirs-snpp,Suomi NPP,2012,3,9,9,8,8
+lebanon,viirs-snpp_2012_Lebanon.csv,viirs-snpp,Suomi NPP,2012,missing,0,0,0,0
+lebanon,viirs-snpp_2012_Lebanon.csv,viirs-snpp,Suomi NPP,2012,unexpected,0,0,0,0
+lebanon,viirs-snpp_2013_Lebanon.csv,viirs-snpp,Suomi NPP,2013,0,769,769,697,697
+lebanon,viirs-snpp_2013_Lebanon.csv,viirs-snpp,Suomi NPP,2013,1,0,0,0,0
+lebanon,viirs-snpp_2013_Lebanon.csv,viirs-snpp,Suomi NPP,2013,2,176,176,176,176
+lebanon,viirs-snpp_2013_Lebanon.csv,viirs-snpp,Suomi NPP,2013,3,1,1,1,1
+lebanon,viirs-snpp_2013_Lebanon.csv,viirs-snpp,Suomi NPP,2013,missing,0,0,0,0
+lebanon,viirs-snpp_2013_Lebanon.csv,viirs-snpp,Suomi NPP,2013,unexpected,0,0,0,0
+lebanon,viirs-snpp_2014_Lebanon.csv,viirs-snpp,Suomi NPP,2014,0,415,415,392,392
+lebanon,viirs-snpp_2014_Lebanon.csv,viirs-snpp,Suomi NPP,2014,1,0,0,0,0
+lebanon,viirs-snpp_2014_Lebanon.csv,viirs-snpp,Suomi NPP,2014,2,177,177,177,177
+lebanon,viirs-snpp_2014_Lebanon.csv,viirs-snpp,Suomi NPP,2014,3,3,3,2,2
+lebanon,viirs-snpp_2014_Lebanon.csv,viirs-snpp,Suomi NPP,2014,missing,0,0,0,0
+lebanon,viirs-snpp_2014_Lebanon.csv,viirs-snpp,Suomi NPP,2014,unexpected,0,0,0,0
+lebanon,viirs-snpp_2015_Lebanon.csv,viirs-snpp,Suomi NPP,2015,0,493,493,445,445
+lebanon,viirs-snpp_2015_Lebanon.csv,viirs-snpp,Suomi NPP,2015,1,0,0,0,0
+lebanon,viirs-snpp_2015_Lebanon.csv,viirs-snpp,Suomi NPP,2015,2,179,179,179,179
+lebanon,viirs-snpp_2015_Lebanon.csv,viirs-snpp,Suomi NPP,2015,3,5,5,5,5
+lebanon,viirs-snpp_2015_Lebanon.csv,viirs-snpp,Suomi NPP,2015,missing,0,0,0,0
+lebanon,viirs-snpp_2015_Lebanon.csv,viirs-snpp,Suomi NPP,2015,unexpected,0,0,0,0
+lebanon,viirs-snpp_2016_Lebanon.csv,viirs-snpp,Suomi NPP,2016,0,678,678,609,609
+lebanon,viirs-snpp_2016_Lebanon.csv,viirs-snpp,Suomi NPP,2016,1,0,0,0,0
+lebanon,viirs-snpp_2016_Lebanon.csv,viirs-snpp,Suomi NPP,2016,2,197,197,197,197
+lebanon,viirs-snpp_2016_Lebanon.csv,viirs-snpp,Suomi NPP,2016,3,5,5,4,4
+lebanon,viirs-snpp_2016_Lebanon.csv,viirs-snpp,Suomi NPP,2016,missing,0,0,0,0
+lebanon,viirs-snpp_2016_Lebanon.csv,viirs-snpp,Suomi NPP,2016,unexpected,0,0,0,0
+lebanon,viirs-snpp_2017_Lebanon.csv,viirs-snpp,Suomi NPP,2017,0,384,384,345,345
+lebanon,viirs-snpp_2017_Lebanon.csv,viirs-snpp,Suomi NPP,2017,1,0,0,0,0
+lebanon,viirs-snpp_2017_Lebanon.csv,viirs-snpp,Suomi NPP,2017,2,167,167,167,167
+lebanon,viirs-snpp_2017_Lebanon.csv,viirs-snpp,Suomi NPP,2017,3,2,2,2,2
+lebanon,viirs-snpp_2017_Lebanon.csv,viirs-snpp,Suomi NPP,2017,missing,0,0,0,0
+lebanon,viirs-snpp_2017_Lebanon.csv,viirs-snpp,Suomi NPP,2017,unexpected,0,0,0,0
+lebanon,viirs-snpp_2018_Lebanon.csv,viirs-snpp,Suomi NPP,2018,0,363,363,332,332
+lebanon,viirs-snpp_2018_Lebanon.csv,viirs-snpp,Suomi NPP,2018,1,0,0,0,0
+lebanon,viirs-snpp_2018_Lebanon.csv,viirs-snpp,Suomi NPP,2018,2,145,145,145,145
+lebanon,viirs-snpp_2018_Lebanon.csv,viirs-snpp,Suomi NPP,2018,3,3,3,3,3
+lebanon,viirs-snpp_2018_Lebanon.csv,viirs-snpp,Suomi NPP,2018,missing,0,0,0,0
+lebanon,viirs-snpp_2018_Lebanon.csv,viirs-snpp,Suomi NPP,2018,unexpected,0,0,0,0
+lebanon,viirs-snpp_2019_Lebanon.csv,viirs-snpp,Suomi NPP,2019,0,548,548,513,513
+lebanon,viirs-snpp_2019_Lebanon.csv,viirs-snpp,Suomi NPP,2019,1,0,0,0,0
+lebanon,viirs-snpp_2019_Lebanon.csv,viirs-snpp,Suomi NPP,2019,2,37,37,37,37
+lebanon,viirs-snpp_2019_Lebanon.csv,viirs-snpp,Suomi NPP,2019,3,5,5,5,5
+lebanon,viirs-snpp_2019_Lebanon.csv,viirs-snpp,Suomi NPP,2019,missing,0,0,0,0
+lebanon,viirs-snpp_2019_Lebanon.csv,viirs-snpp,Suomi NPP,2019,unexpected,0,0,0,0
+lebanon,viirs-snpp_2020_Lebanon.csv,viirs-snpp,Suomi NPP,2020,0,686,686,609,609
+lebanon,viirs-snpp_2020_Lebanon.csv,viirs-snpp,Suomi NPP,2020,1,0,0,0,0
+lebanon,viirs-snpp_2020_Lebanon.csv,viirs-snpp,Suomi NPP,2020,2,8,8,8,8
+lebanon,viirs-snpp_2020_Lebanon.csv,viirs-snpp,Suomi NPP,2020,3,7,7,6,6
+lebanon,viirs-snpp_2020_Lebanon.csv,viirs-snpp,Suomi NPP,2020,missing,0,0,0,0
+lebanon,viirs-snpp_2020_Lebanon.csv,viirs-snpp,Suomi NPP,2020,unexpected,0,0,0,0
+lebanon,viirs-snpp_2021_Lebanon.csv,viirs-snpp,Suomi NPP,2021,0,883,883,820,820
+lebanon,viirs-snpp_2021_Lebanon.csv,viirs-snpp,Suomi NPP,2021,1,0,0,0,0
+lebanon,viirs-snpp_2021_Lebanon.csv,viirs-snpp,Suomi NPP,2021,2,0,0,0,0
+lebanon,viirs-snpp_2021_Lebanon.csv,viirs-snpp,Suomi NPP,2021,3,8,8,8,8
+lebanon,viirs-snpp_2021_Lebanon.csv,viirs-snpp,Suomi NPP,2021,missing,0,0,0,0
+lebanon,viirs-snpp_2021_Lebanon.csv,viirs-snpp,Suomi NPP,2021,unexpected,0,0,0,0
+lebanon,viirs-snpp_2022_Lebanon.csv,viirs-snpp,Suomi NPP,2022,0,426,426,395,395
+lebanon,viirs-snpp_2022_Lebanon.csv,viirs-snpp,Suomi NPP,2022,1,0,0,0,0
+lebanon,viirs-snpp_2022_Lebanon.csv,viirs-snpp,Suomi NPP,2022,2,6,6,6,6
+lebanon,viirs-snpp_2022_Lebanon.csv,viirs-snpp,Suomi NPP,2022,3,15,15,14,14
+lebanon,viirs-snpp_2022_Lebanon.csv,viirs-snpp,Suomi NPP,2022,missing,0,0,0,0
+lebanon,viirs-snpp_2022_Lebanon.csv,viirs-snpp,Suomi NPP,2022,unexpected,0,0,0,0
+lebanon,viirs-snpp_2023_Lebanon.csv,viirs-snpp,Suomi NPP,2023,0,645,645,590,590
+lebanon,viirs-snpp_2023_Lebanon.csv,viirs-snpp,Suomi NPP,2023,1,0,0,0,0
+lebanon,viirs-snpp_2023_Lebanon.csv,viirs-snpp,Suomi NPP,2023,2,9,9,9,9
+lebanon,viirs-snpp_2023_Lebanon.csv,viirs-snpp,Suomi NPP,2023,3,3,3,3,3
+lebanon,viirs-snpp_2023_Lebanon.csv,viirs-snpp,Suomi NPP,2023,missing,0,0,0,0
+lebanon,viirs-snpp_2023_Lebanon.csv,viirs-snpp,Suomi NPP,2023,unexpected,0,0,0,0
+lebanon,viirs-snpp_2024_Lebanon.csv,viirs-snpp,Suomi NPP,2024,0,1248,1248,1162,1162
+lebanon,viirs-snpp_2024_Lebanon.csv,viirs-snpp,Suomi NPP,2024,1,0,0,0,0
+lebanon,viirs-snpp_2024_Lebanon.csv,viirs-snpp,Suomi NPP,2024,2,7,7,7,7
+lebanon,viirs-snpp_2024_Lebanon.csv,viirs-snpp,Suomi NPP,2024,3,2,2,2,2
+lebanon,viirs-snpp_2024_Lebanon.csv,viirs-snpp,Suomi NPP,2024,missing,0,0,0,0
+lebanon,viirs-snpp_2024_Lebanon.csv,viirs-snpp,Suomi NPP,2024,unexpected,0,0,0,0
+lebanon,viirs-snpp_2025_Lebanon.csv,viirs-snpp,Suomi NPP,2025,0,581,581,514,514
+lebanon,viirs-snpp_2025_Lebanon.csv,viirs-snpp,Suomi NPP,2025,1,0,0,0,0
+lebanon,viirs-snpp_2025_Lebanon.csv,viirs-snpp,Suomi NPP,2025,2,0,0,0,0
+lebanon,viirs-snpp_2025_Lebanon.csv,viirs-snpp,Suomi NPP,2025,3,3,3,3,3
+lebanon,viirs-snpp_2025_Lebanon.csv,viirs-snpp,Suomi NPP,2025,missing,0,0,0,0
+lebanon,viirs-snpp_2025_Lebanon.csv,viirs-snpp,Suomi NPP,2025,unexpected,0,0,0,0

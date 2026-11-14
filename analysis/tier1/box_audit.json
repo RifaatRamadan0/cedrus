@@ -1,0 +1,539 @@
+{
+  "requested_years": [
+    2025
+  ],
+  "requested_regions": [
+    "syria",
+    "jordan",
+    "cyprus",
+    "palestine",
+    "israel",
+    "la_rioja"
+  ],
+  "scope": "Incremental box gate; not a complete source or coverage audit",
+  "files": [
+    {
+      "region": "syria",
+      "file": "modis_2025_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 92227,
+      "sha256": "43292251a7bb5058ea3f05d7913416701a76dcc053b8aacc5541d82546613370",
+      "cached": true,
+      "elapsed_seconds": 0.017,
+      "rows": 1158,
+      "box_retained": 1158,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 1112,
+        "1": 0,
+        "2": 46,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 1078,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "syria",
+      "file": "viirs-snpp_2025_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 700608,
+      "sha256": "228c9d9d114f0f54f5bbbaa1e8838e8c37a15d670a07c2e886de755b9c0ef881",
+      "cached": true,
+      "elapsed_seconds": 0.064,
+      "rows": 8959,
+      "box_retained": 8959,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 3666,
+        "1": 0,
+        "2": 5267,
+        "3": 26,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3317,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "syria",
+      "file": "viirs-jpss1_2025_Syria.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Syria.csv",
+      "box": [
+        35.5,
+        32.2,
+        42.5,
+        37.5
+      ],
+      "bytes": 756780,
+      "sha256": "626577c5fa8516f5aaf70e0b13f5889a1ea330536b7bb0c0499cc91ccedbbd58",
+      "cached": true,
+      "elapsed_seconds": 0.086,
+      "rows": 9429,
+      "box_retained": 9429,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 4140,
+        "1": 0,
+        "2": 5260,
+        "3": 29,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3726,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "jordan",
+      "file": "modis_2025_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 5514,
+      "sha256": "1914ea2e8ba78c6730714758299aaabdd98fe6665ac1a5b1b63746d898faba1b",
+      "cached": true,
+      "elapsed_seconds": 0.002,
+      "rows": 68,
+      "box_retained": 68,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 59,
+        "1": 0,
+        "2": 9,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 58,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-snpp_2025_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 59317,
+      "sha256": "fbc6774f08105badfb3261323bae73637296d16beb36d07fc986317bd094ccd6",
+      "cached": true,
+      "elapsed_seconds": 0.005,
+      "rows": 757,
+      "box_retained": 757,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 429,
+        "1": 0,
+        "2": 328,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 374,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "jordan",
+      "file": "viirs-jpss1_2025_Jordan.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Jordan.csv",
+      "box": [
+        34.8,
+        29.0,
+        39.5,
+        33.5
+      ],
+      "bytes": 69480,
+      "sha256": "4dbb99de31216cb948dbe4278cecdd8c6549a52de85ac82d02de264c746d8c63",
+      "cached": true,
+      "elapsed_seconds": 0.007,
+      "rows": 865,
+      "box_retained": 865,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 489,
+        "1": 0,
+        "2": 375,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 424,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "cyprus",
+      "file": "modis_2025_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 9651,
+      "sha256": "d871a718af571244d55724d918e4c42483db0040a909afa8389bb5c737f307eb",
+      "cached": true,
+      "elapsed_seconds": 0.001,
+      "rows": 118,
+      "box_retained": 118,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 117,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 113,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-snpp_2025_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 40526,
+      "sha256": "7b09d57d88756567746f491ae96c1a22b13249f630bc9838645a4c64d12a2177",
+      "cached": true,
+      "elapsed_seconds": 0.006,
+      "rows": 516,
+      "box_retained": 516,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 408,
+        "1": 0,
+        "2": 108,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 390,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "cyprus",
+      "file": "viirs-jpss1_2025_Cyprus.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Cyprus.csv",
+      "box": [
+        32.1,
+        34.4,
+        34.8,
+        35.8
+      ],
+      "bytes": 46958,
+      "sha256": "618dc96ea53d5fbe52fd3e575dbff7962b5fc60cfc7679acc2f7e8edd995b9bb",
+      "cached": true,
+      "elapsed_seconds": 0.005,
+      "rows": 583,
+      "box_retained": 583,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 462,
+        "1": 0,
+        "2": 119,
+        "3": 2,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 440,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "palestine",
+      "file": "modis_2025_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 4346,
+      "sha256": "fc71535cdf9ab150502e75a8d5efef108cf7247ff6d6f37b0dc72f8894657741",
+      "cached": true,
+      "elapsed_seconds": 0.001,
+      "rows": 54,
+      "box_retained": 54,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 47,
+        "1": 0,
+        "2": 7,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 44,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-snpp_2025_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 32690,
+      "sha256": "a8c7cdc66fee9b237b06a0c5f8fcb4963825acd878a050a4d62a1d50f3aeec47",
+      "cached": true,
+      "elapsed_seconds": 0.003,
+      "rows": 416,
+      "box_retained": 416,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 416,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 371,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "palestine",
+      "file": "viirs-jpss1_2025_Palestine.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Palestine.csv",
+      "box": [
+        34.1,
+        31.1,
+        35.7,
+        32.7
+      ],
+      "bytes": 33137,
+      "sha256": "be519614f42d040110ec01d1e6e31caaff41c0a519775610266974e39b80c1a9",
+      "cached": true,
+      "elapsed_seconds": 0.003,
+      "rows": 412,
+      "box_retained": 412,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 412,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 356,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "israel",
+      "file": "modis_2025_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 13102,
+      "sha256": "210e8e5e9b1b39bc2ed2ec1a668d451fb4db63d918049950b00f2868c4581f33",
+      "cached": true,
+      "elapsed_seconds": 0.002,
+      "rows": 163,
+      "box_retained": 163,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 151,
+        "1": 0,
+        "2": 12,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 145,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "israel",
+      "file": "viirs-snpp_2025_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 99444,
+      "sha256": "497559056b252b3ca21530042aae9a358ca2ca060ba7abe6a82d017e1c930a5e",
+      "cached": true,
+      "elapsed_seconds": 0.015,
+      "rows": 1269,
+      "box_retained": 1269,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 792,
+        "1": 0,
+        "2": 476,
+        "3": 1,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 695,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "israel",
+      "file": "viirs-jpss1_2025_Israel.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Israel.csv",
+      "box": [
+        34.2,
+        29.4,
+        35.95,
+        33.4
+      ],
+      "bytes": 98732,
+      "sha256": "6397d5c1fc483f6ae667307f942f8b29dd3e608c10bd55a3478b337ae709279c",
+      "cached": true,
+      "elapsed_seconds": 0.014,
+      "rows": 1229,
+      "box_retained": 1229,
+      "box_excluded": 0,
+      "type_counts_before_filters": {
+        "0": 739,
+        "1": 0,
+        "2": 490,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 650,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "la_rioja",
+      "file": "modis_2025_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/modis/2025/modis_2025_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 3902198,
+      "sha256": "edece169ce64789efba831e1c8b535536e974f8fd775e309f40b1a53eac25439",
+      "cached": true,
+      "elapsed_seconds": 0.433,
+      "rows": 48121,
+      "box_retained": 948,
+      "box_excluded": 47173,
+      "type_counts_before_filters": {
+        "0": 45862,
+        "1": 0,
+        "2": 2259,
+        "3": 0,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 784,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-snpp_2025_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-snpp/2025/viirs-snpp_2025_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 13697114,
+      "sha256": "a6709295263f33166546c7029e823e4ad4716571ca1738a0ebc931d34c373f26",
+      "cached": true,
+      "elapsed_seconds": 1.026,
+      "rows": 170674,
+      "box_retained": 3918,
+      "box_excluded": 166756,
+      "type_counts_before_filters": {
+        "0": 164312,
+        "1": 0,
+        "2": 5912,
+        "3": 450,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3326,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    },
+    {
+      "region": "la_rioja",
+      "file": "viirs-jpss1_2025_Argentina.csv",
+      "url": "https://firms.modaps.eosdis.nasa.gov/data/country/viirs-jpss1/2025/viirs-jpss1_2025_Argentina.csv",
+      "box": [
+        -69.7,
+        -32.8,
+        -65.4,
+        -27.7
+      ],
+      "bytes": 14016040,
+      "sha256": "900032595f151b69b796535967dc814b84e65179802d0877c84905c3f46725f7",
+      "cached": true,
+      "elapsed_seconds": 1.048,
+      "rows": 170323,
+      "box_retained": 3951,
+      "box_excluded": 166372,
+      "type_counts_before_filters": {
+        "0": 163718,
+        "1": 0,
+        "2": 6109,
+        "3": 496,
+        "missing": 0,
+        "unexpected": 0
+      },
+      "retained_after_box_type0_confidence": 3320,
+      "monthly_completeness": "unknown",
+      "type_field_present": true
+    }
+  ],
+  "status": "Selected files pass box gate; full archive audit still required"
+}
