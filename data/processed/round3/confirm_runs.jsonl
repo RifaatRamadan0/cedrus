@@ -1,0 +1,8 @@
+{"event": "start", "at": "2026-11-01T15:34:48+00:00", "regions": ["central_spain", "southern_italy", "sw_australia", "s_california", "portugal"], "confirmation": false, "commit": "80e297f98aaae0fa4c3785f05a1572e0ab4fd288"}
+{"event": "finish", "at": "2026-11-01T15:35:15+00:00", "regions": ["central_spain", "southern_italy", "sw_australia", "s_california", "portugal"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-01T15:35:46+00:00", "regions": ["lebanon", "cyprus", "turkey"], "confirmation": false, "commit": "80e297f98aaae0fa4c3785f05a1572e0ab4fd288"}
+{"event": "finish", "at": "2026-11-01T15:36:07+00:00", "regions": ["lebanon", "cyprus", "turkey"], "confirmation": false, "overall": "NOT CONFIRMED"}
+{"event": "start", "at": "2026-11-01T15:36:41+00:00", "regions": ["central_spain", "southern_italy", "sw_australia", "s_california", "portugal"], "confirmation": false, "commit": "80e297f98aaae0fa4c3785f05a1572e0ab4fd288"}
+{"event": "finish", "at": "2026-11-01T15:37:01+00:00", "regions": ["central_spain", "southern_italy", "sw_australia", "s_california", "portugal"], "confirmation": false, "overall": "CONFIRMED"}
+{"event": "start", "at": "2026-11-02T09:16:07+00:00", "regions": ["northern_algeria", "southern_france", "south_australia", "n_california"], "confirmation": true, "commit": "2a59a3e90e6fd4115df7eac0813ae2c3f4259b43"}
+{"event": "finish", "at": "2026-11-02T09:16:30+00:00", "regions": ["northern_algeria", "southern_france", "south_australia", "n_california"], "confirmation": true, "overall": "CONFIRMED"}
