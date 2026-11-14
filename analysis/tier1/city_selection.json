@@ -1,0 +1,124 @@
+[
+  {
+    "city": "Beirut",
+    "lat": 33.8938,
+    "lon": 35.5018,
+    "radius_km": 5,
+    "unit": "bd",
+    "picked": "lebanon",
+    "warning": "",
+    "shares": [
+      {
+        "id": "lebanon",
+        "name": "Lebanon",
+        "share": 1.0
+      },
+      {
+        "id": "syria",
+        "name": "Syria",
+        "share": 0.0
+      }
+    ],
+    "prescribed_expected": "lebanon"
+  },
+  {
+    "city": "Damascus",
+    "lat": 33.5138,
+    "lon": 36.2765,
+    "radius_km": 5,
+    "unit": "bd",
+    "picked": "syria",
+    "warning": "",
+    "shares": [
+      {
+        "id": "syria",
+        "name": "Syria",
+        "share": 1.0
+      },
+      {
+        "id": "lebanon",
+        "name": "Lebanon",
+        "share": 0.0
+      }
+    ],
+    "prescribed_expected": "syria"
+  },
+  {
+    "city": "Homs",
+    "lat": 34.7324,
+    "lon": 36.7137,
+    "radius_km": 5,
+    "unit": "bd",
+    "picked": "syria",
+    "warning": "",
+    "shares": [
+      {
+        "id": "syria",
+        "name": "Syria",
+        "share": 1.0
+      }
+    ],
+    "prescribed_expected": "syria"
+  },
+  {
+    "city": "Beirut",
+    "lat": 33.8938,
+    "lon": 35.5018,
+    "radius_km": 5,
+    "unit": "hot",
+    "picked": "lebanon",
+    "warning": "",
+    "shares": [
+      {
+        "id": "lebanon",
+        "name": "Lebanon",
+        "share": 1.0
+      },
+      {
+        "id": "syria",
+        "name": "Syria",
+        "share": 0.0
+      }
+    ],
+    "prescribed_expected": "lebanon"
+  },
+  {
+    "city": "Damascus",
+    "lat": 33.5138,
+    "lon": 36.2765,
+    "radius_km": 5,
+    "unit": "hot",
+    "picked": "syria",
+    "warning": "",
+    "shares": [
+      {
+        "id": "syria",
+        "name": "Syria",
+        "share": 1.0
+      },
+      {
+        "id": "lebanon",
+        "name": "Lebanon",
+        "share": 0.0
+      }
+    ],
+    "prescribed_expected": "syria"
+  },
+  {
+    "city": "Homs",
+    "lat": 34.7324,
+    "lon": 36.7137,
+    "radius_km": 5,
+    "unit": "hot",
+    "picked": "syria",
+    "warning": "",
+    "shares": [
+      {
+        "id": "syria",
+        "name": "Syria",
+        "share": 1.0
+      }
+    ],
+    "prescribed_expected": "syria"
+  }
+]

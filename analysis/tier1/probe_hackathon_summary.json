@@ -1,0 +1,9 @@
+{
+  "status": "failed with exception",
+  "passed_checks": 353,
+  "failed_assertions_logged": 0,
+  "exception": "Page.wait_for_function timeout 120000ms at Hebron region-picker switch",
+  "full_probe_pass": false,
+  "no_console_errors_assertion_reached": false,
+  "root_diagnostic": "hebron_switch_diagnostic.json"
+}

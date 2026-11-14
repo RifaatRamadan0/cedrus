@@ -1,0 +1,25 @@
+{
+  "passed": 468,
+  "failed": 0,
+  "round": 1,
+  "elapsed_seconds": 346,
+  "full_probe_pass": true,
+  "console_error_check_passed": true,
+  "new_checks": 108,
+  "regions": [
+    "portugal",
+    "lebanon",
+    "syria",
+    "jordan",
+    "cyprus",
+    "la_rioja"
+  ],
+  "units": [
+    "bd",
+    "hot"
+  ],
+  "visual_review": "tools/shots/map_clarity_syria.png reviewed",
+  "data_or_model_changes": false,
+  "committed": true,
+  "pushed": false
+}

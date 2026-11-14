@@ -1,0 +1,27 @@
+{
+  "passed_checks": 323,
+  "failed_assertions": 0,
+  "exit_code": 1,
+  "full_probe_pass": false,
+  "failure": "Tel Aviv burning-days test raises TypeError in areaName: undefined latitude.toFixed",
+  "five_cities_both_units_passed": true,
+  "all_four_regions_both_units_passed": true,
+  "round_trips_reached": false,
+  "final_console_error_check_reached": false,
+  "tel_aviv_independent_footprint_scores": {
+    "bd": [
+      {
+        "id": "jordan",
+        "name": "Jordan",
+        "share": 0.0
+      }
+    ],
+    "hot": [
+      {
+        "id": "jordan",
+        "name": "Jordan",
+        "share": 0.0
+      }
+    ]
+  }
+}

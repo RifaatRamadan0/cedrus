@@ -1,0 +1,14 @@
+{
+  "passed_checks": 214,
+  "failed_checks": 1,
+  "exit_code": 1,
+  "full_probe_pass": false,
+  "failure": "skip link is the first stop and moves focus to the calendar",
+  "first_focused_class": "skip-link",
+  "actual_focused_id_after_enter": "",
+  "expected_focused_id_after_enter": "calendar-panel",
+  "tel_aviv_and_mediterranean_checks_reached": false,
+  "full_catalog_round_trips_reached": false,
+  "final_console_error_check_reached": false,
+  "cause_established": false
+}

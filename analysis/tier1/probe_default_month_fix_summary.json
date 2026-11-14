@@ -1,0 +1,14 @@
+{
+  "passed_checks": 216,
+  "failed_checks": 1,
+  "exit_code": 1,
+  "full_probe_pass": false,
+  "manual_region_date_preservation_passed": true,
+  "lebanon_example_october_2025_passed": true,
+  "original_lebanon_default_month_assertion_passed": true,
+  "failure": "methodology: both models in plain words, the honest history with round 3 five numbers, links, SHA-256s, credits",
+  "identified_failed_condition": "expects equals the exact sum within rounding (<= 0.1 per month), replaced in the app by the requested rounding-formula wording",
+  "full_catalog_round_trips_reached": false,
+  "tier1_city_checks_reached": false,
+  "final_console_error_check_reached": false
+}

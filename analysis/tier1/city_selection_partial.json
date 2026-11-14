@@ -1,0 +1,178 @@
+{
+  "status": "Incomplete: probe timed out at Hebron picker; Gaza and hotspot city loop not reached",
+  "source": "probe_hackathon.log",
+  "observed": [
+    {
+      "city": "Beirut",
+      "unit": "bd",
+      "picked": "lebanon",
+      "shares": [
+        {
+          "id": "lebanon",
+          "name": "Lebanon",
+          "share": 1.0
+        },
+        {
+          "id": "syria",
+          "name": "Syria",
+          "share": 0.0
+        }
+      ],
+      "warning": false
+    },
+    {
+      "city": "Damascus",
+      "unit": "bd",
+      "picked": "syria",
+      "shares": [
+        {
+          "id": "syria",
+          "name": "Syria",
+          "share": 1.0
+        },
+        {
+          "id": "lebanon",
+          "name": "Lebanon",
+          "share": 0.0
+        },
+        {
+          "id": "jordan",
+          "name": "Jordan",
+          "share": 0.0
+        }
+      ],
+      "warning": false
+    },
+    {
+      "city": "Homs",
+      "unit": "bd",
+      "picked": "syria",
+      "shares": [
+        {
+          "id": "syria",
+          "name": "Syria",
+          "share": 1.0
+        }
+      ],
+      "warning": false
+    },
+    {
+      "city": "Amman",
+      "unit": "bd",
+      "picked": "jordan",
+      "shares": [
+        {
+          "id": "jordan",
+          "name": "Jordan",
+          "share": 1.0
+        },
+        {
+          "id": "israel",
+          "name": "Israel",
+          "share": 0.0
+        }
+      ],
+      "warning": false
+    },
+    {
+      "city": "Nicosia",
+      "unit": "bd",
+      "picked": "cyprus",
+      "shares": [
+        {
+          "id": "cyprus",
+          "name": "Cyprus",
+          "share": 1.0
+        }
+      ],
+      "warning": false
+    },
+    {
+      "city": "Tel Aviv",
+      "unit": "bd",
+      "picked": "israel",
+      "shares": [
+        {
+          "id": "israel",
+          "name": "Israel",
+          "share": 1.0
+        },
+        {
+          "id": "palestine",
+          "name": "Palestine",
+          "share": 0.8540372670807453
+        },
+        {
+          "id": "jordan",
+          "name": "Jordan",
+          "share": 0.0
+        }
+      ],
+      "warning": true
+    },
+    {
+      "city": "Haifa",
+      "unit": "bd",
+      "picked": "israel",
+      "shares": [
+        {
+          "id": "israel",
+          "name": "Israel",
+          "share": 1.0
+        },
+        {
+          "id": "jordan",
+          "name": "Jordan",
+          "share": 0.0
+        }
+      ],
+      "warning": false
+    },
+    {
+      "city": "Ramallah",
+      "unit": "bd",
+      "picked": "palestine",
+      "shares": [
+        {
+          "id": "palestine",
+          "name": "Palestine",
+          "share": 1.0
+        },
+        {
+          "id": "israel",
+          "name": "Israel",
+          "share": 0.9739130434782609
+        },
+        {
+          "id": "jordan",
+          "name": "Jordan",
+          "share": 0.0
+        }
+      ],
+      "warning": true
+    },
+    {
+      "city": "Hebron",
+      "unit": "bd",
+      "picked": "israel",
+      "shares": [
+        {
+          "id": "israel",
+          "name": "Israel",
+          "share": 1.0
+        },
+        {
+          "id": "palestine",
+          "name": "Palestine",
+          "share": 1.0
+        },
+        {
+          "id": "jordan",
+          "name": "Jordan",
+          "share": 0.0
+        }
+      ],
+      "warning": true
+    }
+  ]
+}

@@ -1,0 +1,454 @@
+serving web/ on http://127.0.0.1:8765/
+[PASS] regions.json: model is the frozen round-2 choice in every region :: {'portugal': 'A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)', 'lebanon': 'A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)', 'syria': 'A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)', 'la_rioja': 'A2 + NOAA-20 via Suomi NPP (round-2 choice, frozen)'}
+[PASS] frozen.json SHA-256 is the one recorded at the freeze, and regions.json names it :: file bedc56d5ba85b851…, regions.json ['bedc56d5ba85b851']
+[PASS] fit windows as frozen: Suomi NPP 2012-02..2019-12, NOAA-20 s on 2018-04..2019-12 :: {'portugal': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}, 'lebanon': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}, 'syria': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}, 'la_rioja': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}}
+[PASS] weights_r2 refuses a frozen.json that is not the frozen file
+[PASS] the round-2 fit refuses a window reaching into 2020
+[PASS] frozen by construction: a synthetic 2023 detection in a brand-new cell leaves r0, b, cell sums and s bit-identical :: cells 28 -> 29
+[PASS] a cell that first burns after the fit window gets A2's region-level ratio for its slot :: 0.125000 vs r0 0.125000
+[PASS] combination rule: no slot's average includes a satellite with ratio 0 :: []
+[PASS] NOAA-20 weights in both-covered months = 1/2 x A2 ratio x s (Portugal 2023 sample) :: 137 detections, max |w - expected| 0.000050; s = [0.9993, 0.9417]
+[PASS] Lebanon January nights (ratio 0): VIIRS detections weigh 0 :: 66 detections
+[PASS] regions.json: the default unit is burning days :: burning_days
+[PASS] regions.json: the burning-day model is D-a, round-3 confirmed, in every region :: {'portugal': 'D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)', 'lebanon': 'D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)', 'syria': 'D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)', 'la_rioja': 'D-a + NOAA-20 via Suomi NPP (burning days, round-3 confirmed)'}
+[PASS] frozen_round3.json SHA-256 is the one recorded at the freeze, and regions.json names it :: file f3130df9ed80894e…, regions.json ['f3130df9ed80894e']
+[PASS] burning-day model uses the frozen a = 10
+[PASS] burning days: fit windows Suomi NPP 2012-02..2019-12, NOAA-20 s on 2018-04..2019-12 :: {'portugal': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}, 'lebanon': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}, 'syria': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}, 'la_rioja': {'snpp': ['2012-02', '2019-12'], 'noaa20': ['2018-04', '2019-12']}}
+[PASS] the burning-day model refuses a frozen_round3.json that is not the frozen file
+[PASS] the burning-day fit refuses a window reaching into 2020
+[PASS] no 2020+ in the burning-day fit: dropping every 2020-2025 detection leaves r0, b, cell sums and s bit-identical :: 8920 detections after 2019 dropped
+[PASS] burning days frozen by construction: a 2023 burning day in a brand-new cell changes nothing fitted, and that cell gets r0_k of its slot :: cells 28 -> 29; new cell ratios [0.0, 0.1377, 0.0986, 0.7369] vs r0 [0.0, 0.1377, 0.0986, 0.7369]
+[PASS] lebanon: the product's D-a fit is bit-identical to round 3's own refit of this region (r0, b, cell sums) :: 9352 rows in round 3's table, 28 fit cells
+[PASS] lebanon: monthly_bd.json m = the burning days' w + bg in every cell-month :: max |sum w + bg - m| 0.00500 over 8428 cell-months
+[PASS] lebanon: 2023 VIIRS burning days weigh 1/2 x D-a's class ratio (x s for NOAA-20) :: 130 burning days, max |w - expected| 0.000050; s = [0.9667, 0.8924]
+[PASS] lebanon: bridged MODIS burning days weigh 1 / Terra's burning-day share :: 20 burning days
+[PASS] portugal: the product's D-a fit is bit-identical to round 3's own refit of this region (r0, b, cell sums) :: 61122 rows in round 3's table, 183 fit cells
+[PASS] portugal: monthly_bd.json m = the burning days' w + bg in every cell-month :: max |sum w + bg - m| 0.00500 over 55685 cell-months
+[PASS] portugal: 2023 VIIRS burning days weigh 1/2 x D-a's class ratio (x s for NOAA-20) :: 400 burning days, max |w - expected| 0.000050; s = [0.9653, 0.9373]
+[PASS] portugal: bridged MODIS burning days weigh 1 / Terra's burning-day share :: 1639 burning days
+[PASS] portugal hotspots: whole-region month = exact sum within the unchanged Portugal/Lebanon baseline cap :: largest gap 0.0704 over 301 months
+[PASS] portugal burning: whole-region month = exact sum within the unchanged Portugal/Lebanon baseline cap :: largest gap 0.0924 over 301 months
+[PASS] lebanon hotspots: whole-region month = exact sum within the unchanged Portugal/Lebanon baseline cap :: largest gap 0.0292 over 301 months
+[PASS] lebanon burning: whole-region month = exact sum within the unchanged Portugal/Lebanon baseline cap :: largest gap 0.0347 over 301 months
+[PASS] portugal: zero-weight notes are exactly the months where >= 10% of the used VIIRS burning days weigh 0 (Python, from the files) :: 0 months noted; 2022+ share 0.0015 (regions.json 0.0015)
+[PASS] lebanon: zero-weight notes are exactly the months where >= 10% of the used VIIRS burning days weigh 0 (Python, from the files) :: 28 months noted; 2022+ share 0.2052 (regions.json 0.2052)
+[PASS] cold load to rendered calendar < 5 s (20 Mbit/s, 40 ms, no cache) :: 1.40 s
+[PASS] cold load: the calendar waits only for the burning-day calendar files (no hotspot or burning-day records) :: {'portugal/drift_bd.json': 3341, 'portugal/monthly_bd.json': 1029466, 'regions.json': 178612}, 1.21 MB
+[PASS] map loading state when the calendar appears: 'Loading map…', draw buttons disabled with a matching hint :: {'loading': 'Loading map…', 'drawDisabled': True, 'hint': 'Drawing tools load with the map…', 'preload': 'auto', 'autoplay': False, 'fetched': ['regions.json', 'portugal/monthly_bd.json', 'portugal/drift_bd.json']}
+[PASS] hero video as served: preload=none and no autoplay attribute :: <video class="hero-video" muted loop playsinline preload="none" poster="assets/wildfire-poster.jpg" aria-label="Wildfire
+[PASS] hero video starts only after the calendar rendered :: calendar 1.40 s, video play 1.41 s
+[PASS] reduced motion: hero video never plays
+[PASS] default unit is burning days: switch pressed, calendar, legend, panel, map caption, area and downloads say so :: {'unit': 'bd', 'bd': 'true', 'hot': 'false', 'note': 'Harmonized estimate (expected value), in MODIS-equivalent burning days. Colour: burning days per month (log scale). Whole region: the sum of its 0.25° cells.', 'legend': 'Burning days per month1101001,000≈ zero (under 0.5)▲flare-up: 2.5× the medi
+[PASS] burning days: default month = most recent with >= 5 baseline years and median >= 5 (monthly_bd.json) :: December 2025 · Portugal (whole region) (expected December 2025)
+[PASS] burning days: the same record and policy (312 cells; no-data 11, bridged 19, estimated 48) :: [312, 11, 19, 48]
+[PASS] burning days: the whole-region calendar is monthly_bd.json :: 68806.23 vs 68806.23
+[PASS] burning days: the drift chart is drift_bd.json, in burning days :: Line: MODIS burning days actually observed ÷ MODIS burning days predicted from VIIRS (Suomi NPP and NOAA-20, averaged wh
+[PASS] burning days: season dates shown for Portugal, counted in burning days :: Normal start Mar 25 ± 50 days Middle Aug 8 ± 15 days Normal end Sep 21 ± 17 days
+[INFO] burning days, 2011 -> 2012 totals: naive 2651 -> 4546 (x1.71); harmonized 2651 -> 2995 (x1.13)
+[PASS] burning days: a bridged month says Terra's share of MODIS burning days :: 0 burning days (MODIS-equivalent), harmonized estimate (expected value)  BRIDGEDBridged: Terra alone, scaled up by Terra’s usual share of MODIS burning days (2003–2011).  Not enough history for a base
+[PASS] two models: where burning days exceed hotspots (whole region) the panel says so with both numbers; elsewhere it does not :: 7 such months in Portugal; 2022-05: Burning days and hotspots come from two separately tested models; here the burning-day estimate (47) is above the hotspot estimate (41), which can’t happen in r
+[PASS] burning days: Portugal whole region 2000-2025: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_region_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: Portugal whole region 2000-2025: burning-day CSV parses :: 135574 rows
+[PASS] burning days: Portugal whole region 2000-2025: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 135574 rows, Python 135574; sum w 68182.6134 vs 68182.6134
+[PASS] burning days: Portugal whole region 2000-2025: burning-day calendar sum == sum(w) inside + background :: calendar 68806.2300 vs burning days 68182.6134 + background 623.8900, |diff| 0.2734, tolerance 52.9637 (rounding bound of 2-dp cell values)
+[PASS] burning days: Portugal whole region 2000-2025: 2005-08 (its largest month) calendar == its burning days' w + background :: 4629.0000 vs 4629.0000, tolerance 1.1564
+[PASS] burning days: Portugal whole region 2000-2025: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[INFO] burning days, 12 km circle at 37.3,-8.6: 12 km around 37.300, -8.600 in Portugal 1,733 burning days inside the shape (all satellites, 2000-12 to 2025-12; a ~1 km square counts when its centre is inside). The calendar adds up the weight of ea
+[PASS] burning days: 12 km circle at 37.3,-8.6: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_circle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: 12 km circle at 37.3,-8.6: burning-day CSV parses :: 1733 rows
+[PASS] burning days: 12 km circle at 37.3,-8.6: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 1733 rows, Python 1733; sum w 1024.4943 vs 1024.4943
+[PASS] burning days: 12 km circle at 37.3,-8.6: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 2.7516 vs Python 2.7519
+[PASS] burning days: 12 km circle at 37.3,-8.6: the page counts the same burning days :: page 1733, Python 1733
+[PASS] burning days: 12 km circle at 37.3,-8.6: burning-day calendar sum == sum(w) inside + background :: calendar 1027.2459 vs burning days 1024.4943 + background 2.7516, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: 12 km circle at 37.3,-8.6: 2003-08 (its largest month) calendar == its burning days' w + background :: 289.0000 vs 289.0000, tolerance 0.0100
+[PASS] burning days: 12 km circle at 37.3,-8.6: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[INFO] burning days, 9 km circle at 40.13,-8.36: 9 km around 40.130, -8.360 in Portugal 377 burning days inside the shape (all satellites, 2000-12 to 2025-12; a ~1 km square counts when its centre is inside). The calendar adds up the weight of each 
+[PASS] burning days: 9 km circle at 40.13,-8.36: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_circle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: 9 km circle at 40.13,-8.36: burning-day CSV parses :: 377 rows
+[PASS] burning days: 9 km circle at 40.13,-8.36: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 377 rows, Python 377; sum w 221.0370 vs 221.0370
+[PASS] burning days: 9 km circle at 40.13,-8.36: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 1.4346 vs Python 1.4345
+[PASS] burning days: 9 km circle at 40.13,-8.36: the page counts the same burning days :: page 377, Python 377
+[PASS] burning days: 9 km circle at 40.13,-8.36: burning-day calendar sum == sum(w) inside + background :: calendar 222.4716 vs burning days 221.0370 + background 1.4346, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: 9 km circle at 40.13,-8.36: 2005-08 (its largest month) calendar == its burning days' w + background :: 103.0000 vs 103.0000, tolerance 0.0100
+[PASS] burning days: 9 km circle at 40.13,-8.36: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[INFO] burning days, 25 km circle at 39.6,-8.2: 25 km around 39.600, -8.200 in Portugal 2,887 burning days inside the shape (all satellites, 2000-12 to 2025-12; a ~1 km square counts when its centre is inside). The calendar adds up the weight of ea
+[PASS] burning days: 25 km circle at 39.6,-8.2: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_circle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: 25 km circle at 39.6,-8.2: burning-day CSV parses :: 2887 rows
+[PASS] burning days: 25 km circle at 39.6,-8.2: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 2887 rows, Python 2887; sum w 1824.7459 vs 1824.7459
+[PASS] burning days: 25 km circle at 39.6,-8.2: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 12.1178 vs Python 12.1183
+[PASS] burning days: 25 km circle at 39.6,-8.2: the page counts the same burning days :: page 2887, Python 2887
+[PASS] burning days: 25 km circle at 39.6,-8.2: burning-day calendar sum == sum(w) inside + background :: calendar 1836.8637 vs burning days 1824.7459 + background 12.1178, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: 25 km circle at 39.6,-8.2: 2017-08 (its largest month) calendar == its burning days' w + background :: 339.0000 vs 339.0000, tolerance 0.0100
+[PASS] burning days: 25 km circle at 39.6,-8.2: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] burning days: 25 km circle at 39.6,-8.2: no false 2022 jump in anomaly mode (strong-above share from 2022 <= 2x before) :: strong-above share 2008-21 0.00 of 14 coloured, 2022+ 0.00 of 0; 202 few-fires neutral cells
+[INFO] burning days, 1 km circle at 39.685,-8.905: 1 km around 39.685, -8.905 in Portugal 181 burning days inside the shape (all satellites, 2000-12 to 2025-12; a ~1 km square counts when its centre is inside). The calendar adds up the weight of each 
+[PASS] burning days: 1 km circle at 39.685,-8.905: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_circle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: 1 km circle at 39.685,-8.905: burning-day CSV parses :: 181 rows
+[PASS] burning days: 1 km circle at 39.685,-8.905: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 181 rows, Python 181; sum w 3.0245 vs 3.0245
+[PASS] burning days: 1 km circle at 39.685,-8.905: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 0.0167 vs Python 0.0162
+[PASS] burning days: 1 km circle at 39.685,-8.905: the page counts the same burning days :: page 181, Python 181
+[PASS] burning days: 1 km circle at 39.685,-8.905: burning-day calendar sum == sum(w) inside + background :: calendar 3.0412 vs burning days 3.0245 + background 0.0167, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: 1 km circle at 39.685,-8.905: 2022-10 (its largest month) calendar == its burning days' w + background :: 0.4779 vs 0.4779, tolerance 0.0100
+[PASS] burning days: 1 km circle at 39.685,-8.905: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[INFO] burning days, 1.5 km circle at 37.32,-8.55: 1.5 km around 37.320, -8.550 in Portugal 46 burning days inside the shape (all satellites, 2000-12 to 2025-12; a ~1 km square counts when its centre is inside). The calendar adds up the weight of each
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_circle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: burning-day CSV parses :: 46 rows
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 46 rows, Python 46; sum w 21.0000 vs 21.0000
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 0.0436 vs Python 0.0437
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: the page counts the same burning days :: page 46, Python 46
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: burning-day calendar sum == sum(w) inside + background :: calendar 21.0436 vs burning days 21.0000 + background 0.0436, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: 2003-09 (its largest month) calendar == its burning days' w + background :: 11.0000 vs 11.0000, tolerance 0.0100
+[PASS] burning days: 1.5 km circle at 37.32,-8.55: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[INFO] burning days, 3 km circle at 37.32,-8.55: 3 km around 37.320, -8.550 in Portugal 166 burning days inside the shape (all satellites, 2000-12 to 2025-12; a ~1 km square counts when its centre is inside). The calendar adds up the weight of each 
+[PASS] burning days: 3 km circle at 37.32,-8.55: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_circle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: 3 km circle at 37.32,-8.55: burning-day CSV parses :: 166 rows
+[PASS] burning days: 3 km circle at 37.32,-8.55: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 166 rows, Python 166; sum w 78.0000 vs 78.0000
+[PASS] burning days: 3 km circle at 37.32,-8.55: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 0.1750 vs Python 0.1749
+[PASS] burning days: 3 km circle at 37.32,-8.55: the page counts the same burning days :: page 166, Python 166
+[PASS] burning days: 3 km circle at 37.32,-8.55: burning-day calendar sum == sum(w) inside + background :: calendar 78.1750 vs burning days 78.0000 + background 0.1750, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: 3 km circle at 37.32,-8.55: 2018-08 (its largest month) calendar == its burning days' w + background :: 39.0000 vs 39.0000, tolerance 0.0100
+[PASS] burning days: 3 km circle at 37.32,-8.55: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] burning days: 3 km circle at 37.32,-8.55: no false 2022 jump in anomaly mode (strong-above share from 2022 <= 2x before) :: strong-above share 2008-21 0.00 of 0 coloured, 2022+ 0.00 of 0; 216 few-fires neutral cells
+[PASS] burning days: drawn rectangle: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_rectangle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: drawn rectangle: burning-day CSV parses :: 2261 rows
+[PASS] burning days: drawn rectangle: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 2261 rows, Python 2261; sum w 1134.9073 vs 1134.9073
+[PASS] burning days: drawn rectangle: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 45.6064 vs Python 45.6064
+[PASS] burning days: drawn rectangle: the page counts the same burning days :: page 2261, Python 2261
+[PASS] burning days: drawn rectangle: burning-day calendar sum == sum(w) inside + background :: calendar 1180.5137 vs burning days 1134.9073 + background 45.6064, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: drawn rectangle: 2003-08 (its largest month) calendar == its burning days' w + background :: 64.0000 vs 64.0000, tolerance 0.0100
+[PASS] burning days: drawn rectangle: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] burning days: drawn polygon: monthly CSV is in burning days (methods line and file name) :: cedrus_portugal_polygon_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: drawn polygon: burning-day CSV parses :: 10651 rows
+[PASS] burning days: drawn polygon: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 10651 rows, Python 10651; sum w 5846.1090 vs 5846.1090
+[PASS] burning days: drawn polygon: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 32.5513 vs Python 32.5511
+[PASS] burning days: drawn polygon: the page counts the same burning days :: page 10651, Python 10651
+[PASS] burning days: drawn polygon: burning-day calendar sum == sum(w) inside + background :: calendar 5878.6603 vs burning days 5846.1090 + background 32.5513, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: drawn polygon: 2003-08 (its largest month) calendar == its burning days' w + background :: 917.0000 vs 917.0000, tolerance 0.0100
+[PASS] burning days: drawn polygon: source flags are the documented ones :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] switch to hotspots: same area and month, numbers and words in detections, hotspot downloads :: burning days 6.5 -> hotspots 8.2 (hotspot CSV 8.23); August 2023 · 12 km around 37.300, -8.600 in Portugal
+[PASS] switch back to burning days: the same value again :: 6.5 -> 6.5
+[PASS] burning days: Lebanon whole region: monthly CSV is in burning days (methods line and file name) :: cedrus_lebanon_region_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: Lebanon whole region: burning-day CSV parses :: 12285 rows
+[PASS] burning days: Lebanon whole region: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 12285 rows, Python 12285; sum w 2034.0322 vs 2034.0322
+[PASS] burning days: Lebanon whole region: burning-day calendar sum == sum(w) inside + background :: calendar 2055.0400 vs burning days 2034.0322 + background 20.9000, |diff| 0.1078, tolerance 6.6343 (rounding bound of 2-dp cell values)
+[PASS] burning days: Lebanon whole region: 2024-10 (its largest month) calendar == its burning days' w + background :: 99.2600 vs 99.2729, tolerance 0.1824
+[PASS] burning days: Lebanon whole region: source flags are the documented ones :: ['bridged', 'estimated (S-NPP only) (5 of 9 VIIRS burning days in Lebanon this month carry no weight: their fire-power class never matched a MODIS fire in this 
+[PASS] Lebanon 2022-01: the zero-weight note is in the tooltip, the panel and both burning-day CSVs :: 19 of 19 VIIRS burning days in Lebanon this month carry no weight: their fire-power class never matched a MODIS fire in this season during 2012–2019
+[PASS] burning-day view: the hotspot CSV downloads too, with the hotspot view's weights and notes :: 14976 rows of 14976; sum w 2105.00 vs 2104.95; 14,976 detections in the exact area, 2000–2025. Column w is each one’s share of the hotspot view’s harmonized estimate (
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: monthly CSV is in burning days (methods line and file name) :: cedrus_lebanon_circle_2000-2025_monthly_burning_days.csv; # CEDRUS monthly burning days (days each 0.01-degree square had a fire detected) in MODIS-
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: burning-day CSV parses :: 58 rows
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: the burning-day CSV is exactly the burning days whose square's centre is inside (Python, from the files) :: CSV 58 rows, Python 58; sum w 7.5509 vs 7.5509
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: background = each cell's bg x the exact share of its area inside the shape (Python clip) :: CSV 0.0577 vs Python 0.0581
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: the page counts the same burning days :: page 58, Python 58
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: burning-day calendar sum == sum(w) inside + background :: calendar 7.6086 vs burning days 7.5509 + background 0.0577, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: 2021-08 (its largest month) calendar == its burning days' w + background :: 2.0000 vs 2.0000, tolerance 0.0100
+[PASS] burning days: Lebanon 5 km circle at 34.4,36.1: source flags are the documented ones :: ['bridged', 'estimated (S-NPP only) (5 of 9 VIIRS burning days in Lebanon this month carry no weight: their fire-power class never matched a MODIS fire in this 
+[PASS] a value between 0 and 0.05 shows as <0.1 (its tooltip does not say 'no burning days'), and a value of 1 takes the singular unit :: {'small': ('December 2025: under 0.01 burning days (≈ zero, under 0.5); trust check: few fires — too few to judge · estimated · S-NPP only (5 of 9 VIIRS burning days in Lebanon this month carry no weight: their fire-power class never matched a MODIS fire in this season during 2012–2019)', '<0.1'), 'one': ('October 2020: 1 burning day; trust check: few fires — too few to judge · observed', '1')}
+[PASS] the unit is remembered for the session: after a reload the page opens in hotspots :: {'unit': 'hot', 'pressed': 'true', 'note': 'Harmonized estimate (expected value), in MODIS-equivalent detections. Colour: detections per month (log scale). Whol
+[PASS] calendar rendered: 26 years x 12 months :: 312 cells; no-data 11, bridged 19, estimated 48
+[PASS] record = MODIS's first complete month (2000-12) to Dec 2025: no-data Jan-Nov 2000; bridged Dec 2000..Jun 2002; estimated 2022-01..2025-12
+[PASS] record-end note names the pending near-real-time key :: The record runs to December 2025. 2026 (to the present) needs NASA’s FIRMS near-real-time API key — pending.
+[PASS] default area is Portugal, whole region
+[PASS] default month = most recent with >= 5 baseline years and median >= 5 :: December 2025 · Portugal (whole region) (expected December 2025)
+[PASS] zero months are a dark tile with a centred dot :: rgb(12, 25, 36) luminance 0.09; December 2000: no detections · bridged
+[INFO] season (Portugal): Normal start Mar 25 ± 53 days Middle Aug 8 ± 15 days Normal end Sep 21 ± 17 days
+[PASS] season dates shown for Portugal
+[INFO] 2011 -> 2012 totals: naive 2873 -> 8205 (x2.86); harmonized 2873 -> 3263 (x1.14)
+[PASS] naive toggle recolours Aug 2012 :: background-color:#ef7f2b -> background-color:#f49838
+[PASS] anomaly mode: vs median by default, switch visible
+[PASS] anomaly: a month with < 5 baseline years has no anomaly colour :: August 2005: 5,155 detections; not enough history for a baseline (2 years) · observed
+[PASS] vs mean switch recolours and relabels :: 169 of 312 cells changed colour
+[PASS] tooltip mean == panel mean (Aug 2019) :: tooltip '1,443' vs panel '1,443' :: August 2019: -95% vs 2003–2018 mean (76 vs 1,443); trust check: reliable · observed
+[PASS] ref switch hidden outside anomaly mode
+[PASS] keyboard: ArrowLeft + Enter selects November 2025 :: November 2025 · Portugal (whole region)
+[PASS] keyboard: ArrowUp moves focus a year back :: November 2024: 25 detections; trust check: reliable (R 0.17) · estimated
+[PASS] selected month panel: October 2017 with median, mean, rank, chance, trust
+[INFO] Sep 2024 panel: SELECTED MONTH |  | September 2024 · Portugal (whole region) |  | 3,325 fire detections, harmonized estimate (expected value) | 80% range 3,223–3,430 (approximate, from the model) |  | ESTIMATEDEstimated from VIIRS: the average of the Suomi NPP and NOAA-20 estimates (MODIS drifted after 2021). |  | usual |  | 21× a normal September | Flame: this month. Dashed ghost: the normal September (median 159). Bracket: the usual range, the middle half of 2003–2023 (88–518). |  | Normal September (median) | 159 this month +1991% | Multi-year mean | 342 this month +871% | Rank among baseline years | 100 percentile | Chance it is above the median | 100% |  | Baseline: September in 2003–2023 (21 years), h
+[PASS] Sep 2024 (far above normal) is Reliable
+[PASS] June 2006 (3 baseline years) says 'Not enough history for a baseline'
+[PASS] table fallback lists every year :: 26 rows
+[PASS] Portugal whole region 2000-2025: methods line wording :: Area Portugal (whole region): the sum of its 185 cells of 0.25 deg (equal to the exact sum within rounding; bound: 0.005 × cells + 0.00005 ×
+[PASS] Portugal whole region 2000-2025: monthly CSV parses with methods line :: 301 months
+[PASS] Portugal whole region 2000-2025: hotspot CSV parses :: 214712 rows, 20 columns
+[PASS] Portugal whole region 2000-2025: calendar sum == hotspot CSV sum(w) + background :: calendar 76351.2100 vs hotspots 75710.5961 + background 640.7100, |diff| 0.0961, tolerance 56.9556 (rounding bound of 2-dp cell values)
+[PASS] Portugal whole region 2000-2025: source flags are the documented ones (plus the combination note) :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] model A background is in the record (bg > 0) and inside the equality above :: background 640.71 of 76351.21
+[PASS] hero badge in plain words: both units, both confirmed on unseen regions :: Burning days & hotspots · both confirmed on unseen regions
+[PASS] NOAA-20 detections carry weight in the estimated era :: 31714 of 31714 with w > 0
+[PASS] estimated months are flagged S-NPP+NOAA-20
+[PASS] CSV version strings exactly as in the FIRMS files :: ['2', '6.03', '6.2', '61.03']
+[INFO] 12 km circle at 37.3,-8.6: 12 km around 37.300, -8.600 in Portugal 3,378 detections inside the shape (all satellites, 2000-12 to 2025-12). The calendar adds up the weight of each one: an exact sum, not whole cells.
+[PASS] 12 km circle at 37.3,-8.6: methods line wording :: Area 12 km around 37.300; -8.600 in Portugal: exact sums of the detection weights inside the shape (3378 detections). Model A2 + NOAA-20 via
+[PASS] 12 km circle at 37.3,-8.6: monthly CSV parses with methods line :: 301 months
+[PASS] 12 km circle at 37.3,-8.6: hotspot CSV parses :: 3378 rows, 20 columns
+[PASS] 12 km circle at 37.3,-8.6: calendar sum == hotspot CSV sum(w) + background :: calendar 1199.8596 vs hotspots 1197.0372 + background 2.8224, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] 12 km circle at 37.3,-8.6: source flags are the documented ones (plus the combination note) :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] 12 km circle at 37.3,-8.6: 2023-08 calendar == sum(w) of its detections + background :: 8.2300 vs 8.1961 + 0.0339
+[PASS] 12 km circle at 37.3,-8.6: Aug 2023 panel shows the hotspot sum + background :: panel 8.2 vs 8.230
+[INFO] 9 km circle at 40.13,-8.36: 9 km around 40.130, -8.360 in Portugal 565 detections inside the shape (all satellites, 2000-12 to 2025-12). The calendar adds up the weight of each one: an exact sum, not whole cells.
+[PASS] 9 km circle at 40.13,-8.36: methods line wording :: Area 9 km around 40.130; -8.360 in Portugal: exact sums of the detection weights inside the shape (565 detections). Model A2 + NOAA-20 via S
+[PASS] 9 km circle at 40.13,-8.36: monthly CSV parses with methods line :: 301 months
+[PASS] 9 km circle at 40.13,-8.36: hotspot CSV parses :: 565 rows, 20 columns
+[PASS] 9 km circle at 40.13,-8.36: calendar sum == hotspot CSV sum(w) + background :: calendar 239.3054 vs hotspots 237.8321 + background 1.4733, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] 9 km circle at 40.13,-8.36: source flags are the documented ones (plus the combination note) :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] 9 km circle at 40.13,-8.36: 2005-08 calendar == sum(w) of its detections + background :: 106.0000 vs 106.0000 + 0.0000
+[PASS] mouse-drawn rectangle becomes the area :: drawn rectangle in Portugal 2,544 detections inside the shape (all satellites, 2000-12 to 2025-12). The calendar adds up the weight of each one: an exact sum, not whole cells.
+[PASS] mouse-drawn rectangle: methods line wording :: Area drawn rectangle in Portugal: exact sums of the detection weights inside the shape (2544 detections). Model A2 + NOAA-20 via Suomi NPP (
+[PASS] mouse-drawn rectangle: monthly CSV parses with methods line :: 301 months
+[PASS] mouse-drawn rectangle: hotspot CSV parses :: 2544 rows, 20 columns
+[PASS] mouse-drawn rectangle: calendar sum == hotspot CSV sum(w) + background :: calendar 1235.9617 vs hotspots 1189.0877 + background 46.8740, |diff| 0.0000, tolerance 0.0100 (exact area: both sides add the same 4-dp weights)
+[PASS] mouse-drawn rectangle: source flags are the documented ones (plus the combination note) :: ['bridged', 'estimated (S-NPP+NOAA-20)', 'observed']
+[PASS] map cells are drawn at fill opacity 0.6
+[PASS] Escape leaves drawing mode :: {'drawing': None, 'pressed': 'false'}
+[PASS] 3 km circle at 37.32,-8.55: no false 2022 jump in anomaly mode (strong-above share from 2022 <= 2x before) :: strong-above share 2008-21 0.00 of 0 coloured, 2022+ 0.00 of 0; 216 few-fires neutral cells
+[PASS] 25 km circle at 39.6,-8.2: no false 2022 jump in anomaly mode (strong-above share from 2022 <= 2x before) :: strong-above share 2008-21 0.00 of 14 coloured, 2022+ 0.00 of 0; 202 few-fires neutral cells
+[PASS] a shape over both regions says so and shows one :: drawn polygon, containing all of Portugal
+214,712 detections inside the shape (all satellites, 2000-12 to 2025-12). The calendar adds up the weight of each one: an exact sum, not whole cells.
+Most of this area is outside our data; showing all of Portugal’s detections inside it.
+This area spans Portu
+[PASS] a shape containing all of Portugal is not called '100% outside'
+[PASS] ... and its calendar holds all of Portugal's record :: shape 76351.31 vs region 76351.21
+[PASS] region switch mid-draw: mode cancelled, partial shape cleared, buttons released :: {'drawing': None, 'shapes': 0, 'pressed': ['false', 'false']}
+[PASS] Lebanon: trust overlays drawn and spoken (dashed = care, hatched = too uncertain) :: care 9, hatched 1; September 2022: 13 detections; trust check: too uncertain (R 1.17) · estimated
+[PASS] quiet months under 0.5 use the ≈ zero tile after 2022 too, exact value in the tooltip :: 14 after 2022, e.g. ['February 2022: 0.16 detections (≈ zero, under 0.5); trust check: few fires — too few to judge · estimated (night: no MODIS in the fitting years, detections weigh 0 (background only))']
+[PASS] few-fires months carry a calendar mark and a legend entry :: 140 cells
+[PASS] Lebanon Jan 2025 (baseline median < 5): 'Few fires — too few to judge' :: Trust check: Few fires — too few to judge
+[PASS] Lebanon Dec 2025 is S-NPP only (NOAA-20 file's last detection 24 Dec) :: December 2025: 2.3 detections; trust check: few fires — too few to judge (R 1.08) · estimated · S-NPP only
+[PASS] manual region switch keeps selected January 2025 by date
+[PASS] Lebanon example resets selected month to October 2025 :: October 2025 · Lebanon (whole region)
+[PASS] Lebanon default month :: October 2025 · Lebanon (whole region) (expected October 2025)
+[PASS] Lebanon whole region: methods line wording :: Area Lebanon (whole region): the sum of its 28 cells of 0.25 deg (equal to the exact sum within rounding; bound: 0.005 × cells + 0.00005 × m
+[PASS] Lebanon whole region: monthly CSV parses with methods line :: 301 months
+[PASS] Lebanon whole region: hotspot CSV parses :: 14976 rows, 20 columns
+[PASS] Lebanon whole region: calendar sum == hotspot CSV sum(w) + background :: calendar 2125.8500 vs hotspots 2105.0006 + background 20.9000, |diff| 0.0506, tolerance 6.8288 (rounding bound of 2-dp cell values)
+[PASS] Lebanon whole region: source flags are the documented ones (plus the combination note) :: ['bridged', 'estimated (S-NPP only)', 'estimated (S-NPP+NOAA-20)', 'estimated (S-NPP+NOAA-20) (day: no MODIS in the fitting years, detections weigh 0 (background only); night: no MODIS in the fitting 
+[PASS] Lebanon 5 km circle at 34.4,36.1: no false 2022 jump in anomaly mode (strong-above share from 2022 <= 2x before) :: strong-above share 2008-21 0.00 of 0 coloured, 2022+ 0.00 of 0; 216 few-fires neutral cells
+[INFO] Lebanon 5 km circle panel: MOST RECENT MONTH WITH A DETECTION |  | October 2024 · 5 km around 34.400, 36.100 in Lebanon |  | 1.8 fire detections, harmonized estimate (expected value) | 80% range 0.7–3.0 (approximate, from the model) |  | ESTIMATEDEstimated from VIIRS: the average of the Suomi NPP and NOAA-20 estimates (MODIS drifted after 2021). |  | This month: 1.8 detections. A typical October here has 0–0 (the middle hal
+[PASS] Lebanon 5 km circle: few-fires month in words, no % and no chance; the opening reason is stated :: MOST RECENT MONTH WITH A DETECTION
+[PASS] region race: the older Portugal request is discarded, Lebanon renders :: returns [False, True]; {'id': 'lebanon', 'area': 'Lebanon (whole region)28 cells of 0.25°: every detection in Lebanon’s FIRMS country file inside its box.', 'regio
+[PASS] border circle: share outside Portugal's data is stated :: 36% of this area is outside Portugal’s data (FIRMS country file) — fires there are not counted.
+[PASS] border circle: the area's label says it :: 40 km around 39.000, -7.000, 36% outside Portugal’s data
+[PASS] Madrid circle refused, not relabelled as Portugal :: Outside the regions we cover (Portugal, Lebanon).
+[PASS] skip link is the first stop and moves focus to the calendar :: skip-link -> calendar-panel
+[PASS] About: Suomi NPP stops delivering data on 2 Nov 2026
+[PASS] methodology: both models in plain words, the honest history with round 3's five numbers, links, SHA-256s, credits :: confirmed, all five pre-registered tests passed: cell-month error 29.7% (one ratio per region: 36.2%); the 80% ranges held the observed value in 83.8% of active cell-months (required 70–90%); predicte
+[PASS] README: burning days by default; round 1 failed, round 2 confirmed (hotspots), tournament, round 3 confirmed (burning days) with its five numbers; RESULTS.md earlier; MODIS C6.1; GIBS Blue Marble only
+[PASS] README: Suomi NPP stops delivering data on 2 Nov 2026
+[PASS] unused v1 files removed
+[PASS] unit switch fails (monthly.json 503): stays on burning days with its labels and numbers, says so with a retry :: {'unit': 'bd', 'loaded': 'bd', 'note': 'Harmonized estimate (expected value), in MODIS-equivalent burning days. Colour: burning days per month (log scale). Whole region: the sum of its 0.25° cells.', 'value': '9.4', 'title': 'December 2025 · Portugal (whole region)', 'pressed': ['true', 'false'], 's
+[PASS] ... and the monthly CSV is still the burning-day one :: cedrus_portugal_region_2000-2025_monthly_burning_days.csv
+[PASS] ... the retry switches to hotspots :: {'unit': 'hot', 'loaded': 'hot', 'note': 'Harmonized estimate (expected value), in MODIS-equivalent detections. Colour: detections per month (log scale). Whole region: the sum of its 0.25° cells.', 'v
+[PASS] start-up failure of monthly_bd.json: a clear error with a retry, no numbers, downloads off :: {'status': 'Couldn’t load burning days — try again.', 'retry': True, 'cells': 0, 'note': 'Couldn’t load burning days — try again.', 'csv': [True, True, True], 'badge': 'Burning days & hotspots · both confirmed on unseen regions'}
+[PASS] ... the map does not stay on 'Loading map…' :: Loading drawing tools…
+[PASS] ... the Hotspots button still works :: {'status': True, 'pressed': 'true', 'note': 'Harmonized estimate (expected value), in MODIS-equivalent detections. Colour: detections per month (log scale). Whole region: the sum of its 0.25° cells.'}
+[PASS] ... and burning days load once the file is back
+[PASS] failed year (503): error names the year in the view's unit, offers a retry :: Couldn’t load burning days for 2015 — try again.
+[PASS] failed year: no numbers shown under the new name, label and title agree, downloads disabled :: {'err': 'Couldn’t load burning days for 2015 — try again.', 'label': '25 km around 39.600, -8.200 in Portugal', 'title': '25 km around 39.600, -8.200 in Portugal', 'cells': 0, 'csv': [True, True], 'retry': True, 'caption': '25 km around 39.600, -8.200 in Portugal · burning days per 0.25° cell in Dec
+[PASS] failed year: no stale texts (progress hidden, calendar note and season name the failure and the new area) :: {'progress': True, 'note': 'Couldn’t load burning days for 2015 — try again.', 'legend': '', 'season': 'FIRE SEASON · 25 KM AROUND 39.600, -8.200 IN PORTUGAL'}
+[PASS] retry after the failure loads the area and turns downloads back on
+[PASS] mobile 390 px: no horizontal overflow :: scrollWidth - innerWidth = 0
+[PASS] mobile: calendar cells at least 24 px tall :: 23.2 x 24.0 px
+[PASS] mobile 390 px: hero badge not clipped :: {'left': 16, 'right': 374, 'hRight': 390, 'scroll': 358, 'client': 358, 'text': 'Satellite data\n•\n25 years\n•\nNASA FIRMS\nBurning days & hotspots · both confirmed on unseen regions'}
+[INFO] mobile: map and drawing tools ready 2.5 s after the calendar (CDN-bound)
+[PASS] Tier 1: full four-region catalog loads
+[PASS] Tier 1 syria bd: calendar loads
+[PASS] Tier 1 syria bd: region notes visible
+[PASS] Tier 1 syria bd: accuracy notes visible :: Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.
+
+Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.
+
+Accuracy is checked against MODIS only up to 2021. From 2022 the MODIS satellites drift in orbit, so 2022–2025 values are checked only by agreement between two VIIRS satellites, not against an independent record.
+
+Forward test against MODIS, 2020–2021 (fitted on 2012–2019): burning days passed every check, with regional monthly error 19.5% against 27.0% for a simple conversion. Hotspots failed one check: regional monthly error 27.5%, slightly worse than the simple conversion's 24.4%. 2021 was overestimated (662 predicted against 490 observed burning days). Local grid-cell errors are 69–77%.
+[PASS] Tier 1 syria bd: whole-region CSV equals monthly file sum
+[PASS] Tier 1 syria bd: every CSV month equals record weights plus background within serialization rounding :: max gap 0.070700
+[PASS] Tier 1 syria bd: story opens for selected region
+[PASS] Tier 1 syria bd: playback advances
+[PASS] Tier 1 syria bd: tree rings render
+[PASS] Tier 1 syria bd: fingerprint PNG exports
+[PASS] Tier 1 syria hot: calendar loads
+[PASS] Tier 1 syria hot: region notes visible
+[PASS] Tier 1 syria hot: accuracy notes visible :: Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.
+
+Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.
+
+Accuracy is checked against MODIS only up to 2021. From 2022 the MODIS satellites drift in orbit, so 2022–2025 values are checked only by agreement between two VIIRS satellites, not against an independent record.
+
+Forward test against MODIS, 2020–2021 (fitted on 2012–2019): burning days passed every check, with regional monthly error 19.5% against 27.0% for a simple conversion. Hotspots failed one check: regional monthly error 27.5%, slightly worse than the simple conversion's 24.4%. 2021 was overestimated (662 predicted against 490 observed burning days). Local grid-cell errors are 69–77%.
+[PASS] Tier 1 syria hot: whole-region CSV equals monthly file sum
+[PASS] Tier 1 syria hot: every CSV month equals record weights plus background within serialization rounding :: max gap 0.123500
+[PASS] Tier 1 syria hot: story opens for selected region
+[PASS] Tier 1 syria hot: playback advances
+[PASS] Tier 1 syria hot: tree rings render
+[PASS] Tier 1 syria hot: fingerprint PNG exports
+[PASS] Tier 1 la_rioja bd: calendar loads
+[PASS] Tier 1 la_rioja bd: region notes visible
+[PASS] Tier 1 la_rioja bd: accuracy notes visible :: Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.
+
+Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.
+
+Accuracy is checked against MODIS only up to 2021. From 2022 the MODIS satellites drift in orbit, so 2022–2025 values are checked only by agreement between two VIIRS satellites, not against an independent record.
+
+Regional monthly summaries were tested against MODIS in 2020–2021. Local grid-cell errors remain substantial, around 60%. This region is outside the climates used in the earlier Mediterranean validation.
+
+Annual totals in the 2020-2021 test were above the 80% range.
+
+This is a rectangular area including neighboring provincial land, not the exact La Rioja province.
+[PASS] Tier 1 la_rioja bd: whole-region CSV equals monthly file sum
+[PASS] Tier 1 la_rioja bd: every CSV month equals record weights plus background within serialization rounding :: max gap 0.070300
+[PASS] Tier 1 la_rioja bd: Aug 2020–Feb 2021 page and CSV equal seven-month sum :: page 1500.0000, CSV 1500.0000, months 1500.0000
+[PASS] Tier 1 la_rioja bd: Aug 2024–Feb 2025 page and CSV equal seven-month sum :: page 1574.6300, CSV 1574.6300, months 1574.6300
+[PASS] Tier 1 la_rioja bd: story opens for selected region
+[PASS] Tier 1 la_rioja bd: playback advances
+[PASS] Tier 1 la_rioja bd: tree rings render
+[PASS] Tier 1 la_rioja bd: fingerprint PNG exports
+[PASS] Tier 1 la_rioja hot: calendar loads
+[PASS] Tier 1 la_rioja hot: region notes visible
+[PASS] Tier 1 la_rioja hot: accuracy notes visible :: Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.
+
+Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.
+
+Accuracy is checked against MODIS only up to 2021. From 2022 the MODIS satellites drift in orbit, so 2022–2025 values are checked only by agreement between two VIIRS satellites, not against an independent record.
+
+Regional monthly summaries were tested against MODIS in 2020–2021. Local grid-cell errors remain substantial, around 60%. This region is outside the climates used in the earlier Mediterranean validation.
+
+Annual totals in the 2020-2021 test were above the 80% range.
+
+This is a rectangular area including neighboring provincial land, not the exact La Rioja province.
+[PASS] Tier 1 la_rioja hot: whole-region CSV equals monthly file sum
+[PASS] Tier 1 la_rioja hot: every CSV month equals record weights plus background within serialization rounding :: max gap 0.082600
+[PASS] Tier 1 la_rioja hot: Aug 2020–Feb 2021 page and CSV equal seven-month sum :: page 1642.0000, CSV 1642.0000, months 1642.0000
+[PASS] Tier 1 la_rioja hot: Aug 2024–Feb 2025 page and CSV equal seven-month sum :: page 1727.3300, CSV 1727.3300, months 1727.3300
+[PASS] Tier 1 la_rioja hot: story opens for selected region
+[PASS] Tier 1 la_rioja hot: playback advances
+[PASS] Tier 1 la_rioja hot: tree rings render
+[PASS] Tier 1 la_rioja hot: fingerprint PNG exports
+[PASS] Tier 1 Beirut bd: selects largest footprint (fixed expected region where specified) :: picked lebanon; shares [{'id': 'lebanon', 'name': 'Lebanon', 'share': 1.0}, {'id': 'syria', 'name': 'Syria', 'share': 0.0}]
+[PASS] Tier 1 Beirut bd: warning follows >10% alternative footprint rule
+[PASS] Tier 1 Damascus bd: selects largest footprint (fixed expected region where specified) :: picked syria; shares [{'id': 'syria', 'name': 'Syria', 'share': 1.0}, {'id': 'lebanon', 'name': 'Lebanon', 'share': 0.0}]
+[PASS] Tier 1 Damascus bd: warning follows >10% alternative footprint rule
+[PASS] Tier 1 Homs bd: selects largest footprint (fixed expected region where specified) :: picked syria; shares [{'id': 'syria', 'name': 'Syria', 'share': 1.0}]
+[PASS] Tier 1 Homs bd: warning follows >10% alternative footprint rule
+[PASS] Tier 1 Beirut hot: selects largest footprint (fixed expected region where specified) :: picked lebanon; shares [{'id': 'lebanon', 'name': 'Lebanon', 'share': 1.0}, {'id': 'syria', 'name': 'Syria', 'share': 0.0}]
+[PASS] Tier 1 Beirut hot: warning follows >10% alternative footprint rule
+[PASS] Tier 1 Damascus hot: selects largest footprint (fixed expected region where specified) :: picked syria; shares [{'id': 'syria', 'name': 'Syria', 'share': 1.0}, {'id': 'lebanon', 'name': 'Lebanon', 'share': 0.0}]
+[PASS] Tier 1 Damascus hot: warning follows >10% alternative footprint rule
+[PASS] Tier 1 Homs hot: selects largest footprint (fixed expected region where specified) :: picked syria; shares [{'id': 'syria', 'name': 'Syria', 'share': 1.0}]
+[PASS] Tier 1 Homs hot: warning follows >10% alternative footprint rule
+[PASS] Tier 1 Tel Aviv bd: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Mediterranean bd: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Amman bd: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Nicosia bd: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Western Iraq bd: outside covered regions :: No fire records from Syria fall inside this area. It overlaps the analysis box, but the grid has no cells here: the area may be outside Syria, or no fire was detected there in the record. Analysis boxes are not country boundaries.
+[PASS] Tier 1 switch la_rioja <-> Lebanon bd 2025-12 to la_rioja: date and series/map aligned
+[PASS] Tier 1 switch la_rioja 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch la_rioja <-> Lebanon bd 2025-12 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch la_rioja <-> Lebanon bd 2020-07 to la_rioja: date and series/map aligned
+[PASS] Tier 1 switch la_rioja 2020-07: unit round trip preserves date
+[PASS] Tier 1 switch la_rioja <-> Lebanon bd 2020-07 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2020-07: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon bd 2025-12 to syria: date and series/map aligned
+[PASS] Tier 1 switch syria 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon bd 2025-12 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon bd 2020-07 to syria: date and series/map aligned
+[PASS] Tier 1 switch syria 2020-07: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon bd 2020-07 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2020-07: unit round trip preserves date
+[PASS] Tier 1 Tel Aviv hot: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Mediterranean hot: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Amman hot: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Nicosia hot: outside covered regions :: Outside the regions we cover (Portugal, Lebanon, Syria, La Rioja area, Argentina).
+[PASS] Tier 1 Western Iraq hot: outside covered regions :: No fire records from Syria fall inside this area. It overlaps the analysis box, but the grid has no cells here: the area may be outside Syria, or no fire was detected there in the record. Analysis boxes are not country boundaries.
+[PASS] Tier 1 switch la_rioja <-> Lebanon hot 2025-12 to la_rioja: date and series/map aligned
+[PASS] Tier 1 switch la_rioja 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch la_rioja <-> Lebanon hot 2025-12 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch la_rioja <-> Lebanon hot 2020-07 to la_rioja: date and series/map aligned
+[PASS] Tier 1 switch la_rioja 2020-07: unit round trip preserves date
+[PASS] Tier 1 switch la_rioja <-> Lebanon hot 2020-07 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2020-07: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon hot 2025-12 to syria: date and series/map aligned
+[PASS] Tier 1 switch syria 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon hot 2025-12 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2025-12: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon hot 2020-07 to syria: date and series/map aligned
+[PASS] Tier 1 switch syria 2020-07: unit round trip preserves date
+[PASS] Tier 1 switch syria <-> Lebanon hot 2020-07 to lebanon: date and series/map aligned
+[PASS] Tier 1 switch lebanon 2020-07: unit round trip preserves date
+[PASS] Map clarity portugal bd: analysis extent is not labelled as a border
+[PASS] Map clarity portugal bd: legend explains blank areas and unknown completeness
+[PASS] Map clarity portugal bd: near-zero cell fixture exists
+[PASS] Map clarity portugal bd: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity portugal bd: faint outline layer renders included quiet cells
+[PASS] Map clarity portugal bd: absent-cell fixture exists
+[PASS] Map clarity portugal bd: gap is not described as observed zero fires
+[PASS] Map clarity portugal bd: gap has a separate shaded dashed layer
+[PASS] Map clarity portugal bd: changing month clears stale inspection
+[PASS] Map clarity portugal hot: analysis extent is not labelled as a border
+[PASS] Map clarity portugal hot: legend explains blank areas and unknown completeness
+[PASS] Map clarity portugal hot: near-zero cell fixture exists
+[PASS] Map clarity portugal hot: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity portugal hot: faint outline layer renders included quiet cells
+[PASS] Map clarity portugal hot: absent-cell fixture exists
+[PASS] Map clarity portugal hot: gap is not described as observed zero fires
+[PASS] Map clarity portugal hot: gap has a separate shaded dashed layer
+[PASS] Map clarity portugal hot: changing month clears stale inspection
+[PASS] Map clarity lebanon bd: analysis extent is not labelled as a border
+[PASS] Map clarity lebanon bd: legend explains blank areas and unknown completeness
+[PASS] Map clarity lebanon bd: near-zero cell fixture exists
+[PASS] Map clarity lebanon bd: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity lebanon bd: faint outline layer renders included quiet cells
+[PASS] Map clarity lebanon bd: absent-cell fixture exists
+[PASS] Map clarity lebanon bd: gap is not described as observed zero fires
+[PASS] Map clarity lebanon bd: gap has a separate shaded dashed layer
+[PASS] Map clarity lebanon bd: changing month clears stale inspection
+[PASS] Map clarity lebanon hot: analysis extent is not labelled as a border
+[PASS] Map clarity lebanon hot: legend explains blank areas and unknown completeness
+[PASS] Map clarity lebanon hot: near-zero cell fixture exists
+[PASS] Map clarity lebanon hot: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity lebanon hot: faint outline layer renders included quiet cells
+[PASS] Map clarity lebanon hot: absent-cell fixture exists
+[PASS] Map clarity lebanon hot: gap is not described as observed zero fires
+[PASS] Map clarity lebanon hot: gap has a separate shaded dashed layer
+[PASS] Map clarity lebanon hot: changing month clears stale inspection
+[PASS] Map clarity syria bd: analysis extent is not labelled as a border
+[PASS] Map clarity syria bd: legend explains blank areas and unknown completeness
+[PASS] Map clarity syria bd: near-zero cell fixture exists
+[PASS] Map clarity syria bd: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity syria bd: faint outline layer renders included quiet cells
+[PASS] Map clarity syria bd: absent-cell fixture exists
+[PASS] Map clarity syria bd: gap is not described as observed zero fires
+[PASS] Map clarity syria bd: gap has a separate shaded dashed layer
+[PASS] Map clarity syria bd: changing month clears stale inspection
+[PASS] Map clarity syria hot: analysis extent is not labelled as a border
+[PASS] Map clarity syria hot: legend explains blank areas and unknown completeness
+[PASS] Map clarity syria hot: near-zero cell fixture exists
+[PASS] Map clarity syria hot: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity syria hot: faint outline layer renders included quiet cells
+[PASS] Map clarity syria hot: absent-cell fixture exists
+[PASS] Map clarity syria hot: gap is not described as observed zero fires
+[PASS] Map clarity syria hot: gap has a separate shaded dashed layer
+[PASS] Map clarity syria hot: changing month clears stale inspection
+[PASS] Map clarity la_rioja bd: analysis extent is not labelled as a border
+[PASS] Map clarity la_rioja bd: legend explains blank areas and unknown completeness
+[PASS] Map clarity la_rioja bd: near-zero cell fixture exists
+[PASS] Map clarity la_rioja bd: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity la_rioja bd: faint outline layer renders included quiet cells
+[PASS] Map clarity la_rioja bd: absent-cell fixture exists
+[PASS] Map clarity la_rioja bd: gap is not described as observed zero fires
+[PASS] Map clarity la_rioja bd: gap has a separate shaded dashed layer
+[PASS] Map clarity la_rioja bd: changing month clears stale inspection
+[PASS] Map clarity la_rioja hot: analysis extent is not labelled as a border
+[PASS] Map clarity la_rioja hot: legend explains blank areas and unknown completeness
+[PASS] Map clarity la_rioja hot: near-zero cell fixture exists
+[PASS] Map clarity la_rioja hot: included near-zero cell explains estimate and uncertainty
+[PASS] Map clarity la_rioja hot: faint outline layer renders included quiet cells
+[PASS] Map clarity la_rioja hot: absent-cell fixture exists
+[PASS] Map clarity la_rioja hot: gap is not described as observed zero fires
+[PASS] Map clarity la_rioja hot: gap has a separate shaded dashed layer
+[PASS] Map clarity la_rioja hot: changing month clears stale inspection
+[PASS] no console errors
+
+402/402 checks passed in 337 s; screenshots in C:\Users\rifaa\Desktop\NASA Space Apps\cedrus\tools\shots

@@ -1,0 +1,23 @@
+{
+  "rounds_run": 1,
+  "passed": 360,
+  "failed": 0,
+  "elapsed_seconds": 235,
+  "exit_code": 0,
+  "full_probe_pass": true,
+  "failures": [],
+  "checks_completed": [
+    "full catalog both units",
+    "Lebanon / La Rioja round trips both units",
+    "Lebanon / Syria round trips both units",
+    "Beirut Damascus Homs Amman Nicosia both units",
+    "Tel Aviv and Mediterranean outside coverage both units",
+    "final console-error check"
+  ],
+  "fixes_this_run": [
+    "Restored aggregate failure collection by removing the early AssertionError; all expectations and tolerances unchanged."
+  ],
+  "timing_changes": [],
+  "remaining_failures": [],
+  "previous_skip_link_failure": "Did not recur; passed unchanged. No five-run timing experiment or timing fix was performed because the first full round passed."
+}

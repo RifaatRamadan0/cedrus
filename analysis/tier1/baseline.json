@@ -1,0 +1,442 @@
+{
+  "base": "84d2c0ce12b17c4ef57b64da532c20caa2b32d15",
+  "frozen": {
+    "data\\processed\\round2\\frozen.json": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686",
+    "data\\processed\\tournament\\frozen_round3.json": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2"
+  },
+  "preserved_exports": {
+    "web/data/portugal/burning/2001.json": {
+      "bytes": 46010,
+      "sha256": "d52567eed48553bb734aa658a6fed0308bff1e16c2cf0c4e57448ac19778e4a6"
+    },
+    "web/data/portugal/burning/2002.json": {
+      "bytes": 69425,
+      "sha256": "703b13316a8e6040d1665435b0723c7e8436cbc2262734af3024e214c12a3517"
+    },
+    "web/data/portugal/burning/2003.json": {
+      "bytes": 152492,
+      "sha256": "39364ccf428605864572064aac431b4c04b7d1bf0f4a909e6718c323d5045575"
+    },
+    "web/data/portugal/burning/2004.json": {
+      "bytes": 76327,
+      "sha256": "b11224b6e0f9e752785a2e028ea738911c1286722b7248518dbf732ac07599d3"
+    },
+    "web/data/portugal/burning/2005.json": {
+      "bytes": 232444,
+      "sha256": "228a1f48240c0f1db6fcabc8939d94d277dc3b8c53498b50d761ee5938782319"
+    },
+    "web/data/portugal/burning/2006.json": {
+      "bytes": 65230,
+      "sha256": "64802b8e624195c1bde87336a6e9235e23d194cfa3dea33f876b8d0047574d55"
+    },
+    "web/data/portugal/burning/2007.json": {
+      "bytes": 40228,
+      "sha256": "185a894bc168f5c031ab378c34a487bf6819f533cf640c456f7a760198e9edff"
+    },
+    "web/data/portugal/burning/2008.json": {
+      "bytes": 26105,
+      "sha256": "babbbca30e58d3140f62e72bd4ca0c11a27ec8de1ac62042d971b012ff21a57c"
+    },
+    "web/data/portugal/burning/2009.json": {
+      "bytes": 86950,
+      "sha256": "4122544062c070d5727dba64b2ee5beddcce104d1515cd7e2db58a8c1dc3d8cf"
+    },
+    "web/data/portugal/burning/2010.json": {
+      "bytes": 104322,
+      "sha256": "5d5a8f7847095ebfac1a7ea873fbc80005ad445a1f08f3ed0a011f85971db9b9"
+    },
+    "web/data/portugal/burning/2011.json": {
+      "bytes": 76037,
+      "sha256": "a63a32b41ed236d4cb2f361519f9758427b36d1e9967641f014ae5b2689e9b7a"
+    },
+    "web/data/portugal/burning/2012.json": {
+      "bytes": 214035,
+      "sha256": "047b387e80e0a7732c8f3278abc7e33a0ce026af366251efbd01d08924b66292"
+    },
+    "web/data/portugal/burning/2013.json": {
+      "bytes": 275172,
+      "sha256": "390ee653c3dfa2248f5c3dc0be74e83acc9216ac9e30d3332e7be86a45f7d719"
+    },
+    "web/data/portugal/burning/2014.json": {
+      "bytes": 50031,
+      "sha256": "24509b297e99a26361a39dbc454dde17b2036c55dd384b5b1c4262c40dc7f03e"
+    },
+    "web/data/portugal/burning/2015.json": {
+      "bytes": 141525,
+      "sha256": "5d38343619a1f02f0c3d0dcb49b4b319e4b4916cf3a09d83ef93ce44e99a0b93"
+    },
+    "web/data/portugal/burning/2016.json": {
+      "bytes": 279157,
+      "sha256": "8598bc1e06c0f336b43d671eacd6c3511f20d184e4eedc7ce5d364a3bf0267e2"
+    },
+    "web/data/portugal/burning/2017.json": {
+      "bytes": 407299,
+      "sha256": "03db698fba3a69e20d3bffe47fd3c6b9cbc20caba1a3cd56c31bfb31888dc5fc"
+    },
+    "web/data/portugal/burning/2018.json": {
+      "bytes": 126939,
+      "sha256": "214f1dd8bd4dc9810c6e0fd93007cae46a86a0387356d20e99f27612cdf65d23"
+    },
+    "web/data/portugal/burning/2019.json": {
+      "bytes": 146326,
+      "sha256": "478cfb72f8dd58501af5f1243cbc49fa133a66a38324df15f805cd16f6d35ef8"
+    },
+    "web/data/portugal/burning/2020.json": {
+      "bytes": 137697,
+      "sha256": "718bd84d36dd63d3d66d0f5ee79477f2718343fd37b63ac40460f9700e2a17de"
+    },
+    "web/data/portugal/burning/2021.json": {
+      "bytes": 108218,
+      "sha256": "f60ca31e38b0eb671a60073dd3d179fa16ae9accf53692838ef8345504af7b3b"
+    },
+    "web/data/portugal/burning/2022.json": {
+      "bytes": 223326,
+      "sha256": "6973f125014da10a62ab11214faebe4cc545088dca761c4c4c264267d93fe82b"
+    },
+    "web/data/portugal/burning/2023.json": {
+      "bytes": 120375,
+      "sha256": "00bcc6d64be80bca22c01a22488d789acbfe5bd0b611b5b8a8da939e8b02490d"
+    },
+    "web/data/portugal/burning/2024.json": {
+      "bytes": 333202,
+      "sha256": "8be8316a7638c55f00fa139bb82ab77416e2dc89a1e87eb4d498fb76c9fec9e5"
+    },
+    "web/data/portugal/burning/2025.json": {
+      "bytes": 449613,
+      "sha256": "a3743ba1ef6e7cd1dc567b54e069a59b4008fa71043e8e81c94dbf54fb97adc9"
+    },
+    "web/data/portugal/drift.json": {
+      "bytes": 3294,
+      "sha256": "6408ab29b96ec1f91761e3b5978d8cab2c8125ab9bad086bc35f8aa6ea1763e8"
+    },
+    "web/data/portugal/drift_bd.json": {
+      "bytes": 3341,
+      "sha256": "b497948c30937296ef8dc6824d44ce331681275ee5859e61a55c2cfa598dfa9f"
+    },
+    "web/data/portugal/hotspots/2001.json": {
+      "bytes": 100823,
+      "sha256": "e98011143134310e1fbe0ceb40067218a2093005c10929376b632919d6ec5b9e"
+    },
+    "web/data/portugal/hotspots/2002.json": {
+      "bytes": 160196,
+      "sha256": "19dc49b4e5ebcf4e30cea40a9d50399fe30de373bc138c4997600304c2838bed"
+    },
+    "web/data/portugal/hotspots/2003.json": {
+      "bytes": 374945,
+      "sha256": "42dbb1f006de43ed3094f63ae91f8d8f97b66eb8808406cd04c06989cfdb3ce0"
+    },
+    "web/data/portugal/hotspots/2004.json": {
+      "bytes": 181050,
+      "sha256": "322795feace232d5e826053caac4f4807ed8c75ca0840004849a38ee9b3db3dc"
+    },
+    "web/data/portugal/hotspots/2005.json": {
+      "bytes": 558498,
+      "sha256": "42bb4da55c193e6f89abbcdb2ff7fadcf199dd368f8c94a313c84b14c1d0ca17"
+    },
+    "web/data/portugal/hotspots/2006.json": {
+      "bytes": 157113,
+      "sha256": "59a318e3086ea88e89ea4a67b071629336333e22688d7735956565c9b13cc000"
+    },
+    "web/data/portugal/hotspots/2007.json": {
+      "bytes": 94463,
+      "sha256": "af3a98bc7d408bafd6516ea030d0b0b8812e96c6d033fc41be41b8765ace62f9"
+    },
+    "web/data/portugal/hotspots/2008.json": {
+      "bytes": 59843,
+      "sha256": "4dfb6708e88b399e6c0452a422941b5b54016537edf01b321fc1ff0841569812"
+    },
+    "web/data/portugal/hotspots/2009.json": {
+      "bytes": 206821,
+      "sha256": "d84ab032bded3b38f4140660b4a1ea93133453db4bf34a83fdb438d6479001f2"
+    },
+    "web/data/portugal/hotspots/2010.json": {
+      "bytes": 249442,
+      "sha256": "e7df5fe3a9c019c4d2c8c672d8d719e354edc29f11109f051c6da93aabbdb5f7"
+    },
+    "web/data/portugal/hotspots/2011.json": {
+      "bytes": 180060,
+      "sha256": "caf341f92256d4d6383c078112474fd5fdf7cd1d6a5961ad47b76943aa12fcdc"
+    },
+    "web/data/portugal/hotspots/2012.json": {
+      "bytes": 766943,
+      "sha256": "b7e3de9a4e52610d1e0b0341c7923409949744ca1646eba7d54c7adeca1b750b"
+    },
+    "web/data/portugal/hotspots/2013.json": {
+      "bytes": 1002652,
+      "sha256": "284cf2907f244a595006d9a96b5c71db0648ae6533cf6d447c92e6650abc5283"
+    },
+    "web/data/portugal/hotspots/2014.json": {
+      "bytes": 150422,
+      "sha256": "450e79c6fe90ae3fb5839734c0e1f7b0f4e7c25766757caa2644400c91f65e7f"
+    },
+    "web/data/portugal/hotspots/2015.json": {
+      "bytes": 470182,
+      "sha256": "8b50a8b383d96355593f5e795da72970c040d2d2cb0d3e97a900b30adb784b70"
+    },
+    "web/data/portugal/hotspots/2016.json": {
+      "bytes": 1144542,
+      "sha256": "548ee00bc14dedc5a483f0c2103d0c2829a919150eba53a32303509dfb8a7aa9"
+    },
+    "web/data/portugal/hotspots/2017.json": {
+      "bytes": 1612276,
+      "sha256": "04d934053acef444d780a5e2230f8fef83a6221284d1069b822d2fd1dd69cdc6"
+    },
+    "web/data/portugal/hotspots/2018.json": {
+      "bytes": 523719,
+      "sha256": "c3eae9b6a6b5c7c818e82db2fbd86568b091673074fb2dc3ed7ff54ede777c41"
+    },
+    "web/data/portugal/hotspots/2019.json": {
+      "bytes": 506981,
+      "sha256": "64f6d30b73f4a09e7b75ed6c13090a9146d456e9731edc558465cd7bd9b47b0d"
+    },
+    "web/data/portugal/hotspots/2020.json": {
+      "bytes": 531679,
+      "sha256": "3369f2cff2e64d9ec28513fe01d4648bbb9556f8d6a951923c18b673d9cb7c7b"
+    },
+    "web/data/portugal/hotspots/2021.json": {
+      "bytes": 354672,
+      "sha256": "c655aa81f1844b552dae7ba4076b540afacdb9fb4ac69df13a682dbaeb314297"
+    },
+    "web/data/portugal/hotspots/2022.json": {
+      "bytes": 843554,
+      "sha256": "c3a6a19e9c56cc640f574a257c68f3d8ef0a9d5b0bc00ad85d60d39aca338608"
+    },
+    "web/data/portugal/hotspots/2023.json": {
+      "bytes": 431056,
+      "sha256": "b00cf920b918f14c4293088415784502790960469e1d9688bfaacf3e7adb0b57"
+    },
+    "web/data/portugal/hotspots/2024.json": {
+      "bytes": 1766036,
+      "sha256": "c565ac1869d05f139aa509502f0b4f675e80bc3b1d4f1e2eb93342dcb99cad34"
+    },
+    "web/data/portugal/hotspots/2025.json": {
+      "bytes": 2115338,
+      "sha256": "70082d74bdda45ae1834b57b8d02423d4a5b80a31e0b76551f7ac5bb405ff12e"
+    },
+    "web/data/portugal/monthly.json": {
+      "bytes": 1030321,
+      "sha256": "f2793b2b21f720490f951bd87cd0b6e2b605b1b9f4350f265016d969e176f7c5"
+    },
+    "web/data/portugal/monthly_bd.json": {
+      "bytes": 1029466,
+      "sha256": "7bb96f6517d1ce7c9c58ffe99e82dfe46fc9c965d40e49fdb1dce8566acc4de1"
+    },
+    "web/data/lebanon/burning/2001.json": {
+      "bytes": 491,
+      "sha256": "e9b2b54ff05958ba6529301baf4ea72461f6fa29ebb3290e39a3f259d3527fe4"
+    },
+    "web/data/lebanon/burning/2002.json": {
+      "bytes": 2855,
+      "sha256": "5faf28863bd6a37af3e270fdda1158b20647fe53c699d6f635aafdcf76065761"
+    },
+    "web/data/lebanon/burning/2003.json": {
+      "bytes": 1399,
+      "sha256": "edde41d90fe0bbca7f223e22d509517fdf2f7c953f23fa125017ded87c22fd35"
+    },
+    "web/data/lebanon/burning/2004.json": {
+      "bytes": 2215,
+      "sha256": "c982b5273188f812b875d726e7b390883435e7960531efc47ac21858e31f2562"
+    },
+    "web/data/lebanon/burning/2005.json": {
+      "bytes": 1108,
+      "sha256": "2a189aee4f7fcb134b77f1898d733962a3e3a2c708f790e865d41e241a0e5b7c"
+    },
+    "web/data/lebanon/burning/2006.json": {
+      "bytes": 5025,
+      "sha256": "176d0a7e275a86d203667675b68460e720727516d9f7622cde5b2eecfdaa1f82"
+    },
+    "web/data/lebanon/burning/2007.json": {
+      "bytes": 5234,
+      "sha256": "5133033b47c4f1314dcc1087e5f695ffbd5e58af46ee3dbcc9d48dec3a3ec578"
+    },
+    "web/data/lebanon/burning/2008.json": {
+      "bytes": 1183,
+      "sha256": "1ba2612d10508601ef2aaa518f81eca6a52942bca69798cee49686a49b985689"
+    },
+    "web/data/lebanon/burning/2009.json": {
+      "bytes": 1923,
+      "sha256": "4c2a24be966954fdfd0ebb6abb925fe44c9fae5bdca534f392e7e0f0d772ff49"
+    },
+    "web/data/lebanon/burning/2010.json": {
+      "bytes": 4189,
+      "sha256": "f032b1c562acb1b36720b4eef5fe33dd2a53198adfd8415e9672bcd35ec3ce46"
+    },
+    "web/data/lebanon/burning/2011.json": {
+      "bytes": 1083,
+      "sha256": "bd3f847704fb89ed91182521b9527c7c4bde17927b364225ba833ad58bad5390"
+    },
+    "web/data/lebanon/burning/2012.json": {
+      "bytes": 10426,
+      "sha256": "e11b008072e394da6560e707790db988d27533b1b1adaeac9fef8523c11d5db3"
+    },
+    "web/data/lebanon/burning/2013.json": {
+      "bytes": 18880,
+      "sha256": "b38aebcbde58f291da7c2ba4ce815f167b2eb32dff3dc0e8486f47bdca8b5102"
+    },
+    "web/data/lebanon/burning/2014.json": {
+      "bytes": 9919,
+      "sha256": "52b7cf4ac8fc584f5b813f4e09dfd9f6c12447d84ecd2d5e7d973d120b21e3ac"
+    },
+    "web/data/lebanon/burning/2015.json": {
+      "bytes": 11351,
+      "sha256": "f6ef72d34cfc4f3a553e628534de2dc130452e862c9e50c3aa89f77085dbc71d"
+    },
+    "web/data/lebanon/burning/2016.json": {
+      "bytes": 16234,
+      "sha256": "ae2085c4166e326ed88ceb6a087da1f29dfea5b476af2618e335e6738f7c0126"
+    },
+    "web/data/lebanon/burning/2017.json": {
+      "bytes": 8615,
+      "sha256": "99ee8a3e3cb760328833ee70d7eb88ab79f34a9c73bcef1fed1cbd8dd1688b2f"
+    },
+    "web/data/lebanon/burning/2018.json": {
+      "bytes": 17107,
+      "sha256": "4ed9ccb1cf3f18bd3d46d6aa39b75ab490092b4408e20d9b0aaef8354880496e"
+    },
+    "web/data/lebanon/burning/2019.json": {
+      "bytes": 24386,
+      "sha256": "50afb80c53a604d74f3fdb0e36a0508c41e1818b26344e6c5eb4b7248baa30dc"
+    },
+    "web/data/lebanon/burning/2020.json": {
+      "bytes": 33191,
+      "sha256": "779e656ed8e171d653fcc4e0843e0d8654e7f3074339d1f37d6a2a1b4f148135"
+    },
+    "web/data/lebanon/burning/2021.json": {
+      "bytes": 39034,
+      "sha256": "13cc1b86ad4e993f4a637d91320c6d08822028a6ef8ac2539eb230676f81c6a9"
+    },
+    "web/data/lebanon/burning/2022.json": {
+      "bytes": 19956,
+      "sha256": "29eecf1143ab29faef37d43110e66e8a1c14fd0935396dfaec0eb1b205594e4b"
+    },
+    "web/data/lebanon/burning/2023.json": {
+      "bytes": 28469,
+      "sha256": "4d629704407598985d94c31d82265ac4ba7c6eec17ae4dd45540af3182c55f92"
+    },
+    "web/data/lebanon/burning/2024.json": {
+      "bytes": 57491,
+      "sha256": "529632325666b7b118d91b912f2ba12d43435fc3bf3f58d80b956b685202ed4f"
+    },
+    "web/data/lebanon/burning/2025.json": {
+      "bytes": 27324,
+      "sha256": "9801bf78a9c13cf5097a695948278cf783dd2467bbedc8606a4a89a46e0f2385"
+    },
+    "web/data/lebanon/drift.json": {
+      "bytes": 2942,
+      "sha256": "bb5bdb39497a2d76e1b4262ad2b1584711aff98273516bff9354792496d2e493"
+    },
+    "web/data/lebanon/drift_bd.json": {
+      "bytes": 2970,
+      "sha256": "9e99d8e98219c2b2bfc3fc9a3df830847c93ce9bf913ca38e828a49138cc8ff9"
+    },
+    "web/data/lebanon/hotspots/2001.json": {
+      "bytes": 1020,
+      "sha256": "01930516732899298753748155b14068abb300d45258a2a8e428302e69db440e"
+    },
+    "web/data/lebanon/hotspots/2002.json": {
+      "bytes": 6481,
+      "sha256": "bb39c92aef7835eac3175a6e9d06db204bdf5b8f286c443f966be4b805fbc5a2"
+    },
+    "web/data/lebanon/hotspots/2003.json": {
+      "bytes": 3159,
+      "sha256": "20946c339dae59728e18c43bae6981aeda92ac1da46845dcc7c855896538806f"
+    },
+    "web/data/lebanon/hotspots/2004.json": {
+      "bytes": 4908,
+      "sha256": "fb34e257d9f45798f104067d24f8b55ace5e1fff2a1a7e260d154f1c96bddf7d"
+    },
+    "web/data/lebanon/hotspots/2005.json": {
+      "bytes": 2540,
+      "sha256": "c0e1c63fc088c0a4cb767c328c69bd2021272fa6fde7a1cd2eacd1609847b2b4"
+    },
+    "web/data/lebanon/hotspots/2006.json": {
+      "bytes": 11769,
+      "sha256": "a58959b1ea9eb8d1d490e0c83a2d15db510366fccbcd9f65d7c7ef94758f2ae3"
+    },
+    "web/data/lebanon/hotspots/2007.json": {
+      "bytes": 12220,
+      "sha256": "ec842eb1580f611e40db8b12850a6cf4d682c79607cd18cbcf2271c870a70aa1"
+    },
+    "web/data/lebanon/hotspots/2008.json": {
+      "bytes": 2649,
+      "sha256": "af8ea29d3eddbe21f9228c2825c57e74b5a6805c213ff62c8a70abe40e3422e3"
+    },
+    "web/data/lebanon/hotspots/2009.json": {
+      "bytes": 4420,
+      "sha256": "88b47c1a819251c49ed991bc7d94c78179f539795e8c6a7ffef7896cb5ecc669"
+    },
+    "web/data/lebanon/hotspots/2010.json": {
+      "bytes": 9879,
+      "sha256": "029802b0b627cfefd0adeb93274503aef8079fdff95a12338ddc51c2807e4331"
+    },
+    "web/data/lebanon/hotspots/2011.json": {
+      "bytes": 2417,
+      "sha256": "52e2d0214a9f6ed24a74b9f1613e9aba60b296096388406f078d14deaa40d1d3"
+    },
+    "web/data/lebanon/hotspots/2012.json": {
+      "bytes": 30315,
+      "sha256": "02156a70b585ebcce276e7b4d60c3e8e02bd4db339df7736876a68f5af7c8b12"
+    },
+    "web/data/lebanon/hotspots/2013.json": {
+      "bytes": 56393,
+      "sha256": "69f478b97e4fb95faaca9ca4efc7cddf1dc1590663f02d424229802ba374a477"
+    },
+    "web/data/lebanon/hotspots/2014.json": {
+      "bytes": 29384,
+      "sha256": "f1e19bdeb348f0bb3c2c6da1de168a3ae0b61787c7e0772900a10d05877f0879"
+    },
+    "web/data/lebanon/hotspots/2015.json": {
+      "bytes": 34541,
+      "sha256": "d486759c977124aa92f8386874e18513a2d8fd3b76219c49bb27dd67cb480fd9"
+    },
+    "web/data/lebanon/hotspots/2016.json": {
+      "bytes": 48310,
+      "sha256": "f2f75c98657a0224e53f2cda71e55cb5c604348ef9e5153e2561e7542ec0e24c"
+    },
+    "web/data/lebanon/hotspots/2017.json": {
+      "bytes": 26516,
+      "sha256": "eca12eeb38eac7d85c110a3dd203ff9ebc4d835f14481906bd64510ab5619406"
+    },
+    "web/data/lebanon/hotspots/2018.json": {
+      "bytes": 49797,
+      "sha256": "6478af43c2a7da9bab16d7c7c29fc3f7422649a05fa2563974083242df587755"
+    },
+    "web/data/lebanon/hotspots/2019.json": {
+      "bytes": 75022,
+      "sha256": "1692510add99d6b940b2eaa938e17d00bbfe6a03ee2632c9050a2ddcec10acac"
+    },
+    "web/data/lebanon/hotspots/2020.json": {
+      "bytes": 102210,
+      "sha256": "98e872b82cfed8ca72ce1dff0da58969bf032057582c3f59ec0e3d787cdbc0c4"
+    },
+    "web/data/lebanon/hotspots/2021.json": {
+      "bytes": 121804,
+      "sha256": "86dea2d07163699c3db636c91a2753dad132bbca10ae3502a7490539debbdca1"
+    },
+    "web/data/lebanon/hotspots/2022.json": {
+      "bytes": 55866,
+      "sha256": "ee3aa741ca8a3648c38ac1532a04e679183e5133e8caa30367ccb9989a68c6d5"
+    },
+    "web/data/lebanon/hotspots/2023.json": {
+      "bytes": 86294,
+      "sha256": "baa587ceb6ac670db2b71b26c8561c0295d03f6791fa15b8a012208513e64580"
+    },
+    "web/data/lebanon/hotspots/2024.json": {
+      "bytes": 178434,
+      "sha256": "e1277892d6cbd294b37f5081c3163a6c98fee2ed25ddc4ae1fe535796c99a0bb"
+    },
+    "web/data/lebanon/hotspots/2025.json": {
+      "bytes": 81248,
+      "sha256": "5ca64a764d00dd946bddfb4f4e02f81436cd687334b7003b635935c508ec145b"
+    },
+    "web/data/lebanon/monthly.json": {
+      "bytes": 157941,
+      "sha256": "ce75fb27d1216221d24530480e9977e38ccfb788445e56b3ca0110b8bd2a20d8"
+    },
+    "web/data/lebanon/monthly_bd.json": {
+      "bytes": 159837,
+      "sha256": "7b295be0bc7518768ce221df168548c4500ac4da72d02eaa8ef51cf4afda0533"
+    }
+  },
+  "raw_initially_present": false
+}
