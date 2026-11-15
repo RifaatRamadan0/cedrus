@@ -6,6 +6,7 @@ tools/check_history_unchanged.py must pass, which requires every 2000-2025 value
 year files up to 2025 are still compared byte for byte. Catalog entries are compared with a
 fixed reference commit (the last one ending in 2025), not with HEAD, so the check still means something after a commit.
 """
+import argparse
 import hashlib
 import json
 import subprocess
@@ -49,6 +50,10 @@ def changed_fields(a, b, path=""):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--published-only", action="store_true",
+                        help="Check distributed artifacts; report raw-input retention as not checked")
+    args = parser.parse_args()
     baseline = json.loads((ROOT / "analysis/tier1/baseline.json").read_text(encoding="utf-8"))
     reference = json.loads(subprocess.check_output(["git", "show", f"{REF}:web/data/regions.json"], cwd=ROOT).decode("utf-8"))
     current = json.loads((ROOT / "web/data/regions.json").read_text(encoding="utf-8"))
@@ -86,11 +91,15 @@ def main():
         "changed_models": changed_models,
         "env_ignored": subprocess.run(["git", "check-ignore", "-q", ".env"], cwd=ROOT).returncode == 0,
         "deferred_exports_absent": all(not (ROOT / "web/data" / r).exists() for r in ("israel", "palestine")),
-        "deferred_raw_retained": all((ROOT / "data/raw" / r).is_dir() for r in ("israel", "palestine")),
+        "deferred_raw_retained": None if args.published_only else all(
+            (ROOT / "data/raw" / r).is_dir() for r in ("israel", "palestine")),
+        "scope": "published artifacts" if args.published_only else "published artifacts and local raw inputs",
     }
     result["passed"] = all(result[k] for k in (
         "all_preserved_exports_unchanged", "history_2000_2025_unchanged", "existing_region_entries_unchanged",
-        "frozen_models_unchanged", "env_ignored", "deferred_exports_absent", "deferred_raw_retained"))
+        "frozen_models_unchanged", "env_ignored", "deferred_exports_absent"))
+    if not args.published_only:
+        result["passed"] = result["passed"] and result["deferred_raw_retained"]
     report = json.dumps(result, indent=2) + "\n"
     (ROOT / "analysis/tier1/scope_revision_preservation.json").write_text(report, encoding="utf-8", newline="\n")
     print(report, end="")

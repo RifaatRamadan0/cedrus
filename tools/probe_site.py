@@ -4,7 +4,8 @@
     python tools/probe_site.py              # serves web/ itself on the first free port from 8765
     python tools/probe_site.py --url http://localhost:8000/
 
-Needs Python Playwright and Chrome (C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe by default).
+Install requirements-dev.txt and run python -m playwright install chromium.
+Use --browser-executable PATH to select an existing Chrome/Chromium installation.
 Screenshots go to tools/shots/. Exit code 1 if any check fails.
 """
 import argparse
@@ -26,7 +27,6 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
 SHOTS = ROOT / "tools" / "shots"
-CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 results = []
@@ -223,7 +223,7 @@ def wait_season(page):
     page.wait_for_function("!document.querySelector('#cal-start').textContent.includes('…')", timeout=120000)
 
 
-def model_checks():
+def model_checks(published_only=False):
     """The frozen round-2 model in the data: its settings file, fit windows, refusal of 2020+, frozen-by-construction
     fit, combination rule and NOAA-20 weights."""
     import hashlib
@@ -258,6 +258,10 @@ def model_checks():
     finally:
         weights_r2.WINDOWS.clear(); weights_r2.WINDOWS.update(saved)
     check("the round-2 fit refuses a window reaching into 2020", refused)
+
+    if published_only:
+        print("[SKIP] Raw-input hotspot refit checks (--published-only)", flush=True)
+        return
 
     # Frozen by construction: a detection in 2023 in a cell that never burned before changes no fitted parameter,
     # and that cell gets A2's region-level ratio (r0 of its slot).
@@ -513,7 +517,7 @@ def rounding_checks():
                   f"largest gap {gap.max():.4f} over {len(gap)} months")
 
 
-def bd_model_checks():
+def bd_model_checks(published_only=False):
     """The burning-day model in the data: frozen file, fit windows, nothing from 2020 on, frozen by construction, the
     same refit as the round-3 exam, NOAA-20 via s, and every file adding up."""
     import hashlib
@@ -544,6 +548,10 @@ def bd_model_checks():
         refused = True
     tampered.unlink()
     check("the burning-day model refuses a frozen_round3.json that is not the frozen file", refused and weights_bd.FROZEN_SHA256 == BD_SHA)
+
+    if published_only:
+        print("[SKIP] Raw-input burning-day refit checks (--published-only)", flush=True)
+        return
 
     import export_v2
     for region in ("lebanon", "portugal"):
@@ -640,9 +648,9 @@ def legacy_context(browser, **kwargs):
     return ctx
 
 
-def run(url, shots):
-    model_checks()
-    bd_model_checks()
+def run(url, shots, browser_executable=None, published_only=False):
+    model_checks(published_only)
+    bd_model_checks(published_only)
     rounding_checks()
     for region in ("portugal", "lebanon"):
         want, cnt = zero_notes_from_files(region)
@@ -664,7 +672,7 @@ def run(url, shots):
         page.on("response", lambda r: errors.append(f"{tag}HTTP {r.status} {r.url}") if r.status >= 400 else None)
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(executable_path=CHROME, headless=True)
+        browser = p.chromium.launch(executable_path=browser_executable, headless=True)
 
         # ---- cold load on a throttled "normal" connection (20 Mbit/s, 40 ms), cache off
         ctx = legacy_context(browser, viewport={"width": 1440, "height": 900})
@@ -1297,6 +1305,8 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     ap.add_argument("--url")
+    ap.add_argument("--published-only", action="store_true", help="Check distributed data and UI; explicitly skip refits requiring raw observations")
+    ap.add_argument("--browser-executable", help="Optional path to Chrome/Chromium; defaults to Playwright Chromium")
     args = ap.parse_args()
     httpd = None
     url = args.url
@@ -1307,7 +1317,7 @@ def main():
         print(f"serving web/ on {url}", flush=True)
     t0 = time.time()
     try:
-        ok = run(url, SHOTS)
+        ok = run(url, SHOTS, args.browser_executable, args.published_only)
     finally:
         if httpd:
             httpd.shutdown()

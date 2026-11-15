@@ -1,4 +1,5 @@
 """Isolated La Rioja diagnostic; reuses repository models without modifying them."""
+import argparse
 import sys
 sys.dont_write_bytecode = True
 import hashlib
@@ -8,10 +9,20 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-REPO = Path(r"C:\Users\rifaa\Desktop\NASA Space Apps\cedrus")
+REPO = ROOT.parents[2]
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--data-dir", type=Path, required=True,
+                    help="La Rioja diagnostic inputs, including manifest.json and its CSV files")
+parser.add_argument("--output-dir", type=Path,
+                    default=REPO / "data/processed/la_rioja_diagnostic",
+                    help="Output directory; defaults to ignored working data")
+args = parser.parse_args()
+INPUT = args.data_dir.resolve()
+if not (INPUT / "manifest.json").is_file():
+    parser.error("--data-dir must contain the diagnostic manifest.json and its referenced files")
 sys.path.insert(0, str(REPO))
-OUT = ROOT / "results"
-OUT.mkdir(exist_ok=True)
+OUT = args.output_dir.resolve()
+OUT.mkdir(parents=True, exist_ok=True)
 
 def hashes():
     return {str(p.relative_to(REPO)): hashlib.sha256(p.read_bytes()).hexdigest()
@@ -30,7 +41,7 @@ from pipeline.round3 import confirm as c3
 
 # Runtime-only configuration: neither region definitions nor model code are edited.
 REGIONS["la_rioja"] = {"country": "Argentina", "box": (-69.7, -32.8, -65.4, -27.7), "roles": {"dev"}}
-r2.folder = lambda region: ROOT / "data/raw/la_rioja"
+r2.folder = lambda region: INPUT
 d3.OUT = OUT / "cache"
 
 manifest = json.loads((r2.folder("la_rioja") / "manifest.json").read_text())

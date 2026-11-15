@@ -63,30 +63,75 @@ the current site.
 
 ## Quick start
 
-You need Python 3.10+ and a browser.
+### View the website
+
+Python 3.10+ and a browser are enough to view the committed datasets:
 
 ```bash
-pip install -r requirements.txt
-
-python pipeline/01_download.py                     # NASA FIRMS archives for Portugal (~30 MB, no key needed)
-python pipeline/01_download.py --country Lebanon   # and for Lebanon
-python pipeline/02_aggregate.py                    # filter + count detections per 0.25° cell per day
-python pipeline/03_harmonize.py                    # the retirement test -> docs/RESULTS.md
-python -m pipeline.bakeoff.run                     # the pre-registered bake-off (docs/BAKEOFF_PLAN.md)
-python pipeline/export_v2.py                       # files the website reads -> web/data/ (docs/DATA_CONTRACT.md)
-
-python -m http.server 8000 -d web                  # then open http://localhost:8000
-python tools/probe_site.py                         # headless check of the site (Playwright + Chrome) -> tools/shots/
+python -m http.server 8000 -d web
 ```
 
-`pipeline/04_export_web.py` writes the files the previous version of the site read
-(`web/data/portugal.json`, no longer shipped); the current site reads only what `export_v2.py` writes.
+Open http://localhost:8000. Opening index.html directly blocks data loading.
+Map libraries and map tiles require internet access. The live-feed panel is separate
+from the historical record and reads the committed `web/data/nrt.json` snapshot.
+Updating that snapshot requires the FIRMS acquisition tools; Pages serves the saved snapshot.
 
-The processed website data is committed in `web/data/`, so you can skip the
-pipeline and just run the last line to work on the website.
+### Run software and browser checks
 
-Open the site through `http://localhost`, not by double-clicking `index.html`:
-browsers block a page opened from disk from loading its data files.
+Create and activate a virtual environment, then install:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m playwright install chromium
+python tools/probe_site.py --published-only
+```
+
+The probe starts its own HTTP server and saves screenshots under ignored `tools/shots/`.
+To use an existing Chrome/Chromium installation, pass `--browser-executable PATH`.
+Published-only mode explicitly skips raw-input refit checks while checking frozen settings,
+published data and browser behavior. Omit that flag when the required raw observations
+are available. Browser probes do not rerun sealed scientific experiments.
+
+Historical preservation checks require the archived Git objects. For a shallow or
+single-branch clone, fetch the archive explicitly:
+
+```bash
+git fetch origin refs/heads/archive/original-history:refs/remotes/origin/archive/original-history
+git cat-file -e 4e3396040c4f23625df2c1eb85bf6a78fbf3e6d3^{commit}
+python tools/check_history_unchanged.py
+python tools/check_tier1_preservation.py --published-only
+```
+
+The published-only mode reports raw-input retention as not checked; omit the flag
+to require those local inputs as well. The second preservation check writes an evidence report; use an isolated verification
+checkout to avoid overwriting a retained historical report. Research chronology and
+archive coverage are described in [docs/README.md](docs/README.md#research-chronology).
+
+### Reproduce pipeline outputs
+
+Install `requirements.txt` for pipeline-only work. Raw satellite observations are
+not included; obtain the region inputs and verify their manifests before running
+`python pipeline/export_v2.py`. FIRMS archive acquisition starts with
+`python pipeline/01_download.py --country Portugal`; area/API acquisition requires
+separately configured credentials. See [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md)
+and the acquisition scripts for source and date coverage. Never commit credentials.
+The exporter writes `web/data/`, so use a separate checkout for reproduction.
+
+The frozen settings and run records under `data/processed/` are intentionally tracked
+exceptions to the ignore rules. Preserve their bytes and expected hashes; do not
+renormalize them. `.gitattributes` protects scientific data and code used by historical
+checks across platforms.
+
+The historical La Rioja diagnostic accepts its inputs explicitly:
+
+```bash
+python analysis/tier1/la_rioja_evidence/run_validation.py --data-dir PATH_TO_DIAGNOSTIC_INPUTS
+```
+
+That directory must contain the matching manifest and CSV files; ordinary website
+JSON is not sufficient. Results default to ignored `data/processed/la_rioja_diagnostic/`.
+This is a scientific rerun, not a setup or packaging test. Older experiment commands
+and their evidence remain in the research documentation.
 
 ## What's in the repo
 
@@ -94,10 +139,10 @@ browsers block a page opened from disk from loading its data files.
 |---|---|
 | `web/` | The website: plain HTML/CSS/JS, no build step. Map uses MapLibre (from a CDN). |
 | `web/data/` | Output of `export_v2.py`, in both units: per region the monthly record per 0.25° cell, every burning day and every detection with its weight, the drift check, provenance. Layout in `docs/DATA_CONTRACT.md`. |
-| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid. `weights_bd.py` is the burning-day model, D-a (round-3 confirmed; it refits through `pipeline/round3/model.py` and `pipeline/tournament/` and checks `data/processed/tournament/frozen_round3.json` by SHA-256); `weights_r2.py` is the hotspot model, the frozen round-2 choice (A2 + NOAA-20 via Suomi NPP; it imports `pipeline/round2/models.py` and checks `data/processed/round2/frozen.json` by SHA-256); `weights_a.py` (round 1) and `weights_interim.py` are kept for reference and unused. |
+| `pipeline/` | Python steps (above). `regions.py` holds the region boxes and the global grid. `weights_bd.py` is the burning-day model, D-a (round-3 confirmed; it refits through `pipeline/round3/model.py` and `pipeline/tournament/` and checks `data/processed/tournament/frozen_round3.json` by SHA-256); `weights_r2.py` is the hotspot model, the frozen round-2 choice (A2 + NOAA-20 via Suomi NPP; it imports `pipeline/round2/models.py` and checks `data/processed/round2/frozen.json` by SHA-256); `weights_a.py` is retained for reference; `weights_interim.py` still supplies the exporter’s bridging quantiles. |
 | `tools/export_firms_missing_dates.py` | Writes `web/data/firms_missing_dates.json` (FIRMS's own list of dates with missing standard data, per satellite), which the map names as FIRMS-reported missing data, not independently verified outages. |
 | `tools/probe_site.py` | Loads the site in headless Chrome, clicks through both units, checks the CSV downloads agree with the calendar (and, for burning days, with its own Python sum over the files), saves screenshots. |
-| `data/` | Raw downloads and intermediate files. **Not committed** (in `.gitignore`); run the pipeline to rebuild. |
+| `data/` | Raw downloads and intermediate files are ignored; five frozen settings/run-record files are intentionally tracked. |
 | `docs/` | Plans, results and references. Start at [docs/README.md](docs/README.md): what each document is for, which ones are current, and the order the tests ran in. Plans are never rewritten (add a dated section); generated results are never edited by hand. |
 
 ## Rules we work by
