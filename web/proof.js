@@ -22,7 +22,7 @@ function examCard(e, tests) {
   const rows = e.tests.map((t) => {
     const d = tests[t.key];
     return `<li class="${t.pass ? 'pass' : 'fail'}"><span class="t-mark" aria-hidden="true">${t.pass ? '✓' : '✗'}</span>
-      <span class="t-name">${esc(d.name)}<small>${esc(d.plain)}</small></span>
+      <span class="t-name">${esc(d.name)}<button type="button" class="t-tip" aria-label="What this test means" aria-expanded="false">i</button><small class="t-desc">${esc(d.plain)}</small></span>
       ${gauge(t)}<span class="t-num"><strong>${fmtGot(t)}</strong><small>needed ${esc(t.need)}${t.unit === '×' ? '' : ''}</small></span>
       <span class="sr-only">${t.pass ? 'passed' : 'failed'}</span></li>`;
   }).join('');
@@ -33,7 +33,8 @@ function examCard(e, tests) {
     <p class="exam-when"><span>Rules written <strong>${day(e.planned)}</strong></span><span aria-hidden="true">→</span><span>sat once <strong>${day(e.run)}</strong></span></p>
     <ul class="exam-regions" aria-label="Regions it had never seen">${e.regions.map(([n, c]) => `<li>${esc(n)} <small>${esc(c)}</small></li>`).join('')}</ul>
     <ol class="exam-tests" aria-label="${passed} of ${e.tests.length} tests passed">${rows}</ol>
-    <p class="exam-lesson">${esc(e.lesson)}</p>
+    <p class="exam-short">${e.verdict === 'failed' ? `Failed ${e.tests.length - passed} of ${e.tests.length}: published, the causes found and fixed for the next exam.` : `Passed all ${e.tests.length} tests on ${e.regions.length} regions it had never seen.`}</p>
+    <details class="more fold"${window.__uxOpen ? ' open' : ''}><summary>The full story</summary><p class="exam-lesson">${esc(e.lesson)}</p></details>
     <p class="exam-links"><a href="${DOCS}${e.plan}">The rules (plan)</a> · <a href="${DOCS}${e.source}">Full results</a></p>
   </article>`;
 }
@@ -43,8 +44,8 @@ function regionsBlock(index) {
     const notes = (r.notes || []).filter((n) => /\btest/i.test(n)).slice(0, 2);
     return notes.length ? `<li><strong>${esc(r.name)}</strong>${notes.map((n) => `<span>${esc(cap(n.replace(/^Forward test against MODIS, 2020–2021 \(fitted on 2012–2019\): /i, '')))}</span>`).join(' ')}</li>` : '';
   }).join('');
-  return rows ? `<div class="proof-regions"><h3>And every region in this app was tested on its own data</h3>
-    <p class="hint">Fitted on 2012–2019, then checked against real MODIS in 2020–2021, the last years MODIS still flew on its planned orbits. Where a region does worse, the app says so in that region's notes.</p><ul>${rows}</ul></div>` : '';
+  return rows ? `<details class="more proof-regions-fold"${window.__uxOpen ? ' open' : ''}><summary>And every region in this app was tested on its own data</summary><div class="proof-regions"><h3 class="sr-only">And every region in this app was tested on its own data</h3>
+    <p class="hint">Fitted on 2012–2019, then checked against real MODIS in 2020–2021, the last years MODIS still flew on its planned orbits. Where a region does worse, the app says so in that region's notes.</p><ul>${rows}</ul></div></details>` : '';
 }
 
 async function render() {
@@ -55,6 +56,7 @@ async function render() {
     box.innerHTML = `<div class="exams">${cards}</div>${regionsBlock(index)}`;
     const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('seen'); io.unobserve(en.target); } }), { threshold: 0.25 }) : null;
     box.querySelectorAll('.exam').forEach((el) => (io ? io.observe(el) : el.classList.add('seen')));
+    box.querySelectorAll('.t-tip').forEach((b) => b.addEventListener('click', () => { const on = b.parentElement.classList.toggle('open'); b.setAttribute('aria-expanded', String(on)); }));
   } catch (err) {
     box.innerHTML = `<p class="hint">Couldn’t load the exam results (${esc(err.message)}). They are in the repository’s docs folder.</p>`;
   }

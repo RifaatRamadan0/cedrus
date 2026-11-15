@@ -502,7 +502,8 @@ function renderMonth() {
   // Smoke is doubt: the trust check's verdict drawn on the number itself (hover or focus clears it; the words below stay).
   const smoke = base.enough ? fx.smokeClass(trustVerdict(j, base).key) : '';
   const plume = ranged ? `<i class="plume" aria-hidden="true" style="--lo:${(Math.min(1, lo / Math.max(hi, 1e-9)) * 100).toFixed(1)}%"></i>` : '';
-  rows.push(`<p class="big-value"><strong id="month-value"${smoke ? ` class="${smoke}" tabindex="0"` : ''}>${fmt(v)}</strong> ${state.unit === 'bd' ? 'burning days (MODIS-equivalent)' : 'fire detections'}, harmonized estimate (expected value)${ranged ? ` <span>80% range ${fmt(lo)}–${fmt(hi)} (approximate, ${rangeFrom})${plume}</span>` : ''}</p>`);
+  rows.push(`<p class="big-value"><strong id="month-value"${smoke ? ` class="${smoke}" tabindex="0"` : ''}>${fmt(v)}</strong> ${v === 1 ? unit().one : unit().many}</p>`
+    + `<details class="more fold" id="value-more"${window.__uxOpen ? ' open' : ''}><summary>What this number is${ranged ? ' and its range' : ''}</summary><p class="big-value-more">${state.unit === 'bd' ? 'burning days (MODIS-equivalent)' : 'fire detections'}, harmonized estimate (expected value)${ranged ? ` <span>80% range ${fmt(lo)}–${fmt(hi)} (approximate, ${rangeFrom})${plume}</span>` : ''}</p></details>`);
   const more = []; let lead = ''; // the answer first; the evidence behind it in Details
   more.push(`<p class="source-line"><span class="flag ${isEstimated(flag) ? 'estimated' : flagName(flag)}">${SHORT_FLAG[flag]}</span>${flagText(flag)}.${slotNote(j) ? ` <span class="slot-note">Exception this month (a satellite with no ratio for this month and time of day is left out): ${slotNote(j)}.</span>` : ''}${zeroNote(j) ? ` <span class="slot-note" id="zero-note">${zeroNote(j)}.</span>` : ''}</p>`);
   const two = bothUnits(j);

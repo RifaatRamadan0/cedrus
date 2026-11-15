@@ -27,9 +27,10 @@ function render() {
   if (!r) { box.hidden = false; box.className = 'live none'; box.innerHTML = `<span class="live-dot" aria-hidden="true"></span><p><strong>Right now</strong> · ${s.meta.name}: the live comparison isn’t built for this region yet.</p>`; mapLayer(); return; }
   const v = verdict(r); const win = `${d(data.window[0])}–${d(data.window[1])} ${data.window[1].slice(0, 4)}`;
   box.hidden = false; box.className = `live ${v.key}`;
+  const open = window.__uxOpen ? ' open' : '';
   box.innerHTML = `<span class="live-dot" aria-hidden="true"></span>
-    <p><strong>Right now</strong> · ${s.meta.name}, ${win} (${data.days} complete days): <strong class="live-n">${r.now}</strong> burning days seen by NOAA-20, <strong>${v.text}</strong>${r.median != null ? ` (normal ${fmt(r.median)}, usual range ${fmt(r.q1)}–${fmt(r.q3)}, same days ${Object.keys(r.years)[0]}–${Object.keys(r.years).at(-1)})` : ''}.
-    <span class="live-note">${stale()}Live NASA FIRMS feed, built ${data.built.replace('T', ' ')} UTC and updated daily; like-for-like NOAA-20 counts, not the harmonized record.</span></p>
+    <p><strong>Right now</strong> · ${s.meta.name}: <strong class="live-n">${r.now}</strong> burning days in the last ${data.days} days — <strong>${v.text}</strong>${r.median != null ? ` (normal ${fmt(r.median)})` : ''}.
+    <details class="more info-tip live-tip"${open}><summary aria-label="About this comparison" title="About this comparison"><span aria-hidden="true">i</span></summary><span class="tip-body">${win} (${data.days} complete days), seen by NOAA-20${r.median != null ? `; usual range ${fmt(r.q1)}–${fmt(r.q3)}, same days ${Object.keys(r.years)[0]}–${Object.keys(r.years).at(-1)}` : ''}. <span class="live-note">${stale()}Live NASA FIRMS feed, built ${data.built.replace('T', ' ')} UTC and updated daily; like-for-like NOAA-20 counts, not the harmonized record.</span></span></details></p>
     ${r.median != null ? bars(r) : ''}<button type="button" class="map-lens" id="live-map" aria-pressed="${onMap}">${onMap ? 'Hide' : 'Show'} on map</button>`;
   $('#live-map').addEventListener('click', () => { onMap = !onMap; shownFor = null; render(); mapLayer(); });
   mapLayer();

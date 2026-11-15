@@ -13,19 +13,19 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <link rel="icon" href="assets/cedar.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261115e">
-  <link rel="stylesheet" href="fx.css?v=20261115e">
-  <link rel="stylesheet" href="shell.css?v=20261115e">
+  <link rel="stylesheet" href="styles.css?v=20261115f">
+  <link rel="stylesheet" href="fx.css?v=20261115f">
+  <link rel="stylesheet" href="shell.css?v=20261115f">
   <link rel="preload" href="data/regions.json" as="fetch" crossorigin>
   <link rel="preload" href="data/portugal/monthly_bd.json" as="fetch" crossorigin>
   <script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
   <link rel="modulepreload" href="fx.js">
-  <script type="module" src="app.js?v=20261115e" async></script>
-  <script type="module" src="proof.js?v=20261115e" async></script>
-  <script type="module" src="i18n.js?v=20261115e"></script>
-  <script type="module" src="live.js?v=20261115e" async></script>
-  <script type="module" src="shell.js?v=20261115e" async></script>
+  <script type="module" src="app.js?v=20261115f" async></script>
+  <script type="module" src="proof.js?v=20261115f" async></script>
+  <script type="module" src="i18n.js?v=20261115f"></script>
+  <script type="module" src="live.js?v=20261115f" async></script>
+  <script type="module" src="shell.js?v=20261115f" async></script>
   <meta name="cedrus-docs" content="https://github.com/RifaatRamadan0/cedrus/blob/main/docs/">
 </head>
 <body>
@@ -250,15 +250,14 @@
   <div class="live" id="live" aria-live="polite" hidden></div>
   <section class="workspace" id="fire-history" aria-label="Fire calendar for an area">
     <form class="controls panel" id="area-form" novalidate>
-      <h2>Your area</h2>
-      <p class="intro">Pick a region or draw an area. You get every month of its record (from December 2000, or from 2012 where older files are not loaded yet), on one consistent scale.</p>
+      <h2>Your area</h2><details class="more info-tip intro-tip"><summary aria-label="How this works" title="How this works"><span aria-hidden="true">i</span></summary><div class="tip-body"><p class="intro">Pick a region or draw an area. You get every month of its record (from December 2000, or from 2012 where older files are not loaded yet), on one consistent scale.</p></div></details>
       <div class="field-group unit-group"><span class="field-label" id="unit-label">Count fires as</span>
         <div class="unit-row" role="group" aria-labelledby="unit-label">
           <button type="button" class="unit" id="unit-bd" aria-pressed="true">Burning days</button>
           <button type="button" class="unit" id="unit-hot" aria-pressed="false">Hotspots</button>
         </div>
         <p class="unit-status" id="unit-status" role="alert" hidden><span id="unit-status-text"></span> <button type="button" class="link-button" id="unit-retry">Try again</button></p>
-        <p class="hint" id="unit-hint">Burning days: how many days each ~1 km square had a fire detected, in MODIS-equivalent terms. Hotspots: the satellites’ fire detections, the numbers the challenge asks for.</p>
+        <details class="more info-tip"><summary aria-label="What these units mean" title="What these units mean"><span aria-hidden="true">i</span></summary><div class="tip-body"><p class="hint" id="unit-hint">Burning days: how many days each ~1 km square had a fire detected, in MODIS-equivalent terms. Hotspots: the satellites’ fire detections, the numbers the challenge asks for.</p></div></details>
       </div>
       <p class="start-hint" id="start-hint" hidden>Start here: pick a region, or draw an area on the map</p>
       <div class="field-group"><label for="region">1. Region</label>
@@ -271,7 +270,7 @@
           <button type="button" class="tool" id="draw-polygon" aria-pressed="false" disabled>Polygon</button>
           <button type="button" class="tool" id="draw-clear">Whole region</button>
         </div>
-        <p class="hint" id="draw-hint">Drawing tools load with the map…</p>
+        <details class="more info-tip draw-tip"><summary aria-label="How to draw" title="How to draw"><span aria-hidden="true">i</span></summary><div class="tip-body"><p class="hint" id="draw-hint">Drawing tools load with the map…</p></div></details>
       </div>
       <details class="more" id="more-circle"><summary>Or enter a point and radius</summary>
       <fieldset class="field-group circle-group"><legend class="sr-only">Point and radius</legend>
@@ -284,7 +283,8 @@
       </fieldset>
       </details>
       <div class="area-summary" id="area-summary" aria-live="polite"></div>
-      <div class="hint" id="region-notes" aria-live="polite"></div>
+      <p class="trust-line" id="trust-line"></p>
+      <details class="more region-data" id="region-data"><summary>About this region’s data</summary><div class="hint" id="region-notes" aria-live="polite"></div></details>
       <details class="more" id="more-download"><summary>Download data for this area (CSV)</summary>
       <fieldset class="field-group download-group"><legend class="sr-only">Download for this area</legend>
         <div class="year-span">
@@ -326,6 +326,8 @@
           <div class="story-nav"><button type="button" class="update-button" id="story-next">Next</button><button type="button" class="link-button" id="story-exit">Exit</button></div>
         </div>
       </div>
+      <p class="map-caption-short" id="map-caption-short" aria-hidden="true"></p>
+      <details class="more map-info" id="map-info"><summary><span class="i-dot" aria-hidden="true">i</span>How to read the map</summary>
       <p class="map-caption" id="map-caption" aria-live="polite">Loading NASA FIRMS record…</p>
       <div class="map-coverage" aria-label="How to read the map">
         <p id="map-extent-note">Orange dashed outline: analysis extent — not the country boundary.</p>
@@ -337,6 +339,7 @@
         <p>Blank areas may have no qualifying fire records or a near-zero estimate for this month. Blank does not mean confirmed fire-free. Observation completeness is unknown.</p>
         <p id="map-cell-detail" aria-live="polite">Click the map to inspect a location and its selected-month estimate.</p>
       </div>
+      </details>
       <div class="playback" id="playback" role="group" aria-label="Play the record">
         <button type="button" class="play" id="play" aria-pressed="false" aria-label="Play every year of the record"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
         <div class="fuse"><canvas id="fuse-strip" aria-hidden="true"></canvas><input type="range" id="scrub" min="0" max="300" value="0" aria-label="Month of the record"></div>
@@ -358,13 +361,13 @@
         <button type="button" class="link-button" id="table-toggle" aria-pressed="false">Show as table</button></span>
         </div></details>
       </div>
-      <p class="calendar-note" id="calendar-note"></p>
+      <p class="cal-sub" id="cal-sub" aria-hidden="true"></p><details class="more info-tip cal-tip"><summary aria-label="About this view" title="About this view"><span aria-hidden="true">i</span></summary><div class="tip-body"><p class="calendar-note" id="calendar-note"></p></div></details>
       <div class="cal-progress" id="cal-progress" role="status" hidden><span></span><progress max="1" value="0"></progress></div>
       <div class="calendar" id="cal-grid" role="grid" aria-labelledby="calendar-title" aria-describedby="calendar-note"></div>
       <div class="calendar-table" id="calendar-table" hidden></div>
       <div class="cal-rings" id="cal-rings" hidden><svg id="rings-svg" viewBox="0 0 400 412" tabindex="0" role="application" aria-label="Tree-ring calendar: one ring per year (the first at the centre), one wedge per month, January at the top. Arrow keys move, Enter opens a month."></svg><p class="sr-only" id="rings-live" aria-live="polite"></p></div>
-      <div class="calendar-legend" id="calendar-legend" aria-hidden="true"></div>
-      <p class="hint record-end" id="record-end-note"></p>
+      <div class="calendar-legend" id="calendar-legend" aria-hidden="true"></div><button type="button" class="link-button" id="legend-more" aria-expanded="false">More symbols</button>
+      <details class="more info-tip end-tip"><summary aria-label="Where the record ends" title="Where the record ends"><span aria-hidden="true">i</span></summary><div class="tip-body"><p class="hint record-end" id="record-end-note"></p></div></details>
     </section>
   </section>
 
@@ -378,16 +381,16 @@
       <p class="eyebrow small" id="season-eyebrow">FIRE SEASON</p>
       <h2 id="season-title">When the fire season runs here</h2>
       <div class="fire-calendar" id="season-dates"><div class="season"><svg class="icon green"><use href="#sprout"/></svg><div><small>Normal start</small><strong id="cal-start">–</strong><span id="cal-start-spread"></span></div></div><div class="season"><svg class="icon orange"><use href="#fire"/></svg><div><small>Middle</small><strong id="cal-peak">–</strong><span id="cal-peak-spread"></span></div></div><div class="season"><svg class="icon green"><use href="#leaf"/></svg><div><small>Normal end</small><strong id="cal-end">–</strong><span id="cal-end-spread"></span></div></div></div>
-      <p class="hint" id="season-note">Dates are worked out from the individual records when you open this area.</p>
-      <p class="hint" id="cross-year-season" hidden></p>
+      <details class="more fold" id="season-more"><summary>How the dates are worked out</summary><p class="hint" id="season-note">Dates are worked out from the individual records when you open this area.</p>
+      <p class="hint" id="cross-year-season" hidden></p></details>
       <div class="fingerprint"><svg id="fp-svg" viewBox="0 0 220 220" role="img" aria-labelledby="fp-caption"></svg>
-        <div class="fp-side"><p class="eyebrow small">FIRE FINGERPRINT</p><p class="hint" id="fp-caption"></p><button type="button" class="download" id="share-card">Save as image (PNG)</button></div></div>
+        <div class="fp-side"><p class="eyebrow small">FIRE FINGERPRINT</p><p class="fp-short" id="fp-short" aria-hidden="true"></p><details class="more fold"><summary>Reading the wheel</summary><p class="hint" id="fp-caption"></p></details><button type="button" class="download" id="share-card">Save as image (PNG)</button></div></div>
     </section>
     <section class="panel drift-panel" aria-labelledby="drift-title">
       <p class="eyebrow small" id="drift-eyebrow">SATELLITE CHECK</p>
       <h2 id="drift-title">Is MODIS still seeing what it used to?</h2>
       <svg id="drift-chart" viewBox="0 0 430 170" role="img" aria-labelledby="drift-title drift-caption"></svg>
-      <p class="hint" id="drift-caption"></p>
+      <p class="drift-short">MODIS has drifted since 2022, so the record switches to VIIRS there.</p><details class="more fold"><summary>What the line and band show</summary><p class="hint" id="drift-caption"></p></details>
     </section>
   </section>
 
@@ -396,12 +399,12 @@
     <h2 id="eyes-title">Why raw satellite counts jump in 2012, and how the record fixes it</h2>
     <div class="eyes-grid">
       <div><div class="eyes-pixels" id="eyes-pixels"></div>
-        <p class="hint" data-i18n="eyes-text">The same fire, seen by two satellite eyes. MODIS sees in pixels about 1 km wide; VIIRS (from 2012) in pixels 375 m wide, so about seven of its pixels fit in one of MODIS’s, and it also catches smaller, cooler fires. Counted raw, the sharper eye makes fire look as if it jumped overnight. The record translates every count into MODIS-equivalent terms, so the whole record sits on one scale.</p></div>
+        <p class="eyes-short" id="eyes-short-a" aria-hidden="true"></p><details class="more fold"><summary>Why the counts differ</summary><p class="hint" data-i18n="eyes-text">The same fire, seen by two satellite eyes. MODIS sees in pixels about 1 km wide; VIIRS (from 2012) in pixels 375 m wide, so about seven of its pixels fit in one of MODIS’s, and it also catches smaller, cooler fires. Counted raw, the sharper eye makes fire look as if it jumped overnight. The record translates every count into MODIS-equivalent terms, so the whole record sits on one scale.</p></details></div>
       <div><svg id="eyes-chart" viewBox="0 0 520 210" role="img" aria-labelledby="eyes-caption"></svg>
         <div class="eyes-controls"><button type="button" class="match" id="translate" role="switch" aria-checked="true"><span class="stick" aria-hidden="true"></span>Translate</button>
           <span class="eyes-key"><i class="k-raw"></i>raw counts <i class="k-harm"></i>translated</span></div>
-        <p class="hint" id="eyes-caption"></p>
-        <p class="hint">On the map, the <strong>Raw lens</strong> shows the untranslated counts inside a circle you move over the map.</p></div>
+        <p class="eyes-short" id="eyes-short-b" aria-hidden="true"></p><details class="more fold"><summary>About this chart</summary><p class="hint" id="eyes-caption"></p>
+        <p class="hint">On the map, the <strong>Raw lens</strong> shows the untranslated counts inside a circle you move over the map.</p></details></div>
     </div>
   </section>
   </section>
@@ -410,7 +413,7 @@
   <section class="panel proof-panel" id="proof" aria-labelledby="proof-title">
     <p class="eyebrow small">HOW DO WE KNOW IT WORKS?</p>
     <h2 id="proof-title">Three sealed exams, on regions the model had never seen</h2>
-    <p class="proof-intro" data-i18n="proof-intro">Like a student sitting an exam: we wrote the rules and the pass marks down, with the date, <strong>before</strong> downloading each exam's regions, then let the model sit it once. The first one failed, and we published that. Each of the next two passed every test.</p>
+    <p class="proof-short">Three sealed exams on regions the model had never seen: rules written first, sat once.</p><details class="more fold"><summary>How the exams work</summary><p class="proof-intro" data-i18n="proof-intro">Like a student sitting an exam: we wrote the rules and the pass marks down, with the date, <strong>before</strong> downloading each exam's regions, then let the model sit it once. The first one failed, and we published that. Each of the next two passed every test.</p></details>
     <div id="proof-body"><p class="hint">Loading the exam results…</p></div>
   </section>
   </section>

@@ -378,7 +378,7 @@ export function createFx(api) {
       <path d="M26,${y3.toFixed(1)} h-5 V${y1.toFixed(1)} h5" fill="none" stroke="#a8998e" stroke-width="1"/><text x="13" y="${((y1 + y3) / 2).toFixed(1)}" class="ghost-usual" transform="rotate(-90 13 ${((y1 + y3) / 2).toFixed(1)})" text-anchor="middle">usual</text>
       ${flame}<path d="${flamePath(70, by, hm, w(hm))}" fill="none" stroke="#e6ddd6" stroke-width="1.3" stroke-dasharray="3 3" opacity=".85"/>
       <line x1="18" x2="122" y1="${by}" y2="${by}" stroke="#4a3a32"/></svg>
-      <p><span>Flame: this month. Dashed ghost: the normal ${monthName} (median ${api.fmt(base.median)}). Bracket: the usual range, the middle half of ${base.first}–${base.last} (${api.fmt(q1)}–${api.fmt(q3)}).</span></p></div>`;
+      <details class="more fold"${window.__uxOpen ? ' open' : ''}><summary>Reading the flame</summary><p><span>Flame: this month. Dashed ghost: the normal ${monthName} (median ${api.fmt(base.median)}). Bracket: the usual range, the middle half of ${base.first}–${base.last} (${api.fmt(q1)}–${api.fmt(q3)}).</span></p></details></div>`;
   }
 
   // ---------------------------------------------------------------- fire fingerprint (a place's seasonal shape)

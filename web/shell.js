@@ -471,10 +471,58 @@ function initTour(index, mon) {
   document.querySelectorAll('#lang-switch button').forEach((b) => b.addEventListener('click', () => setTimeout(() => showRegion(tourK), 0)));
 }
 
+// ---------- the explorer, condensed: one short visible line per card; the full text stays, folded ----------
+// Every line below is read from the app's own state or from the text it has just written.
+const MON_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function shortLines() {
+  const st = window.cedrus?.state; if (!st?.monthly || st.sel == null) return;
+  const [fy, fm] = st.monthly.months.first.split('-').map(Number); const k = fy * 12 + fm - 1 + st.sel;
+  const unitWord = st.unit === 'bd' ? 'burning days' : 'hotspots';
+  const set = (sel, t) => { const el = $(sel); if (el && el.textContent !== t) el.textContent = t; };
+  set('#map-caption-short', `${MON_LONG[k % 12]} ${Math.floor(k / 12)} · ${unitWord} per 0.25° cell${st.record === 'naive' ? ' · naive merge' : ''}`);
+  set('#cal-sub', st.record === 'naive' ? `Naive merge: raw counts per month, with the false jump from 2012` : `${st.unit === 'bd' ? 'Burning days' : 'Hotspots'} per month · one scale since ${fy}`);
+  // one trust line per region, from its own forward-test note
+  const test = (st.meta?.notes || []).filter((x) => /\btest/i.test(x)).join(' ');
+  const err = test.match(/regional monthly error (\d+(?:\.\d+)?)%/i);
+  const cellErr = [...test.matchAll(/(?:grid-cell|single-square|single cells?)[^.]*?(\d+)(?:[–-](\d+))?%/gi)].flatMap((m) => [Number(m[1]), Number(m[2] || 0)]);
+  const parts = [];
+  if (err) parts.push(`Tested on 2020–2021: monthly error ${Math.round(Number(err[1]))}%`); else if (test) parts.push('Tested on 2020–2021 against MODIS');
+  if (/failed/i.test(test)) parts.push('missed a pass mark');
+  if (cellErr.length || /grid[- ]cells?|single cells/i.test(test)) parts.push('single cells less reliable');
+  set('#trust-line', parts.join(' · '));
+}
+function figureLines() {
+  const cap = $('#fp-caption'); const s1 = cap?.querySelector('strong')?.textContent || (cap?.textContent || '').split('.')[0];
+  const fpS = $('#fp-short'); if (fpS && s1 && fpS.textContent !== s1) fpS.textContent = s1;
+  const lit = [...document.querySelectorAll('#eyes-pixels figcaption')].map((f) => (f.textContent.match(/(\d+) lit/) || [])[1]);
+  if (lit.length === 2 && lit[0] && lit[1]) { const t = `Same fire: MODIS lights ${lit[0]} pixels, VIIRS lights ${lit[1]}.`; if ($('#eyes-short-a').textContent !== t) $('#eyes-short-a').textContent = t; }
+  const raw = $('#eyes-caption .raw-t')?.textContent; const harm = $('#eyes-caption .harm-t')?.textContent;
+  const b = raw && harm ? `From 2011 to 2012 raw counts jump ${raw}; translated ${harm}.` : '';
+  if ($('#eyes-short-b').textContent !== b) $('#eyes-short-b').textContent = b;
+}
+function initCondensed() {
+  const watch = (sel, fn) => { const el = $(sel); if (el) new MutationObserver(fn).observe(el, { subtree: true, childList: true, characterData: true, attributes: true }); };
+  ['#map-caption', '#calendar-note', '#region-notes', '#month-title'].forEach((sel) => watch(sel, shortLines));
+  ['#fp-caption', '#eyes-pixels', '#eyes-caption'].forEach((sel) => watch(sel, figureLines));
+  shortLines(); figureLines();
+  // "More symbols": the legend shows the colour bar, flare-up, cooled and estimated; the rest on request
+  const leg = $('#calendar-legend'); const more = $('#legend-more');
+  const setAll = (on) => { leg.classList.toggle('all', on); more.setAttribute('aria-expanded', String(on)); more.textContent = on ? 'Fewer symbols' : 'More symbols'; };
+  more.addEventListener('click', () => setAll(!leg.classList.contains('all')));
+  setAll(!!window.__uxOpen);
+  // the drawing instructions open by themselves while a drawing tool is active
+  const tipBox = document.querySelector('.draw-tip');
+  document.querySelectorAll('#draw-rectangle,#draw-polygon').forEach((b) => new MutationObserver(() => {
+    const drawing = [...document.querySelectorAll('#draw-rectangle,#draw-polygon')].some((x) => x.getAttribute('aria-pressed') === 'true');
+    if (drawing) tipBox.open = true;
+  }).observe(b, { attributes: true, attributeFilter: ['aria-pressed'] }));
+}
+
 async function boot() {
   try { await window.cedrus?.ready; } catch { /* the app shows its own error */ }
   if (!window.cedrus) { await new Promise((r) => { const t = setInterval(() => { if (window.cedrus) { clearInterval(t); r(); } }, 100); }); try { await window.cedrus.ready; } catch { /* shown by the app */ } }
   calendarUp = true; maybeVideo();
+  initCondensed();
   let index; let mon;
   try {
     [index, mon] = await Promise.all(['data/regions.json', `data/${STORY}/monthly_bd.json`].map((p) => fetch(p).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${p}`); return r.json(); })));

@@ -68,6 +68,7 @@ def run_checks(browser, url, shots, check, watch):
             page.evaluate("u => window.cedrus.setUnit(u)", unit)
             label = f"Tier 1 {rid} {unit}"
             check(label+": calendar loads", page.locator("#cal-grid [role=gridcell]").count() > 0 and page.evaluate("window.cedrus.state.meta.id") == rid)
+            page.evaluate(OPEN_MORE)  # the notes now sit in the folded "About this region's data" section
             text = page.inner_text("#region-notes")
             expected = "Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs."
             check(label+": region notes visible", expected in text and page.locator("#region-notes").is_visible() and (rid != "la_rioja" or "Annual totals in the 2020-2021 test were above the 80% range." in text))
@@ -125,6 +126,7 @@ def run_checks(browser, url, shots, check, watch):
     page.evaluate("window.cedrus.useRegion('lebanon')")
     for unit in ("bd", "hot"):
         page.evaluate("u => window.cedrus.setUnit(u)", unit)
+        page.evaluate(OPEN_MORE)  # the notes now sit in the folded "About this region's data" section
         text = page.inner_text("#region-notes")
         check(f"Lebanon {unit}: forward-test and border-cell notes visible",
               page.locator("#region-notes").is_visible() and "Accuracy is checked against MODIS only up to 2021." in text
@@ -134,6 +136,7 @@ def run_checks(browser, url, shots, check, watch):
     page.evaluate("window.cedrus.useRegion('portugal')")
     for unit in ("bd", "hot"):
         page.evaluate("u => window.cedrus.setUnit(u)", unit)
+        page.evaluate(OPEN_MORE)  # the notes now sit in the folded "About this region's data" section
         text = page.inner_text("#region-notes")
         check(f"Portugal {unit}: forward-test note visible with its limits",
               page.locator("#region-notes").is_visible() and "Accuracy is checked against MODIS only up to 2021." in text
