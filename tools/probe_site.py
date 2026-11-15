@@ -982,10 +982,11 @@ def run(url, shots, browser_executable=None, published_only=False):
         page.wait_for_timeout(900)
         page.click("#draw-rectangle")
         # Scroll so both corners are inside the viewport: a click below its edge never reaches the map, and the
-        # page's height above the map changes with the region notes.
+        # page's height above the map changes with the region notes. The scroll is instant: shell.css sets
+        # scroll-behavior: smooth, and a long smooth scroll is still moving after the 300 ms wait below.
         page.evaluate(r"""() => { const m = window.cedrus.state.map; const r = m.getCanvas().getBoundingClientRect();
           const ys = [[-8.9, 38.3], [-7.9, 39.1]].map(([x, y]) => r.top + m.project([x, y]).y);
-          window.scrollBy(0, (Math.min(...ys) + Math.max(...ys)) / 2 - window.innerHeight / 2); }""")
+          window.scrollBy({ top: (Math.min(...ys) + Math.max(...ys)) / 2 - window.innerHeight / 2, behavior: 'instant' }); }""")
         page.wait_for_timeout(300)
         pts = page.evaluate(r"""() => { const m = window.cedrus.state.map; const r = m.getCanvas().getBoundingClientRect();
           return [[-8.9, 38.3], [-7.9, 39.1]].map(([x, y]) => { const p = m.project([x, y]); return [r.left + p.x, r.top + p.y]; }); }""")

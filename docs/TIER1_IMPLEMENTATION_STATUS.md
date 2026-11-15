@@ -11,6 +11,13 @@
   The submission draft links the site and the repository.
 - **Checks:** `tools/probe_site.py` 739/739 (15 November 2026, all 18 regions, both units, 1,865 s, run with
   `--browser-executable` pointing at an installed Chrome). No test expectation was changed.
+- **Live site:** `tools/probe_site.py --url https://rifaatramadan0.github.io/cedrus/` 739/739 with Chrome (1,679 s).
+- **Probe fix (timing only):** the mouse-drawn rectangle step now scrolls with `behavior: 'instant'`. `shell.css`
+  sets `scroll-behavior: smooth`, and a long smooth scroll was still moving after the step's 300 ms wait, so the
+  clicks missed the map (first live run: corners at y = 967 and 839 in a 900 px window). From the page top, 5 trials
+  each: smooth 1/5 inside, instant 5/5. No assertion changed.
+- **Known flake:** with Playwright's own Chromium, a full-page screenshot (`desktop_bd.png`) timed out once after
+  30 s and passed in another run; with Chrome it has not happened. It affects only the probe's screenshots.
 
 # The 80% ranges are too narrow: wording only — 13 November 2026
 
