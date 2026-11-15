@@ -12,7 +12,7 @@ CEDRUS: Same fires. Fair record.
 For 25 years, NASA satellites have counted the world's fires, but the record is split between two kinds of eye. MODIS, flying since 2000, is retiring. VIIRS, flying since 2012, sees smaller fires, so a record that simply switches from one to the other jumps in 2012. That jump is the instrument changing, not the fires. CEDRUS translates every satellite count into one consistent scale and turns it into a fire calendar for any area. You draw an area and see every month from December 2000 to today: whether this month is above or below normal, how sure the estimate is, the fire records as CSV, and a 7-day fire-weather outlook against that place's normal. We proved the translation works the way exams prove a student knows the subject: rules written and dated first, then tested once on regions the model had never seen. The first exam failed and we published it. The next two passed every test. The app shows it all, in English, Spanish and Arabic.
 
 ## Link to project demo
-- 30-second demo video (global judging): PASTE YOUTUBE LINK
+- 30-second demo video (global judging): https://youtu.be/6etdoVmqyTE
 - 2-minute video (local judging): PASTE YOUTUBE LINK
 
 ## Link to final project
