@@ -1,4 +1,4 @@
-// CEDRUS story stage: Yasmina's 3D scene (orbit, dive, the record as slabs), fed with the real Portugal record.
+// CEDRUS story stage: Yasmina's 3D scene (orbit, dive, the record as slabs), fed with the real record of the story region (Lebanon).
 // Loaded by shell.js after the calendar has rendered; it reads window.__storyD (built from monthly_bd.json and regions.json).
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
@@ -7,7 +7,8 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { GEO } from './story-geo.js';
+// loaded with this module's own ?v so a browser never mixes old and new files
+const { GEO } = await import(`./story-geo.js${new URL(import.meta.url).search}`);
 
 const FX = (() => {
 const NOISE = `
@@ -116,7 +117,7 @@ function ll(lon, lat, r = R) {
   const ca = Math.cos(LAT0), sa = Math.sin(LAT0);
   return new THREE.Vector3(x * r, (y * ca - z * sa) * r, (y * sa + z * ca) * r);
 }
-const SUN = new THREE.Vector3(1, .3, .1).normalize();   // evening over Iberia: the terminator runs through Portugal
+const SUN = new THREE.Vector3(1, .3, .1).normalize();   // evening light from the west
 // The stage announces itself only once the Earth images are in, so the crossfade from the poster never shows a black globe.
 let texturesIn = false;
 const texManager = new THREE.LoadingManager(() => { texturesIn = true; });
@@ -185,7 +186,7 @@ let landMask = null;
   };
   img.src = 'assets/land-mask.png';
 }
-{ // Portugal's real 0.25° cells for the story month (harmonized burning days). Nothing else is drawn as fire.
+{ // the story region's real 0.25° cells for the story month (harmonized burning days). Nothing else is drawn as fire.
   const P = [], SZ = [], SE = [], HT = [];
   const add = (lo, la, size, heat) => { const v = ll(lo, la, R * 1.01); P.push(v.x, v.y, v.z); SZ.push(size); SE.push(rnd()); HT.push(heat); };
   D.cells.forEach((c, k) => { const v = D.cellVal(k, D.AUG); if (v > 1.5) add(c.lon, c.lat, .05 + D.cellLogn(v) * .2, D.cellLogn(v)); });
@@ -197,39 +198,45 @@ let landMask = null;
   space.add(new THREE.Points(g, new THREE.ShaderMaterial({ uniforms: { uTime: uniformsTime, uPx }, vertexShader: FX.fireVert, fragmentShader: FX.fireFrag,
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })));
 }
-// accurate country outlines on the globe: Portugal and Lebanon
+// country outlines on the globe (Natural Earth): Portugal and Lebanon
 [[D.PT, 0x7fd3a6], [D.LB, 0x7fd3a6]].forEach(([poly, col]) => {
   space.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(poly.map(([lo, la]) => ll(lo, la, R * 1.012))),
     new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: .9, toneMapped: false })));
 });
 // target rings
 const ringGeo = new THREE.RingGeometry(.92, 1, 64);
-// one ring per region in the catalog (the centre of its analysis box); Portugal and Lebanon labelled
-const TARGETS = D.regions.map((r) => {
-  const t = { lon: (r.bbox[0] + r.bbox[2]) / 2, lat: (r.bbox[1] + r.bbox[3]) / 2, col: 0x8fc9ff, s: .24 };
-  if (r.id === D.story.id) Object.assign(t, { col: 0xff8a3d, s: .34, label: D.story.name, sub: 'The story region · Beirut, team home' });
-  return t;
-});
-const geoLabels = [];
-TARGETS.forEach((t, k) => {
+// one ring per region in the catalog (the centre of its analysis box)
+const ORANGE = new THREE.Color(0xff8a3d), BLUE = new THREE.Color(0x8fc9ff);
+const TARGETS = D.regions.map((r) => ({ id: r.id, name: r.name, lon: (r.bbox[0] + r.bbox[2]) / 2, lat: (r.bbox[1] + r.bbox[3]) / 2, s: .24 }));
+TARGETS.forEach((t) => {
   const g = new THREE.Group(); const pos = ll(t.lon, t.lat, R * 1.015); g.position.copy(pos); g.lookAt(pos.clone().multiplyScalar(2));
-  t.rings = [0, 1, 2].map(j => { const m = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ color: t.col, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, side: THREE.DoubleSide })); g.add(m); return m; });
-  const dot = new THREE.Mesh(new THREE.CircleGeometry(.05, 20), new THREE.MeshBasicMaterial({ color: t.col, toneMapped: false })); dot.position.z = .002; g.add(dot);
+  t.rings = [0, 1, 2].map(j => { const m = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ color: BLUE, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, side: THREE.DoubleSide })); g.add(m); return m; });
+  t.dot = new THREE.Mesh(new THREE.CircleGeometry(.05, 20), new THREE.MeshBasicMaterial({ color: BLUE, toneMapped: false })); t.dot.position.z = .002; g.add(t.dot);
   t.group = g; t.pos = pos; space.add(g);
-  if (t.label) { const el = document.createElement('div'); el.className = 'geo-label'; el.innerHTML = `${t.label}<small>${t.sub}</small>`; document.getElementById('satLabels').appendChild(el); t.el = el; geoLabels.push(t); }
 });
-function updateTargets(time, show, showLb) {
+// The label always names the region in focus: the story region by default, the toured region on the orbit slide.
+const focusLabel = document.createElement('div'); focusLabel.className = 'geo-label'; document.getElementById('satLabels').appendChild(focusLabel);
+let focus = null;
+function setFocus(id, sub) {
+  const t = TARGETS.find((x) => x.id === id) || TARGETS.find((x) => x.id === D.story.id); if (!t) return;
+  focus = t;
+  TARGETS.forEach((x) => { const on = x === t; x.s = on ? .36 : .24; x.rings.forEach((m) => m.material.color.copy(on ? ORANGE : BLUE)); x.dot.material.color.copy(on ? ORANGE : BLUE); });
+  focusLabel.innerHTML = '';
+  focusLabel.append(t.name); const sm2 = document.createElement('small'); sm2.textContent = sub || ''; focusLabel.append(sm2);
+  focusGoal.copy(t.pos).normalize();
+  dirtyStage();
+}
+let dirtyStage = () => {};
+function updateTargets(time, show) {
   TARGETS.forEach((t, k) => {
     t.rings.forEach((m, j) => { const c = (time * .35 + j / 3 + k * .17) % 1; const sc = t.s * (.25 + c * 1.1); m.scale.set(sc, sc, 1); m.material.opacity = (1 - c) * .85; });
-    if (t.el) {
-      const vis = (show || (showLb && t.label === 'Lebanon')) && t.pos.clone().normalize().dot(camera.position.clone().normalize()) > .25;
-      if (vis) { proj.copy(t.pos).project(camera); t.el.style.transform = `translate(${((proj.x + 1) / 2 * innerWidth + 16).toFixed(1)}px, ${((1 - proj.y) / 2 * innerHeight - 22).toFixed(1)}px)`; }
-      t.el.style.opacity = vis ? 1 : 0;
-    }
   });
+  const vis = !!focus && show && focus.pos.clone().normalize().dot(camera.position.clone().normalize()) > .25;
+  if (vis) { proj.copy(focus.pos).project(camera); focusLabel.style.transform = `translate(${((proj.x + 1) / 2 * innerWidth + 16).toFixed(1)}px, ${((1 - proj.y) / 2 * innerHeight - 22).toFixed(1)}px)`; }
+  focusLabel.style.opacity = vis ? 1 : 0;
 }
 
-/* satellites: near-polar, sun-synchronous orbits, each ground track crossing Portugal. Real altitudes and swaths, time-lapsed. */
+/* satellites: near-polar, sun-synchronous orbits, each ground track crossing the story region. Real altitudes and swaths, time-lapsed. */
 const dIb = ll(D.story.lon, D.story.lat, 1).normalize();
 const NORTH = ll(0, 90, 1).normalize();
 const EAST = new THREE.Vector3().crossVectors(NORTH, dIb).normalize();
@@ -286,7 +293,7 @@ function updateSats(time, show) {
     const visible = show && yA.dot(camera.position.clone().normalize()) > .15;
     if (visible) { proj.copy(pos).project(camera); s.el.style.transform = `translate(${((proj.x + 1) / 2 * innerWidth + 12).toFixed(1)}px, ${((1 - proj.y) / 2 * innerHeight - 8).toFixed(1)}px)`; }
     s.el.style.opacity = visible ? 1 : 0; s.el.classList.toggle('on', on);
-    // ground-relative state for the radar: distance and bearing from Portugal, time to the next overhead pass
+    // ground-relative state for the radar: distance and bearing from the story region, time to the next overhead pass
     const ang = Math.acos(clamp(yA.dot(dIb), -1, 1));
     const rem = ((Math.PI * 2 - (th % (Math.PI * 2))) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
     Object.assign(window.__sats[k], { distKm: ang * EARTH_KM, bearing: Math.atan2(yA.dot(EAST), yA.dot(NTAN)), mins: rem / (Math.PI * 2) * s.periodMin });
@@ -473,6 +480,7 @@ const wall = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), wallMat); wall.frustu
    0 hero · 1 orbit · [dive 1.5] · 2–7 ground · [ascent 7.5] · 8 methodology · 9 about
    ========================================================= */
 const dLb = ll(35.6, 33.9, 1).normalize();
+const focusDir = dIb.clone(), focusGoal = dIb.clone(), SCAM1_OFF_P = V(2.0, 1.8, 0), SCAM1_OFF_L = V(-.6, 0, 0);
 const SCAM = {
   0: { p: V(3.6, 1.2, 16.6), l: V(3.6, 1.0, 0), f: 38 },
   1: { p: dIb.clone().multiplyScalar(9.4).add(V(2.0, 1.8, 0)), l: dIb.clone().multiplyScalar(4.9).add(V(-.6, 0, 0)), f: 40 },
@@ -535,6 +543,11 @@ const clock = new THREE.Clock();
 const m4 = new THREE.Matrix4(), vP = new THREE.Vector3(), vS = new THREE.Vector3(), qA = new THREE.Quaternion(), cA = new THREE.Color();
 const qBuf = new Float32Array(4), camP = new THREE.Vector3(), camL = new THREE.Vector3();
 let time = 0, first = true, dirty = true;
+dirtyStage = () => { dirty = true; };
+// the tour on the orbit slide calls this; an unknown id falls back to the story region
+window.__stageFocus = (id, sub) => setFocus(id, sub);
+setFocus(D.story.id, D.storySub);
+if (window.__stageFocusWanted) setFocus(...window.__stageFocusWanted);
 addEventListener('resize', () => { dirty = true; });
 new MutationObserver(() => { dirty = true; }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 const DIVE = 1.5, RISE = 8.5;
@@ -586,7 +599,7 @@ function lerpCam(ca, cb, ct) { camL.lerpVectors(ca.l, cb.l, ct); camP.lerpVector
 function frame() {
   requestAnimationFrame(frame);
   if (document.hidden || window.__stageHidden) { clock.getDelta(); lastT = 0; return; }
-  if (still() && !fly && !first && Math.abs(scrollP() - pS) < 1e-3 && !dirty) { clock.getDelta(); lastT = 0; return; }
+  if (still() && !fly && !first && Math.abs(scrollP() - pS) < 1e-3 && !dirty && focusDir.distanceToSquared(focusGoal) < 1e-6) { clock.getDelta(); lastT = 0; return; }
   dirty = false;
   // A slow GPU gets a lighter picture: after 40 slow frames, no bloom, no shadows, one pixel per pixel.
   { const now = performance.now(); if (lastT && now - lastT > 45) slowFrames += 1; lastT = now;
@@ -610,7 +623,9 @@ function frame() {
   let fov;
   const inSpace = pS < DIVE || pS >= RISE;
   updateSats(time, inSpace && (pS < 1.25 || (pS > 8.8 && pS < 9.6)));
-  updateTargets(time, inSpace && pS < 1.25, inSpace && pS > 9.6);
+  updateTargets(time, inSpace && pS < 1.6);
+  focusDir.lerp(focusGoal, Math.min(1, dt * 3)).normalize();
+  SCAM[1].p.copy(focusDir).multiplyScalar(9.4).add(SCAM1_OFF_P); SCAM[1].l.copy(focusDir).multiplyScalar(4.9).add(SCAM1_OFF_L);
 
   if (inSpace) {
     renderPass.scene = space; bloom.strength = .62; renderer.toneMappingExposure = 1.05;
