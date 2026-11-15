@@ -1,0 +1,231 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>CEDRUS film overlay</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#04080a;--ember:#ff7a2f;--ember2:#ffb347;--mint:#7fe3b0;--ink:#eef3f1;--mute:#9fb0aa}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:transparent;font-family:'IBM Plex Sans',sans-serif;color:var(--ink)}
+.L{position:absolute;opacity:0;will-change:transform,opacity}
+.card{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#0d1a1c 0%,#04080a 70%)}
+.h{font-family:'Archivo',sans-serif;font-stretch:112%;font-weight:800;letter-spacing:.01em;line-height:1.02;text-transform:uppercase}
+.mono{font-family:'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+.cap{left:0;right:0;text-align:center}
+.shadow{text-shadow:0 4px 30px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.9)}
+em{font-style:normal;color:var(--ember2)} .m{color:var(--mint)}
+.pill{display:inline-block;background:rgba(6,12,14,.82);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:18px 34px;}
+.src{font-size:20px;color:var(--mute)}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.45) 100%);opacity:1}
+#grain{display:none}
+#steps{left:60px;top:48px;display:flex;gap:10px}
+#steps span{font:500 20px 'JetBrains Mono',monospace;letter-spacing:.14em;padding:10px 18px;border-radius:12px;background:rgba(6,12,14,.78);border:1px solid rgba(255,255,255,.12);color:#8a9a95}
+#steps span.on{color:#04080a;background:var(--mint);border-color:var(--mint)}
+#steps span.done{color:var(--mint)}
+.grid{display:grid;gap:4px}
+.px{background:#1a2427;border-radius:3px;transition:none}
+#mascot{position:absolute;left:0;top:0;transform-origin:50% 100%}
+#mascot img{position:absolute;left:0;top:0;width:100%;height:100%}
+#shadowE{position:absolute;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.55),rgba(0,0,0,0) 70%)}
+.bar{position:absolute;left:0;height:100%;border-radius:10px}
+</style></head>
+<body>
+<div id="root" style="position:absolute;inset:0">
+
+<!-- ===== cards (opaque) ===== -->
+<div class="L card" id="cardPixels">
+  <div class="L" id="pxTitle" style="left:0;right:0;top:92px;text-align:center"><div class="h" style="font-size:62px">Same fire. <span class="m">Two eyes.</span></div></div>
+  <div style="position:absolute;left:250px;top:250px;width:560px;text-align:center">
+    <div id="gModis" class="grid" style="grid-template-columns:repeat(4,1fr);width:440px;height:440px;margin:0 auto;position:relative"></div>
+    <div class="h" style="font-size:40px;margin-top:26px">MODIS</div>
+    <div class="mono" style="font-size:22px;color:var(--mute);margin-top:8px">1 km eye · since 2000</div>
+    <div class="L h" id="cntModis" style="position:relative;font-size:46px;color:var(--ember2);margin-top:14px">2 lit</div>
+  </div>
+  <div style="position:absolute;left:1010px;top:250px;width:560px;text-align:center">
+    <div id="gViirs" class="grid" style="grid-template-columns:repeat(11,1fr);gap:2px;width:440px;height:440px;margin:0 auto;position:relative"></div>
+    <div class="h" style="font-size:40px;margin-top:26px">VIIRS</div>
+    <div class="mono" style="font-size:22px;color:var(--mute);margin-top:8px">375 m eye · since 2012</div>
+    <div class="L h" id="cntViirs" style="position:relative;font-size:46px;color:var(--ember2);margin-top:14px">19 lit</div>
+  </div>
+  <div class="mono" style="position:absolute;left:60px;bottom:40px;font-size:18px;color:var(--mute)">Simplified illustration</div>
+</div>
+
+<div class="L card" id="cardStat">
+  <div style="position:absolute;left:150px;top:200px;width:1300px">
+    <div class="L mono" id="st0" style="position:relative;font-size:26px;color:var(--mute)">Lebanon · 2012–2021 · burning days</div>
+    <div class="L h" id="st1" style="position:relative;font-size:70px;margin-top:30px">Merged naively: <em>4,150</em></div>
+    <div class="L h" id="st2" style="position:relative;font-size:70px;margin-top:18px">MODIS saw: <span class="m">744</span></div>
+    <div class="L h" id="st3" style="position:relative;font-size:150px;margin-top:40px;color:var(--ember)">5.6× too many</div>
+  </div>
+</div>
+
+<div class="L card" id="cardLogo">
+  <div style="position:absolute;left:0;right:0;top:250px;text-align:center">
+    <img id="logo1" src="cedrus-team-logo.webp" style="width:300px;height:300px;border-radius:50%;box-shadow:0 0 120px rgba(255,122,47,.35)">
+    <div class="h" style="font-size:110px;margin-top:40px;letter-spacing:.12em">CEDRUS</div>
+    <div style="font-size:34px;color:var(--mute);margin-top:14px">Roots in Nature. Data for a Safer Tomorrow.</div>
+  </div>
+</div>
+
+<div class="L card" id="cardProof">
+  <div class="L" id="pr0" style="left:150px;top:110px"><div class="mono" style="font-size:26px;color:var(--mint)">Sealed exam</div>
+    <div class="h" style="font-size:58px;margin-top:14px">4 regions the model never saw · 2020–2021</div></div>
+  <div class="L" id="pr1" style="left:150px;top:330px;width:1300px">
+    <div style="font:600 34px 'IBM Plex Sans';color:var(--ink)">Regional monthly error — lower is better</div>
+    <div style="position:relative;margin-top:50px;height:110px">
+      <div style="position:absolute;left:0;top:0;width:360px;font:500 34px 'IBM Plex Sans';line-height:110px;color:var(--mute)">Simple conversion</div>
+      <div style="position:absolute;left:380px;top:15px;width:900px;height:80px"><div class="bar" id="barA" style="background:#5a6a66;width:0"></div></div>
+      <div class="L h" id="valA" style="top:0;font-size:56px;line-height:110px;color:#c9d4d0">20.3%</div>
+    </div>
+    <div style="position:relative;margin-top:30px;height:110px">
+      <div style="position:absolute;left:0;top:0;width:360px;font:600 34px 'IBM Plex Sans';line-height:110px;color:var(--ink)">CEDRUS</div>
+      <div style="position:absolute;left:380px;top:15px;width:900px;height:80px"><div class="bar" id="barB" style="background:linear-gradient(90deg,#3fbf86,var(--mint));width:0;box-shadow:0 0 40px rgba(127,227,176,.45)"></div></div>
+      <div class="L h" id="valB" style="top:0;font-size:56px;line-height:110px;color:var(--mint)">11.6%</div>
+    </div>
+    <div class="mono" style="font-size:20px;color:var(--mute);margin-top:34px">Burning days · pooled WAPE · MODIS reference</div>
+  </div>
+  <div class="L" id="pr2" style="left:150px;top:900px;font:500 34px 'IBM Plex Sans';color:var(--ink)">Performance varies by region; the app shows each region's <span class="m">trust level</span>.</div>
+</div>
+
+<div class="L card" id="cardClose">
+  <div class="L" id="cl0" style="left:0;right:0;top:300px;text-align:center">
+    <div style="display:flex;justify-content:center;gap:110px">
+      <div><svg width="150" height="150" viewBox="0 0 60 68" fill="none" stroke="#7fe3b0" stroke-width="2.2"><path d="M30 2 21 13h6L17 23h9L11 34h11L6 46h17L2 57h25v9m6 0v-9h25L37 46h17L38 34h11L34 23h9L33 13h6L30 2Z"/></svg><div class="h" style="font-size:44px;margin-top:26px">Forestry</div></div>
+      <div><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#ff9a4d" stroke-width="1.3"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M12 7c1 2.5-2 3-1 5.5 1-.5 1.5-1.5 1.5-2.5 2 1.5 2.5 3.5 1.5 5-1 2-4.5 2-5.5 0-1-2 0-3.5 1-5"/></svg><div class="h" style="font-size:44px;margin-top:26px">Civil protection</div></div>
+      <div><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#ffb347" stroke-width="1.3"><rect x="2" y="2" width="20" height="20" rx="1"/><path d="m5 17 5-6 4 3 5-7"/></svg><div class="h" style="font-size:44px;margin-top:26px">Research</div></div>
+    </div>
+    <div style="font-size:36px;color:var(--mute);margin-top:60px">A clearer fire history, from changing satellites.</div>
+  </div>
+  <div class="L" id="cl1" style="left:0;right:0;top:150px;text-align:center">
+    <img src="cedrus-team-logo.webp" style="width:250px;height:250px;border-radius:50%;box-shadow:0 0 120px rgba(255,122,47,.35)">
+    <div class="h" style="font-size:104px;margin-top:30px;letter-spacing:.12em">CEDRUS</div>
+    <div class="mono" style="font-size:26px;color:var(--mint);margin-top:18px">Team CEDRUS · NASA Space Apps Challenge 2026 · Beirut</div>
+    <div style="font:600 40px 'IBM Plex Sans';margin-top:26px">rifaatramadan0.github.io/cedrus</div>
+    <div style="font-size:19px;color:var(--mute);margin-top:56px;line-height:1.6">Fire data: NASA FIRMS (MODIS · VIIRS) · App Earth imagery: NASA GIBS Blue Marble<br>Music: “Hymn To The Dawn” by Scott Buckley (CC BY 4.0) · Narration: AI voice (ElevenLabs) · Flame mascot drawn by Team CEDRUS<br>Footage: NASA’s Goddard Space Flight Center Scientific Visualization Studio</div>
+  </div>
+</div>
+
+<!-- ===== captions over footage ===== -->
+<div class="L cap shadow" id="h1" style="top:390px"><div class="h" style="font-size:84px">2025: the EU's <em>worst</em><br>fire year on record</div></div>
+<div class="L cap shadow" id="h2" style="top:400px"><div class="h" style="font-size:132px;color:var(--ember2)">1,079,538</div><div class="h" style="font-size:60px;margin-top:10px">hectares burned</div></div>
+<div class="L cap shadow" id="h3" style="top:390px"><div class="h" style="font-size:80px">Extreme fires expected<br>to rise <em>30%</em> by 2050</div></div>
+<div class="L shadow src" id="hsrc" style="right:60px;bottom:40px">Sources: EFFIS / EU Joint Research Centre 2026 · UNEP “Spreading like Wildfire” 2022</div>
+
+<div class="L cap shadow" id="p1" style="top:380px"><div class="h" style="font-size:88px">More dots on a fire map<br><em>≠</em> more fire</div><div class="mono" style="font-size:24px;color:var(--mute);margin-top:26px">Raw satellite counts, merged naively</div></div>
+
+<div class="L cap shadow" id="a1" style="top:330px"><div class="h" style="font-size:72px">We learn how <span class="m">VIIRS</span><br>translates into <em>MODIS</em></div><div style="font-size:36px;margin-top:24px;color:#dfe7e4">from the years both flew · 2012–2019</div></div>
+<div class="L cap shadow" id="a2" style="top:340px"><div class="h" style="font-size:76px">One MODIS-equivalent<br>fire record</div><div class="mono" style="font-size:34px;margin-top:24px;color:var(--mint)">Dec 2000 → today</div></div>
+<div class="L shadow mono" id="atech" style="left:0;right:0;bottom:44px;text-align:center;font-size:22px;color:#cfd8d5">NASA FIRMS · Python · JavaScript</div>
+
+<!-- demo -->
+<div class="L" id="steps"><span>Select</span><span>Compare</span><span>Explore</span><span>Forecast</span><span>Export</span></div>
+<div class="L cap" id="d1" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:46px">Pick a region</div></div></div>
+<div class="L cap" id="d2" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:44px">October 2024 · <em>7.1×</em> a normal October</div><div class="mono" style="font-size:24px;color:var(--mint);margin-top:8px">trust: reliable</div></div></div>
+<div class="L cap" id="d3" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:46px">Burning days <span class="m">↔</span> Hotspots</div></div></div>
+<div class="L cap" id="d4" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:46px">Draw any area</div></div></div>
+<div class="L cap" id="d5" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:46px">Fire season: Jul 16 → Nov 1</div></div></div>
+<div class="L cap" id="d6" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:46px">Right now <span class="m">vs</span> normal</div><div class="mono" style="font-size:22px;color:var(--mute);margin-top:8px">updated daily</div></div></div>
+<div class="L cap" id="d7" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:46px">Download CSV</div></div></div>
+<div class="L cap" id="f1" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:44px">Next 7 days: is the weather favouring fire?</div><div style="font-size:28px;color:#dfe7e4;margin-top:8px">compared with this place's normal</div></div></div>
+<div class="L cap" id="f2" style="bottom:70px;top:auto"><div class="pill"><div class="h" style="font-size:40px">An outlook of fire-weather <em>conditions</em></div><div style="font-size:28px;color:#dfe7e4;margin-top:8px">for prevention and preparedness · not a prediction of fires</div></div></div>
+
+<!-- mascot -->
+<div id="shadowE"></div>
+<div id="mascot"><img id="mBody" src="body.png"><img id="mNo" src="body_nomouth.png" style="opacity:0">
+  <svg id="mMouth" viewBox="0 0 346 569" style="position:absolute;left:0;top:0;width:100%;height:100%;opacity:0"><ellipse id="mo" cx="214.5" cy="344" rx="14" ry="9" fill="#3a1420"/></svg></div>
+
+<div id="vig"></div>
+<div id="grain"></div>
+</div>
+<script>
+const MOUTH = window.__MOUTH || [];
+const $ = (id) => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = (u) => { u = cl(u); return u * u * (3 - 2 * u); };
+const eob = (u) => { u = cl(u); const c = 1.70158; return 1 + (c + 1) * Math.pow(u - 1, 3) + c * Math.pow(u - 1, 2); };
+// show(el, t, t0, t1, kind): fade + rise in, fade out
+function show(id, t, t0, t1, kind = 'rise', fin = 0.6, fout = 0.45) {
+  const el = $(id); const a = ease((t - t0) / fin) * (1 - ease((t - (t1 - fout)) / fout));
+  const on = t >= t0 && t < t1; el.style.opacity = on ? a : 0;
+  if (kind === 'rise') el.style.transform = `translateY(${(1 - ease((t - t0) / (fin * 1.4))) * 40}px)`;
+  if (kind === 'zoom') el.style.transform = `scale(${1.06 - 0.06 * ease((t - t0) / 1.2) + 0.02 * ease((t - t0) / 8)})`;
+  return on;
+}
+// ---------- pixel grids (simplified illustration) ----------
+const MODIS_LIT = [6, 10]; // 4x4
+const VIIRS_LIT = Array.from({length:121},(_,i)=>i).map(i=>[i,Math.hypot((i%11)+.5-6.875,Math.floor(i/11)+.5-5.5)]).sort((a,b)=>a[1]-b[1]).slice(0,19).map(a=>a[0]); // 11x11, the 19 cells nearest the same fire
+$('gModis').innerHTML = Array.from({ length: 16 }, (_, i) => `<div class="px" data-i="${i}"></div>`).join('') + '<div id="fire1" style="position:absolute;left:62.5%;top:50%;margin:-75px 0 0 -70px;width:140px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.85),rgba(255,90,30,.35) 45%,transparent 70%);pointer-events:none"></div>';
+$('gViirs').innerHTML = Array.from({ length: 121 }, (_, i) => `<div class="px" data-i="${i}"></div>`).join('') + '<div id="fire2" style="position:absolute;left:62.5%;top:50%;margin:-75px 0 0 -70px;width:140px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.85),rgba(255,90,30,.35) 45%,transparent 70%);pointer-events:none"></div>';
+function pixels(t, t0) {
+  const lit = (grid, list, start) => grid.querySelectorAll('.px').forEach((p) => { const k = list.indexOf(Number(p.dataset.i)); const on = k >= 0 && t > start + k * 0.06;
+    p.style.background = on ? '#ff8a3d' : '#162125'; p.style.boxShadow = on ? '0 0 18px rgba(255,138,61,.6)' : 'none'; });
+  lit($('gModis'), MODIS_LIT, t0 + 1.2); lit($('gViirs'), VIIRS_LIT, t0 + 2.6);
+  const fl = 1 + 0.05 * Math.sin(t * 9) + 0.03 * Math.sin(t * 23);
+  $('fire1').style.transform = $('fire2').style.transform = `scale(${fl})`;
+}
+// ---------- mascot ----------
+// keyframes: [t, x(center px), baseY(feet px), h(px)]; moves ease between consecutive keys
+const MK = [
+  [0, -260, 1050, 330], [0.6, -260, 1050, 330], [2.0, 230, 1050, 330], [10.6, 230, 1050, 330], [11.4, -300, 1050, 330],
+  [11.9, 2200, 1050, 320], [12.9, 1700, 1050, 320], [28.4, 1700, 1050, 320], [33.2, 1790, 1065, 190],
+  [86.5, 1800, 1065, 190], [97.6, 1800, 1065, 190], [98.6, 1690, 1050, 380], [109.2, 1690, 1050, 380], [110.2, 1730, 1050, 300],
+  [116.2, 1730, 1050, 300], [116.9, 1710, 1050, 320], [119.5, 1710, 1050, 320]];
+function mpos(t) {
+  for (let i = 0; i < MK.length - 1; i += 1) { const a = MK[i], b = MK[i + 1];
+    if (t >= a[0] && t <= b[0]) { const u = ease((t - a[0]) / (b[0] - a[0] || 1)); return [a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u, a[3] + (b[3] - a[3]) * u, (b[1] - a[1]) !== 0 && t > a[0] && t < b[0]]; } }
+  const z = MK[MK.length - 1]; return [z[1], z[2], z[3], false];
+}
+function mascot(t) {
+  const [x, y, h, moving] = mpos(t); const w = h * 346 / 569;
+  const f = Math.round(t * 30); const lvl = MOUTH[f] || 0;
+  const talk = lvl > 0;
+  let bounce = Math.abs(Math.sin(t * Math.PI * (moving ? 4 : 1.1))) * (moving ? 0.07 : 0.025) * h;
+  let sq = 1 + (moving ? 0.05 : 0.018) * Math.sin(t * Math.PI * (moving ? 8 : 2.2));
+  let tilt = (moving ? 4 : 1.5) * Math.sin(t * Math.PI * (moving ? 4 : 0.9));
+  if (talk) { bounce += 0.012 * h * Math.abs(Math.sin(t * 13)); }
+  // happy bounce on the 11.6% reveal
+  const hb = t > 102.9 && t < 104.6 ? Math.abs(Math.sin((t - 102.9) * Math.PI * 2.3)) * 0.16 * h * (1 - (t - 102.9) / 1.7) : 0;
+  // wave at the close
+  if (t > 116.9) tilt = 9 * Math.sin((t - 116.9) * Math.PI * 2.4) * Math.max(0, 1 - (t - 116.9) / 3);
+  const flick = 1 + 0.02 * Math.sin(t * 17) + 0.012 * Math.sin(t * 31);
+  const m = $('mascot');
+  m.style.width = w + 'px'; m.style.height = h + 'px';
+  m.style.transform = `translate(${x - w / 2}px, ${y - h - bounce - hb}px) rotate(${tilt}deg) scale(${1 / Math.sqrt(sq)}, ${sq * flick}) skewX(${1.2 * Math.sin(t * 7)}deg)`;
+  const sh = $('shadowE'); const sw = w * 0.9 * (1 - 0.25 * (bounce + hb) / (0.2 * h + 1));
+  sh.style.width = sw + 'px'; sh.style.height = sw * 0.16 + 'px'; sh.style.transform = `translate(${x - sw / 2}px, ${y - sw * 0.08}px)`;
+  const vis = x > -200 && x < 2150 ? 1 : 0; m.style.opacity = vis; sh.style.opacity = vis * 0.8;
+  $('mBody').style.opacity = talk ? 0 : 1; $('mNo').style.opacity = talk ? 1 : 0; $('mMouth').style.opacity = talk ? 1 : 0;
+  const o = $('mo'); if (lvl === 1) { o.setAttribute('rx', 13); o.setAttribute('ry', 8); } else { o.setAttribute('rx', 15); o.setAttribute('ry', 15); }
+}
+// ---------- grain ----------
+const gc = document.createElement('canvas'); gc.width = gc.height = 256; const gx = gc.getContext('2d'); const id = gx.createImageData(256, 256);
+for (let i = 0; i < id.data.length; i += 4) { const v = Math.random() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
+gx.putImageData(id, 0, 0); $('grain').style.backgroundImage = `url(${gc.toDataURL()})`;
+function rnd(n) { const x = Math.sin(n * 12.9898) * 43758.5453; return x - Math.floor(x); }
+
+window.render = (t) => {
+  // cards
+  show('cardPixels', t, 16.8, 22.6, 'none', 0.5, 0.4); show('pxTitle', t, 17.1, 22.6); pixels(t, 16.8);
+  show('cntModis', t, 18.4, 22.6); show('cntViirs', t, 19.8, 22.6);
+  show('cardStat', t, 22.6, 28.6, 'none', 0.4, 0.4); show('st0', t, 22.8, 28.6); show('st1', t, 23.2, 28.6); show('st2', t, 24.2, 28.6); show('st3', t, 25.3, 28.6, 'zoom');
+  show('cardLogo', t, 28.6, 32.7, 'none', 0.5, 0.6); $('logo1').style.transform = `scale(${0.85 + 0.15 * eob((t - 28.8) / 1.0)}) rotate(${(1 - ease((t - 28.8) / 1.4)) * -20}deg)`;
+  show('cardProof', t, 97.5, 109.4, 'none', 0.5, 0.4); show('pr0', t, 97.8, 109.4); show('pr1', t, 98.6, 109.4); show('pr2', t, 106.6, 109.4);
+  const gB = ease((t - 102.8) / 1.3), gA = ease((t - 105.6) / 1.3);
+  $('barB').style.width = (11.6 / 20.3 * 860 * gB) + 'px'; $('barA').style.width = (860 * gA) + 'px';
+  $('valB').style.left = (380 + 11.6 / 20.3 * 860 * gB + 24) + 'px'; $('valB').style.opacity = gB; $('valA').style.left = (380 + 860 * gA + 24) + 'px'; $('valA').style.opacity = gA;
+  show('cardClose', t, 109.4, 120, 'none', 0.5, 0.01); show('cl0', t, 109.6, 116.3, 'rise', 0.6, 0.4); show('cl1', t, 116.4, 120, 'zoom', 0.7, 0.01);
+  // hook
+  show('h1', t, 0.8, 4.4); show('h2', t, 4.4, 7.6, 'zoom'); show('h3', t, 7.6, 11.1); show('hsrc', t, 0.8, 11.1, 'none');
+  show('p1', t, 12.2, 16.8);
+  show('a1', t, 32.8, 39.4); show('a2', t, 39.6, 45.0); show('atech', t, 33.2, 45.0, 'none');
+  // demo
+  const steps = [[45, 56.3], [56.3, 70.1], [70.1, 86.5]]; // select, compare, explore(+right now)
+  const sOn = show('steps', t, 45.3, 97.5, 'none'); let cur = t < 54.0 ? 0 : t < 67.3 ? 1 : t < 83.4 ? 2 : t < 86.6 ? 4 : 3;
+  [...$('steps').children].forEach((s, i) => { s.className = i === cur ? 'on' : i < cur || (cur === 4 && i === 3) ? '' : ''; });
+  show('d1', t, 46.5, 51.6); show('d2', t, 54.3, 61.3); show('d3', t, 61.8, 67.2); show('d4', t, 67.8, 76.4); show('d5', t, 76.8, 79.9);
+  show('d6', t, 80.4, 83.3); show('d7', t, 83.6, 86.5, 'rise', 0.4, 0.3);
+  show('f1', t, 87.0, 92.2); show('f2', t, 92.4, 97.4);
+  mascot(t);
+  const fr = Math.round(t * 30); $('grain').style.transform = `translate(${Math.floor(rnd(fr) * 64) - 64}px,${Math.floor(rnd(fr + 7) * 64) - 64}px)`;
+};
+</script>
+</body></html>

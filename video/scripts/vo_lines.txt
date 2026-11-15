@@ -1,0 +1,7 @@
+1|[softly] In 2025, Europe lived through its worst fire year on record... more than a million hectares burned. [concerned] And the fires are expected to grow.
+2|But here's the catch. More dots on a fire map don't always mean more fire. Newer satellites see smaller fires than the old ones. Merge their counts naively, and Lebanon's fires look five times worse than they really were.
+3|[warmly] This is CEDRUS. Using NASA FIRMS data, we learn how the new Veers sensors translate into the old MODIS scale, from the years both flew together... and build one consistent fire record, from two thousand to today.
+4|Pick a region... like Lebanon, our home. Every month is a tile. Click October 2024, and see how it compares to a normal October, with an honest trust label. Switch between burning days and hotspots. Draw any area. See when the fire season runs. And compare right now to normal, updated every day.
+5|And to help prevent the next fire: a seven-day fire-weather outlook... heat, dryness, wind and soil moisture, compared with what's normal for that place.
+6|We tested it in a sealed exam, on four regions the model had never seen. Our error: eleven point six percent... against twenty point three for a simple conversion.
+7|[warmly] For forest teams, civil protection and researchers: a clearer fire history, from changing satellites. [proudly] CEDRUS.

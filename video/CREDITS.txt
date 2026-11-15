@@ -1,0 +1,41 @@
+CEDRUS - NASA Space Apps Challenge 2026 - submission video (CEDRUS_2min.mp4)
+Challenge: "Harmonization of MODIS and VIIRS Hot Spots" (authored by CONAE, Argentina)
+Team CEDRUS, Beirut - https://rifaatramadan0.github.io/cedrus/
+
+MUSIC (human-composed, Creative Commons)
+  "Hymn To The Dawn" by Scott Buckley - released under CC-BY 4.0. www.scottbuckley.com.au
+  Track page and licence statement: https://www.scottbuckley.com.au/library/hymn-to-the-dawn/
+  Licence: https://creativecommons.org/licenses/by/4.0/
+  Downloaded from the official site: https://www.scottbuckley.com.au/library/wp-content/uploads/2022/11/HymnToTheDawn.mp3
+  Edited (three phrases crossfaded: 0:00-0:47, 3:41-4:33, 6:18-6:44), ducked under the narration, normalised. Attribution is on the closing card.
+  (For a YouTube upload, the artist asks that the credit also appear in the video description.)
+
+NARRATION (AI voice - disclosed)
+  AI-generated voice: ElevenLabs text-to-speech, voice "George" (premade, warm British storyteller), model eleven_v3.
+  Script adapted from teammate Rifaat's script.
+
+FLAME MASCOT
+  Flame mascot: drawn by Team CEDRUS. Cut out and animated (bounce, flicker, lip-sync to the narration) for this video.
+
+FOOTAGE / VISUALS
+  Apart from the two NASA clips listed below, all moving pictures are screen recordings of the CEDRUS web app (branch ux/merge-yasmina; the fire-weather
+  outlook from the cedrus-forecast worktree, commit 101b572), including its 3D globe and 3D story stage.
+  Earth imagery inside the app: NASA Blue Marble / Black Marble via NASA GIBS. Map basemap and borders: NASA GIBS.
+  NASA footage (public domain), credit: NASA's Goddard Space Flight Center Scientific Visualization Studio
+    - "NOAA-20 satellite orbit with Suomi NPP and JPSS-2" (SVS 4820), 00:19-00:28: https://svs.gsfc.nasa.gov/4820/  (hook, 0:00-0:08)
+    - "Active Fires As Observed by VIIRS, 2012-2018" (SVS 4741), 00:27-00:34: https://svs.gsfc.nasa.gov/4741/  (hook, 0:07-0:11)
+  No NASA logo is used on team-made cards.
+  The MODIS/VIIRS pixel graphic is a team-made simplified illustration.
+
+DATA AND FACTS
+  Fire detections: NASA FIRMS (MODIS Collection 6.1, Terra/Aqua; VIIRS 375 m, Suomi NPP/NOAA-20).
+  "2025: EU's worst fire year on record, 1,079,538 ha burned" - EFFIS / EU Joint Research Centre, 31 Mar 2026:
+    https://joint-research-centre.ec.europa.eu/jrc-news-and-updates/2025-was-eus-most-destructive-wildfire-season-record-2026-03-31_en
+  "Extreme fires expected to rise 30% by 2050" - UNEP "Spreading like Wildfire", 2022.
+  Lebanon 2012-2021 naive merge 4,150 burning days vs MODIS 744 (5.6x) and the sealed-exam result
+    (pooled WAPE, burning days, MODIS reference: simple conversion 20.3% vs CEDRUS 11.6%) - team figures.
+  October 2024 "7.1x a normal October, trust: reliable", the fire season dates and the "Right now" strip are read from the app on screen.
+  Fire weather outlook: Open-Meteo forecast (CC BY 4.0), normal from ERA5 2003-2025 (as shown in the app).
+
+TOOLS
+  Playwright (frame-exact capture), Python, ffmpeg. Video edited with AI coding assistance.

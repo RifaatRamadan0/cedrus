@@ -1,0 +1,16 @@
+
+--- NASA footage (added 15 Nov 2026) ---
+nasa_satellite.mp4 (9.0 s)
+  Page:   https://svs.gsfc.nasa.gov/4820/
+  Title:  NOAA-20 satellite orbit with Suomi NPP and JPSS-2
+  File:   NOAA20_orbit_with_SNPP_1080p30.mp4 (1920x1080, 30 fps)
+  Used:   00:19.0 - 00:28.0 (native 1080p, no scaling)
+  Credit: NASA's Goddard Space Flight Center Scientific Visualization Studio
+  Note:   contains the visualization's own small orbit labels "Suomi-NPP" and "NOAA-20" (part of the render; no clean version is published)
+
+nasa_earth_fire.mp4 (7.0 s)
+  Page:   https://svs.gsfc.nasa.gov/4741/
+  Title:  Active Fires As Observed by VIIRS, 2012-2018
+  File:   fires_BT_no_dates_1080p30.mp4 (1920x1080, 30 fps; the no-dates version)
+  Used:   00:27.0 - 00:34.0
+  Credit: NASA's Goddard Space Flight Center Scientific Visualization Studio
