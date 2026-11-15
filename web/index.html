@@ -48,13 +48,14 @@
   <symbol id="cedar" viewBox="0 0 60 68"><path d="M30 2 21 13h6L17 23h9L11 34h11L6 46h17L2 57h25v9m6 0v-9h25L37 46h17L38 34h11L34 23h9L33 13h6L30 2ZM30 13v42M19 66h23M16 51l14-7 15 7M20 38l10-6 11 6M24 25l6-5 6 5"/></symbol>
 </defs></svg>
 
+<div id="poster" aria-hidden="true"></div>
 <canvas id="gl" aria-hidden="true" tabindex="-1"></canvas>
 <div id="scrim" aria-hidden="true"></div>
 <div id="grain" aria-hidden="true"></div>
 
 <header class="topbar">
   <a class="tb-brand" href="#home" data-go="home" aria-label="CEDRUS home">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 10.5 8.6h3L7.6 14.4h3.6L4.5 21.4h23l-6.7-7h3.6L18.5 8.6h3Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M16 21.4V29M12.5 29h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <img class="tb-logo" src="assets/cedrus-team-logo.webp" width="40" height="40" alt="CEDRUS team logo">
     <span><b>CEDRUS</b><small>Roots in Nature. Data for a Safer Tomorrow.</small></span>
   </a>
   <nav class="tb-nav" aria-label="Main navigation">
@@ -84,15 +85,16 @@
     <section class="shot hero dash-wrap reveal" id="mission" data-shot="0" data-name="Mission view">
       <div class="dash">
         <div class="dash-copy">
-          <div class="kicker mono fade"><span>Satellite wildfire record · <span id="span-all">Dec 2000 – Jul 2026</span></span></div>
+          <div class="hero-mark fade"><img class="team-logo" src="assets/cedrus-team-logo.webp" width="88" height="88" alt="CEDRUS team logo"><div class="kicker plain mono"><span>Satellite wildfire record · <span id="span-all">Dec 2000 – Jul 2026</span></span></div></div>
           <h1 class="fade" data-i18n="hero-h1">A clearer picture<br>of <em class="burn">wildfires.</em></h1>
-          <p class="lede fade" style="--d:2" data-i18n="hero-desc">By combining MODIS and VIIRS satellite data, we correct the false increase in fire detections and provide a consistent 25-year fire history — for better decisions, safer communities, and a healthier planet.</p>
+          <p class="lede fade" style="--d:2" data-i18n="hero-desc">By combining MODIS and VIIRS satellite data, we correct the false increase in fire detections and provide one consistent fire history of up to 25 years — for better decisions, safer communities, and a healthier planet.</p>
           <div class="cta fade" style="--d:3">
             <a class="tb-btn primary glow" href="#explore" data-go="explore"><span>Explore the Fire Calendar</span>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
             <a class="tb-btn" href="#problem" data-go="problem">How the correction works</a>
           </div>
           <div class="keyhint mono fade" style="--d:4"><kbd>→</kbd><kbd>↓</kbd> <span>or scroll to move through the story</span></div>
+          <p class="typeline" id="typeline" aria-hidden="true"></p><p class="sr-only" id="typeline-sr" aria-live="polite"></p>
         </div>
 
         <aside class="dash-side">
@@ -121,8 +123,8 @@
             <small class="mono">The record we serve</small>
             <div class="rc-grid">
               <div><b id="rec-regions">–</b><span>regions</span></div>
-              <div><b id="rec-months">–</b><span>months, Portugal</span></div>
-              <div><b id="rec-cells">–</b><span>0.25° cells, Portugal</span></div>
+              <div><b id="rec-months">–</b><span>months, Lebanon</span></div>
+              <div><b id="rec-cells">–</b><span>0.25° cells, Lebanon</span></div>
             </div>
             <p class="hero-badge"><svg class="icon"><use href="#satellite"/></svg><span>Satellite data</span><i>•</i><span>Up to 25 years</span><i>•</i><span>NASA FIRMS</span><b id="data-badge">LOADING</b></p>
           </div>
@@ -130,8 +132,8 @@
 
         <div class="dash-cards">
           <div class="glass dcard fade" style="--d:4">
-            <div class="dh"><span>Burning days by year</span><em class="mono">Portugal · harmonized</em></div>
-            <div class="ydots" id="ydots" role="img" aria-label="Harmonized burning days per year in Portugal"></div>
+            <div class="dh"><span>Burning days by year</span><em class="mono">Lebanon · harmonized</em></div>
+            <div class="ydots" id="ydots" role="img" aria-label="Harmonized burning days per year in Lebanon"></div>
             <div class="dx mono"><span id="ydFirst">2001</span><span id="ydMax"></span><span id="ydLast">2025</span></div>
           </div>
           <div class="glass dcard fade" style="--d:5">
@@ -144,7 +146,7 @@
             </div>
           </div>
           <div class="glass dcard fade" style="--d:6">
-            <div class="dh"><span>Worst months on record</span><em class="mono">Portugal · harmonized</em></div>
+            <div class="dh"><span>Worst months on record</span><em class="mono">Lebanon · harmonized</em></div>
             <ul class="worst" id="worst"></ul>
           </div>
         </div>
@@ -156,12 +158,12 @@
         <div class="stepmark fade" aria-hidden="true"><span>1</span></div>
         <div class="kicker mono fade">In orbit</div>
         <h2><span class="line"><span>Four satellites.</span></span><span class="line"><span style="--d:1">One fire record.</span></span></h2>
-        <p class="lede fade" style="--d:2">Terra and Aqua have carried MODIS since 2000 and 2002. Suomi NPP and NOAA-20 added VIIRS in 2012 and 2018, with sharper eyes that catch smaller fires. The orbits drawn here use their real altitudes and swath widths, sped up so one orbit takes a minute; the positions are an illustration, not a live track. The glowing points over Portugal are its real 0.25° cells for <span class="st-aug">August 2025</span>; the rings mark the regions we cover.</p>
+        <p class="lede fade" style="--d:2">Terra and Aqua have carried MODIS since 2000 and 2002. Suomi NPP and NOAA-20 added VIIRS in 2012 and 2018, with sharper eyes that catch smaller fires. The orbits drawn here use their real altitudes and swath widths, sped up so one orbit takes a minute; the positions are an illustration, not a live track. The glowing points over Lebanon are its real 0.25° cells for <span class="st-aug">October 2024</span>; the rings mark the <span class="st-nregions">18</span> regions we cover, on <span class="st-ncont">six</span> continents.</p>
         <div class="sat-key mono fade" style="--d:3">
           <span><i class="modis"></i>MODIS · Terra, Aqua · 1 km</span>
           <span><i class="viirs"></i>VIIRS · Suomi NPP, NOAA-20 · 375 m</span>
         </div>
-        <p class="mono fade dive-hint" style="--d:4">Press → to dive into Portugal</p>
+        <p class="mono fade dive-hint" style="--d:4">Press → to dive into Lebanon</p>
       </div>
     </section>
 
@@ -170,7 +172,7 @@
         <div class="stepmark fade" aria-hidden="true"><span>2</span></div>
         <div class="kicker mono fade">The calendar</div>
         <h2><span class="line"><span>Every month</span></span><span class="line"><span style="--d:1">since December</span></span><span class="line"><span style="--d:2">2000.</span></span></h2>
-        <p class="lede fade" style="--d:3">Each tile is one month of satellite fire activity over Portugal. Rows are years, columns are months, colour is harmonized burning days on a log scale. The months that burned hardest are on fire: <span id="st-hottest">…</span>.</p>
+        <p class="lede fade" style="--d:3">Each tile is one month of satellite fire activity over Lebanon, where the team is based. Rows are years, columns are months, colour is harmonized burning days on a log scale. Lebanon is small and has few fires: <span id="st-small">…</span> The months that burned hardest are on fire: <span id="st-hottest">…</span>.</p>
         <div class="st-stats fade" style="--d:4">
           <div><b id="st-years">–</b><span class="mono">Calendar years</span></div>
           <div><b id="st-months">–</b><span class="mono">Months</span></div>
@@ -194,7 +196,7 @@
         <div class="stepmark fade" aria-hidden="true"><span>4</span></div>
         <div class="kicker mono fade">The fix</div>
         <h2><span class="line"><span>Harmonized to</span></span><span class="line"><span style="--d:1">one MODIS-</span></span><span class="line"><span style="--d:2">equivalent scale.</span></span></h2>
-        <p class="lede fade" style="--d:3">We learn how VIIRS burning days translate into MODIS-equivalent burning days over 2012–2019, when MODIS and Suomi NPP fly together (NOAA-20 is tied in through Suomi NPP), and use it for every month from 2022, when the MODIS satellites drift. The false climb flattens. Real fire years still stand out: <span id="st-topyears">…</span>.</p>
+        <p class="lede fade" style="--d:3">We learn how VIIRS burning days translate into MODIS-equivalent burning days over 2012–2019, when MODIS and Suomi NPP fly together (NOAA-20 is tied in through Suomi NPP), and use it for every month from 2022, when the MODIS satellites drift. The false climb flattens. Real fire years still stand out: <span id="st-topyears">…</span>. <span id="st-zero"></span></p>
         <div class="chip ok mono fade" style="--d:4"><i></i>Harmonized · expected value</div>
       </div>
     </section>
@@ -204,7 +206,7 @@
         <div class="stepmark fade" aria-hidden="true"><span>5</span></div>
         <div class="kicker mono fade">Any area</div>
         <h2><span class="line"><span>Draw an area.</span></span><span class="line"><span style="--d:1">Read it to the</span></span><span class="line"><span style="--d:2">0.25° cell.</span></span></h2>
-        <p class="lede fade" style="--d:3">Pick one of <span class="st-nregions">18</span> regions, drag a rectangle or a polygon, or enter a point and radius. A burning day counts when the centre of its ~1 km square falls inside your shape. The tiles you just watched now stand on the map as Portugal's grid for <span class="st-aug">August 2025</span>.</p>
+        <p class="lede fade" style="--d:3">Pick one of <span class="st-nregions">18</span> regions, drag a rectangle or a polygon, or enter a point and radius. A burning day counts when the centre of its ~1 km square falls inside your shape. The tiles you just watched now stand on the map as Lebanon's grid for <span class="st-aug">October 2024</span>, its busiest recent month.</p>
         <div class="chip mono fade" style="--d:4"><i></i><span id="cellsChip">0.25° cells · August 2025</span></div>
       </div>
     </section>
@@ -214,7 +216,7 @@
         <div class="stepmark fade" aria-hidden="true"><span>6</span></div>
         <div class="kicker mono fade">The season</div>
         <h2><span class="line"><span>When the fire</span></span><span class="line"><span style="--d:1">season runs.</span></span></h2>
-        <p class="lede fade" style="--d:2">The calendar wrapped into a year: twelve spokes for the months, one ring per year from <span id="st-ring0">2000</span> at the centre to <span id="st-ring1">2026</span> at the edge. Below, Portugal's season as the Fire Calendar works it out from the daily records: the days by which 10%, 50% and 90% of a typical year's burning has happened.</p>
+        <p class="lede fade" style="--d:2">The calendar wrapped into a year: twelve spokes for the months, one ring per year from <span id="st-ring0">2000</span> at the centre to <span id="st-ring1">2026</span> at the edge. Below, Lebanon's season worked out from the daily records, the way the Fire Calendar does it: the days by which 10%, 50% and 90% of a typical year's burning has happened. <span id="st-season-note"></span></p>
         <div class="season-row fade" style="--d:3">
           <div><small>Normal start</small><b id="ssStart">…</b><small id="ssStartPm"></small></div>
           <div><small>Middle</small><b id="ssMid">…</b><small id="ssMidPm"></small></div>
@@ -443,7 +445,7 @@
           <div><span>Basemap &amp; borders</span>NASA GIBS</div>
           <div><span>Story Earth imagery</span>Blue Marble · Black Marble (NASA GIBS)</div>
           <div><span>Outlines</span>Natural Earth</div>
-          <div><span>Record</span><span id="about-span">Dec 2000 – Jul 2026</span></div>
+          <div><span>Record</span><span id="about-span">Nov 2000 – Jul 2026</span></div>
         </div>
       </div>
       <div class="benefits"><div class="benefit"><svg class="icon"><use href="#satellite"/></svg><div><h3>Two Satellites.<br>One Clearer Record.</h3><p>MODIS (2000–) + VIIRS (2012–)<br>= one consistent history of up to 25 years.</p></div></div><div class="benefit"><svg class="icon"><use href="#chart"/></svg><div><h3>Corrected Data.<br>Real Trends.</h3><p>We remove the artificial jump and reveal<br>the true patterns of wildfire activity.</p></div></div><div class="benefit"><svg class="icon"><use href="#globe"/></svg><div><h3>Better Insights.<br>Greater Impact.</h3><p>Supporting governments, researchers<br>and communities with reliable data.</p></div></div><div class="benefit"><svg class="icon"><use href="#leaf"/></svg><div><h3>A Healthier Planet.<br>A Safer Future.</h3><p>Because every fire tells a story —<br>and now we can see the real one.</p></div></div></div>

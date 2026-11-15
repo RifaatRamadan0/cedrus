@@ -10,8 +10,8 @@ const NOTE = { es: 'Las explicaciones detalladas con cifras están en inglés.',
 const HTML = {
   'hero-h1': { es: 'Una imagen más clara<br>de los <em class="burn">incendios.</em>', ar: 'صورة أوضح<br>لحرائق <em class="burn">الغابات.</em>' },
   'hero-desc': {
-    es: 'Combinando los datos de los satélites MODIS y VIIRS, corregimos el falso aumento de detecciones de incendios y ofrecemos una historia del fuego coherente de 25 años, para mejores decisiones, comunidades más seguras y un planeta más sano.',
-    ar: 'بدمج بيانات القمرين الصناعيين MODIS وVIIRS، نصحّح الارتفاع الزائف في رصد الحرائق ونقدّم سجلًّا متّسقًا للحرائق على مدى 25 عامًا، من أجل قرارات أفضل ومجتمعات أكثر أمانًا وكوكب أكثر صحة.',
+    es: 'Combinando los datos de los satélites MODIS y VIIRS, corregimos el falso aumento de detecciones de incendios y ofrecemos una historia del fuego coherente de hasta 25 años, para mejores decisiones, comunidades más seguras y un planeta más sano.',
+    ar: 'بدمج بيانات القمرين الصناعيين MODIS وVIIRS، نصحّح الارتفاع الزائف في رصد الحرائق ونقدّم سجلًّا متّسقًا للحرائق يمتد حتى 25 عامًا، من أجل قرارات أفضل ومجتمعات أكثر أمانًا وكوكب أكثر صحة.',
   },
   'proof-intro': {
     es: 'Como un estudiante ante un examen: escribimos las reglas y las notas para aprobar, con fecha, <strong>antes</strong> de descargar las regiones de cada examen, y el modelo lo rindió una sola vez. El primero no se aprobó, y lo publicamos. Los dos siguientes aprobaron todas las pruebas.',
@@ -133,6 +133,7 @@ const T = {
   'Show on map': ['Ver en el mapa', 'اعرض على الخريطة'],
   'Hide on map': ['Ocultar del mapa', 'إخفاء من الخريطة'],
   // the story deck, Method and About (Yasmina's design)
+  'Lebanon is our home. The same tool covers {n} regions on {c} continents, including La Rioja, the challenge authors’ own example.': ['El Líbano es nuestro hogar. La misma herramienta cubre {n} regiones en {c} continentes, incluida La Rioja, el ejemplo de los propios autores del desafío.', 'لبنان موطننا. والأداة نفسها تغطي {n} منطقة في {c} قارات، من بينها لا ريوخا، المثال الذي اختاره واضعو التحدي أنفسهم.'],
   'Your area': ['Tu área', 'منطقتك'],
   'How the correction works': ['Cómo funciona la corrección', 'كيف يعمل التصحيح'],
   'or scroll to move through the story': ['o desplázate para recorrer la historia', 'أو مرّر لتتابع القصة'],
@@ -140,7 +141,7 @@ const T = {
   'In orbit': ['En órbita', 'في المدار'],
   'Four satellites.': ['Cuatro satélites.', 'أربعة أقمار صناعية.'],
   'One fire record.': ['Un solo registro de incendios.', 'سجلّ واحد للحرائق.'],
-  'Press → to dive into Portugal': ['Pulsa → para descender sobre Portugal', 'اضغط → للهبوط إلى البرتغال'],
+  'Press → to dive into Lebanon': ['Pulsa → para descender sobre el Líbano', 'اضغط → للهبوط إلى لبنان'],
   'The calendar': ['El calendario', 'التقويم'],
   'Every month': ['Cada mes', 'كل شهر'],
   'since December': ['desde diciembre', 'منذ ديسمبر'],
@@ -166,8 +167,8 @@ const T = {
   'Worst months on record': ['Los peores meses del registro', 'أسوأ الأشهر في السجل'],
   'The record we serve': ['El registro que ofrecemos', 'السجل الذي نقدّمه'],
   'regions': ['regiones', 'مناطق'],
-  'months, Portugal': ['meses, Portugal', 'شهرًا، البرتغال'],
-  '0.25° cells, Portugal': ['celdas de 0,25°, Portugal', 'خلية 0.25°، البرتغال'],
+  'months, Lebanon': ['meses, Líbano', 'شهرًا، لبنان'],
+  '0.25° cells, Lebanon': ['celdas de 0,25°, Líbano', 'خلية 0.25°، لبنان'],
   'Altitude': ['Altitud', 'الارتفاع'],
   'Orbital velocity': ['Velocidad orbital', 'السرعة المدارية'],
   'Orbital period': ['Período orbital', 'الدورة المدارية'],
@@ -203,6 +204,8 @@ const touched = new Set(); // elements given a lang attribute
 const RLI = '⁧'; const PDI = '⁩'; // Arabic runs are isolated, so the English and numbers around them keep their order
 
 function tr(en) { const row = T[en]; if (!row || lang === 'en') return null; return row[lang === 'es' ? 0 : 1]; }
+// For shell.js: sentences it writes itself (the landing's typed line) are looked up here.
+window.cedrusI18n = { tr: (en) => tr(en), lang: () => lang };
 
 function wanted(node) { // what this node should read in the current language
   const key = node.__en.trim(); const out = tr(key);
