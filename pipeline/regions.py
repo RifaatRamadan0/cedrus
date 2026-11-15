@@ -154,7 +154,7 @@ REGIONS = {
                                 DEV_NOTE, BOX_COUNTRY.format("Chile")]},
     "western_cape": {"country": "South_Africa", "name": "Western Cape area, South Africa",
                      "box": (17.5, -35.0, 24.0, -31.0), "roles": {"dev", "spent", "product"},
-                     "notes": [START.format("January 2012", "December 2025"),
+                     "notes": [START_FULL.format("November 2000", "December 2025"),
                                FORWARD + "burning days passed every check, with regional monthly error 14.5% against "
                                "20.0% for a simple conversion and the total 8.9% too high. Hotspots failed the check that "
                                "the total is within 10% (11.3% too high), and their regional monthly error (16.9%) only "
@@ -183,7 +183,7 @@ REGIONS = {
                                  DEV_AFTER, BOX_COUNTRY.format("Italy")]},
     "sw_australia": {"country": "Australia_SW", "name": "Southwest Australia", "box": (114.5, -35.5, 119.0, -30.5),
                      "roles": {"dev", "spent", "product"},
-                     "notes": [START.format("January 2012", "December 2025"),
+                     "notes": [START_FULL.format("November 2000", "December 2025"),
                                ROUND2 + "Its own figures there: cell-month error 63.4% (simple conversion 69.2%), "
                                "national-month error 19.4% (25.7%), but the predicted total was 1.187 × observed: "
                                "overestimated in both 2020 and 2021.",
@@ -195,7 +195,7 @@ REGIONS = {
                                DEV_AFTER, BOX_AREA]},
     "s_california": {"country": "USA_SoCal", "name": "Southern California", "box": (-121.0, 32.5, -116.0, 35.5),
                      "roles": {"dev", "spent", "product"},
-                     "notes": [START.format("January 2012", "December 2025"),
+                     "notes": [START_FULL.format("November 2000", "December 2025"),
                                ROUND2 + "Its own figures there: cell-month error 36.6% (simple conversion 40.6%), "
                                "national-month error 12.9% (21.4%), predicted total 0.944 × observed.",
                                FORWARD + "every check passed in both units: regional monthly error 11.7% in burning days "
@@ -228,8 +228,9 @@ REGIONS = {
                                   BOX_COUNTRY.format("France")]},
     "south_australia": {"country": "Australia_SA", "name": "South Australia (southeast)",
                         "box": (136.5, -36.5, 141.0, -33.0), "roles": {"spent", "product"},
-                        "notes": [START.format("March 2012", "December 2025") + " February 2012 is left out: the "
-                                  "first MODIS detection in the box is on 16 February 2012, after the month's first 3 days.",
+                        "notes": [START_FULL.format("December 2000", "December 2025") + " It starts in December 2000 because "
+                                  "a month counts only if MODIS has a detection in its first 3 days; the first in the box "
+                                  "is on 4 November 2000.",
                                   ROUND3 + "Its own figures there, in burning days: cell-month error 65.4% (simple "
                                   "conversion 82.6%), national-month error 18.8% (40.2%), predicted total 1.041 × "
                                   "observed.",
@@ -238,7 +239,7 @@ REGIONS = {
                                   BOX_AREA + " It is the southeast of the state, not the whole state."]},
     "n_california": {"country": "USA_NorCal", "name": "Northern California", "box": (-123.5, 37.5, -120.5, 40.5),
                      "roles": {"spent", "product"},
-                     "notes": [START.format("January 2012", "December 2025"),
+                     "notes": [START_FULL.format("November 2000", "December 2025"),
                                ROUND3 + "Its own figures there, in burning days: cell-month error 22.2% (simple "
                                "conversion 26.2%), national-month error 11.0% (16.0%), predicted total 1.081 × observed.",
                                FORWARD + "burning days passed every check (the exam's own figures, rerun). Hotspots failed "

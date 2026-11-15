@@ -2,7 +2,7 @@
   "kind": "Per-region forward test of the frozen models (former sealed-exam region, never used for development), not a sealed confirmation",
   "region": "south_australia",
   "country_file": "Australia_SA",
-  "generated_at": "2026-11-14T11:57:08.341298+00:00",
+  "generated_at": "2026-11-15T09:06:40.818682+00:00",
   "box": [
     136.5,
     -36.5,
@@ -31,7 +31,7 @@
     "burning_days": "f3130df9ed80894e0176866cd3c8e51a3c4a7233c3cb40dd1c7b93651d4357a2",
     "hotspots": "bedc56d5ba85b851931cd6912dfcab832dc38b26a8fe80712a72974cf46e0686"
   },
-  "source_manifest_sha256": "c23e19b05ab53fc3c9c09cc0b41af7e59c2fbf1055c5ba70c9b87717e100da89",
+  "source_manifest_sha256": "eea10d6cfe1bb5b7a13384652109260e26680df0e8b87746f1c6241cce5bb3d1",
   "source_code_sha256": {
     "pipeline/01_download.py": "a37b959e8c81826ff4901aaa045e03e73fc302786d7623cf630222fb1d57c931",
     "pipeline/01b_download_area.py": "291afbc67c562f60aee879dabdd058b8e2cf7f373a9b77a36f61f9cd238a96bf",
@@ -60,7 +60,7 @@
     "pipeline/confirm/tests.py": "5cedabc2bd7b8df6efc312acc4998ce32fdcd9b7e2c9ba41befc25ebdfd9c290",
     "pipeline/export_v2.py": "e2b7267855170ed26e180057b4d919f9cc84c32766577e03963d4ee0c51f6c9e",
     "pipeline/outline.py": "8909f2e4a47f8cc7eef1b6ecb08219ada570dd148249bc164a6bbc898bb73e70",
-    "pipeline/regions.py": "0da299d8b46e7cc6c53cd7931f015fc5eb9a4ecb51e623b9ba56d1723327209b",
+    "pipeline/regions.py": "bf20c3f0f9f08e492bc3463cde5715b98262f6adf66237aa0da451781f809e7b",
     "pipeline/round2/__init__.py": "6c2a5ea2f2011c9f535dc864646a080530528bc55307a64b9f623dfb6a98f621",
     "pipeline/round2/confirm.py": "ffd4d1ca912f597f2da40bba5c84f4fb2d34aa4751c8992b6afe2d423649a877",
     "pipeline/round2/data.py": "4c248413e03ef2d2ed2f0b34c544db09964474bfec9ed886b167cf90d78910ae",
