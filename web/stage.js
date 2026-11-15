@@ -73,7 +73,7 @@ void main(){ vec2 c=gl_PointCoord-.5; float d=length(c)*2.; float g=exp(-d*d*6.)
 return {NOISE,flameFrag,smokeFrag,wallFrag,fireVert,fireFrag,emberVert,emberFrag};
 })();
 
-const D = { ...window.__storyD, PT: GEO.PT, LB: GEO.LB };
+const D = { ...window.__storyD, PT: GEO.PT, LB: GEO.LB, OUT: window.__storyD.story.id === 'portugal' ? GEO.PT : GEO.LB };
 const canvas = document.getElementById('gl');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Effects off (the app's switch) or reduced motion: a still picture that only moves when the slide changes.
@@ -108,7 +108,7 @@ let lastT = 0, slowFrames = 0, light = false;
    ========================================================= */
 const space = new THREE.Scene();
 space.background = new THREE.Color(0x010305);
-const R = 5, LON0 = 8, LAT0 = 36 * Math.PI / 180;
+const R = 5, LON0 = 20, LAT0 = 35 * Math.PI / 180; // faces the eastern Mediterranean: Lebanon (the story) and Iberia both in view
 // lon/lat → world position. The camera faces lon 8°E, lat 36°N.
 function ll(lon, lat, r = R) {
   const p = lat * Math.PI / 180, l = (lon - LON0) * Math.PI / 180;
@@ -117,7 +117,10 @@ function ll(lon, lat, r = R) {
   return new THREE.Vector3(x * r, (y * ca - z * sa) * r, (y * sa + z * ca) * r);
 }
 const SUN = new THREE.Vector3(1, .3, .1).normalize();   // evening over Iberia: the terminator runs through Portugal
-const texLoader = new THREE.TextureLoader();
+// The stage announces itself only once the Earth images are in, so the crossfade from the poster never shows a black globe.
+let texturesIn = false;
+const texManager = new THREE.LoadingManager(() => { texturesIn = true; });
+const texLoader = new THREE.TextureLoader(texManager);
 const maxAniso = renderer.capabilities.getMaxAnisotropy();
 const tex = (u, srgb) => { const t = texLoader.load(u); if (srgb) t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, maxAniso); return t; };
 const dayT = tex('assets/earth-day.jpg', true), nightT = tex('assets/earth-night.jpg', true), waterT = tex('assets/land-mask.png'); // NASA GIBS OSM_Land_Mask: white = water
@@ -204,8 +207,7 @@ const ringGeo = new THREE.RingGeometry(.92, 1, 64);
 // one ring per region in the catalog (the centre of its analysis box); Portugal and Lebanon labelled
 const TARGETS = D.regions.map((r) => {
   const t = { lon: (r.bbox[0] + r.bbox[2]) / 2, lat: (r.bbox[1] + r.bbox[3]) / 2, col: 0x8fc9ff, s: .24 };
-  if (r.id === 'portugal') Object.assign(t, { col: 0xff8a3d, s: .42, label: 'Portugal', sub: 'The story region' });
-  if (r.id === 'lebanon') Object.assign(t, { s: .3, label: 'Lebanon', sub: 'Beirut · team home' });
+  if (r.id === D.story.id) Object.assign(t, { col: 0xff8a3d, s: .34, label: D.story.name, sub: 'The story region · Beirut, team home' });
   return t;
 });
 const geoLabels = [];
@@ -228,7 +230,7 @@ function updateTargets(time, show, showLb) {
 }
 
 /* satellites: near-polar, sun-synchronous orbits, each ground track crossing Portugal. Real altitudes and swaths, time-lapsed. */
-const dIb = ll(-8.1, 39.6, 1).normalize();
+const dIb = ll(D.story.lon, D.story.lat, 1).normalize();
 const NORTH = ll(0, 90, 1).normalize();
 const EAST = new THREE.Vector3().crossVectors(NORTH, dIb).normalize();
 const NTAN = new THREE.Vector3().crossVectors(dIb, EAST).normalize();
@@ -343,14 +345,16 @@ const plate = new THREE.Mesh(new RoundedBoxGeometry(8.8, 0.16, 12.4, 4, 0.3),
   new THREE.MeshPhysicalMaterial({ color: 0x0c1618, roughness: .35, metalness: .1, clearcoat: 1, clearcoatRoughness: .2 }));
 plate.castShadow = plate.receiveShadow = true; ground.add(plate);
 
-const MS = 2.1, MLON = -7.85, MLAT = 39.65;
+// the story region fills the plate: Lebanon is about 1.6° across, so the map scale is large
+const MLON = D.story.lon, MLAT = D.story.lat, MS = 6.2 / Math.max(D.story.bbox[2] - D.story.bbox[0], D.story.bbox[3] - D.story.bbox[1]);
+const CELL = 0.25 * MS * 0.9;
 const mx = lon => (lon - MLON) * MS, mz = lat => -(lat - MLAT) * MS;
-const land = new THREE.Mesh(new THREE.ShapeGeometry(new THREE.Shape(D.PT.map(([lo, la]) => new THREE.Vector2(mx(lo), (la - MLAT) * MS)))).rotateX(-Math.PI / 2),
+const land = new THREE.Mesh(new THREE.ShapeGeometry(new THREE.Shape(D.OUT.map(([lo, la]) => new THREE.Vector2(mx(lo), (la - MLAT) * MS)))).rotateX(-Math.PI / 2),
   new THREE.MeshStandardMaterial({ color: 0x18241f, roughness: .9 }));
 land.receiveShadow = true; ground.add(land);
-land.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(D.PT.map(([lo, la]) => new THREE.Vector3(mx(lo), 0.012, mz(la)))),
+land.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(D.OUT.map(([lo, la]) => new THREE.Vector3(mx(lo), 0.012, mz(la)))),
   new THREE.LineBasicMaterial({ color: 0x7fd3a6, transparent: true, opacity: .6 })));
-const selRect = new THREE.Line(new THREE.BufferGeometry().setFromPoints([[-8.55, 40.35], [-7.55, 40.35], [-7.55, 39.35], [-8.55, 39.35], [-8.55, 40.35]].map(([lo, la]) => new THREE.Vector3(mx(lo), 0, mz(la)))),
+const selRect = new THREE.Line(new THREE.BufferGeometry().setFromPoints([[35.35, 34.05], [35.85, 34.05], [35.85, 33.65], [35.35, 33.65], [35.35, 34.05]] /* a box around Beirut */.map(([lo, la]) => new THREE.Vector3(mx(lo), 0, mz(la)))),
   new THREE.LineDashedMaterial({ color: 0xff8a3d, dashSize: .2, gapSize: .13, transparent: true, toneMapped: false }));
 selRect.computeLineDistances(); selRect.position.y = 1.0; ground.add(selRect);
 
@@ -396,7 +400,7 @@ for (let i = 0; i < N; i++) {
   put(L[5], i, Math.cos(th) * r, 0.02 + hr / 2, Math.sin(th) * r, Q, Math.min(.85, 2 * Math.PI * r / 12 * .8), hr, .12, HC[i], D.H[i]);
   if (i < D.C) {
     const c = D.cells[i], v = D.cellVal(i, AUG25), h = 0.04 + D.cellLogn(v) * 1.9;
-    put(L[4], i, mx(c.lon), 0.02 + h / 2, mz(c.lat), I, .48, h, .48, cellCol(v), v);
+    put(L[4], i, mx(c.lon), 0.02 + h / 2, mz(c.lat), I, CELL, h, CELL, cellCol(v), v);
   } else put(L[4], i, (rnd() - .5) * 16, -1.6, (rnd() - .5) * 12, I, .2, .02, .2, HC[i], 0);
 }
 // which slabs burn in each layout: the months (or cells) above a threshold, hottest first
@@ -406,11 +410,13 @@ function hotList(s, thr, cap, fMin, fMax) {
   const top = s.val[idx[0]] || 1;
   return idx.slice(0, cap).map(i => ({ i, f: clamp(Math.log(s.val[i] / thr) / Math.log(top / thr || 2)), fMin, fMax }));
 }
-L[1].hot = hotList(L[1], 600, 18, .45, 1.2);
-L[2].hot = hotList(L[2], 600, 30, .5, 1.35);
-L[3].hot = hotList(L[3], 600, 18, .5, 1.3);
-L[4].hot = hotList(L[4], 25, 18, .3, .9);
-L[5].hot = hotList(L[5], 600, 18, .35, .95);
+// thresholds scale with the region: the months above 13% of its busiest month burn, and cells above 6% of its busiest cell
+const THR = D.vmax * 0.13, CTHR = D.cmax * 0.06;
+L[1].hot = hotList(L[1], THR, 18, .45, 1.2);
+L[2].hot = hotList(L[2], THR, 30, .5, 1.35);
+L[3].hot = hotList(L[3], THR, 18, .5, 1.3);
+L[4].hot = hotList(L[4], CTHR, 18, .4, 1.1);
+L[5].hot = hotList(L[5], THR, 18, .35, .95);
 L[0].hot = L[1].hot;
 const delay = new Float32Array(N).map((_, i) => (i % 12) / 11 * .35 + Math.floor(i / 12) / (D.NY - 1) * .65);
 const curPos = new Float32Array(N * 3), curH = new Float32Array(N);
@@ -614,7 +620,7 @@ function frame() {
     else { fov = lerpCam(SCAM[9], SCAM[10], sm(clamp(pS - 9))); }
     if (aspect < 1.1) { // portrait: centre the globe and pull back
       const k = pS < 1 ? 1 - clamp(pS) : pS >= 9 ? 1 : 0;
-      camL.x += 4.2 * k; camP.x += 3.4 * k; camL.y -= 2.6 * k;
+      camL.x -= 3.6 * k; camP.x -= 3.6 * k; camL.y -= 2.6 * k; // the globe sits behind the copy, centred
       camP.sub(camL).multiplyScalar(1 + .7 * k).add(camL);
     }
     if (!still()) { const w = pS < DIVE ? 1 - clamp(pS - 1) : clamp((pS - RISE) * 2); camP.x += mX * .5 * w; camP.y += -mY * .3 * w; }
@@ -696,7 +702,7 @@ function frame() {
     wallMat.uniforms.uAmt.value = wa;
     renderer.autoClear = false; renderer.render(overlay, orthoCam); renderer.autoClear = true;
   }
-  if (first) { first = false; window.__glReady && window.__glReady(); }
+  if (first && texturesIn) { first = false; window.__glReady && window.__glReady(); }
 }
 frame();
 
