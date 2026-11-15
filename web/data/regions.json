@@ -2,7 +2,7 @@
   "contract": "docs/DATA_CONTRACT.md",
   "version": 2,
   "default_unit": "burning_days",
-  "generated_at": "2026-11-14T13:19:11+00:00",
+  "generated_at": "2026-11-15T09:33:13+00:00",
   "shared_notes": [
     "Counts all fires FIRMS detects, from any cause, including agricultural burning and conflict. Static heat sources (type 2) are excluded. Monthly completeness is unknown; known FIRMS data gaps are listed in the docs.",
     "Only type 0 (presumed vegetation fire) is eligible; volcano and offshore detections are also excluded. Fire causes are not classified.",
@@ -11494,7 +11494,7 @@
       "id": "western_cape",
       "name": "Western Cape area, South Africa",
       "notes": [
-        "Record runs January 2012 to December 2025: MODIS files before 2012 are not yet on disk for this region, so it has no 2000–2011 history and no bridged months, and no 2026 data has been added.",
+        "Record runs November 2000 to December 2025, as for Portugal: Terra alone (bridged) until June 2002, observed MODIS to 2021, estimates from VIIRS from 2022. The 2000–2011 MODIS files were downloaded on 14 Nov 2026. No 2026 data has been added.",
         "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): burning days passed every check, with regional monthly error 14.5% against 20.0% for a simple conversion and the total 8.9% too high. Hotspots failed the check that the total is within 10% (11.3% too high), and their regional monthly error (16.9%) only matched the simple conversion's (16.7%). Grid-cell errors are 65–68%.",
         "This was a development region (its 2012–2019 data helped choose the models), so the forward test is a test forward in time, not on an unseen region. It was also a round-1 exam region, where the earlier model failed.",
         "The analysis box is a rectangle downloaded from the FIRMS area service: it counts every fire in it, whatever the country. It is not the Western Cape province boundary."
@@ -11506,7 +11506,7 @@
         -31.0
       ],
       "months": {
-        "first": "2012-01",
+        "first": "2000-11",
         "last": "2025-12"
       },
       "record_end": {
@@ -11523,9 +11523,9 @@
           "last_detection": "2025-12-31"
         },
         "modis": {
-          "first": "2012-01",
+          "first": "2000-11",
           "last": "2025-12",
-          "first_detection": "2012-01-01",
+          "first_detection": "2000-11-03",
           "last_detection": "2025-12-31"
         },
         "detections_outside_record_dropped": 0,
@@ -11668,7 +11668,7 @@
           }
         },
         "fit_cells": 297,
-        "cells_outside_fit_region_level": 16,
+        "cells_outside_fit_region_level": 23,
         "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
         "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
         "evidence": [
@@ -11677,7 +11677,7 @@
         ],
         "check": {
           "max_gap_between_model_predictive_mean_and_m": 0.0184,
-          "background_total": 698.91
+          "background_total": 717.39
         }
       },
       "combination": {
@@ -11781,11 +11781,49 @@
           ]
         }
       },
-      "terra_share": null,
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.3901,
+          "02": 0.4128,
+          "03": 0.4342,
+          "04": 0.3718,
+          "05": 0.3507,
+          "06": 0.3764,
+          "07": 0.3744,
+          "08": 0.4137,
+          "09": 0.4349,
+          "10": 0.4166,
+          "11": 0.4098,
+          "12": 0.3587
+        },
+        "pooled": 0.3979,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(1254 Terra + 20 x 0.3979) / (3215 MODIS + 20)",
+          "02": "(1687 Terra + 20 x 0.3979) / (4086 MODIS + 20)",
+          "03": "(2940 Terra + 20 x 0.3979) / (6769 MODIS + 20)",
+          "04": "(1945 Terra + 20 x 0.3979) / (5233 MODIS + 20)",
+          "05": "(691 Terra + 20 x 0.3979) / (1973 MODIS + 20)",
+          "06": "(321 Terra + 20 x 0.3979) / (854 MODIS + 20)",
+          "07": "(305 Terra + 20 x 0.3979) / (816 MODIS + 20)",
+          "08": "(390 Terra + 20 x 0.3979) / (942 MODIS + 20)",
+          "09": "(370 Terra + 20 x 0.3979) / (849 MODIS + 20)",
+          "10": "(407 Terra + 20 x 0.3979) / (976 MODIS + 20)",
+          "11": "(360 Terra + 20 x 0.3979) / (878 MODIS + 20)",
+          "12": "(817 Terra + 20 x 0.3979) / (2280 MODIS + 20)"
+        }
+      },
       "policy": {
-        "bridged": null,
+        "bridged": [
+          "2000-11",
+          "2002-06"
+        ],
         "observed": [
-          "2012-01",
+          "2002-07",
           "2021-12"
         ],
         "estimated": [
@@ -11794,8 +11832,20 @@
         ],
         "naive_switch": "2012-01"
       },
-      "cells": 313,
+      "cells": 320,
       "hotspot_years": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
         2012,
         2013,
         2014,
@@ -11837,14 +11887,122 @@
       "detections": {
         "N": 141300,
         "J1": 61333,
-        "A": 26248,
-        "T": 18874
+        "A": 44293,
+        "T": 33365
       },
       "provenance": {
         "source": "NASA FIRMS area API (standard products: MODIS_SP, VIIRS_SNPP_SP, VIIRS_NOAA20_SP) for the analysis box",
         "filters": "box lon 17.5..24.0, lat -35.0..-31.0; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
         "unit": "fire detections (satellite pixels flagged as burning), not burned area",
         "files": [
+          {
+            "name": "modis_2000_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2000-*",
+            "sensor": "MODIS_SP",
+            "rows": 307,
+            "sha256": "66918c5f7f0c0d0f46c0d9de9c615ea719ab7d94a9de45f714cbb0c7b326f398",
+            "retrieved": "2026-11-14T13:20:11+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2001-*",
+            "sensor": "MODIS_SP",
+            "rows": 1465,
+            "sha256": "0ac376a594e6707d112a7467de472e98cfdf53651ea1fc5047afae06a6f15e87",
+            "retrieved": "2026-11-14T13:38:38+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2002-*",
+            "sensor": "MODIS_SP",
+            "rows": 2197,
+            "sha256": "89682b0a31147df942fb9f509fe73d94e085008beac8b34656cd816867f5e200",
+            "retrieved": "2026-11-14T13:39:30+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2003-*",
+            "sensor": "MODIS_SP",
+            "rows": 4150,
+            "sha256": "8ecf47fbfe309dfdd78015004ed828dbc0155deb012101c8ba69cedacab70120",
+            "retrieved": "2026-11-14T13:40:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2004-*",
+            "sensor": "MODIS_SP",
+            "rows": 3018,
+            "sha256": "1185a5328fc773b162b081726a5a841b0c39a13c07673595ae0e89cc486cef10",
+            "retrieved": "2026-11-14T13:41:25+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2005-*",
+            "sensor": "MODIS_SP",
+            "rows": 3349,
+            "sha256": "952a779752357579d3f5c9a7529fab9f4899cd311b4cca936dc4a5099c0540e8",
+            "retrieved": "2026-11-14T13:42:20+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2006-*",
+            "sensor": "MODIS_SP",
+            "rows": 3539,
+            "sha256": "2dd9c102b3e89ffd754069e8756abd7ed9be34b2704302a683467e0834e6afff",
+            "retrieved": "2026-11-14T13:56:53+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2007-*",
+            "sensor": "MODIS_SP",
+            "rows": 2962,
+            "sha256": "b59a51cc4d18b899782d11e7aa4c7acc1e8dae20e266130e1be16521fa885a3b",
+            "retrieved": "2026-11-14T16:17:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2008-*",
+            "sensor": "MODIS_SP",
+            "rows": 2857,
+            "sha256": "18544f856897c03f600a44590c5716f8207b762f279cf8abf2f587495fa86632",
+            "retrieved": "2026-11-14T16:18:32+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2009-*",
+            "sensor": "MODIS_SP",
+            "rows": 4703,
+            "sha256": "b5b27e67e2709c73deb29941f2eec379a2bbbfbc401b27868419663b6a02de8d",
+            "retrieved": "2026-11-14T16:19:29+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2010-*",
+            "sensor": "MODIS_SP",
+            "rows": 3692,
+            "sha256": "a9dbaf699d3fdb3f8b6aff3a00f0b4504c321645e620f1b9921dfaa13ad81b0b",
+            "retrieved": "2026-11-14T16:20:27+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_South_Africa.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2011-*",
+            "sensor": "MODIS_SP",
+            "rows": 2634,
+            "sha256": "d77c8fbf4e2f5d2a16643a5153819da2db38db638f6295cbf8843fc67f9b6dda",
+            "retrieved": "2026-11-14T16:21:20+00:00",
+            "sha256_ok": true
+          },
           {
             "name": "modis_2012_South_Africa.csv",
             "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/17.5,-35,24,-31/5/2012-*",
@@ -12402,7 +12560,7 @@
             }
           },
           "fit_cells": 297,
-          "cells_outside_fit_region_level": 16,
+          "cells_outside_fit_region_level": 23,
           "em": {
             "iterations": 142,
             "delta": 6.86129221542143e-08,
@@ -12416,7 +12574,7 @@
           ],
           "check": {
             "max_gap_between_model_predictive_mean_and_m": 0.0075,
-            "background_total": 686.94,
+            "background_total": 705.14,
             "fit_table_burning_days_matched": 87279
           }
         },
@@ -12521,8 +12679,55 @@
             ]
           }
         },
-        "terra_share": null,
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.4093,
+            "02": 0.4337,
+            "03": 0.4432,
+            "04": 0.3828,
+            "05": 0.3565,
+            "06": 0.3815,
+            "07": 0.3869,
+            "08": 0.4257,
+            "09": 0.4486,
+            "10": 0.4311,
+            "11": 0.421,
+            "12": 0.3679
+          },
+          "pooled": 0.41,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(1201 Terra burning days + 20 x 0.4100) / (2934 MODIS burning days + 20)",
+            "02": "(1612 Terra burning days + 20 x 0.4100) / (3716 MODIS burning days + 20)",
+            "03": "(2789 Terra burning days + 20 x 0.4100) / (6292 MODIS burning days + 20)",
+            "04": "(1883 Terra burning days + 20 x 0.4100) / (4921 MODIS burning days + 20)",
+            "05": "(678 Terra burning days + 20 x 0.4100) / (1905 MODIS burning days + 20)",
+            "06": "(305 Terra burning days + 20 x 0.4100) / (801 MODIS burning days + 20)",
+            "07": "(304 Terra burning days + 20 x 0.4100) / (787 MODIS burning days + 20)",
+            "08": "(380 Terra burning days + 20 x 0.4100) / (892 MODIS burning days + 20)",
+            "09": "(361 Terra burning days + 20 x 0.4100) / (803 MODIS burning days + 20)",
+            "10": "(391 Terra burning days + 20 x 0.4100) / (906 MODIS burning days + 20)",
+            "11": "(345 Terra burning days + 20 x 0.4100) / (819 MODIS burning days + 20)",
+            "12": "(778 Terra burning days + 20 x 0.4100) / (2117 MODIS burning days + 20)"
+          }
+        },
         "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
           2012,
           2013,
           2014,
@@ -12539,7 +12744,7 @@
           2025
         ],
         "records": {
-          "modis": 41608,
+          "modis": 71937,
           "snpp": 76484,
           "noaa20": 34583
         },
@@ -12552,7 +12757,7 @@
           "note_threshold": 0.1
         }
       },
-      "generated_at": "2026-11-14T12:00:35+00:00"
+      "generated_at": "2026-11-14T16:21:48+00:00"
     },
     {
       "id": "central_spain",
@@ -15092,7 +15297,7 @@
       "id": "sw_australia",
       "name": "Southwest Australia",
       "notes": [
-        "Record runs January 2012 to December 2025: MODIS files before 2012 are not yet on disk for this region, so it has no 2000–2011 history and no bridged months, and no 2026 data has been added.",
+        "Record runs November 2000 to December 2025, as for Portugal: Terra alone (bridged) until June 2002, observed MODIS to 2021, estimates from VIIRS from 2022. The 2000–2011 MODIS files were downloaded on 14 Nov 2026. No 2026 data has been added.",
         "Passed the round-2 sealed exam (hotspots, model A2; CONFIRMED with central Spain, southern Italy, southwest Australia and southern California pooled: docs/ROUND2_CONFIRMATION.md). Its own figures there: cell-month error 63.4% (simple conversion 69.2%), national-month error 19.4% (25.7%), but the predicted total was 1.187 × observed: overestimated in both 2020 and 2021.",
         "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): both units failed the check that the total is within 10%: burning days 10.8% too high, hotspots 20.1% too high. Burning days still beat a simple conversion (regional monthly error 12.8% against 17.2%); hotspots did not (20.4% against 19.4%). Grid-cell errors are 55–64%. Five months (August and October 2020, September, November and December 2021) were left out of the test by the sensor-outage rule.",
         "After its exam this region became development data for the burning-day tournament, so its burning-day forward test is a test forward in time, not on an unseen region.",
@@ -15105,7 +15310,7 @@
         -30.5
       ],
       "months": {
-        "first": "2012-01",
+        "first": "2000-11",
         "last": "2025-12"
       },
       "record_end": {
@@ -15122,9 +15327,9 @@
           "last_detection": "2025-12-31"
         },
         "modis": {
-          "first": "2012-01",
+          "first": "2000-11",
           "last": "2025-12",
-          "first_detection": "2012-01-03",
+          "first_detection": "2000-11-01",
           "last_detection": "2025-12-31"
         },
         "detections_outside_record_dropped": 0,
@@ -15380,11 +15585,49 @@
           ]
         }
       },
-      "terra_share": null,
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.4303,
+          "02": 0.3895,
+          "03": 0.3243,
+          "04": 0.236,
+          "05": 0.2546,
+          "06": 0.2801,
+          "07": 0.2427,
+          "08": 0.3249,
+          "09": 0.2439,
+          "10": 0.2097,
+          "11": 0.2621,
+          "12": 0.3646
+        },
+        "pooled": 0.2701,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(980 Terra + 20 x 0.2701) / (2270 MODIS + 20)",
+          "02": "(358 Terra + 20 x 0.2701) / (913 MODIS + 20)",
+          "03": "(1284 Terra + 20 x 0.2701) / (3956 MODIS + 20)",
+          "04": "(3574 Terra + 20 x 0.2701) / (15148 MODIS + 20)",
+          "05": "(2685 Terra + 20 x 0.2701) / (10547 MODIS + 20)",
+          "06": "(548 Terra + 20 x 0.2701) / (1956 MODIS + 20)",
+          "07": "(122 Terra + 20 x 0.2701) / (505 MODIS + 20)",
+          "08": "(198 Terra + 20 x 0.2701) / (606 MODIS + 20)",
+          "09": "(240 Terra + 20 x 0.2701) / (986 MODIS + 20)",
+          "10": "(687 Terra + 20 x 0.2701) / (3282 MODIS + 20)",
+          "11": "(885 Terra + 20 x 0.2701) / (3377 MODIS + 20)",
+          "12": "(764 Terra + 20 x 0.2701) / (2090 MODIS + 20)"
+        }
+      },
       "policy": {
-        "bridged": null,
+        "bridged": [
+          "2000-11",
+          "2002-06"
+        ],
         "observed": [
-          "2012-01",
+          "2002-07",
           "2021-12"
         ],
         "estimated": [
@@ -15395,6 +15638,18 @@
       },
       "cells": 273,
       "hotspot_years": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
         2012,
         2013,
         2014,
@@ -15436,14 +15691,122 @@
       "detections": {
         "N": 380666,
         "J1": 203919,
-        "A": 57963,
-        "T": 22194
+        "A": 92390,
+        "T": 36627
       },
       "provenance": {
         "source": "NASA FIRMS area API (standard products: MODIS_SP, VIIRS_SNPP_SP, VIIRS_NOAA20_SP) for the analysis box",
         "filters": "box lon 114.5..119.0, lat -35.5..-30.5; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
         "unit": "fire detections (satellite pixels flagged as burning), not burned area",
         "files": [
+          {
+            "name": "modis_2000_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2000-*",
+            "sensor": "MODIS_SP",
+            "rows": 197,
+            "sha256": "4f70bcf47191a30b82d34a4ee3371344471913b121bd650a4a8a96618fd1f5ab",
+            "retrieved": "2026-11-14T16:21:32+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2001-*",
+            "sensor": "MODIS_SP",
+            "rows": 1008,
+            "sha256": "81e4bdb9cd7a04c707a467e1802a0b8c30a7b3cc0fc38370bbc6d094e43c63cd",
+            "retrieved": "2026-11-14T16:22:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2002-*",
+            "sensor": "MODIS_SP",
+            "rows": 2377,
+            "sha256": "f6450f6a04aa1eca337d4adf15dc77719ec3feaad929aaa9656021a7d0092aef",
+            "retrieved": "2026-11-14T16:37:09+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2003-*",
+            "sensor": "MODIS_SP",
+            "rows": 4229,
+            "sha256": "d59e20d7fb539c297409c4dd30c20816b8aba6637ad6eccfcee40cfa2e4e3561",
+            "retrieved": "2026-11-14T16:38:21+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2004-*",
+            "sensor": "MODIS_SP",
+            "rows": 7332,
+            "sha256": "317ec7324b07dfeedcb451b732b5a62b6a2bf7d333a4288db606583766c4423c",
+            "retrieved": "2026-11-14T16:39:29+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2005-*",
+            "sensor": "MODIS_SP",
+            "rows": 4787,
+            "sha256": "d52edf1f838f5b0e7c1ddf6cf5c978efb01123bc47a2622902e6442632489d44",
+            "retrieved": "2026-11-14T16:40:37+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2006-*",
+            "sensor": "MODIS_SP",
+            "rows": 7100,
+            "sha256": "bc8a4dee487efd4094b8df10b5f550425d25a7d54d79371ae474ba28487bc934",
+            "retrieved": "2026-11-14T16:41:34+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2007-*",
+            "sensor": "MODIS_SP",
+            "rows": 4201,
+            "sha256": "ece7ec7e1d8fd47312389acddd8007fac18bfa4a7c06b6f9bebbfdf0b6d67dde",
+            "retrieved": "2026-11-14T16:42:33+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2008-*",
+            "sensor": "MODIS_SP",
+            "rows": 3827,
+            "sha256": "47faae417bedddec3bca8f60a5f293fa69df00a2bac6b085ab5609dbbc5903e9",
+            "retrieved": "2026-11-14T16:57:34+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2009-*",
+            "sensor": "MODIS_SP",
+            "rows": 7029,
+            "sha256": "ec931f28963662be941277d6cf3a28db9bfe8eb2d583c64bebaab7683e667826",
+            "retrieved": "2026-11-14T16:58:47+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2010-*",
+            "sensor": "MODIS_SP",
+            "rows": 6665,
+            "sha256": "d3307b56f8fbb692b1955f1c0eba9ba440d2cc9a01fedd514d25567a6db3c9a5",
+            "retrieved": "2026-11-14T16:59:47+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_Australia_SW.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2011-*",
+            "sensor": "MODIS_SP",
+            "rows": 4269,
+            "sha256": "9d6fa55a2c0a8896043c6a9038b6c23797716c9a0d641d562ae879a8aa3638f5",
+            "retrieved": "2026-11-14T17:00:53+00:00",
+            "sha256_ok": true
+          },
           {
             "name": "modis_2012_Australia_SW.csv",
             "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/114.5,-35.5,119,-30.5/5/2012-*",
@@ -16120,8 +16483,55 @@
             ]
           }
         },
-        "terra_share": null,
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.4826,
+            "02": 0.4181,
+            "03": 0.3333,
+            "04": 0.2391,
+            "05": 0.2591,
+            "06": 0.2881,
+            "07": 0.2442,
+            "08": 0.3342,
+            "09": 0.2524,
+            "10": 0.2171,
+            "11": 0.2728,
+            "12": 0.3821
+          },
+          "pooled": 0.2772,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(911 Terra burning days + 20 x 0.2772) / (1879 MODIS burning days + 20)",
+            "02": "(344 Terra burning days + 20 x 0.2772) / (816 MODIS burning days + 20)",
+            "03": "(1241 Terra burning days + 20 x 0.2772) / (3720 MODIS burning days + 20)",
+            "04": "(3453 Terra burning days + 20 x 0.2772) / (14447 MODIS burning days + 20)",
+            "05": "(2593 Terra burning days + 20 x 0.2772) / (10008 MODIS burning days + 20)",
+            "06": "(532 Terra burning days + 20 x 0.2772) / (1846 MODIS burning days + 20)",
+            "07": "(118 Terra burning days + 20 x 0.2772) / (486 MODIS burning days + 20)",
+            "08": "(196 Terra burning days + 20 x 0.2772) / (583 MODIS burning days + 20)",
+            "09": "(236 Terra burning days + 20 x 0.2772) / (937 MODIS burning days + 20)",
+            "10": "(661 Terra burning days + 20 x 0.2772) / (3050 MODIS burning days + 20)",
+            "11": "(852 Terra burning days + 20 x 0.2772) / (3124 MODIS burning days + 20)",
+            "12": "(720 Terra burning days + 20 x 0.2772) / (1879 MODIS burning days + 20)"
+          }
+        },
         "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
           2012,
           2013,
           2014,
@@ -16138,7 +16548,7 @@
           2025
         ],
         "records": {
-          "modis": 75435,
+          "modis": 121264,
           "snpp": 199601,
           "noaa20": 107548
         },
@@ -16151,13 +16561,13 @@
           "note_threshold": 0.1
         }
       },
-      "generated_at": "2026-11-14T12:01:20+00:00"
+      "generated_at": "2026-11-14T17:02:32+00:00"
     },
     {
       "id": "s_california",
       "name": "Southern California",
       "notes": [
-        "Record runs January 2012 to December 2025: MODIS files before 2012 are not yet on disk for this region, so it has no 2000–2011 history and no bridged months, and no 2026 data has been added.",
+        "Record runs November 2000 to December 2025, as for Portugal: Terra alone (bridged) until June 2002, observed MODIS to 2021, estimates from VIIRS from 2022. The 2000–2011 MODIS files were downloaded on 14 Nov 2026. No 2026 data has been added.",
         "Passed the round-2 sealed exam (hotspots, model A2; CONFIRMED with central Spain, southern Italy, southwest Australia and southern California pooled: docs/ROUND2_CONFIRMATION.md). Its own figures there: cell-month error 36.6% (simple conversion 40.6%), national-month error 12.9% (21.4%), predicted total 0.944 × observed.",
         "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): every check passed in both units: regional monthly error 11.7% in burning days against 33.6% for a simple conversion, total 4.7% too low. Grid-cell errors are 34–37%.",
         "After its exam this region became development data for the burning-day tournament, so its burning-day forward test is a test forward in time, not on an unseen region.",
@@ -16170,7 +16580,7 @@
         35.5
       ],
       "months": {
-        "first": "2012-01",
+        "first": "2000-11",
         "last": "2025-12"
       },
       "record_end": {
@@ -16187,9 +16597,9 @@
           "last_detection": "2025-12-29"
         },
         "modis": {
-          "first": "2012-01",
+          "first": "2000-11",
           "last": "2025-12",
-          "first_detection": "2012-01-02",
+          "first_detection": "2000-11-02",
           "last_detection": "2025-12-29"
         },
         "detections_outside_record_dropped": 0,
@@ -16445,11 +16855,49 @@
           ]
         }
       },
-      "terra_share": null,
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.4901,
+          "02": 0.5294,
+          "03": 0.5657,
+          "04": 0.6202,
+          "05": 0.536,
+          "06": 0.4142,
+          "07": 0.4812,
+          "08": 0.4551,
+          "09": 0.4788,
+          "10": 0.5101,
+          "11": 0.5321,
+          "12": 0.4891
+        },
+        "pooled": 0.4885,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(174 Terra + 20 x 0.4885) / (355 MODIS + 20)",
+          "02": "(166 Terra + 20 x 0.4885) / (312 MODIS + 20)",
+          "03": "(212 Terra + 20 x 0.4885) / (372 MODIS + 20)",
+          "04": "(149 Terra + 20 x 0.4885) / (236 MODIS + 20)",
+          "05": "(262 Terra + 20 x 0.4885) / (487 MODIS + 20)",
+          "06": "(293 Terra + 20 x 0.4885) / (711 MODIS + 20)",
+          "07": "(1196 Terra + 20 x 0.4885) / (2486 MODIS + 20)",
+          "08": "(2337 Terra + 20 x 0.4885) / (5137 MODIS + 20)",
+          "09": "(1562 Terra + 20 x 0.4885) / (3263 MODIS + 20)",
+          "10": "(3599 Terra + 20 x 0.4885) / (7055 MODIS + 20)",
+          "11": "(268 Terra + 20 x 0.4885) / (502 MODIS + 20)",
+          "12": "(135 Terra + 20 x 0.4885) / (276 MODIS + 20)"
+        }
+      },
       "policy": {
-        "bridged": null,
+        "bridged": [
+          "2000-11",
+          "2002-06"
+        ],
         "observed": [
-          "2012-01",
+          "2002-07",
           "2021-12"
         ],
         "estimated": [
@@ -16460,6 +16908,18 @@
       },
       "cells": 154,
       "hotspot_years": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
         2012,
         2013,
         2014,
@@ -16501,14 +16961,122 @@
       "detections": {
         "N": 70274,
         "J1": 42832,
-        "A": 9303,
-        "T": 8865
+        "T": 20574,
+        "A": 20526
       },
       "provenance": {
         "source": "NASA FIRMS area API (standard products: MODIS_SP, VIIRS_SNPP_SP, VIIRS_NOAA20_SP) for the analysis box",
         "filters": "box lon -121.0..-116.0, lat 32.5..35.5; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
         "unit": "fire detections (satellite pixels flagged as burning), not burned area",
         "files": [
+          {
+            "name": "modis_2000_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2000-*",
+            "sensor": "MODIS_SP",
+            "rows": 61,
+            "sha256": "45c8a02ec555ece1916a5abdfbdb25af83ed3070b04b973b3dd24bb2179f9bc9",
+            "retrieved": "2026-11-14T13:27:25+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2001-*",
+            "sensor": "MODIS_SP",
+            "rows": 343,
+            "sha256": "e42e7f3c1a139953ae8e1f22d0c3d4c7f3d03a2fa91fbb2a432eab1043e8f530",
+            "retrieved": "2026-11-14T13:27:59+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2002-*",
+            "sensor": "MODIS_SP",
+            "rows": 1659,
+            "sha256": "2bf2b4721f4c38416509e7f70990f6111c621855ead3da2d0280830cf662463f",
+            "retrieved": "2026-11-14T13:28:26+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2003-*",
+            "sensor": "MODIS_SP",
+            "rows": 5170,
+            "sha256": "108e64b19f75842b94be86e609bf0f906c142a13625013ee869bcacafe5efce5",
+            "retrieved": "2026-11-14T13:29:05+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2004-*",
+            "sensor": "MODIS_SP",
+            "rows": 1248,
+            "sha256": "29e3d87627d28a2c52c5cf7cbbebe6d8f6840e10f0e6f32e8e4c79c73bcc1fba",
+            "retrieved": "2026-11-14T13:29:39+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2005-*",
+            "sensor": "MODIS_SP",
+            "rows": 880,
+            "sha256": "af58df1649aaa4c2f043a15cd7ae5307a8736106fff73541b36b10882806368b",
+            "retrieved": "2026-11-14T13:30:11+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2006-*",
+            "sensor": "MODIS_SP",
+            "rows": 3760,
+            "sha256": "d3c7b28db7c39bc6e4b2ac8747ec5579da3be3a79ff7b119353bddfba67983f0",
+            "retrieved": "2026-11-14T13:30:43+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2007-*",
+            "sensor": "MODIS_SP",
+            "rows": 7236,
+            "sha256": "ce3720c300d5bfc17ae702f985088ce6c42ac7fb89fa47685f0b30d7f9176a5e",
+            "retrieved": "2026-11-14T17:02:00+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2008-*",
+            "sensor": "MODIS_SP",
+            "rows": 1314,
+            "sha256": "8c9f690614a1245677a14ae5b4ec2e43da77e43a2a9e6f0085e2cf651990b4a3",
+            "retrieved": "2026-11-14T17:02:56+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2009-*",
+            "sensor": "MODIS_SP",
+            "rows": 3250,
+            "sha256": "4b6acc0ba6f701931228f7989bb8fb07bfaf5656dd8e155bcabb2a3557df8430",
+            "retrieved": "2026-11-14T17:17:52+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2010-*",
+            "sensor": "MODIS_SP",
+            "rows": 422,
+            "sha256": "c6b47c9a444e59c78c00fe20ca1738944bae0ae47cd53a6e68b4ebd8bd66f6d6",
+            "retrieved": "2026-11-14T17:18:52+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_USA_SoCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2011-*",
+            "sensor": "MODIS_SP",
+            "rows": 613,
+            "sha256": "fd543a9a5e736a0fb2e100f6008c4d22b1edfade530e195fd5b0ba91849c831d",
+            "retrieved": "2026-11-14T17:19:49+00:00",
+            "sha256_ok": true
+          },
           {
             "name": "modis_2012_USA_SoCal.csv",
             "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-121,32.5,-116,35.5/5/2012-*",
@@ -17185,8 +17753,55 @@
             ]
           }
         },
-        "terra_share": null,
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.5213,
+            "02": 0.5604,
+            "03": 0.6048,
+            "04": 0.6487,
+            "05": 0.5692,
+            "06": 0.4422,
+            "07": 0.5306,
+            "08": 0.5204,
+            "09": 0.5491,
+            "10": 0.5794,
+            "11": 0.5666,
+            "12": 0.5106
+          },
+          "pooled": 0.5487,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(172 Terra burning days + 20 x 0.5487) / (331 MODIS burning days + 20)",
+            "02": "(165 Terra burning days + 20 x 0.5487) / (294 MODIS burning days + 20)",
+            "03": "(211 Terra burning days + 20 x 0.5487) / (347 MODIS burning days + 20)",
+            "04": "(146 Terra burning days + 20 x 0.5487) / (222 MODIS burning days + 20)",
+            "05": "(248 Terra burning days + 20 x 0.5487) / (435 MODIS burning days + 20)",
+            "06": "(276 Terra burning days + 20 x 0.5487) / (629 MODIS burning days + 20)",
+            "07": "(1125 Terra burning days + 20 x 0.5487) / (2121 MODIS burning days + 20)",
+            "08": "(2190 Terra burning days + 20 x 0.5487) / (4209 MODIS burning days + 20)",
+            "09": "(1487 Terra burning days + 20 x 0.5487) / (2708 MODIS burning days + 20)",
+            "10": "(3373 Terra burning days + 20 x 0.5487) / (5820 MODIS burning days + 20)",
+            "11": "(261 Terra burning days + 20 x 0.5487) / (460 MODIS burning days + 20)",
+            "12": "(132 Terra burning days + 20 x 0.5487) / (260 MODIS burning days + 20)"
+          }
+        },
         "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
           2012,
           2013,
           2014,
@@ -17203,7 +17818,7 @@
           2025
         ],
         "records": {
-          "modis": 15590,
+          "modis": 35006,
           "snpp": 31077,
           "noaa20": 19427
         },
@@ -17216,7 +17831,7 @@
           "note_threshold": 0.1
         }
       },
-      "generated_at": "2026-11-14T12:01:30+00:00"
+      "generated_at": "2026-11-14T17:20:10+00:00"
     },
     {
       "id": "northern_algeria",
@@ -19759,7 +20374,7 @@
       "id": "south_australia",
       "name": "South Australia (southeast)",
       "notes": [
-        "Record runs March 2012 to December 2025: MODIS files before 2012 are not yet on disk for this region, so it has no 2000–2011 history and no bridged months, and no 2026 data has been added. February 2012 is left out: the first MODIS detection in the box is on 16 February 2012, after the month's first 3 days.",
+        "Record runs December 2000 to December 2025, as for Portugal: Terra alone (bridged) until June 2002, observed MODIS to 2021, estimates from VIIRS from 2022. The 2000–2011 MODIS files were downloaded on 14 Nov 2026. No 2026 data has been added. It starts in December 2000 because a month counts only if MODIS has a detection in its first 3 days; the first in the box is on 4 November 2000.",
         "Passed the round-3 sealed exam (burning days, model D-a; CONFIRMED with northern Algeria, southern France, South Australia and northern California pooled: docs/ROUND3_CONFIRMATION.md). Its own figures there, in burning days: cell-month error 65.4% (simple conversion 82.6%), national-month error 18.8% (40.2%), predicted total 1.041 × observed.",
         "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): every check passed in both units: hotspots regional monthly error 25.8% against 38.4% for a simple conversion, total 7.0% too low. Grid-cell errors are 65–70%.",
         "The analysis box is a rectangle downloaded from the FIRMS area service: it counts every fire in it, whatever the country. It is the southeast of the state, not the whole state."
@@ -19771,7 +20386,7 @@
         -33.0
       ],
       "months": {
-        "first": "2012-03",
+        "first": "2000-12",
         "last": "2025-12"
       },
       "record_end": {
@@ -19788,12 +20403,12 @@
           "last_detection": "2025-12-31"
         },
         "modis": {
-          "first": "2012-03",
+          "first": "2000-12",
           "last": "2025-11",
-          "first_detection": "2012-02-16",
+          "first_detection": "2000-11-04",
           "last_detection": "2025-12-28"
         },
-        "detections_outside_record_dropped": 137,
+        "detections_outside_record_dropped": 4,
         "detections_outside_grid": {},
         "viirs_outage_months": [],
         "rule": "a file's final month counts if it has a detection in that month's last 3 days; a VIIRS satellite with 0 detections in a month while the other has >= 20 does not cover that month",
@@ -19832,8 +20447,8 @@
             "prior_ratio_r0": {
               "01D": 0.4335,
               "01N": 0.1308,
-              "02D": 0.3277,
-              "02N": 0.2128,
+              "02D": 0.3177,
+              "02N": 0.2102,
               "03D": 0.3306,
               "03N": 0.12,
               "04D": 0.352,
@@ -19858,7 +20473,7 @@
             "background_b": {
               "01D": 0.0076,
               "01N": 0.0152,
-              "02D": 0.014,
+              "02D": 0.0157,
               "02N": 0.0,
               "03D": 0.0634,
               "03N": 0.0007,
@@ -19882,8 +20497,8 @@
               "12N": 0.0
             },
             "train_detections": {
-              "modis": 10106,
-              "snpp": 33440
+              "modis": 10133,
+              "snpp": 33549
             }
           },
           "noaa20": {
@@ -19903,8 +20518,8 @@
             "prior_ratio_r0": {
               "01D": 0.4744,
               "01N": 0.1693,
-              "02D": 0.3586,
-              "02N": 0.2755,
+              "02D": 0.3476,
+              "02N": 0.2721,
               "03D": 0.3618,
               "03N": 0.1553,
               "04D": 0.3852,
@@ -19933,7 +20548,7 @@
           }
         },
         "fit_cells": 178,
-        "cells_outside_fit_region_level": 12,
+        "cells_outside_fit_region_level": 14,
         "method": "A2: per 0.25 deg cell x calendar month x day/night, posterior MODIS per Suomi NPP detection (a + sum MODIS) / (a / r0 + sum VIIRS) over rows with Suomi NPP > 0; b = mean MODIS where it saw nothing. NOAA-20: x s, then A2 (pipeline/round2/models.py)",
         "interval": "A2's predictive per cell-month (negative binomial for V > 0, Poisson(b) for V = 0) plus Var(s) for NOAA-20, day + night added, satellites averaged; 10th/90th percentile of the moment-matched negative binomial (approximate)",
         "evidence": [
@@ -19942,7 +20557,7 @@
         ],
         "check": {
           "max_gap_between_model_predictive_mean_and_m": 0.005,
-          "background_total": 250.81
+          "background_total": 261.63
         }
       },
       "combination": {
@@ -20043,11 +20658,49 @@
           ]
         }
       },
-      "terra_share": null,
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.4416,
+          "02": 0.3345,
+          "03": 0.1648,
+          "04": 0.1218,
+          "05": 0.1474,
+          "06": 0.1586,
+          "07": 0.2633,
+          "08": 0.3631,
+          "09": 0.3623,
+          "10": 0.3248,
+          "11": 0.4286,
+          "12": 0.3559
+        },
+        "pooled": 0.1926,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(247 Terra + 20 x 0.1926) / (548 MODIS + 20)",
+          "02": "(51 Terra + 20 x 0.1926) / (144 MODIS + 20)",
+          "03": "(251 Terra + 20 x 0.1926) / (1526 MODIS + 20)",
+          "04": "(519 Terra + 20 x 0.1926) / (4271 MODIS + 20)",
+          "05": "(449 Terra + 20 x 0.1926) / (3052 MODIS + 20)",
+          "06": "(104 Terra + 20 x 0.1926) / (660 MODIS + 20)",
+          "07": "(23 Terra + 20 x 0.1926) / (82 MODIS + 20)",
+          "08": "(35 Terra + 20 x 0.1926) / (87 MODIS + 20)",
+          "09": "(36 Terra + 20 x 0.1926) / (90 MODIS + 20)",
+          "10": "(78 Terra + 20 x 0.1926) / (232 MODIS + 20)",
+          "11": "(189 Terra + 20 x 0.1926) / (430 MODIS + 20)",
+          "12": "(346 Terra + 20 x 0.1926) / (963 MODIS + 20)"
+        }
+      },
       "policy": {
-        "bridged": null,
+        "bridged": [
+          "2000-12",
+          "2002-06"
+        ],
         "observed": [
-          "2012-03",
+          "2002-07",
           "2021-12"
         ],
         "estimated": [
@@ -20056,8 +20709,20 @@
         ],
         "naive_switch": "2012-01"
       },
-      "cells": 190,
+      "cells": 192,
       "hotspot_years": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
         2012,
         2013,
         2014,
@@ -20097,16 +20762,124 @@
         "61.03"
       ],
       "detections": {
-        "N": 46374,
+        "N": 46484,
+        "A": 20563,
         "J1": 19733,
-        "A": 10694,
-        "T": 3358
+        "T": 6598
       },
       "provenance": {
         "source": "NASA FIRMS area API (standard products: MODIS_SP, VIIRS_SNPP_SP, VIIRS_NOAA20_SP) for the analysis box",
         "filters": "box lon 136.5..141.0, lat -36.5..-33.0; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
         "unit": "fire detections (satellite pixels flagged as burning), not burned area",
         "files": [
+          {
+            "name": "modis_2000_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2000-*",
+            "sensor": "MODIS_SP",
+            "rows": 10,
+            "sha256": "16f7fb133d0a1b2ecfb6b39a25ffc105ea42dc7b315fde53fb722b212ebf927b",
+            "retrieved": "2026-11-14T17:20:03+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2001-*",
+            "sensor": "MODIS_SP",
+            "rows": 482,
+            "sha256": "5466490f3ccb9a28ffcde97ddfd4eea8ceace402fda60ae384f2dcd257864b92",
+            "retrieved": "2026-11-14T17:21:23+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2002-*",
+            "sensor": "MODIS_SP",
+            "rows": 616,
+            "sha256": "a8ba2eb5cdc517fcdf41a83ec52aa6e2b3402a3e968d58f9e09ddb087b791f75",
+            "retrieved": "2026-11-14T17:22:27+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2003-*",
+            "sensor": "MODIS_SP",
+            "rows": 463,
+            "sha256": "cbcbcbd6257e0a3b602308af98bd5a18e945cbd2911dda5e3f79312b47993dbd",
+            "retrieved": "2026-11-14T17:23:33+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2004-*",
+            "sensor": "MODIS_SP",
+            "rows": 2096,
+            "sha256": "7ef6f526f4b2120f83e9bcd07e0bd9200acc69e05e786f95c2f46a35d7b00c29",
+            "retrieved": "2026-11-14T17:55:42+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2005-*",
+            "sensor": "MODIS_SP",
+            "rows": 2065,
+            "sha256": "7676f123aa0fadef4e2fbc303223f7055a9d99db3a8baf4c27e772e2774d4088",
+            "retrieved": "2026-11-14T17:57:06+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2006-*",
+            "sensor": "MODIS_SP",
+            "rows": 2303,
+            "sha256": "19444ea09b796df8c084d6e9457111d24cb20985ac625cb7184a4360ebdacc2c",
+            "retrieved": "2026-11-14T17:58:23+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2007-*",
+            "sensor": "MODIS_SP",
+            "rows": 964,
+            "sha256": "a7998276978ca0e0b7bfe2376c0948d995691b9e1c0ba006c4c41ac6363dac32",
+            "retrieved": "2026-11-14T17:59:34+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2008-*",
+            "sensor": "MODIS_SP",
+            "rows": 709,
+            "sha256": "385117c1ec6d296057385eb78cf11423587ac4ac42325c45e23dc917353b3ef8",
+            "retrieved": "2026-11-14T18:00:45+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2009-*",
+            "sensor": "MODIS_SP",
+            "rows": 675,
+            "sha256": "41a0c7c4fc5df4b31698f7b528465ecbfe70feff3af4e3ad4c31ed238da56ca9",
+            "retrieved": "2026-11-14T18:02:05+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2010-*",
+            "sensor": "MODIS_SP",
+            "rows": 1384,
+            "sha256": "03cbd07a4ee7298008c154b522d582a3ecbff9e08eff70d7a22c5000b24b4473",
+            "retrieved": "2026-11-14T18:04:41+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_Australia_SA.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2011-*",
+            "sensor": "MODIS_SP",
+            "rows": 2333,
+            "sha256": "e6e91a82244b5c83c7039b8a96ea55c5b6c51c6c042f930e24cae3d2c0459fb7",
+            "retrieved": "2026-11-14T18:05:49+00:00",
+            "sha256_ok": true
+          },
           {
             "name": "modis_2012_Australia_SA.csv",
             "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/136.5,-36.5,141,-33/5/2012-*",
@@ -20481,15 +21254,15 @@
                 ],
                 "02D": [
                   0.0,
-                  0.1758,
-                  0.3043,
-                  0.9925
+                  0.1897,
+                  0.3517,
+                  0.9315
                 ],
                 "02N": [
                   0.0,
-                  0.1019,
-                  1.8691,
-                  0.6942
+                  0.0929,
+                  1.8285,
+                  0.7459
                 ],
                 "03D": [
                   0.0,
@@ -20513,7 +21286,7 @@
                   0.0,
                   0.0384,
                   0.6904,
-                  0.9467
+                  0.9542
                 ],
                 "05D": [
                   0.0,
@@ -20525,7 +21298,7 @@
                   0.0,
                   0.0528,
                   0.5165,
-                  0.9467
+                  0.9542
                 ],
                 "06D": [
                   0.0,
@@ -20537,7 +21310,7 @@
                   0.0,
                   0.0,
                   0.6154,
-                  0.9467
+                  0.9542
                 ],
                 "07D": [
                   0.0,
@@ -20549,7 +21322,7 @@
                   0.0,
                   0.0152,
                   0.0,
-                  0.9467
+                  0.9542
                 ],
                 "08D": [
                   0.0,
@@ -20560,8 +21333,8 @@
                 "08N": [
                   0.0,
                   0.0,
-                  0.9567,
-                  0.9467
+                  0.9542,
+                  0.9542
                 ],
                 "09D": [
                   0.0,
@@ -20573,7 +21346,7 @@
                   0.0,
                   0.0165,
                   0.0,
-                  0.9467
+                  0.9542
                 ],
                 "10D": [
                   0.0,
@@ -20597,7 +21370,7 @@
                   0.0,
                   0.0189,
                   0.6078,
-                  0.9467
+                  0.9542
                 ],
                 "12D": [
                   0.0,
@@ -20615,7 +21388,7 @@
               "background_b": {
                 "01D": 0.0076,
                 "01N": 0.0152,
-                "02D": 0.014,
+                "02D": 0.0157,
                 "02N": 0.0,
                 "03D": 0.0614,
                 "03N": 0.0007,
@@ -20639,8 +21412,8 @@
                 "12N": 0.0
               },
               "train_burning_days": {
-                "modis": 9520,
-                "snpp": 18439
+                "modis": 9547,
+                "snpp": 18504
               }
             },
             "noaa20": {
@@ -20664,10 +21437,10 @@
             }
           },
           "fit_cells": 178,
-          "cells_outside_fit_region_level": 12,
+          "cells_outside_fit_region_level": 14,
           "em": {
             "iterations": 52,
-            "delta": 9.813977622556249e-08,
+            "delta": 6.119208752555658e-08,
             "converged": true
           },
           "method": "D-a: per 0.25 deg cell x calendar month x day/night x FRP class, posterior MODIS burning days per Suomi NPP burning day (a + sum MODIS_k) / (a / r0_k + sum VIIRS_k) over rows with Suomi NPP > 0, MODIS split over classes at the fitted fixed point; b = mean MODIS burning days where Suomi NPP saw nothing. NOAA-20: x s, then D-a (pipeline/round3/model.py, pipeline/tournament/candidates.py)",
@@ -20678,8 +21451,8 @@
           ],
           "check": {
             "max_gap_between_model_predictive_mean_and_m": 0.005,
-            "background_total": 249.47,
-            "fit_table_burning_days_matched": 31298
+            "background_total": 260.29,
+            "fit_table_burning_days_matched": 31390
           }
         },
         "combination": {
@@ -20783,8 +21556,55 @@
             ]
           }
         },
-        "terra_share": null,
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.4707,
+            "02": 0.337,
+            "03": 0.1678,
+            "04": 0.121,
+            "05": 0.1476,
+            "06": 0.1637,
+            "07": 0.2662,
+            "08": 0.3634,
+            "09": 0.3799,
+            "10": 0.3285,
+            "11": 0.442,
+            "12": 0.3769
+          },
+          "pooled": 0.1943,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(239 Terra burning days + 20 x 0.1943) / (496 MODIS burning days + 20)",
+            "02": "(47 Terra burning days + 20 x 0.1943) / (131 MODIS burning days + 20)",
+            "03": "(247 Terra burning days + 20 x 0.1943) / (1475 MODIS burning days + 20)",
+            "04": "(495 Terra burning days + 20 x 0.1943) / (4103 MODIS burning days + 20)",
+            "05": "(435 Terra burning days + 20 x 0.1943) / (2954 MODIS burning days + 20)",
+            "06": "(104 Terra burning days + 20 x 0.1943) / (639 MODIS burning days + 20)",
+            "07": "(23 Terra burning days + 20 x 0.1943) / (81 MODIS burning days + 20)",
+            "08": "(35 Terra burning days + 20 x 0.1943) / (87 MODIS burning days + 20)",
+            "09": "(36 Terra burning days + 20 x 0.1943) / (85 MODIS burning days + 20)",
+            "10": "(72 Terra burning days + 20 x 0.1943) / (211 MODIS burning days + 20)",
+            "11": "(180 Terra burning days + 20 x 0.1943) / (396 MODIS burning days + 20)",
+            "12": "(321 Terra burning days + 20 x 0.1943) / (842 MODIS burning days + 20)"
+          }
+        },
         "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
           2012,
           2013,
           2014,
@@ -20801,8 +21621,8 @@
           2025
         ],
         "records": {
-          "modis": 13210,
-          "snpp": 26612,
+          "modis": 25680,
+          "snpp": 26678,
           "noaa20": 11876
         },
         "zero_weight": {
@@ -20814,13 +21634,13 @@
           "note_threshold": 0.1
         }
       },
-      "generated_at": "2026-11-14T12:02:03+00:00"
+      "generated_at": "2026-11-15T09:05:56+00:00"
     },
     {
       "id": "n_california",
       "name": "Northern California",
       "notes": [
-        "Record runs January 2012 to December 2025: MODIS files before 2012 are not yet on disk for this region, so it has no 2000–2011 history and no bridged months, and no 2026 data has been added.",
+        "Record runs November 2000 to December 2025, as for Portugal: Terra alone (bridged) until June 2002, observed MODIS to 2021, estimates from VIIRS from 2022. The 2000–2011 MODIS files were downloaded on 14 Nov 2026. No 2026 data has been added.",
         "Passed the round-3 sealed exam (burning days, model D-a; CONFIRMED with northern Algeria, southern France, South Australia and northern California pooled: docs/ROUND3_CONFIRMATION.md). Its own figures there, in burning days: cell-month error 22.2% (simple conversion 26.2%), national-month error 11.0% (16.0%), predicted total 1.081 × observed.",
         "Forward test against MODIS, 2020–2021 (fitted on 2012–2019): burning days passed every check (the exam's own figures, rerun). Hotspots failed one check: grid-cell error 23.1%, more than 1 point worse than the simple conversion's 22.0%; regional monthly error 10.4% against 11.3%, total 3.7% too high. 2020 holds 17,700 of the two years' 29,049 MODIS burning days.",
         "The analysis box is a rectangle downloaded from the FIRMS area service: it counts every fire in it, whatever the country."
@@ -20832,7 +21652,7 @@
         40.5
       ],
       "months": {
-        "first": "2012-01",
+        "first": "2000-11",
         "last": "2025-12"
       },
       "record_end": {
@@ -20849,9 +21669,9 @@
           "last_detection": "2025-12-30"
         },
         "modis": {
-          "first": "2012-01",
+          "first": "2000-11",
           "last": "2025-11",
-          "first_detection": "2012-01-01",
+          "first_detection": "2000-11-02",
           "last_detection": "2025-12-22"
         },
         "detections_outside_record_dropped": 0,
@@ -21107,11 +21927,49 @@
           ]
         }
       },
-      "terra_share": null,
+      "terra_share": {
+        "years": [
+          2003,
+          2011
+        ],
+        "by_month": {
+          "01": 0.3418,
+          "02": 0.3284,
+          "03": 0.4619,
+          "04": 0.4823,
+          "05": 0.5062,
+          "06": 0.5125,
+          "07": 0.4897,
+          "08": 0.4868,
+          "09": 0.4578,
+          "10": 0.3738,
+          "11": 0.3314,
+          "12": 0.3809
+        },
+        "pooled": 0.4485,
+        "prior_detections": 20,
+        "basis": {
+          "01": "(84 Terra + 20 x 0.4485) / (252 MODIS + 20)",
+          "02": "(147 Terra + 20 x 0.4485) / (455 MODIS + 20)",
+          "03": "(537 Terra + 20 x 0.4485) / (1162 MODIS + 20)",
+          "04": "(538 Terra + 20 x 0.4485) / (1114 MODIS + 20)",
+          "05": "(235 Terra + 20 x 0.4485) / (462 MODIS + 20)",
+          "06": "(1323 Terra + 20 x 0.4485) / (2579 MODIS + 20)",
+          "07": "(2105 Terra + 20 x 0.4485) / (4297 MODIS + 20)",
+          "08": "(673 Terra + 20 x 0.4485) / (1381 MODIS + 20)",
+          "09": "(1098 Terra + 20 x 0.4485) / (2398 MODIS + 20)",
+          "10": "(890 Terra + 20 x 0.4485) / (2385 MODIS + 20)",
+          "11": "(557 Terra + 20 x 0.4485) / (1688 MODIS + 20)",
+          "12": "(199 Terra + 20 x 0.4485) / (526 MODIS + 20)"
+        }
+      },
       "policy": {
-        "bridged": null,
+        "bridged": [
+          "2000-11",
+          "2002-06"
+        ],
         "observed": [
-          "2012-01",
+          "2002-07",
           "2021-12"
         ],
         "estimated": [
@@ -21122,6 +21980,18 @@
       },
       "cells": 135,
       "hotspot_years": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
         2012,
         2013,
         2014,
@@ -21163,14 +22033,122 @@
       "detections": {
         "N": 277455,
         "J1": 230624,
-        "T": 35222,
-        "A": 34645
+        "A": 45598,
+        "T": 45398
       },
       "provenance": {
         "source": "NASA FIRMS area API (standard products: MODIS_SP, VIIRS_SNPP_SP, VIIRS_NOAA20_SP) for the analysis box",
         "filters": "box lon -123.5..-120.5, lat 37.5..40.5; vegetation fires only (type 0); MODIS confidence >= 30; VIIRS confidence nominal or high",
         "unit": "fire detections (satellite pixels flagged as burning), not burned area",
         "files": [
+          {
+            "name": "modis_2000_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2000-*",
+            "sensor": "MODIS_SP",
+            "rows": 144,
+            "sha256": "a6c5fbbb381893c8fc71b8f8bfe6c8acdfe462a60faca3eac0efed3fa897951f",
+            "retrieved": "2026-11-14T18:06:00+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2001_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2001-*",
+            "sensor": "MODIS_SP",
+            "rows": 1107,
+            "sha256": "0ae18384d5563d83d8b561a7731ea8946f33ed42e17ae5a41a6690c9a565a3a3",
+            "retrieved": "2026-11-14T18:07:25+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2002_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2002-*",
+            "sensor": "MODIS_SP",
+            "rows": 1437,
+            "sha256": "03855dd39fd493197364b11ebba010d5c51ddf216c2f30adddcdd08029cbcb92",
+            "retrieved": "2026-11-14T18:08:37+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2003_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2003-*",
+            "sensor": "MODIS_SP",
+            "rows": 1917,
+            "sha256": "93eb114945c8897bbaf0bd5b0f201cce769a9f08ae0b9281f9894a296db266b0",
+            "retrieved": "2026-11-15T09:06:51+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2004_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2004-*",
+            "sensor": "MODIS_SP",
+            "rows": 1902,
+            "sha256": "88ec1c9d147536df95580829e1c520ec05ffc73c5e0fd6f8cace89a069fbe37d",
+            "retrieved": "2026-11-15T09:07:52+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2005_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2005-*",
+            "sensor": "MODIS_SP",
+            "rows": 1487,
+            "sha256": "122fde85fd84cd832df36d6f0a2bbe9e9531a94344901cb7f5bcf60f57dad126",
+            "retrieved": "2026-11-15T09:08:53+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2006_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2006-*",
+            "sensor": "MODIS_SP",
+            "rows": 1630,
+            "sha256": "a73b9d1f269174a858c8004c37e5076f7822f8b72f02994b5470218593ef55b8",
+            "retrieved": "2026-11-15T09:10:00+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2007_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2007-*",
+            "sensor": "MODIS_SP",
+            "rows": 2835,
+            "sha256": "2b3b54c5c2aab18e0a375ce4d18a09f271be11055c01e08d1ab36110f4ba62b7",
+            "retrieved": "2026-11-15T09:11:01+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2008_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2008-*",
+            "sensor": "MODIS_SP",
+            "rows": 7418,
+            "sha256": "33784d95c6d5ad6d5d542ceb71ef476167c303d263985a3605c02d8ec54b7d53",
+            "retrieved": "2026-11-15T09:12:01+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2009_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2009-*",
+            "sensor": "MODIS_SP",
+            "rows": 1518,
+            "sha256": "fb07f1f5f77c2c3b356d1e33e5ce2728acddf1de3462b725e8f6b2b3f528c5c3",
+            "retrieved": "2026-11-15T09:27:18+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2010_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2010-*",
+            "sensor": "MODIS_SP",
+            "rows": 857,
+            "sha256": "2da86eb41e4ee49492459ebdf9ff9163ab42bb6f8090d2cff1921dd0a42b580a",
+            "retrieved": "2026-11-15T09:28:19+00:00",
+            "sha256_ok": true
+          },
+          {
+            "name": "modis_2011_USA_NorCal.csv",
+            "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2011-*",
+            "sensor": "MODIS_SP",
+            "rows": 1071,
+            "sha256": "b1a3c8742daf1f137613066bf0a9cc091b2acdda51db9c35cc1fab893972f26c",
+            "retrieved": "2026-11-15T09:29:13+00:00",
+            "sha256_ok": true
+          },
           {
             "name": "modis_2012_USA_NorCal.csv",
             "url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/<MAP_KEY>/MODIS_SP/-123.5,37.5,-120.5,40.5/5/2012-*",
@@ -21847,8 +22825,55 @@
             ]
           }
         },
-        "terra_share": null,
+        "terra_share": {
+          "years": [
+            2003,
+            2011
+          ],
+          "by_month": {
+            "01": 0.3508,
+            "02": 0.3389,
+            "03": 0.4662,
+            "04": 0.4904,
+            "05": 0.5164,
+            "06": 0.5564,
+            "07": 0.5499,
+            "08": 0.5198,
+            "09": 0.5101,
+            "10": 0.381,
+            "11": 0.3413,
+            "12": 0.395
+          },
+          "pooled": 0.4782,
+          "prior_burning_days": 20,
+          "basis": {
+            "01": "(82 Terra burning days + 20 x 0.4782) / (241 MODIS burning days + 20)",
+            "02": "(146 Terra burning days + 20 x 0.4782) / (439 MODIS burning days + 20)",
+            "03": "(520 Terra burning days + 20 x 0.4782) / (1116 MODIS burning days + 20)",
+            "04": "(521 Terra burning days + 20 x 0.4782) / (1062 MODIS burning days + 20)",
+            "05": "(229 Terra burning days + 20 x 0.4782) / (442 MODIS burning days + 20)",
+            "06": "(1278 Terra burning days + 20 x 0.4782) / (2294 MODIS burning days + 20)",
+            "07": "(2028 Terra burning days + 20 x 0.4782) / (3685 MODIS burning days + 20)",
+            "08": "(650 Terra burning days + 20 x 0.4782) / (1249 MODIS burning days + 20)",
+            "09": "(1055 Terra burning days + 20 x 0.4782) / (2067 MODIS burning days + 20)",
+            "10": "(863 Terra burning days + 20 x 0.4782) / (2270 MODIS burning days + 20)",
+            "11": "(541 Terra burning days + 20 x 0.4782) / (1593 MODIS burning days + 20)",
+            "12": "(197 Terra burning days + 20 x 0.4782) / (503 MODIS burning days + 20)"
+          }
+        },
         "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
           2012,
           2013,
           2014,
@@ -21865,7 +22890,7 @@
           2025
         ],
         "records": {
-          "modis": 59698,
+          "modis": 78992,
           "snpp": 118953,
           "noaa20": 94999
         },
@@ -21878,7 +22903,7 @@
           "note_threshold": 0.1
         }
       },
-      "generated_at": "2026-11-14T12:02:23+00:00"
+      "generated_at": "2026-11-15T09:32:34+00:00"
     }
   ]
 }
