@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <link rel="icon" href="assets/cedar.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css?v=20261115h">
-  <link rel="stylesheet" href="fx.css?v=20261115h">
+  <link rel="stylesheet" href="fx.css?v=20261115w5">
   <link rel="stylesheet" href="shell.css?v=20261115h">
   <link rel="preload" href="data/regions.json" as="fetch" crossorigin>
   <link rel="preload" href="data/portugal/monthly_bd.json" as="fetch" crossorigin>
@@ -23,8 +23,9 @@
   <link rel="modulepreload" href="fx.js">
   <script type="module" src="app.js?v=20261115h" async></script>
   <script type="module" src="proof.js?v=20261115h" async></script>
-  <script type="module" src="i18n.js?v=20261115h"></script>
+  <script type="module" src="i18n.js?v=20261115w4"></script>
   <script type="module" src="live.js?v=20261115h" async></script>
+  <script type="module" src="forecast.js?v=20261115w5" async></script>
   <script type="module" src="shell.js?v=20261115h" async></script>
   <meta name="cedrus-docs" content="https://github.com/RifaatRamadan0/cedrus/blob/main/docs/">
 </head>
@@ -249,6 +250,7 @@
       <p>Choose an area, then click any month to see it on the map and read it below.</p>
     </div>
   <div class="live" id="live" aria-live="polite" hidden></div>
+  <div class="wx" id="wx" aria-live="polite" hidden></div>
   <section class="workspace" id="fire-history" aria-label="Fire calendar for an area">
     <form class="controls panel" id="area-form" novalidate>
       <h2>Your area</h2><details class="more info-tip intro-tip"><summary aria-label="How this works" title="How this works"><span aria-hidden="true">i</span></summary><div class="tip-body"><p class="intro">Pick a region or draw an area. You get every month of its record (from December 2000, or from 2012 where older files are not loaded yet), on one consistent scale.</p></div></details>
