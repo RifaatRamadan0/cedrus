@@ -88,7 +88,6 @@ Each exam's rules and pass marks were committed, dated, before its regions were 
 - NASA Earthdata, "Transitioning from Suomi NPP VIIRS & OMPS: what FIRMS users need to know" (2026)
 - Related 2026 work on fusing MODIS and VIIRS fire radiative power: *Remote Sensing* 18, 01650 (2026). We fuse counts per place and month instead, and test on unseen regions.
 - Software: MapLibre GL JS, terra-draw, pandas, NumPy, SciPy, matplotlib; country outlines from Natural Earth.
-- TODO: the hero background video's source and licence, or replace it.
 
 ## Use of artificial intelligence (AI)
 AI assistants (Anthropic's Claude, OpenAI's Codex) helped us write code, search the literature and draft text.
