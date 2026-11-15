@@ -20,8 +20,8 @@ TODO: the GitHub Pages site and the repository.
 ## Detailed project description
 
 **What it does**
-- **A fire calendar for any area:** a region (Portugal, Lebanon, Syria, the La Rioja area of Argentina), a shape you draw, or a point and radius.
-  - Every month from December 2000 to July 2026, on one scale.
+- **A fire calendar for any area:** one of 18 regions on six continents (from Portugal, Lebanon and Syria to Chile, South Africa, Australia and California), a shape you draw, or a point and radius.
+  - Every month from late 2000 on one scale: to July 2026 for Portugal, Lebanon, Syria and the La Rioja area of Argentina, to late 2025 for the other 14.
   - The challenge asks for this month against the historical median and anomalies against the multi-year average; both are there, one click apart.
 - **Two ways to count:**
   - **Burning days**, the default: how many days each ~1 km square had a fire seen.
@@ -68,7 +68,7 @@ Each exam's rules and pass marks were committed, dated, before its regions were 
 ## Use of NASA data
 - **NASA FIRMS active fire data,** the core of the project:
   - MODIS Collection 6.1 (Terra and Aqua, 1 km);
-  - VIIRS 375 m from Suomi NPP and NOAA-20, standard-quality archive, December 2000 to July 2026;
+  - VIIRS 375 m from Suomi NPP and NOAA-20, standard-quality archive, January 2012 to July 2026 (MODIS from November 2000);
   - the near-real-time NOAA-20 feed for the "right now" comparison.
 - **NASA GIBS** Blue Marble imagery for the map.
 - **NASA documentation:**

@@ -8,6 +8,39 @@ fixed before the first run, and the results are reported whatever they show.
 Run: `.venv\Scripts\python -u analysis/tier1/region_evidence/run_validation.py cyprus jordan lebanon portugal syria`.
 Each region's `REPORT.md` and `results.json` record the checksums, the outage exclusions and the yearly totals.
 
+## Update, 14–15 November 2026: 18 product regions
+
+14 regions were added to the app and forward-tested the same way, each on its own data (folders here, one per
+region). With Portugal, Lebanon, Syria and La Rioja the app now has 18. Their records end in late 2025, not July
+2026: no 2026 data has been added for them (spans in [the data contract](../../../docs/DATA_CONTRACT.md#current-product-records)).
+Eight of them sat a sealed exam earlier: central Spain, southern Italy, southwest Australia and southern California
+(round 2, hotspots), and northern Algeria, southern France, South Australia and northern California (round 3, burning
+days). That exam and this forward test are different tests.
+
+| Region | Region-month error, burning days (simple conversion) | Total bias, burning days / hotspots | Grid-cell error | Burning days | Hotspots |
+|---|---:|---:|---:|---|---|
+| Greece | 19.4% (35.5%) | +8.2% / +5.0% | 101–102% | PASS | PASS |
+| Turkey | 20.2% (34.9%) | +11.7% / +7.0% | 73–77% | FAIL (total) | PASS |
+| Morocco | 31.7% (44.8%) | −3.2% / −10.6% | 116–125% | PASS | FAIL (total) |
+| Tunisia | 19.7% (60.0%) | −8.5% / −10.9% | 72–73% | PASS | FAIL (total) |
+| Northern Algeria | 10.6% (33.0%) | +2.6% / +1.0% | 50% | PASS | PASS |
+| Central Spain | 26.1% (44.2%) | −4.7% / −5.4% | 92–94% | PASS | PASS |
+| Southern Italy | 16.7% (22.2%) | −2.7% / −4.1% | 54% | PASS | PASS |
+| Southern France | 29.6% (56.6%) | −4.6% / −8.1% | 104–105% | PASS | PASS |
+| Central Chile | 14.8% (19.9%) | +6.8% / +8.4% | 53–56% | PASS | FAIL (region-month error worse than the simple conversion) |
+| Western Cape | 14.5% (20.0%) | +8.9% / +11.3% | 65–68% | PASS | FAIL (total) |
+| Southwest Australia | 12.8% (17.2%) | +10.8% / +20.1% | 55–64% | FAIL (total) | FAIL (total) |
+| South Australia | 18.8% (40.2%) | +4.1% / −7.0% | 65–70% | PASS | PASS |
+| Southern California | 11.7% (33.6%) | −4.7% / −5.6% | 34–37% | PASS | PASS |
+| Northern California | 11.0% (16.0%) | +8.1% / +3.7% | 22–23% | PASS | FAIL (grid-cell error more than 1 point worse than the simple conversion) |
+
+Figures are from each region's `REPORT.md` and its notes in `web/data/regions.json`.
+
+- **The display rule below was not applied to the 14.** Greece, Morocco and southern France have grid-cell errors
+  above 100%, the limit that removed Jordan and Cyprus. They are shown, and each one's note on the site says single
+  cells there are not reliable. Greece's figure comes from leaving out August 2021 under the outage rule; with it, the
+  error is 64–66% (a sensitivity check, not the test's rule).
+
 ## What this test is and is not
 
 - Portugal, Lebanon, Syria, Jordan and Cyprus were **development regions**: their 2012–2019 data helped choose

@@ -1,3 +1,15 @@
+# 18 regions in the docs, and the site published — 15 November 2026
+
+- **Docs.** README, [DATA_CONTRACT.md](DATA_CONTRACT.md) (record table, outage-month and drift lines),
+  [TIER1_PLAN.md](TIER1_PLAN.md) (dated scope section), this index, the per-region forward-test summary
+  ([analysis/tier1/region_evidence/README.md](../analysis/tier1/region_evidence/README.md), results of the 14 added
+  regions) and the submission drafts now describe 18 regions and their different end months: July 2026 for Portugal,
+  Lebanon, Syria and La Rioja, October–December 2025 for the other 14. No data, model or site file changed.
+- **Publishing.** GitHub Pages is switched on with *GitHub Actions* as its source; the site is
+  https://rifaatramadan0.github.io/cedrus/. `.github/workflows/pages.yml` now also runs after each successful
+  "Live fire snapshot" run, because that job's commit (made with `GITHUB_TOKEN`) does not start push workflows.
+- No test expectation was changed.
+
 # The 80% ranges are too narrow: wording only — 13 November 2026
 
 - **Finding.** With 2020–2021 estimated exactly as 2022 onward is (the exporter run into a scratch folder with the

@@ -1,9 +1,13 @@
-# Publishes the web/ folder to GitHub Pages on every push to main.
-# One-time setup: repo Settings -> Pages -> Source: "GitHub Actions".
+# Publishes the web/ folder to GitHub Pages: on every push to main, after each successful daily
+# "Live fire snapshot" run (its bot commit uses GITHUB_TOKEN, which does not start push workflows),
+# and on demand. One-time setup: repo Settings -> Pages -> Source: "GitHub Actions".
 name: Publish website
 on:
   push:
     branches: [main]
+  workflow_run:
+    workflows: ["Live fire snapshot"]
+    types: [completed]
   workflow_dispatch:
 permissions:
   contents: read
@@ -14,11 +18,13 @@ concurrency:
   cancel-in-progress: true
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # workflow_run checks out the latest commit on main, which includes the new snapshot
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

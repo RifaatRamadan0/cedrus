@@ -20,14 +20,33 @@ All files are UTF-8 JSON, no NaN or Infinity (the writer refuses them).
 
 ## Current product records
 
-Both units use the same date span within each region.
+18 product regions since 14 November 2026. Both units use the same date span within each region; spans differ
+between regions, so always read `months.first` and `months.last`. Only the first four include 2026.
 
-| Region | First month | Last month |
-|---|---|---|
-| Portugal | 2000-12 | 2026-07 |
-| Lebanon | 2000-12 | 2026-07 (2026 assigned with the 30 August 2021 Natural Earth outline, see below) |
-| Syria | 2000-11 | 2026-07 |
-| La Rioja area, Argentina | 2000-11 | 2026-07 |
+| Region (`id`) | First month | Last month | Analysis area |
+|---|---|---|---|
+| Portugal (`portugal`) | 2000-12 | 2026-07 | rectangle, country file |
+| Lebanon (`lebanon`) | 2000-12 | 2026-07 (2026 assigned with the 30 August 2021 Natural Earth outline, see below) | rectangle, country file |
+| Syria (`syria`) | 2000-11 | 2026-07 | rectangle, country file |
+| La Rioja area, Argentina (`la_rioja`) | 2000-11 | 2026-07 | rectangle, country file |
+| Greece (`greece`) | 2000-11 | 2025-12 | whole country file (`box` null, `export_box` encloses every detection) |
+| Turkey (`turkey`) | 2000-11 | 2025-12 | whole country file |
+| Morocco (`morocco`) | 2001-01 | 2025-12 | whole country file (includes Western Sahara) |
+| Tunisia (`tunisia`) | 2001-02 | 2025-12 | whole country file |
+| Northern Algeria (`northern_algeria`) | 2000-11 | 2025-12 | rectangle, country file |
+| Central Spain (`central_spain`) | 2000-11 | 2025-12 | rectangle, country file |
+| Southern Italy (`southern_italy`) | 2000-12 | 2025-12 | rectangle, country file |
+| Southern France (`southern_france`) | 2000-12 | 2025-11 | rectangle, country file |
+| Central Chile (`central_chile`) | 2000-11 | 2025-12 | rectangle, country file |
+| Western Cape area, South Africa (`western_cape`) | 2000-11 | 2025-12 | rectangle, FIRMS area service |
+| Southwest Australia (`sw_australia`) | 2000-11 | 2025-12 | rectangle, FIRMS area service |
+| South Australia, southeast (`south_australia`) | 2000-12 | 2025-12 | rectangle, FIRMS area service |
+| Southern California (`s_california`) | 2000-11 | 2025-12 | rectangle, FIRMS area service |
+| Northern California (`n_california`) | 2000-11 | 2025-12 | rectangle, FIRMS area service |
+
+The first month is the first one in which MODIS has a detection in its first 3 days (legacy month-eligibility
+heuristic, below). A country-file rectangle counts only that country's records; an area-service rectangle counts
+every detection inside it, whatever the country.
 
 ## Two units, one record (lead's decision, 2 Nov 2026)
 
@@ -65,8 +84,8 @@ down. The hotspot files are unchanged by the second view (byte-identical on re-e
   3 days; its first month only if it has one in the first 3 days. Interior months qualify under the span rule.
   This sets the exported first month (MODIS) and last month (VIIRS), but does **not** establish monthly completeness.
 - **VIIRS inclusion heuristic:** the month must be inside the sensor's eligible span and not flagged by the exporter
-  as an outage (zero regional detections while the other VIIRS satellite has at least 20). The current four-region
-  catalog lists no such heuristic outage months. This does not negate the service-reported missing dates documented
+  as an outage (zero regional detections while the other VIIRS satellite has at least 20). The current 18-region
+  catalog lists no such heuristic outage months (`viirs_outage_months` is empty in every entry). This does not negate the service-reported missing dates documented
   in the FIRMS audit; these are different measures.
 - **2026 and later** ([plan and tests](OBS2026_VALIDATION_PLAN.md)): FIRMS publishes no 2026 country file and no
   longer offers a country API, so 2026 comes from the keyed **area API, standard data only** (`*_SP`, January–July
@@ -335,7 +354,9 @@ Sizes (12 Nov 2026): Portugal 15.1 MB over 26 files (largest 2025, about 2 MB), 
 }
 ```
 
-Every region's drift series now runs to 2026-07 (`modis_archive_ends` 2026-07-31 in all four).
+Each region's drift series runs from 2012-02 to its last complete MODIS month: 2026-07 for Portugal, Lebanon,
+Syria and La Rioja (`modis_archive_ends` 2026-07-31), and 2025-10 to 2025-12 for the other 14
+(`modis_archive_ends` between 2025-11-14 and 2025-12-31). Read `months.last` per region.
 
 ## CSV downloads (written by the website)
 

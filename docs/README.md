@@ -42,7 +42,7 @@ and `pipeline/round3/`; each folder's `README.md` says how to re-run it.
 | File | What it is | Label |
 |---|---|---|
 | [DATA_CONTRACT.md](DATA_CONTRACT.md) | Layout of every file in `web/data/`, each region's record range, the source policy per month, map states and the reconciliation bounds. | current |
-| [TIER1_PLAN.md](TIER1_PLAN.md) | The hackathon build: current scope (four regions), deferred items, completed work and remaining limitations at the top; the original plan below it, superseded. | current (top), record (below) |
+| [TIER1_PLAN.md](TIER1_PLAN.md) | The hackathon build: current scope (18 regions since 14 November 2026), deferred items, completed work and remaining limitations at the top; the original plan below it, superseded. | current (top), record (below) |
 | [TIER1_IMPLEMENTATION_STATUS.md](TIER1_IMPLEMENTATION_STATUS.md) | Change log, newest first: what changed, test results, and every changed test expectation. | current |
 | [TIER1_AUDIT_CHECKPOINT.md](TIER1_AUDIT_CHECKPOINT.md) | The three audits of 6 November 2026: the type-filter impact on Portugal and Lebanon, FIRMS availability and missing-data services, and the 2000–2017 source audit. | record |
 | [OBS2026_VALIDATION_PLAN.md](OBS2026_VALIDATION_PLAN.md) | Plan and results for adding 2026: country clipping, the static-source mask, and the three Lebanon boundary tests. Earlier sections keep their original results. | current (top and last section) |

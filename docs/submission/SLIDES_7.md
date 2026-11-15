@@ -3,7 +3,7 @@
 1. **The problem in one picture.**
    - Show the raw 2012 jump (the two-eyes chart, Lebanon: ×7 overnight).
    - "The fires didn't change. The satellite did."
-2. **What CEDRUS does.** A fire calendar for any area, December 2000 to July 2026, on one scale. Screenshot: the map with embers beside the calendar.
+2. **What CEDRUS does.** A fire calendar for any area, from late 2000 on one scale, in 18 regions (to July 2026 in four of them, to late 2025 in the rest). Screenshot: the map with embers beside the calendar.
 3. **How: translate, don't splice.**
    - A ratio per place, month and time of day, learned while both satellites flew (2012–2019).
    - Fire-power classes for burning days.

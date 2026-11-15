@@ -24,7 +24,37 @@ exact sum within rounding (bound: 0.005 × cells + 0.00005 × monthly records + 
 
 ## Current regions and map coverage
 
-The product includes Portugal, Lebanon, Syria and the La Rioja area in Argentina. Israel and Palestine are Deferred. Jordan and Cyprus were tested and removed from the app: too few fires to measure accuracy (81 and 139 MODIS burning days in the 2020–2021 test) and grid-cell errors of about 163% and 100%. Their results stay in [the forward tests](analysis/tier1/region_evidence/README.md). Exported records start in November or December 2000, and all four regions run to July 2026. Lebanon's 2026 detections are assigned with the Natural Earth outline as it was on 30 August 2021: the current outline moved part of the southern border by about 1 km and failed the assignment test, while the 2021 one matched every FIRMS Lebanon assignment in 2000–2025. Exact ranges are in [the data contract](docs/DATA_CONTRACT.md#current-product-records); how 2026 was added and tested is in [the 2026 plan](docs/OBS2026_VALIDATION_PLAN.md).
+The product covers **18 regions**. Every record starts between November 2000 and February 2001, but they end at
+different times: four regions run to July 2026, the other 14 to late 2025, because no 2026 data has been added for
+them yet.
+
+| Region | Analysis area | First month | Last month |
+|---|---|---|---|
+| Portugal | rectangle, FIRMS country file | 2000-12 | 2026-07 |
+| Lebanon | rectangle, FIRMS country file | 2000-12 | 2026-07 |
+| Syria | rectangle, FIRMS country file | 2000-11 | 2026-07 |
+| La Rioja area, Argentina | rectangle, FIRMS country file | 2000-11 | 2026-07 |
+| Greece | whole FIRMS country file | 2000-11 | 2025-12 |
+| Turkey | whole FIRMS country file | 2000-11 | 2025-12 |
+| Morocco (FIRMS's file includes Western Sahara) | whole FIRMS country file | 2001-01 | 2025-12 |
+| Tunisia | whole FIRMS country file | 2001-02 | 2025-12 |
+| Northern Algeria | rectangle, FIRMS country file | 2000-11 | 2025-12 |
+| Central Spain | rectangle, FIRMS country file | 2000-11 | 2025-12 |
+| Southern Italy | rectangle, FIRMS country file | 2000-12 | 2025-12 |
+| Southern France | rectangle, FIRMS country file | 2000-12 | 2025-11 |
+| Central Chile | rectangle, FIRMS country file | 2000-11 | 2025-12 |
+| Western Cape area, South Africa | rectangle, FIRMS area service | 2000-11 | 2025-12 |
+| Southwest Australia | rectangle, FIRMS area service | 2000-11 | 2025-12 |
+| South Australia (southeast) | rectangle, FIRMS area service | 2000-12 | 2025-12 |
+| Southern California | rectangle, FIRMS area service | 2000-11 | 2025-12 |
+| Northern California | rectangle, FIRMS area service | 2000-11 | 2025-12 |
+
+A month counts only if MODIS has a detection in its first 3 days, which is why the first month differs. A rectangle
+on a country file counts only that country's records; a rectangle from the FIRMS area service counts every fire
+inside it, whatever the country. Each region's own notes on the site give its span, its sources and its forward-test
+result; the results are collected in [the forward tests](analysis/tier1/region_evidence/README.md).
+
+Israel and Palestine are Deferred. Jordan and Cyprus were tested and removed from the app: too few fires to measure accuracy (81 and 139 MODIS burning days in the 2020–2021 test) and grid-cell errors of about 163% and 100%. Their results stay in [the forward tests](analysis/tier1/region_evidence/README.md). Only Portugal, Lebanon, Syria and La Rioja include 2026 (January–July). Lebanon's 2026 detections are assigned with the Natural Earth outline as it was on 30 August 2021: the current outline moved part of the southern border by about 1 km and failed the assignment test, while the 2021 one matched every FIRMS Lebanon assignment in 2000–2025. Exact ranges are in [the data contract](docs/DATA_CONTRACT.md#current-product-records); how 2026 was added and tested is in [the 2026 plan](docs/OBS2026_VALIDATION_PLAN.md).
 
 The orange dashed outline is an analysis extent, not a country boundary. Faint outlined cells are included in the exported grid with an estimate for the selected month that rounds to zero (under 0.05); shaded dashed cells have no qualifying records in that region's exported grid. Neither state establishes complete observations or confirms that a location was fire-free. Click the map for details; where FIRMS's own missing-data list names dates in that month for a satellite the month uses, the message gives them as FIRMS-reported missing data, not as independently verified outages. Monthly observation completeness remains unknown.
 
@@ -72,9 +102,11 @@ python -m http.server 8000 -d web
 ```
 
 Open http://localhost:8000. Opening index.html directly blocks data loading.
-Map libraries and map tiles require internet access. The live-feed panel is separate
-from the historical record and reads the committed `web/data/nrt.json` snapshot.
-Updating that snapshot requires the FIRMS acquisition tools; Pages serves the saved snapshot.
+Map libraries and map tiles require internet access. The live-feed panel ("Right now") is
+separate from the historical record and reads the committed `web/data/nrt.json` snapshot, which
+covers Portugal and Lebanon only. A GitHub Action (`.github/workflows/nrt.yml`) rebuilds it once a
+day at 06:30 UTC from NASA FIRMS's keyless 7-day NOAA-20 file, and the site is republished after
+each run. A local server shows whichever snapshot is committed.
 
 ### Run software and browser checks
 
@@ -162,9 +194,11 @@ and their evidence remain in the research documentation.
 ## Working together
 
 - Branch from `main` and open a pull request. Keep `main` working.
-- The site publishes to GitHub Pages from `main`, using `.github/workflows/pages.yml`.
-  This needs a public repo, or a paid plan for a private one. One-time setup:
-  *Settings → Pages → Source: GitHub Actions*.
+- The site is live at **https://rifaatramadan0.github.io/cedrus/**. It publishes to GitHub Pages
+  from `main` with `.github/workflows/pages.yml`: on every push to `main`, after each daily
+  snapshot run, and on demand (*Actions → Publish website → Run workflow*). The repository's
+  Pages source is set to *GitHub Actions*; a fork needs that one-time setting
+  (*Settings → Pages → Source: GitHub Actions*) and a public repository or a paid plan.
 - Re-run the pipeline after changing anything in `pipeline/`, and commit the new `web/data/` and `docs/RESULTS.md`.
 
 ## Data credits

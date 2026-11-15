@@ -2,7 +2,17 @@
 
 This current completion record and the user-approved scope amendments supersede conflicting requirements in the historical plan below. The original plan is retained in full; completed audits remain unchanged. Stop conditions, frozen models, preservation of Portugal/Lebanon exports, no commits without approval, and no pushes remain in force.
 
-## Latest scope: four new product regions
+## Latest scope, 14 November 2026: 18 product regions
+
+The app now shows 18 regions: Portugal, Lebanon, Syria and the La Rioja area (records to July 2026), and Greece,
+Turkey, Morocco, Tunisia, northern Algeria, central Spain, southern Italy, southern France, central Chile, the Western
+Cape area, southwest Australia, South Australia (southeast), southern California and northern California (records to
+October–December 2025; no 2026 data added). Every record starts between November 2000 and February 2001. Exact spans
+and analysis areas: [DATA_CONTRACT.md](DATA_CONTRACT.md#current-product-records). Forward-test results for all 18:
+[analysis/tier1/region_evidence/README.md](../analysis/tier1/region_evidence/README.md). The section below is the
+scope as of 7 November 2026 and still holds for the deferred regions.
+
+## Scope, 7 November 2026: four new product regions
 
 Israel and Palestine are excluded from product exports; raw files and completed audits remain. This supersedes six-region and Israel/Palestine test requirements below. Keep the five other city checks in both units, test Tel Aviv as outside coverage, and verify Lebanon / La Rioja and Lebanon / Syria switches by YYYY-MM in both units.
 
