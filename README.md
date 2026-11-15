@@ -58,7 +58,7 @@ Israel and Palestine are Deferred. Jordan and Cyprus were tested and removed fro
 
 The orange dashed outline is an analysis extent, not a country boundary. Faint outlined cells are included in the exported grid with an estimate for the selected month that rounds to zero (under 0.05); shaded dashed cells have no qualifying records in that region's exported grid. Neither state establishes complete observations or confirms that a location was fire-free. Click the map for details; where FIRMS's own missing-data list names dates in that month for a satellite the month uses, the message gives them as FIRMS-reported missing data, not as independently verified outages. Monthly observation completeness remains unknown.
 
-Latest full browser/data probe: **432/432 passed** (12 November 2026), including both units, all four regions, the map messages, the documentation index and the final console-error check. See [implementation status](docs/TIER1_IMPLEMENTATION_STATUS.md) and [the completed Tier 1 plan](docs/TIER1_PLAN.md). 2026 comes from FIRMS standard data through the keyed area API (the key stays in the ignored local `.env`); near-real-time data is not used.
+Latest full browser/data probe: **739/739 passed** (15 November 2026), including both units, all 18 regions, the map messages, the documentation index and the final console-error check. See [implementation status](docs/TIER1_IMPLEMENTATION_STATUS.md) and [the completed Tier 1 plan](docs/TIER1_PLAN.md). 2026 comes from FIRMS standard data through the keyed area API (the key stays in the ignored local `.env`); near-real-time data is not used.
 
 ## How we know it works: pre-registered tests, one of them failed
 

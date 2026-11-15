@@ -1,6 +1,6 @@
 # CEDRUS: project page draft (NASA Space Apps 2026, Beirut)
 
-Draft for the Space Apps project page fields. Fill in the two links once the repo is public and the site is live.
+Draft for the Space Apps project page fields. The site and repository links are in; the demo video link is still to come.
 Every number here is in the repository; the source file is named in brackets so anyone can check it.
 
 ---
@@ -15,7 +15,8 @@ For 25 years, NASA satellites have counted the world's fires, but the record is 
 TODO: 30-second video (script in VIDEO_30S.md).
 
 ## Link to final project
-TODO: the GitHub Pages site and the repository.
+- Website: https://rifaatramadan0.github.io/cedrus/
+- Code and data: https://github.com/RifaatRamadan0/cedrus
 
 ## Detailed project description
 

@@ -8,7 +8,9 @@
 - **Publishing.** GitHub Pages is switched on with *GitHub Actions* as its source; the site is
   https://rifaatramadan0.github.io/cedrus/. `.github/workflows/pages.yml` now also runs after each successful
   "Live fire snapshot" run, because that job's commit (made with `GITHUB_TOKEN`) does not start push workflows.
-- No test expectation was changed.
+  The submission draft links the site and the repository.
+- **Checks:** `tools/probe_site.py` 739/739 (15 November 2026, all 18 regions, both units, 1,865 s, run with
+  `--browser-executable` pointing at an installed Chrome). No test expectation was changed.
 
 # The 80% ranges are too narrow: wording only — 13 November 2026
 
