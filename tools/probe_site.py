@@ -1248,6 +1248,41 @@ def run(url, shots, browser_executable=None, published_only=False):
         check("retry after the failure loads the area and turns downloads back on", ok)
         ctx.close()
 
+        # ---- fire weather outlook (forecast.js): renders for Portugal and Lebanon, follows the region, fails quietly
+        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900})
+        page = ctx.new_page()
+        watch(page, "outlook ")
+        page.goto(url, wait_until="commit")
+        page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
+        wx_ready = "id => { const b = document.querySelector('#wx'); return b && !b.hidden && b.dataset.region === id && !b.classList.contains('loading'); }"
+        for rid, name in (("portugal", "Portugal"), ("lebanon", "Lebanon")):
+            if rid != "portugal":
+                page.select_option("#region", rid)
+            page.wait_for_function(wx_ready, arg=rid, timeout=30000)
+            st = page.evaluate("""() => { const b = document.querySelector('#wx'); return { text: b.innerText, all: b.textContent, days: b.querySelectorAll('.wx-day').length,
+              rows: b.querySelectorAll('.wx-table tbody tr').length, off: b.classList.contains('off') }; }""")
+            head = st["text"].split(chr(10))
+            check(f"outlook: renders for {name} (7 days of HDW, weekly percentile against 2003-2025, labelled as conditions, sources credited)",
+                  not st["off"] and st["days"] >= 5 and st["rows"] == st["days"] and name in st["text"] and re.search(r"(harsher|milder) than (\d+%|any) ", st["text"])
+                  and "2003–2025" in st["text"] and "not a prediction of fires" in st["text"] and "Open-Meteo" in st["text"] and "Srock et al. 2018" in st["all"],
+                  " / ".join(h for h in head[:3] if h.strip()))
+            words = page.evaluate("""() => { const b = document.querySelector('#wx').cloneNode(true); b.querySelectorAll('details').forEach((d) => { if (d.querySelector('summary')) [...d.children].forEach((c) => c.tagName !== 'SUMMARY' && c.remove()); });
+              return b.textContent.replace(/\s+/g, ' ').trim().split(' ').filter((w) => /[A-Za-z]/.test(w)).length; }""")
+            check(f"outlook: {name} card shows at most ~40 words with its folds closed", words <= 45, f"{words} words")
+        ctx.close()
+        ctx = legacy_context(browser, viewport={"width": 390, "height": 844})
+        page = ctx.new_page()
+        errs = []
+        page.on("pageerror", lambda e: errs.append(str(e)))
+        page.route("**/api.open-meteo.com/**", lambda route: route.abort())
+        page.goto(url, wait_until="commit")
+        page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
+        page.wait_for_function("() => document.querySelector('#wx.off')", timeout=30000)
+        st = page.evaluate("() => ({ text: document.querySelector('#wx').innerText.trim(), cal: document.querySelectorAll('#cal-grid [role=gridcell]').length, over: document.documentElement.scrollWidth - window.innerWidth })")
+        check("outlook offline: a quiet 'unavailable' line, the calendar still renders, no page errors, no overflow at 390 px",
+              st["text"] == "Weather outlook unavailable right now" and st["cal"] > 0 and not errs and st["over"] <= 0, f"{st} {errs[:2]}")
+        ctx.close()
+
         # ---- mobile
         ctx = legacy_context(browser, viewport={"width": 390, "height": 844}, device_scale_factor=2, is_mobile=True, has_touch=True)
         page = ctx.new_page()
