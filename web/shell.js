@@ -4,6 +4,8 @@
 import { EMBER } from './fx.js';
 
 const $ = (s) => document.querySelector(s);
+// the longer story sentences are no longer on the page; writes to them are harmless no-ops
+const $$ = (s) => document.querySelector(s) || {};
 // this module's ?v, passed on to the modules it loads later, so a browser never mixes old and new files
 const V = new URL(import.meta.url).search;
 const tr = (en) => window.cedrusI18n?.tr?.(en) || en;
@@ -232,27 +234,27 @@ function buildStory(index, mon) {
   const typical = median(full.map((o) => o.h));
   SHORT.cal = { first: [fm, fy], top: ym(order[0].j), n: order[0].v, typical };
   SHORT.region = name; SHORT.nRegions = index.regions.length;
-  $('#st-small').textContent = `its busiest month on record, ${ymText(key(order[0].j), true)}, has ${n0(order[0].v)} burning days, and a typical year about ${n0(typical)}, so one large fire stands out.`;
+  $$('#st-small').textContent = `its busiest month on record, ${ymText(key(order[0].j), true)}, has ${n0(order[0].v)} burning days, and a typical year about ${n0(typical)}, so one large fire stands out.`;
   const hottest = order.slice(0, 4).map((o) => ymText(key(o.j), true));
-  $('#st-hottest').textContent = `${hottest.slice(0, -1).join(', ')} and ${hottest[hottest.length - 1]}`;
+  $$('#st-hottest').textContent = `${hottest.slice(0, -1).join(', ')} and ${hottest[hottest.length - 1]}`;
   // 3. the problem: 2012-2021, when the harmonized record is observed MODIS
   const obs = full.filter((o) => o.y >= 2012 && /^O+$/.test(o.flags));
   if (obs.length) {
     const sn = obs.reduce((a, o) => a + o.nv, 0); const sh = obs.reduce((a, o) => a + o.h, 0); const r = sn / sh;
     SHORT.prob = { y0: obs[0].y, y1: obs[obs.length - 1].y, r, sn, sh };
-    $('#st-naive').textContent = `From ${obs[0].y} to ${obs[obs.length - 1].y}, while MODIS still flew its planned orbits, the naive merge counts ${n0(sn)} burning days in ${name} where MODIS saw ${n0(sh)}: ${r >= 2 ? `${n1(r)} times as many` : `${Math.round((r - 1) * 100)}% more`}. Small fires are exactly what the sharper sensor adds, and ${name}'s fires are mostly small.`;
+    $$('#st-naive').textContent = `From ${obs[0].y} to ${obs[obs.length - 1].y}, while MODIS still flew its planned orbits, the naive merge counts ${n0(sn)} burning days in ${name} where MODIS saw ${n0(sh)}: ${r >= 2 ? `${n1(r)} times as many` : `${Math.round((r - 1) * 100)}% more`}. Small fires are exactly what the sharper sensor adds, and ${name}'s fires are mostly small.`;
   }
   // 4. the fix: the biggest complete years, and the honest caveat for estimated years
   const big = [...full].sort((a, b) => b.h - a.h).slice(0, 3);
-  $('#st-topyears').textContent = big.map((o) => `${o.y} (${n0(o.h)}${/[ENJ]/.test(o.flags) ? ', estimated' : ''})`).join(', ');
+  $$('#st-topyears').textContent = big.map((o) => `${o.y} (${n0(o.h)}${/[ENJ]/.test(o.flags) ? ', estimated' : ''})`).join(', ');
   const zw = meta.burning_days?.zero_weight;
-  if (zw?.viirs_burning_days) $('#st-zero').textContent = `One caution for ${name}: since 2022, ${n0(zw.weight_zero)} of its ${n0(zw.viirs_burning_days)} VIIRS burning days (${Math.round(zw.share * 100)}%) carry no weight, because their kind of fire never matched a MODIS fire in that season during 2012–2019, so its estimates from 2022 rest on the others.`;
+  if (zw?.viirs_burning_days) $$('#st-zero').textContent = `One caution for ${name}: since 2022, ${n0(zw.weight_zero)} of its ${n0(zw.viirs_burning_days)} VIIRS burning days (${Math.round(zw.share * 100)}%) carry no weight, because their kind of fire never matched a MODIS fire in that season during 2012–2019, so its estimates from 2022 rest on the others.`;
   // 5. any area: the busiest month of the last three years in the record
   let aug = -1; for (let j = 0; j < n; j += 1) if (ym(j)[0] >= ly - 2 && (aug < 0 || H[j] > H[aug])) aug = j;
   document.querySelectorAll('.st-aug').forEach((el) => { el.textContent = ymText(key(aug), true); });
   $('#cellsChip').textContent = `${mon.cells.ix.length} cells · 0.25° · ${ymText(key(aug), true)} · ${n0(H[aug])} burning days${est(aug) ? ' (estimated)' : ''}`;
   // 6. the season rings
-  $('#st-ring0').textContent = fy; $('#st-ring1').textContent = ly;
+  $$('#st-ring0').textContent = fy; $$('#st-ring1').textContent = ly;
 
   // the 3D stage's data: a full calendar grid (rows fy..ly), months outside the record are null
   const NY = ly - fy + 1; const N = NY * 12; const off = fm - 1;
@@ -292,14 +294,14 @@ async function storySeason(index) {
   const q = (a, p) => { const s = [...a].sort((x, y) => x - y); const i = (s.length - 1) * p; const lo = Math.floor(i); return s[lo] + (s[Math.ceil(i)] - s[lo]) * (i - lo); };
   if (median(totals) < 20 || !dates.length) {
     ['#ssStart', '#ssMid', '#ssEnd'].forEach((a) => { $(a).textContent = '–'; });
-    $('#st-season-note').textContent = `A typical year here has too few burning days (${n0(median(totals))}) to date a season.`; return;
+    $$('#st-season-note').textContent = `A typical year here has too few burning days (${n0(median(totals))}) to date a season.`; return;
   }
   SHORT.season = { k: dates.length, days: [0, 1, 2].map((k) => Math.round(q(dates.map((d) => d[k]), 0.5))) }; renderShort();
   [['#ssStart', '#ssStartPm'], ['#ssMid', '#ssMidPm'], ['#ssEnd', '#ssEndPm']].forEach(([a, b], k) => {
     const s = dates.map((d) => d[k]); const day = new Date(Date.UTC(2001, 0, Math.round(q(s, 0.5))));
     $(a).textContent = `${MON[day.getUTCMonth()]} ${day.getUTCDate()}`; $(b).textContent = `± ${Math.round((q(s, 0.75) - q(s, 0.25)) / 2)} days`;
   });
-  $('#st-season-note').textContent = `Over the ${dates.length} years in ${ys[0]}–${ys[ys.length - 1]} with at least 20 burning days; ± is half the spread across years.`;
+  $$('#st-season-note').textContent = `Over the ${dates.length} years in ${ys[0]}–${ys[ys.length - 1]} with at least 20 burning days; ± is half the spread across years.`;
 }
 
 // The landing's one-line aside: typed once the hero has settled, held, then faded so the page stays light on words.
@@ -345,7 +347,6 @@ function typeOrbit() {
 }
 
 // ---------- slides 2-6: one or two short lines each, typed fast (about 3 s) every time the slide is shown ----------
-// The detail they replace sits word for word under Data & Methodology ("Behind the story").
 const SHORT = {};
 function phaseOf(doy) {
   const d = new Date(Date.UTC(2001, 0, doy)); const day = d.getUTCDate(); const m = d.getUTCMonth() + 1; const lang = langNow();
@@ -433,28 +434,25 @@ function regionFacts(r, mon) {
   const span = tr('Record: {span} · {cells} cells of 0.25°').replace('{span}', `${ymText(r.months.first)} – ${ymText(r.months.last)}`).replace('{cells}', mon.cells.ix.length);
   return { lines, caveat, span };
 }
-function renderTour(r, facts) {
-  const card = $('#tour-card');
-  card.dir = langNow() === 'ar' ? 'rtl' : ''; if (langNow() !== 'en') card.lang = langNow(); else card.removeAttribute('lang');
-  $('#tour-name').textContent = r.name;
-  $('#tour-count').textContent = tr('Region {k} of {n}').replace('{k}', tourK + 1).replace('{n}', tourIndex.regions.length);
-  const ul = $('#tour-lines'); ul.textContent = '';
-  if (!facts) { const li = document.createElement('li'); li.textContent = tr('Loading this region…'); ul.append(li); card.setAttribute('aria-busy', 'true'); $('#tour-span').textContent = ''; return; }
-  card.removeAttribute('aria-busy');
-  facts.lines.forEach((t) => { const li = document.createElement('li'); li.textContent = t; ul.append(li); });
-  if (facts.caveat) { const li = document.createElement('li'); li.className = 'caveat'; li.textContent = facts.caveat; ul.append(li); }
-  $('#tour-span').textContent = facts.span;
+// One short line, under the region's name on the globe: its worst fire month on record (harmonized burning days).
+function worstMonth(mon) {
+  const n = mon.months.n; const [fy, fm] = mon.months.first.split('-').map(Number);
+  let jMax = 0; let vMax = -1;
+  for (let jj = 0; jj < n; jj += 1) { let v = 0; for (const row of mon.m) v += row[jj]; if (v > vMax) { vMax = v; jMax = jj; } }
+  const t = (fm - 1) + jMax; return monthName((t % 12) + 1, true, fy + Math.floor(t / 12));
 }
 async function showRegion(k) {
   const regions = tourIndex.regions; tourK = (k + regions.length) % regions.length; const r = regions[tourK];
   const token = ++tourToken;
-  const sub = r.id === STORY ? tr('The story region · Beirut, team home') : tr('Region {k} of {n}').replace('{k}', tourK + 1).replace('{n}', regions.length);
-  window.__stageFocusWanted = [r.id, sub]; window.__stageFocus?.(r.id, sub);
-  if (!tourCache.has(r.id)) {
-    renderTour(r, null);
-    tourCache.set(r.id, fetch(`data/${r.id}/monthly_bd.json`).then((x) => { if (!x.ok) throw new Error(`HTTP ${x.status}`); return x.json(); }));
-  }
-  try { const mon = await tourCache.get(r.id); if (token === tourToken) renderTour(r, regionFacts(r, mon)); } catch (err) { tourCache.delete(r.id); if (token === tourToken) { renderTour(r, { lines: [`${r.name}: ${err.message}`], caveat: null, span: '' }); } }
+  $('#tour-count').textContent = tr('Region {k} of {n}').replace('{k}', tourK + 1).replace('{n}', regions.length);
+  const focus = (sub) => { window.__stageFocusWanted = [r.id, sub]; window.__stageFocus?.(r.id, sub); };
+  focus('…');
+  if (!tourCache.has(r.id)) tourCache.set(r.id, fetch(`data/${r.id}/monthly_bd.json`).then((x) => { if (!x.ok) throw new Error(`HTTP ${x.status}`); return x.json(); }));
+  try {
+    const mon = await tourCache.get(r.id); if (token !== tourToken) return;
+    const line = tr('Worst fire month: {monthyear}').replace('{monthyear}', worstMonth(mon));
+    focus(line); $('#tour-card').textContent = `${r.name}. ${line}`;
+  } catch (err) { tourCache.delete(r.id); if (token === tourToken) { focus(''); $('#tour-card').textContent = r.name; } }
 }
 function leaveTour() { if (tourIndex && tourIndex.regions[tourK]?.id !== STORY) { const k = tourIndex.regions.findIndex((x) => x.id === STORY); showRegion(k); } }
 function initTour(index, mon) {
@@ -533,6 +531,6 @@ async function boot() {
   document.querySelectorAll('#lang-switch button').forEach((b) => b.addEventListener('click', () => setTimeout(renderShort, 0)));
   setTimeout(() => typeLine(index), reduce ? 300 : 1400);
   if (html.classList.contains('gl-ok')) import(`./stage.js${V}`).catch((err) => window.__stageFailed(err));
-  storySeason(index).catch((err) => { $('#st-season-note').textContent = `Season dates unavailable (${err.message}).`; });
+  storySeason(index).catch((err) => { $$('#st-season-note').textContent = `Season dates unavailable (${err.message}).`; });
 }
 boot();

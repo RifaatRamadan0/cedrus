@@ -13,19 +13,19 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <link rel="icon" href="assets/cedar.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261115f">
-  <link rel="stylesheet" href="fx.css?v=20261115f">
-  <link rel="stylesheet" href="shell.css?v=20261115f">
+  <link rel="stylesheet" href="styles.css?v=20261115h">
+  <link rel="stylesheet" href="fx.css?v=20261115h">
+  <link rel="stylesheet" href="shell.css?v=20261115h">
   <link rel="preload" href="data/regions.json" as="fetch" crossorigin>
   <link rel="preload" href="data/portugal/monthly_bd.json" as="fetch" crossorigin>
   <script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
   <link rel="modulepreload" href="fx.js">
-  <script type="module" src="app.js?v=20261115f" async></script>
-  <script type="module" src="proof.js?v=20261115f" async></script>
-  <script type="module" src="i18n.js?v=20261115f"></script>
-  <script type="module" src="live.js?v=20261115f" async></script>
-  <script type="module" src="shell.js?v=20261115f" async></script>
+  <script type="module" src="app.js?v=20261115h" async></script>
+  <script type="module" src="proof.js?v=20261115h" async></script>
+  <script type="module" src="i18n.js?v=20261115h"></script>
+  <script type="module" src="live.js?v=20261115h" async></script>
+  <script type="module" src="shell.js?v=20261115h" async></script>
   <meta name="cedrus-docs" content="https://github.com/RifaatRamadan0/cedrus/blob/main/docs/">
 </head>
 <body>
@@ -167,7 +167,8 @@
         <div class="stepmark fade" aria-hidden="true"><span>1</span></div>
         <div class="kicker mono fade">In orbit</div>
         <h2><span class="line"><span>Four satellites.</span></span><span class="line"><span style="--d:1">One fire record.</span></span></h2>
-        <p class="lede fade typed-para" style="--d:2" id="orbit-lede"><span class="tp-src">Terra and Aqua have carried MODIS since 2000 and 2002. Suomi NPP and NOAA-20 added VIIRS in 2012 and 2018, with sharper eyes that catch smaller fires. The orbits drawn here use their real altitudes and swath widths, sped up so one orbit takes a minute; the positions are an illustration, not a live track.</span><span class="tp-type" aria-hidden="true"></span></p>
+        <p class="lede fade typed-para" style="--d:2" id="orbit-lede"><span class="tp-src">Four satellites watch for fire: MODIS since 2000, and VIIRS since 2012, with sharper eyes that catch smaller fires.</span><span class="tp-type" aria-hidden="true"></span></p>
+        <details class="more info-tip orbit-tip"><summary aria-label="About the orbits shown" title="About the orbits shown"><span aria-hidden="true">i</span></summary><div class="tip-body">The orbits drawn here use their real altitudes and swath widths, sped up so one orbit takes a minute; the positions are an illustration, not a live track.</div></details>
         <div class="sat-key mono fade" style="--d:3">
           <span><i class="modis"></i>MODIS · Terra, Aqua · 1 km</span>
           <span><i class="viirs"></i>VIIRS · Suomi NPP, NOAA-20 · 375 m</span>
@@ -175,7 +176,7 @@
         <div class="tour fade" id="tour" style="--d:4" role="group" aria-labelledby="tour-title">
           <p class="tour-head"><span class="mono" id="tour-title">Region tour</span><span class="mono" id="tour-count"></span></p>
           <div class="tour-nav"><button type="button" class="tb-btn" id="tour-prev" aria-controls="tour-card">Previous</button><button type="button" class="tb-btn primary" id="tour-next" aria-controls="tour-card">Next region</button></div>
-          <div class="tour-card" id="tour-card" aria-live="polite"><b id="tour-name"></b><ul id="tour-lines"></ul><small id="tour-span"></small></div>
+          <p class="sr-only" id="tour-card" aria-live="polite"></p>
         </div>
         <p class="mono fade dive-hint" style="--d:5">Press → to dive into Lebanon</p>
       </div>
@@ -431,16 +432,6 @@
         <div><small class="mono">MODIS · Terra, Aqua</small><b>1 km</b><span>fire pixel at nadir · 2,330 km swath · 705 km orbit</span></div>
         <div><small class="mono">VIIRS · Suomi NPP, NOAA-20</small><b>375 m</b><span>fire pixel · 3,040 km swath · 824 km orbit</span></div>
         <div><small class="mono">Overlap used for fitting</small><b>2012–2019</b><span>MODIS with Suomi NPP; NOAA-20 via Suomi NPP, 2018–2019</span></div>
-      </div>
-      <div class="story-notes glass" id="story-notes">
-        <h3>Behind the story: Lebanon, slide by slide</h3>
-        <dl>
-          <div><dt>The calendar</dt><dd>Each tile is one month of satellite fire activity over Lebanon, where the team is based. Rows are years, columns are months, colour is harmonized burning days on a log scale. Lebanon is small and has few fires: <span id="st-small">…</span> The months that burned hardest are on fire: <span id="st-hottest">…</span>.</dd></div>
-          <div><dt>The problem</dt><dd>VIIRS on Suomi NPP (from 2012) and NOAA-20 (from 2018) detect smaller fires than MODIS. Add Suomi NPP's burning days to the MODIS record as they are, and the years from 2012 look worse than they were. <span id="st-naive"></span></dd></div>
-          <div><dt>The fix</dt><dd>We learn how VIIRS burning days translate into MODIS-equivalent burning days over 2012–2019, when MODIS and Suomi NPP fly together (NOAA-20 is tied in through Suomi NPP), and use it for every month from 2022, when the MODIS satellites drift. The false climb flattens. Real fire years still stand out: <span id="st-topyears">…</span>. <span id="st-zero"></span></dd></div>
-          <div><dt>Any area</dt><dd>Pick one of <span class="st-nregions">18</span> regions, drag a rectangle or a polygon, or enter a point and radius. A burning day counts when the centre of its ~1 km square falls inside your shape. The tiles you just watched now stand on the map as Lebanon's grid for <span class="st-aug">October 2024</span>, its busiest recent month.</dd></div>
-          <div><dt>The season</dt><dd>The calendar wrapped into a year: twelve spokes for the months, one ring per year from <span id="st-ring0">2000</span> at the centre to <span id="st-ring1">2026</span> at the edge. Below, Lebanon's season worked out from the daily records, the way the Fire Calendar does it: the days by which 10%, 50% and 90% of a typical year's burning has happened. <span id="st-season-note"></span></dd></div>
-        </dl>
       </div>
       <div class="limits glass">
         <h3>What this record is not</h3>

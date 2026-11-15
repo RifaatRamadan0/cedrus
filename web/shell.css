@@ -68,16 +68,11 @@ html.past-deck .topbar{background:rgba(4,8,10,.9);backdrop-filter:blur(12px);-we
 .src-line{margin:16px 0 0;font-size:12px;color:var(--muted-y);max-width:34rem;line-height:1.6}
 .src-line a,.why-note a{color:#a9e6c4;text-decoration:underline;text-underline-offset:2px}
 .why-note small{display:block;margin-top:4px;color:var(--muted-y)}
-.story-notes{margin-top:16px;padding:22px}
-.story-notes h3{font:700 20px/1.2 var(--f-display);margin:0 0 12px}
-.story-notes dl{margin:0;display:grid;gap:12px}
-.story-notes dt{font:500 11px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cedar)}
-.story-notes dd{margin:4px 0 0;color:#c4d3cc;line-height:1.65;max-width:62rem}
 .tour-head{display:flex;justify-content:space-between;gap:12px;margin:0 0 10px;color:var(--cedar)}
 .tour-head span:last-child{color:var(--muted-y)}
 .tour-nav{display:flex;gap:8px;flex-wrap:wrap}
 .tour-nav .tb-btn{padding:10px 16px}
-.tour-card{margin-top:12px;min-height:8.6em;padding:12px 14px;border-radius:14px;border:1px solid var(--glass-b);background:rgba(8,14,18,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.tour-card-unused{margin-top:12px;min-height:8.6em;padding:12px 14px;border-radius:14px;border:1px solid var(--glass-b);background:rgba(8,14,18,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .tour-card b{display:block;font:700 17px/1.25 var(--f-display);font-stretch:104%;letter-spacing:.01em}
 .tour-card ul{list-style:none;margin:6px 0 6px;padding:0;color:#d3e2db;font-size:14px;line-height:1.55}
 .tour-card li+li{margin-top:2px}
@@ -449,3 +444,6 @@ details.more.info-tip>summary{padding:0;gap:0}
 .controls>h2{margin-bottom:14px}
 details.more.map-info>summary::before{display:none}
 details.more.map-info>summary{justify-content:center}
+.orbit-tip{display:block;margin:6px 0 0}
+.geo-label{background:rgba(4,8,10,.72);padding:5px 9px}
+.geo-label small{color:#f2e3d4;font-size:10px;letter-spacing:.08em;margin-top:2px}
