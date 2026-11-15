@@ -121,7 +121,7 @@ const T = {
   'fixed the two causes →': ['corregimos las dos causas →', 'أصلحنا السببين →'],
   'tournament of 9 models →': ['torneo de 9 modelos →', 'منافسة بين 9 نماذج →'],
   'Got it': ['Entendido', 'فهمت'],
-  'Pick a region or draw an area. You get every month of its record (from December 2000, or from 2012 where older files are not loaded yet), on one consistent scale.': ['Elige una región o dibuja un área. Verás cada mes de su registro (desde diciembre de 2000, o desde 2012 donde aún no se cargaron los archivos anteriores), en una misma escala.', 'اختر منطقة أو ارسم مساحة. ستحصل على كل شهر من سجلّها (منذ ديسمبر 2000، أو منذ 2012 حيث لم تُحمَّل الملفات الأقدم بعد)، على مقياس واحد متّسق.'],
+  'Pick a region or draw an area. You get every month since late 2000, on one consistent scale.': ['Elige una región o dibuja un área. Verás cada mes desde finales de 2000, en una misma escala.', 'اختر منطقة أو ارسم مساحة. ستحصل على كل شهر منذ أواخر عام 2000، على مقياس واحد متّسق.'],
   'Start here: pick a region, or draw an area on the map': ['Empieza aquí: elige una región o dibuja un área en el mapa', 'ابدأ من هنا: اختر منطقة أو ارسم مساحة على الخريطة'],
   'Or enter a point and radius': ['O introduce un punto y un radio', 'أو أدخل نقطة ونصف قطر'],
   'Download data for this area (CSV)': ['Descargar los datos de esta área (CSV)', 'تنزيل بيانات هذه المنطقة (CSV)'],
