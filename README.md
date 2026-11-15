@@ -205,3 +205,10 @@ and their evidence remain in the research documentation.
 
 Fire detections: NASA FIRMS (Fire Information for Resource Management System),
 MODIS Collection 6.1 and VIIRS 375 m active fire products (each file's own version string — 6.2, 6.03, 61.03 for MODIS, 2 for VIIRS — is kept in the data). Basemap: NASA GIBS Blue Marble.
+Weather for the fire weather outlook: Open-Meteo (forecast and ERA5 archive), CC BY 4.0.
+
+## Use of AI
+
+AI assistants (Anthropic's Claude, OpenAI's Codex) helped write code, search the literature and draft text in this
+repository. The method, the exam rules and the decisions are the team's, and every number can be rebuilt from the code
+and data here. The demo videos' narration is an AI voice (ElevenLabs); no AI-generated images or video are used.

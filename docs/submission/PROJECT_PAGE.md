@@ -1,18 +1,19 @@
-# CEDRUS: project page draft (NASA Space Apps 2026, Beirut)
+# CEDRUS: project page (NASA Space Apps 2026, Beirut)
 
-Draft for the Space Apps project page fields. The site and repository links are in; the demo video link is still to come.
+Final text for the Space Apps project page fields (paste field by field). Only the YouTube links of the two demo videos remain to be pasted.
 Every number here is in the repository; the source file is named in brackets so anyone can check it.
 
 ---
 
 ## Project name
-CEDRUS: one fire record that survives the satellite handover
+CEDRUS: Same fires. Fair record.
 
 ## High-level project summary (≤ 1,000 characters)
-For 25 years, NASA satellites have counted the world's fires, but the record is split between two kinds of eye. MODIS, flying since 2000, is retiring. VIIRS, flying since 2012, sees smaller fires, so a record that simply switches from one to the other jumps in 2012. That jump is the instrument changing, not the fires. CEDRUS translates every satellite count into one consistent scale and turns it into a fire calendar for any area. You draw an area and see every month from December 2000 to July 2026: whether this month is above or below normal, how sure the estimate is, and the fire records themselves as CSV. We proved the translation works the way exams prove a student knows the subject: rules written and dated first, then tested once on regions the model had never seen. The first exam failed and we published it. The next two passed every test. The app shows it all, in English, Spanish and Arabic.
+For 25 years, NASA satellites have counted the world's fires, but the record is split between two kinds of eye. MODIS, flying since 2000, is retiring. VIIRS, flying since 2012, sees smaller fires, so a record that simply switches from one to the other jumps in 2012. That jump is the instrument changing, not the fires. CEDRUS translates every satellite count into one consistent scale and turns it into a fire calendar for any area. You draw an area and see every month from December 2000 to today: whether this month is above or below normal, how sure the estimate is, the fire records as CSV, and a 7-day fire-weather outlook against that place's normal. We proved the translation works the way exams prove a student knows the subject: rules written and dated first, then tested once on regions the model had never seen. The first exam failed and we published it. The next two passed every test. The app shows it all, in English, Spanish and Arabic.
 
 ## Link to project demo
-TODO: 30-second video (script in VIDEO_30S.md).
+- 30-second demo video (global judging): PASTE YOUTUBE LINK
+- 2-minute video (local judging): PASTE YOUTUBE LINK
 
 ## Link to final project
 - Website: https://rifaatramadan0.github.io/cedrus/
@@ -30,6 +31,7 @@ TODO: 30-second video (script in VIDEO_30S.md).
   - Both are in MODIS-equivalent terms.
 - **Honest uncertainty:** every estimated month has an 80% range and a trust check (reliable / use with care / too uncertain / too few fires to judge). On screen, doubt is drawn as smoke over the number.
 - **Downloads:** every hotspot and every burning day inside your area as CSV, each with its weight in the harmonized total, plus the monthly record.
+- **Fire weather outlook (prevention):** the next 7 days of heat, dry air, wind, rain and topsoil moisture for the selected region, combined into the Hot-Dry-Windy Index (Srock et al. 2018) and ranked against the same weeks in 2003–2025 (ERA5), with whether today is inside the region's normal fire season. It is an outlook of conditions that help fires spread, not a fire prediction. We also tested, per region, whether fire weather tracks our fire record: a moderate link in Portugal (rank correlation 0.58) and southern Europe, a weak one in Lebanon (0.28), and little in Australia; the app states it for each region.
 - **Right now vs normal:** NASA's live feed for the last complete days, against the same calendar days in 2019–2025 (like-for-like NOAA-20 counts). This is the early-warning question the challenge's authors asked: is this month unusual here?
 - **Made to be understood:**
   - places ignite on the map, sized by their fire;
@@ -64,21 +66,22 @@ Each exam's rules and pass marks were committed, dated, before its regions were 
 - **For researchers:** a 25-year record that does not jump in 2012 and keeps going after Suomi NPP, with every weight downloadable.
 - **For everyone:** the method and the tests are open (Apache-2.0), and every number can be rebuilt from the code.
 
-**Tools and languages:** Python (pandas, NumPy, SciPy, matplotlib) for the pipeline and the tests. A static web app in plain JavaScript with MapLibre GL and terra-draw, on NASA GIBS imagery. No server: the whole app is static files.
+**Tools and languages:** Python (pandas, NumPy, SciPy, matplotlib) for the pipeline and the tests. A static web app in plain JavaScript with MapLibre GL, terra-draw and three.js, on NASA GIBS imagery, hosted on GitHub Pages. GitHub Actions refresh the live data daily. No server: the whole app is static files.
 
 ## Use of NASA data
 - **NASA FIRMS active fire data,** the core of the project:
   - MODIS Collection 6.1 (Terra and Aqua, 1 km);
   - VIIRS 375 m from Suomi NPP and NOAA-20, standard-quality archive, January 2012 to July 2026 (MODIS from November 2000);
   - the near-real-time NOAA-20 feed for the "right now" comparison.
-- **NASA GIBS** Blue Marble imagery for the map.
+- **NASA GIBS** Blue Marble and Black Marble imagery for the map and globe.
+- **NASA Goddard Scientific Visualization Studio** footage in the demo videos (svs.gsfc.nasa.gov/4820 and /4741).
 - **NASA documentation:**
   - the MODIS C6/C6.1 and VIIRS 375 m active fire user guides;
   - the Earthdata notices on the Suomi NPP transition.
 
 ## Use of space agency partner data
 - No partner-agency data products.
-- The La Rioja / Chilecito example comes from CONAE's challenge description.
+- The challenge was authored by CONAE (National Space Activities Commission of Argentina, a 2026 Space Agency Partner); our La Rioja / Chilecito region follows its example.
 
 ## References
 - Giglio, L., Schroeder, W., Justice, C. O. (2016). The collection 6 MODIS active fire detection algorithm and fire products. *Remote Sensing of Environment* 178, 31–41. doi:10.1016/j.rse.2016.02.054
@@ -87,9 +90,12 @@ Each exam's rules and pass marks were committed, dated, before its regions were 
 - NASA FIRMS: https://firms.modaps.eosdis.nasa.gov/ (Davies et al. 2009, doi:10.1109/TGRS.2008.2002076)
 - NASA Earthdata, "Transitioning from Suomi NPP VIIRS & OMPS: what FIRMS users need to know" (2026)
 - Related 2026 work on fusing MODIS and VIIRS fire radiative power: *Remote Sensing* 18, 01650 (2026). We fuse counts per place and month instead, and test on unseen regions.
-- Software: MapLibre GL JS, terra-draw, pandas, NumPy, SciPy, matplotlib; country outlines from Natural Earth.
+- Software: MapLibre GL JS, terra-draw, three.js, pandas, NumPy, SciPy, matplotlib; country outlines from Natural Earth.
+- Weather: Open-Meteo forecast and ERA5 archive APIs (CC BY 4.0). Srock, A. F. et al. (2018). The Hot-Dry-Windy Index: a new fire weather index. *Atmosphere* 9(7), 279. doi:10.3390/atmos9070279
+- EFFIS / EU Joint Research Centre (2026), 2025 wildfire season; UNEP (2022), *Spreading like Wildfire*.
+- Demo videos: music "Hymn To The Dawn" by Scott Buckley (CC BY 4.0); flame mascot drawn by Team CEDRUS.
 
 ## Use of artificial intelligence (AI)
 AI assistants (Anthropic's Claude, OpenAI's Codex) helped us write code, search the literature and draft text.
 The method, the exam rules and the decisions are the team's. Every number shown comes from code and data in the repository and can be rebuilt from it. The exam plans were committed before their results existed.
-No AI-generated images, video or data are presented as NASA's.
+The narration in both demo videos is an AI voice (ElevenLabs text-to-speech); this is stated on the videos' end cards and in their descriptions. No AI-generated images or video are used, and no NASA branding appears in anything we generated.
