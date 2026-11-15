@@ -419,10 +419,10 @@ details.more.info-tip>summary{padding:0;gap:0}
 .unit-group>details.info-tip,.draw-group>details.info-tip,.calendar-bar~details.info-tip{display:inline-block;margin:0 0 0 6px}
 .unit-group>details.info-tip>summary,.draw-group>details.info-tip>summary{position:absolute;right:0;top:0}
 .unit-group,.draw-group{position:relative}
-.controls{position:relative}
-.controls>details.intro-tip{position:absolute;top:18px;left:130px;margin:0;z-index:4}
-.controls>details.intro-tip .tip-body{width:min(22rem,70vw)}
-.live .info-tip .tip-body{position:absolute;z-index:6;left:0;top:22px;width:min(30rem,80vw)}
+.controls>h2{display:inline-block}
+.controls>details.intro-tip{display:inline-block;margin:0 0 0 8px;vertical-align:2px}
+.controls>details.intro-tip[open]{display:block;margin:6px 0 12px}
+.live .info-tip .tip-body{max-width:44rem}
 .trust-line{margin:8px 0 6px;font-size:12px;color:#cfe4da;padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(127,211,166,.05)}
 .trust-line:empty{display:none}
 .region-data>summary,.map-info>summary,.fold>summary,.proof-regions-fold>summary{cursor:pointer;color:var(--cedar);font-size:12px;margin:4px 0}
