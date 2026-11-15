@@ -41,7 +41,7 @@ function hud() {
   $('#nextBtn').disabled = false; // past the last slide, "next" opens the explorer
 }
 function activate(n) {
-  const s = shots[n]; const fastP = s.querySelector('.typed-para.fast'); if (fastP) typeFast(fastP); if (s.id === 'orbit') setTimeout(typeOrbit, reduce ? 0 : 500); if (s.id !== 'orbit') leaveTour(); s.classList.add('active'); s.scrollTop = 0; s.removeAttribute('inert');
+  const s = shots[n]; const fastP = s.querySelector('.typed-para.fast'); if (fastP) typeFast(fastP); if (s.id === 'orbit') typeOrbit(); if (s.id !== 'orbit') leaveTour(); s.classList.add('active'); s.scrollTop = 0; s.removeAttribute('inert');
   void s.offsetWidth; s.classList.add('in'); // a style flush between the two, so the reveal transitions run
 }
 function setDeckMode(on) {
@@ -320,7 +320,7 @@ function typeLine(index) {
   const hide = () => { el.classList.add('gone'); setTimeout(() => { el.textContent = ''; el.classList.remove('typing'); }, still ? 0 : 900); };
   if (still) { el.textContent = text; setTimeout(hide, 4000); return; }
   let k = 0; el.classList.add('typing');
-  const tick = () => { k += 1; el.textContent = text.slice(0, k); if (k < text.length) setTimeout(tick, text[k - 1] === '.' ? 260 : 26); else { el.classList.remove('typing'); setTimeout(hide, 2500); } };
+  const tick = () => { k += 1; el.textContent = text.slice(0, k); if (k < text.length) setTimeout(tick, typeStep(text)); else { el.classList.remove('typing'); setTimeout(hide, 2500); } };
   tick();
 }
 
@@ -341,13 +341,14 @@ function typeOrbit() {
   const tick = () => {
     k += 1; out.textContent = text.slice(0, k);
     if (k >= text.length) { finish(); return; }
-    const c = text[k - 1]; timer = setTimeout(tick, c === '.' || c === ';' ? 320 : c === ',' ? 120 : 30);
+    timer = setTimeout(tick, typeStep(text));
   };
   tick();
 }
 
 // ---------- slides 2-6: one or two short lines each, typed fast (about 3 s) every time the slide is shown ----------
 const SHORT = {};
+const typeStep = (text) => Math.min(25, 2000 / Math.max(1, text.length));
 function phaseOf(doy) {
   const d = new Date(Date.UTC(2001, 0, doy)); const day = d.getUTCDate(); const m = d.getUTCMonth() + 1; const lang = langNow();
   const month = monthName(m);
@@ -388,11 +389,11 @@ function typeFast(p) {
   clearTimeout(p._timer); p.classList.remove('typing'); out.textContent = '';
   const text = src.textContent;
   if (!text || reduce || html.classList.contains('fx-still')) return;
-  const step = Math.max(8, Math.min(30, 3000 / text.length)); let k = 0;
+  const step = typeStep(text); let k = 0;
   out.dir = langNow() === 'ar' ? 'rtl' : '';
   p.classList.add('typing');
   const tick = () => { k += 1; out.textContent = text.slice(0, k); if (k >= text.length) { p.classList.remove('typing'); out.textContent = ''; return; } p._timer = setTimeout(tick, step); };
-  p._timer = setTimeout(tick, 350);
+  tick();
 }
 
 // ---------- region tour (orbit slide): every region in the catalogue, in plain words ----------
