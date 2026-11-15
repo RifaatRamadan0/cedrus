@@ -24,6 +24,7 @@ const deckMQ = matchMedia('(min-width: 861px) and (min-height: 600px)');
 let deckMode = deckMQ.matches;
 let cur = 0; let lock = false;
 window.__slide = 0;
+const stageOf = (n) => Number(shots[n]?.dataset.stage ?? n);
 
 const ruler = $('#ruler');
 ruler.innerHTML = shots.map((s, j) => `<button type="button" aria-label="Slide ${j + 1}: ${s.dataset.name}"></button>`).join('');
@@ -32,13 +33,13 @@ function hud() {
   $('#hudNum').textContent = String(cur + 1).padStart(2, '0');
   $('#hudTot').textContent = String(shots.length).padStart(2, '0');
   $('#hudName').textContent = shots[cur].dataset.name;
-  html.classList.toggle('on-first', cur === 0);
+  html.classList.toggle('on-first', stageOf(cur) === 0);
   rulerBtns.forEach((b, j) => { b.classList.toggle('on', j === cur); if (j === cur) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
   $('#prevBtn').disabled = cur === 0;
   $('#nextBtn').disabled = false; // past the last slide, "next" opens the explorer
 }
 function activate(n) {
-  const s = shots[n]; if (s.id === 'orbit') setTimeout(typeOrbit, reduce ? 0 : 500); if (n !== 1) leaveTour(); s.classList.add('active'); s.scrollTop = 0; s.removeAttribute('inert');
+  const s = shots[n]; const fastP = s.querySelector('.typed-para.fast'); if (fastP) typeFast(fastP); if (s.id === 'orbit') setTimeout(typeOrbit, reduce ? 0 : 500); if (s.id !== 'orbit') leaveTour(); s.classList.add('active'); s.scrollTop = 0; s.removeAttribute('inert');
   void s.offsetWidth; s.classList.add('in'); // a style flush between the two, so the reveal transitions run
 }
 function setDeckMode(on) {
@@ -54,8 +55,8 @@ function go(n, { instant = false } = {}) {
   n = Math.max(0, Math.min(shots.length - 1, n));
   if (!deckMode) { shots[n].scrollIntoView({ behavior: reduce || instant ? 'auto' : 'smooth' }); return; }
   if (n === cur || lock) return;
-  lock = true; const prev = shots[cur]; cur = n; window.__slide = n; hud();
-  const dur = (!instant && window.__flyTo && window.__flyTo(n)) || 0;
+  lock = true; const prev = shots[cur]; cur = n; window.__slide = stageOf(n); hud();
+  const dur = (!instant && window.__flyTo && stageOf(n) !== stageOf(shots.indexOf(prev)) && window.__flyTo(stageOf(n))) || 0;
   if (instant) window.__cut && window.__cut();
   prev.classList.add('leaving'); prev.classList.remove('active'); prev.setAttribute('inert', '');
   const enterAt = reduce || instant ? 0 : Math.max(450, dur * 0.55);
@@ -129,8 +130,9 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach((en) => seen.set(en.target, en.intersectionRatio));
   if (deckMode) return;
   let best = cur; let br = -1; shots.forEach((s, j) => { const r = seen.get(s) ?? 0; if (r > br) { br = r; best = j; } });
-  if (br > 0) { cur = best; window.__slide = best; }
+  if (br > 0) { cur = best; window.__slide = stageOf(best); hud(); }
   if ((seen.get($('#orbit')) ?? 0) >= 0.5) typeOrbit();
+  shots.forEach((sh) => { const p = sh.querySelector('.typed-para.fast'); if (!p) return; const r = seen.get(sh) ?? 0; if (r >= 0.5 && !p.dataset.inView) { p.dataset.inView = '1'; typeFast(p); } else if (r === 0) delete p.dataset.inView; });
 }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
 shots.forEach((s) => io.observe(s));
 
@@ -149,7 +151,7 @@ deckMQ.addEventListener('change', (e) => { setDeckMode(e.matches); onScroll(); }
 // Start: on the slide the link names, if any.
 {
   const h = location.hash.slice(1); const k = h ? shots.findIndex((s) => s.id === h) : -1;
-  if (k > 0) { cur = k; window.__slide = k; }
+  if (k > 0) { cur = k; window.__slide = stageOf(k); }
   setDeckMode(deckMode);
   if (k > 0 && !deckMode) shots[k].scrollIntoView();
   onScroll();
@@ -228,6 +230,8 @@ function buildStory(index, mon) {
   // 2. the calendar
   $('#st-years').textContent = ly - fy + 1; $('#st-months').textContent = n; $('#st-cells').textContent = mon.cells.ix.length;
   const typical = median(full.map((o) => o.h));
+  SHORT.cal = { first: [fm, fy], top: ym(order[0].j), n: order[0].v, typical };
+  SHORT.region = name; SHORT.nRegions = index.regions.length;
   $('#st-small').textContent = `its busiest month on record, ${ymText(key(order[0].j), true)}, has ${n0(order[0].v)} burning days, and a typical year about ${n0(typical)}, so one large fire stands out.`;
   const hottest = order.slice(0, 4).map((o) => ymText(key(o.j), true));
   $('#st-hottest').textContent = `${hottest.slice(0, -1).join(', ')} and ${hottest[hottest.length - 1]}`;
@@ -235,6 +239,7 @@ function buildStory(index, mon) {
   const obs = full.filter((o) => o.y >= 2012 && /^O+$/.test(o.flags));
   if (obs.length) {
     const sn = obs.reduce((a, o) => a + o.nv, 0); const sh = obs.reduce((a, o) => a + o.h, 0); const r = sn / sh;
+    SHORT.prob = { y0: obs[0].y, y1: obs[obs.length - 1].y, r, sn, sh };
     $('#st-naive').textContent = `From ${obs[0].y} to ${obs[obs.length - 1].y}, while MODIS still flew its planned orbits, the naive merge counts ${n0(sn)} burning days in ${name} where MODIS saw ${n0(sh)}: ${r >= 2 ? `${n1(r)} times as many` : `${Math.round((r - 1) * 100)}% more`}. Small fires are exactly what the sharper sensor adds, and ${name}'s fires are mostly small.`;
   }
   // 4. the fix: the biggest complete years, and the honest caveat for estimated years
@@ -289,6 +294,7 @@ async function storySeason(index) {
     ['#ssStart', '#ssMid', '#ssEnd'].forEach((a) => { $(a).textContent = '–'; });
     $('#st-season-note').textContent = `A typical year here has too few burning days (${n0(median(totals))}) to date a season.`; return;
   }
+  SHORT.season = { k: dates.length, days: [0, 1, 2].map((k) => Math.round(q(dates.map((d) => d[k]), 0.5))) }; renderShort();
   [['#ssStart', '#ssStartPm'], ['#ssMid', '#ssMidPm'], ['#ssEnd', '#ssEndPm']].forEach(([a, b], k) => {
     const s = dates.map((d) => d[k]); const day = new Date(Date.UTC(2001, 0, Math.round(q(s, 0.5))));
     $(a).textContent = `${MON[day.getUTCMonth()]} ${day.getUTCDate()}`; $(b).textContent = `± ${Math.round((q(s, 0.75) - q(s, 0.25)) / 2)} days`;
@@ -336,6 +342,56 @@ function typeOrbit() {
     const c = text[k - 1]; timer = setTimeout(tick, c === '.' || c === ';' ? 320 : c === ',' ? 120 : 30);
   };
   tick();
+}
+
+// ---------- slides 2-6: one or two short lines each, typed fast (about 3 s) every time the slide is shown ----------
+// The detail they replace sits word for word under Data & Methodology ("Behind the story").
+const SHORT = {};
+function phaseOf(doy) {
+  const d = new Date(Date.UTC(2001, 0, doy)); const day = d.getUTCDate(); const m = d.getUTCMonth() + 1; const lang = langNow();
+  const month = monthName(m);
+  const ph = day <= 10 ? 0 : day <= 20 ? 1 : 2;
+  if (lang === 'es') return [`a principios de ${month}`, `a mediados de ${month}`, `a finales de ${month}`][ph];
+  if (lang === 'ar') return [`في أوائل ${month}`, `في منتصف ${month}`, `في أواخر ${month}`][ph];
+  return [`early ${month}`, `mid-${month}`, `late ${month}`][ph];
+}
+function setShort(key, text) {
+  const p = document.getElementById(`lede-${key}`); if (!p || !text) return;
+  const src = p.querySelector('.tp-src'); if (src.textContent === text) return;
+  src.textContent = text; p.dir = langNow() === 'ar' ? 'rtl' : ''; if (langNow() !== 'en') p.lang = langNow(); else p.removeAttribute('lang');
+}
+function renderShort() {
+  const R = SHORT.region; if (!R) return;
+  const fill = (tpl, o) => Object.entries(o).reduce((t, [k, v]) => t.split(`{${k}}`).join(v), tr(tpl));
+  if (SHORT.cal) {
+    const c = SHORT.cal;
+    setShort('cal', fill('One tile is one month of fire over {region} since {first}. The brightest is {top}: {n} burning days, when a normal year has about {typical}.',
+      { region: R, first: monthName(c.first[0], true, c.first[1]), top: monthName(c.top[1], true, c.top[0]), n: n0(c.n), typical: n0(c.typical) }));
+  }
+  if (SHORT.prob) {
+    const b = SHORT.prob;
+    setShort('prob', fill('Newer satellites see small fires that MODIS misses. Merge them naively and {region}’s {y0}–{y1} looks {r}× worse than it was: {sn} burning days instead of {sh}.',
+      { region: R, y0: b.y0, y1: b.y1, r: n1(b.r), sn: n0(b.sn), sh: n0(b.sh) }));
+  }
+  setShort('why', tr("2025 was the EU's worst fire year on record: 1,079,538 hectares burned. The UN expects extreme fires to rise 30% by 2050 — and countries plan budgets, crews and fire seasons from the satellite record."));
+  setShort('fix', tr('We learn how VIIRS translates into MODIS from the years both flew (2012–2019), then apply it after MODIS fades. The false climb flattens, and real fire years still stand out.'));
+  setShort('area', fill('Pick one of {n} regions, or draw any shape, and read its fire record down to a single 0.25° cell (about 25 km).', { n: SHORT.nRegions }));
+  if (SHORT.season) {
+    const z = SHORT.season;
+    setShort('season', fill('{region}’s fire season, worked out from {k} years of daily records: it normally starts {start}, peaks {mid} and ends {end}.',
+      { region: R, k: z.k, start: phaseOf(z.days[0]), mid: phaseOf(z.days[1]), end: phaseOf(z.days[2]) }));
+  }
+}
+function typeFast(p) {
+  const src = p.querySelector('.tp-src'); const out = p.querySelector('.tp-type');
+  clearTimeout(p._timer); p.classList.remove('typing'); out.textContent = '';
+  const text = src.textContent;
+  if (!text || reduce || html.classList.contains('fx-still')) return;
+  const step = Math.max(8, Math.min(30, 3000 / text.length)); let k = 0;
+  out.dir = langNow() === 'ar' ? 'rtl' : '';
+  p.classList.add('typing');
+  const tick = () => { k += 1; out.textContent = text.slice(0, k); if (k >= text.length) { p.classList.remove('typing'); out.textContent = ''; return; } p._timer = setTimeout(tick, step); };
+  p._timer = setTimeout(tick, 350);
 }
 
 // ---------- region tour (orbit slide): every region in the catalogue, in plain words ----------
@@ -424,7 +480,9 @@ async function boot() {
     [index, mon] = await Promise.all(['data/regions.json', `data/${STORY}/monthly_bd.json`].map((p) => fetch(p).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${p}`); return r.json(); })));
   } catch (err) { console.warn('Story numbers unavailable:', err.message); window.__stageFailed(); return; }
   buildStory(index, mon);
+  renderShort();
   initTour(index, mon);
+  document.querySelectorAll('#lang-switch button').forEach((b) => b.addEventListener('click', () => setTimeout(renderShort, 0)));
   setTimeout(() => typeLine(index), reduce ? 300 : 1400);
   if (html.classList.contains('gl-ok')) import(`./stage.js${V}`).catch((err) => window.__stageFailed(err));
   storySeason(index).catch((err) => { $('#st-season-note').textContent = `Season dates unavailable (${err.message}).`; });
