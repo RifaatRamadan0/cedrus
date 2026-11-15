@@ -4,6 +4,10 @@
 import { EMBER } from './fx.js';
 
 const $ = (s) => document.querySelector(s);
+// this module's ?v, passed on to the modules it loads later, so a browser never mixes old and new files
+const V = new URL(import.meta.url).search;
+const tr = (en) => window.cedrusI18n?.tr?.(en) || en;
+const langNow = () => window.cedrusI18n?.lang?.() || 'en';
 const html = document.documentElement;
 const deck = $('#deck');
 const shots = [...document.querySelectorAll('.deck .shot')];
@@ -34,7 +38,7 @@ function hud() {
   $('#nextBtn').disabled = false; // past the last slide, "next" opens the explorer
 }
 function activate(n) {
-  const s = shots[n]; s.classList.add('active'); s.scrollTop = 0; s.removeAttribute('inert');
+  const s = shots[n]; if (s.id === 'orbit') setTimeout(typeOrbit, reduce ? 0 : 500); if (n !== 1) leaveTour(); s.classList.add('active'); s.scrollTop = 0; s.removeAttribute('inert');
   void s.offsetWidth; s.classList.add('in'); // a style flush between the two, so the reveal transitions run
 }
 function setDeckMode(on) {
@@ -95,6 +99,7 @@ function step(dir) {
   if (dir > 0) { if (cur === shots.length - 1) nextFromLast(); else go(cur + 1); } else go(cur - 1);
 }
 addEventListener('keydown', (e) => {
+  if ((e.key === ' ' || e.key === 'Enter') && e.target.closest?.('button,a,summary')) return;
   if (!deckMode || !atTop() || dialogOpen() || typing(e) || e.metaKey || e.ctrlKey || e.altKey) return;
   if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); step(1); }
   else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); step(-1); }
@@ -125,6 +130,7 @@ const io = new IntersectionObserver((entries) => {
   if (deckMode) return;
   let best = cur; let br = -1; shots.forEach((s, j) => { const r = seen.get(s) ?? 0; if (r > br) { br = r; best = j; } });
   if (br > 0) { cur = best; window.__slide = best; }
+  if ((seen.get($('#orbit')) ?? 0) >= 0.5) typeOrbit();
 }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
 shots.forEach((s) => io.observe(s));
 
@@ -258,7 +264,8 @@ function buildStory(index, mon) {
     cellVal: (c, i) => (at(i) < 0 ? 0 : mon.m[c][at(i)]),
     logn: (v) => lg(v, vmax), cellLogn: (v) => lg(v, cmax),
     colorFor: (v) => ramp(0.08 + 0.92 * lg(v, vmax)), cellColor: (v) => ramp(0.08 + 0.92 * lg(v, cmax)),
-    regions: index.regions.map((r) => ({ id: r.id, bbox: r.bbox })),
+    regions: index.regions.map((r) => ({ id: r.id, name: r.name, bbox: r.bbox })),
+    storySub: tr('The story region · Beirut, team home'),
   };
 }
 
@@ -309,6 +316,105 @@ function typeLine(index) {
   tick();
 }
 
+// ---------- the orbit slide: its paragraph types at reading speed, the first time the slide is shown ----------
+// The full text stays in the page (transparent while typing) so the layout never moves and screen readers get it
+// whole; the typed copy on top is hidden from them. Reduced motion or Effects off: shown at once. Click to finish.
+let orbitTyped = false;
+function typeOrbit() {
+  if (orbitTyped) return; orbitTyped = true;
+  const p = $('#orbit-lede'); if (!p) return;
+  const src = p.querySelector('.tp-src'); const out = p.querySelector('.tp-type');
+  if (reduce || html.classList.contains('fx-still')) return;
+  const text = src.textContent; let k = 0; let timer = 0;
+  out.dir = langNow() === 'ar' ? 'rtl' : '';
+  p.classList.add('typing');
+  const finish = () => { clearTimeout(timer); p.classList.remove('typing'); out.textContent = ''; p.removeEventListener('click', finish); };
+  p.addEventListener('click', finish);
+  const tick = () => {
+    k += 1; out.textContent = text.slice(0, k);
+    if (k >= text.length) { finish(); return; }
+    const c = text[k - 1]; timer = setTimeout(tick, c === '.' || c === ';' ? 320 : c === ',' ? 120 : 30);
+  };
+  tick();
+}
+
+// ---------- region tour (orbit slide): every region in the catalogue, in plain words ----------
+// Each card is computed from that region's monthly_bd.json, fetched only when the tour reaches it.
+const tourCache = new Map();
+let tourIndex = null; let tourK = 0; let tourToken = 0;
+function monthName(m, withYear, y) {
+  const lang = langNow(); const d = new Date(Date.UTC(y || 2001, m - 1, 15));
+  try { return new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : lang, withYear ? { month: 'long', year: 'numeric', timeZone: 'UTC' } : { month: 'long', timeZone: 'UTC' }).format(d); } catch { return `${MONL[m - 1]}${withYear ? ` ${y}` : ''}`; }
+}
+function regionFacts(r, mon) {
+  const n = mon.months.n; const [fy, fm] = mon.months.first.split('-').map(Number);
+  const H = new Array(n).fill(0); mon.m.forEach((row) => { for (let j = 0; j < n; j += 1) H[j] += row[j]; });
+  const ym = (j) => { const t = (fm - 1) + j; return [fy + Math.floor(t / 12), (t % 12) + 1]; };
+  const years = {}; for (let j = 0; j < n; j += 1) { const [y, m] = ym(j); (years[y] ||= { y, tot: 0, k: 0, m: new Array(12).fill(0) }); years[y].tot += H[j]; years[y].k += 1; years[y].m[m - 1] = H[j]; }
+  const full = Object.values(years).filter((o) => o.k === 12).sort((a, b) => a.y - b.y);
+  const lines = [];
+  // when the season peaks: the calendar month with the highest median over the complete years
+  const med = Array.from({ length: 12 }, (_, m) => median(full.map((o) => o.m[m])));
+  const peak = med.indexOf(Math.max(...med));
+  lines.push(med[peak] < 1 ? tr('Fires are rare here in every month.') : tr('In a typical year, fires here are most frequent in {month}.').replace('{month}', monthName(peak + 1)));
+  // the biggest month on record
+  let jMax = 0; for (let j = 1; j < n; j += 1) if (H[j] > H[jMax]) jMax = j;
+  const [wy, wm] = ym(jMax);
+  lines.push(tr('Its worst month on record was {monthyear} ({n} burning days).').replace('{monthyear}', monthName(wm, true, wy)).replace('{n}', n0(H[jMax])));
+  // the latest complete year against a typical (median) complete year before it
+  const last = full[full.length - 1]; const before = full.slice(0, -1).map((o) => o.tot);
+  if (last && before.length >= 5) {
+    const ratio = last.tot / Math.max(1e-9, median(before));
+    const key = ratio > 1.2 ? '{year} was busier than a typical year.' : ratio < 0.83 ? '{year} was quieter than a typical year.' : '{year} was about a typical year.';
+    lines.push(tr(key).replace('{year}', last.y));
+  }
+  // one honest caveat, from the region's own forward-test note
+  const test = (r.notes || []).filter((x) => /\btest/i.test(x)).join(' ');
+  const cellErr = [...test.matchAll(/(?:grid-cell|single-square|single cells?)[^.]*?(\d+)(?:[–-](\d+))?%/gi)].flatMap((m) => [Number(m[1]), Number(m[2] || 0)]);
+  let caveat = null;
+  if (/not reliable|above the 100% limit/i.test(test) || Math.max(0, ...cellErr) >= 100) caveat = tr('Single small areas are less reliable here; the whole-region totals are the stronger figures.');
+  else if (/burning days failed|failed the check/i.test(test) && !/burning days passed every check/i.test(test)) caveat = tr('Its own accuracy test (2020–2021) missed a pass mark, so read its totals with care.');
+  const span = tr('Record: {span} · {cells} cells of 0.25°').replace('{span}', `${ymText(r.months.first)} – ${ymText(r.months.last)}`).replace('{cells}', mon.cells.ix.length);
+  return { lines, caveat, span };
+}
+function renderTour(r, facts) {
+  const card = $('#tour-card');
+  card.dir = langNow() === 'ar' ? 'rtl' : ''; if (langNow() !== 'en') card.lang = langNow(); else card.removeAttribute('lang');
+  $('#tour-name').textContent = r.name;
+  $('#tour-count').textContent = tr('Region {k} of {n}').replace('{k}', tourK + 1).replace('{n}', tourIndex.regions.length);
+  const ul = $('#tour-lines'); ul.textContent = '';
+  if (!facts) { const li = document.createElement('li'); li.textContent = tr('Loading this region…'); ul.append(li); card.setAttribute('aria-busy', 'true'); $('#tour-span').textContent = ''; return; }
+  card.removeAttribute('aria-busy');
+  facts.lines.forEach((t) => { const li = document.createElement('li'); li.textContent = t; ul.append(li); });
+  if (facts.caveat) { const li = document.createElement('li'); li.className = 'caveat'; li.textContent = facts.caveat; ul.append(li); }
+  $('#tour-span').textContent = facts.span;
+}
+async function showRegion(k) {
+  const regions = tourIndex.regions; tourK = (k + regions.length) % regions.length; const r = regions[tourK];
+  const token = ++tourToken;
+  const sub = r.id === STORY ? tr('The story region · Beirut, team home') : tr('Region {k} of {n}').replace('{k}', tourK + 1).replace('{n}', regions.length);
+  window.__stageFocusWanted = [r.id, sub]; window.__stageFocus?.(r.id, sub);
+  if (!tourCache.has(r.id)) {
+    renderTour(r, null);
+    tourCache.set(r.id, fetch(`data/${r.id}/monthly_bd.json`).then((x) => { if (!x.ok) throw new Error(`HTTP ${x.status}`); return x.json(); }));
+  }
+  try { const mon = await tourCache.get(r.id); if (token === tourToken) renderTour(r, regionFacts(r, mon)); } catch (err) { tourCache.delete(r.id); if (token === tourToken) { renderTour(r, { lines: [`${r.name}: ${err.message}`], caveat: null, span: '' }); } }
+}
+function leaveTour() { if (tourIndex && tourIndex.regions[tourK]?.id !== STORY) { const k = tourIndex.regions.findIndex((x) => x.id === STORY); showRegion(k); } }
+function initTour(index, mon) {
+  tourIndex = index; tourK = index.regions.findIndex((x) => x.id === STORY);
+  tourCache.set(STORY, Promise.resolve(mon));
+  showRegion(tourK);
+  $('#tour-next').addEventListener('click', () => showRegion(tourK + 1));
+  $('#tour-prev').addEventListener('click', () => showRegion(tourK - 1));
+  $('#tour').addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); e.stopPropagation(); showRegion(tourK + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); e.stopPropagation(); showRegion(tourK - 1); }
+  });
+  // a language switch rewrites the card in the new language
+  document.querySelectorAll('#lang-switch button').forEach((b) => b.addEventListener('click', () => setTimeout(() => showRegion(tourK), 0)));
+}
+
 async function boot() {
   try { await window.cedrus?.ready; } catch { /* the app shows its own error */ }
   if (!window.cedrus) { await new Promise((r) => { const t = setInterval(() => { if (window.cedrus) { clearInterval(t); r(); } }, 100); }); try { await window.cedrus.ready; } catch { /* shown by the app */ } }
@@ -318,8 +424,9 @@ async function boot() {
     [index, mon] = await Promise.all(['data/regions.json', `data/${STORY}/monthly_bd.json`].map((p) => fetch(p).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${p}`); return r.json(); })));
   } catch (err) { console.warn('Story numbers unavailable:', err.message); window.__stageFailed(); return; }
   buildStory(index, mon);
+  initTour(index, mon);
   setTimeout(() => typeLine(index), reduce ? 300 : 1400);
-  if (html.classList.contains('gl-ok')) import('./stage.js').catch((err) => window.__stageFailed(err));
+  if (html.classList.contains('gl-ok')) import(`./stage.js${V}`).catch((err) => window.__stageFailed(err));
   storySeason(index).catch((err) => { $('#st-season-note').textContent = `Season dates unavailable (${err.message}).`; });
 }
 boot();
