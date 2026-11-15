@@ -96,7 +96,7 @@ function draw(box, r, name) {
       ${link}<p>Weather: Open-Meteo (ECMWF/DWD/NOAA models; ERA5 for the normal), CC BY 4.0.</p></span></details> <span class="wx-src">Weather: Open-Meteo · CC BY 4.0</span></div>
     </div>
     <ol class="wx-days" aria-label="Hot-Dry-Windy Index, next 7 days">${cols}</ol>
-    <details class="more wx-more"${open}><summary>Day by day</summary><div class="wx-table"><table><thead><tr><th></th><th scope="col">Hottest °C</th><th scope="col">Driest air (RH)</th><th scope="col">Wind km/h</th><th scope="col">Rain mm</th><th scope="col">Topsoil wet</th><th scope="col">HDW</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+    <details class="more wx-more" open><summary>Day by day</summary><div class="wx-table"><table><thead><tr><th></th><th scope="col">Hottest °C</th><th scope="col">Driest air (RH)</th><th scope="col">Wind km/h</th><th scope="col">Rain mm</th><th scope="col">Topsoil wet</th><th scope="col">HDW</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
 }
 
 function linkSentence(name, lk) {
