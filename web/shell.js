@@ -286,7 +286,7 @@ async function storySeason(index) {
     const s = dates.map((d) => d[k]); const day = new Date(Date.UTC(2001, 0, Math.round(q(s, 0.5))));
     $(a).textContent = `${MON[day.getUTCMonth()]} ${day.getUTCDate()}`; $(b).textContent = `± ${Math.round((q(s, 0.75) - q(s, 0.25)) / 2)} days`;
   });
-  $('#st-season-note').textContent = `Over the ${dates.length} years in ${ys[0]}–${ys[ys.length - 1]} with at least 20 burning days; ± is half the spread across years, wide here because a few fires decide each year.`;
+  $('#st-season-note').textContent = `Over the ${dates.length} years in ${ys[0]}–${ys[ys.length - 1]} with at least 20 burning days; ± is half the spread across years.`;
 }
 
 // The landing's one-line aside: typed once the hero has settled, held, then faded so the page stays light on words.
