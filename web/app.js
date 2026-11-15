@@ -443,7 +443,7 @@ function renderCalendar() {
     + (state.mode === 'anomaly' ? ` Colour: each month vs the same month’s ${state.ref} in 2003 to the year before (at least ${MIN_BASE_YEARS} years).` : ` Colour: ${unit().many} per month (log scale).`)
     + (state.mode === 'anomaly' ? (state.ref === 'median' ? ' Median by default: one extreme year cannot move it.' : ' The mean is pulled up by the few worst years; the median is the sturdier normal.') : '')
     + (state.series.exact ? (state.unit === 'bd' ? ' Exact sums of the burning days inside your shape (a ~1 km square counts when its centre is inside).' : ' Exact sums of the detections inside your shape.') : ' Whole region: the sum of its 0.25° cells.');
-  if (!state.calendarShown) { state.calendarShown = true; startVideo(); }
+  if (!state.calendarShown) state.calendarShown = true;
   fx.afterCalendar();
 }
 
@@ -1279,19 +1279,6 @@ function bindControls() {
   $('#zoom-in').addEventListener('click', () => state.map?.zoomIn());
   $('#zoom-out').addEventListener('click', () => state.map?.zoomOut());
 }
-
-// The hero video loads nothing until the calendar is on screen, and never plays for reduced motion or data saving.
-const video = $('.hero-video'); const videoToggle = $('.video-toggle');
-function syncVideo() { videoToggle.textContent = video.paused ? '▶' : 'Ⅱ'; const l = video.paused ? 'Play background video' : 'Pause background video'; videoToggle.setAttribute('aria-label', l); videoToggle.title = l; }
-function startVideo() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData) return;
-  if (document.documentElement.classList.contains('gl-ok')) return; // the 3D story stage stands in for the video (shell.js plays it if the stage fails)
-  video.preload = 'auto';
-  video.play().catch(syncVideo);
-}
-videoToggle.addEventListener('click', () => { if (video.paused) { video.play().catch(() => toast('Use your browser’s video playback permission to play the background.')); } else { video.pause(); } });
-video.addEventListener('play', syncVideo); video.addEventListener('pause', syncVideo);
-syncVideo();
 
 // The years whose records set a region's grid: its first record year to 2025 (or its last year, if earlier).
 function gridYears(r) { return `${r.months.first.slice(0, 4)}–${Math.min(2025, Number(r.months.last.slice(0, 4)))}`; }

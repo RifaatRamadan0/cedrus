@@ -72,8 +72,8 @@ def serve(port):
     return httpd
 
 
-# Records, from navigation start: when the calendar first has cells, when the hero video first plays,
-# and the state of the map panel, draw buttons and video at the moment the calendar first appears.
+# Records, from navigation start: when the calendar first has cells,
+# and the state of the map panel and draw buttons at the moment the calendar first appears.
 INIT = r"""
 // The probe tests every control, so it opens the folded "More" sections (details.more) the page starts closed.
 window.__uxOpen = true;
@@ -82,14 +82,11 @@ new MutationObserver((_, obs) => {
   const g = document.getElementById('cal-grid');
   if (g && g.dataset.cells && !window.__calendarAt) {
     window.__calendarAt = performance.now(); obs.disconnect();
-    const v = document.querySelector('.hero-video');
     window.__atParse = { loading: document.getElementById('map-loading')?.textContent || '',
       drawDisabled: document.getElementById('draw-rectangle')?.disabled, hint: document.getElementById('draw-hint')?.textContent,
-      preload: v?.getAttribute('preload'), autoplay: v?.hasAttribute('autoplay'),
       fetched: performance.getEntriesByType('resource').map((e) => e.name).filter((n) => n.includes('/data/')).map((n) => n.split('/data/').pop()) };
   }
 }).observe(document, { subtree: true, childList: true, attributes: true });
-document.addEventListener('play', () => { if (!window.__playAt) window.__playAt = performance.now(); }, true);
 """
 
 
@@ -699,25 +696,7 @@ def run(url, shots, browser_executable=None, published_only=False):
         check("map loading state when the calendar appears: 'Loading map…', draw buttons disabled with a matching hint",
               at["loading"].startswith("Loading map") and at["drawDisabled"] and "load with the map" in at["hint"], str(at))
         served = page.request.get(url).text()
-        tag = served[served.index("<video"):served.index(">", served.index("<video")) + 1]
-        check("hero video as served: preload=none and no autoplay attribute", 'preload="none"' in tag and "autoplay" not in tag, tag[:120])
-        page.wait_for_timeout(2500)
-        play_at = page.evaluate("window.__playAt || null")
-        # Where WebGL runs, the 3D story stage replaces the hero video (it then never plays); elsewhere the video plays
-        # after the calendar. Either way it never starts before the calendar.
-        gl = page.evaluate("document.documentElement.classList.contains('gl-ok')")
-        check("hero video never starts before the calendar rendered (with WebGL the 3D story replaces it)",
-              (play_at is None and gl) or (play_at is not None and play_at >= page.evaluate("window.__calendarAt")),
-              f"calendar {t:.2f} s, video play {'never' if play_at is None else f'{play_at / 1000:.2f} s'}")
-        ctx.close()
-
-        ctx = legacy_context(browser, viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
-        page = ctx.new_page()
-        page.add_init_script(INIT)
-        page.goto(url, wait_until="commit")  # the calendar does not wait for CDN scripts; neither does the probe
-        page.wait_for_function("window.cedrus", timeout=60000); page.evaluate("window.cedrus.ready")
-        page.wait_for_timeout(2000)
-        check("reduced motion: hero video never plays", page.evaluate("!window.__playAt && document.querySelector('.hero-video').paused"))
+        check("no video on the page (the old hero video was removed)", "<video" not in served and "wildfire.mp4" not in served)
         ctx.close()
 
         # ---- desktop

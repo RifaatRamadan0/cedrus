@@ -40,12 +40,6 @@ html.past-deck #poster,html.past-deck #gl{visibility:hidden}
 html.past-deck #grain,html.past-deck #scrim,html.past-deck #satLabels{display:none}
 .deck{background:radial-gradient(120% 80% at 70% 30%,#10221d 0,#04080a 60%)}
 html.gl-ok .deck{background:none}
-/* no WebGL: the wildfire video (after the calendar, never with reduced motion) is the story's backdrop */
-.deck-video{display:none}
-html.no-gl .deck-video{display:block;position:absolute;inset:0;z-index:0;overflow:hidden}
-html.no-gl .deck-video::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,8,10,.92),rgba(4,8,10,.55) 60%,rgba(4,8,10,.35))}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-.video-toggle{position:absolute;right:16px;bottom:16px;z-index:3;background:#04080acc;border:1px solid var(--line-strong);width:30px;height:30px;border-radius:8px;color:var(--fg)}
 
 /* ---------- top bar ---------- */
 .topbar{position:fixed;z-index:50;top:0;left:0;right:0;display:flex;align-items:center;gap:18px;

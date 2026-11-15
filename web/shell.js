@@ -175,14 +175,7 @@ function showSat(k) {
 document.querySelectorAll('.sc-tabs button').forEach((b) => b.addEventListener('click', () => showSat(Number(b.dataset.sat))));
 showSat(2);
 
-// ---------- the hero video: only where the 3D stage cannot run, only after the calendar ----------
-let calendarUp = false;
-function maybeVideo() {
-  const v = $('.hero-video');
-  if (!v || !calendarUp || !html.classList.contains('no-gl') || reduce || navigator.connection?.saveData) return;
-  v.preload = 'auto'; v.play().catch(() => {});
-}
-window.__stageFailed = (err) => { html.classList.remove('gl-ok', 'gl-live'); html.classList.add('no-gl'); maybeVideo(); if (err) console.warn('3D story stage unavailable:', err.message || err); };
+window.__stageFailed = (err) => { html.classList.remove('gl-ok', 'gl-live'); html.classList.add('no-gl'); if (err) console.warn('3D story stage unavailable:', err.message || err); };
 window.__glReady = () => html.classList.add('gl-live');
 
 // ---------- story numbers, from the record ----------
@@ -520,7 +513,6 @@ function initCondensed() {
 async function boot() {
   try { await window.cedrus?.ready; } catch { /* the app shows its own error */ }
   if (!window.cedrus) { await new Promise((r) => { const t = setInterval(() => { if (window.cedrus) { clearInterval(t); r(); } }, 100); }); try { await window.cedrus.ready; } catch { /* shown by the app */ } }
-  calendarUp = true; maybeVideo();
   initCondensed();
   let index; let mon;
   try {
